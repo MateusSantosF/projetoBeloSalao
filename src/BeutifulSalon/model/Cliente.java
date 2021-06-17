@@ -1,0 +1,172 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package BeutifulSalon.model;
+
+import BeutifulSalon.dao.clienteDAO;
+import java.util.Date;
+import BeutifulSalon.dao.clienteDAO;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
+/**
+ *
+ * @author Mateus
+ */
+public class Cliente {
+    
+    private String CPF;
+    private String NOME; 
+    private String SOBRENOME;
+    private String EMAIL;
+    private Date DATANASC; 
+    private String CEP; 
+    private String BAIRRO;
+    private String RUA; 
+    private String CIDADE; 
+    private String NUMERO;
+    private String TELEFONE; 
+    private String CELULAR; 
+    private Date DATAREG; //Data que o cliente foi registrado no sistema
+    
+    //construtor padrão
+    public Cliente(){}
+    
+    //Construtor não padrão
+    public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, Date DATANASC, 
+            String CEP, String BAIRRO, String RUA, String CIDADE,String NUMERO,
+            String TELEFONE, String CELULAR, Date DATAREG) {
+        this.CPF = CPF;
+        this.NOME = NOME;
+        this.SOBRENOME = SOBRENOME;
+        this.EMAIL = EMAIL;
+        this.DATANASC = DATANASC;
+        this.CEP = CEP;
+        this.BAIRRO = BAIRRO;
+        this.RUA = RUA;
+        this.NUMERO = NUMERO;
+        this.CIDADE = CIDADE;
+        this.TELEFONE = TELEFONE;
+        this.CELULAR = CELULAR;
+        this.DATAREG = DATAREG;
+    }
+
+    public Date getDATAREG() {
+        return DATAREG;
+    }
+
+    public void setDATAREG(Date DATAREG) {
+        this.DATAREG = DATAREG;
+    }
+    
+    
+    //Getters and Setters
+    public String getNUMERO() {
+        return NUMERO;
+    }
+
+    public void setNUMERO(String NUMERO) {
+        this.NUMERO = NUMERO;
+    }
+
+    public String getCPF() {
+        return CPF;
+    }
+
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
+    }
+
+    public String getNOME() {
+        return NOME;
+    }
+
+    public void setNOME(String NOME) {
+        this.NOME = NOME;
+    }
+
+    public String getSOBRENOME() {
+        return SOBRENOME;
+    }
+
+    public void setSOBRENOME(String SOBRENOME) {
+        this.SOBRENOME = SOBRENOME;
+    }
+
+    public String getEMAIL() {
+        return EMAIL;
+    }
+
+    public void setEMAIL(String EMAIL) {
+        this.EMAIL = EMAIL;
+    }
+
+    public Date getDATANASC() {
+        return DATANASC;
+    }
+
+    public void setDATANASC(Date DATANASC) {
+        this.DATANASC = DATANASC;
+    }
+
+    public String getCEP() {
+        return CEP;
+    }
+
+    public void setCEP(String CEP) {
+        this.CEP = CEP;
+    }
+
+    public String getBAIRRO() {
+        return BAIRRO;
+    }
+
+    public void setBAIRRO(String BAIRRO) {
+        this.BAIRRO = BAIRRO;
+    }
+
+    public String getRUA() {
+        return RUA;
+    }
+
+    public void setRUA(String RUA) {
+        this.RUA = RUA;
+    }
+
+    public String getCIDADE() {
+        return CIDADE;
+    }
+
+    public void setCIDADE(String CIDADE) {
+        this.CIDADE = CIDADE;
+    }
+
+    public String getTELEFONE() {
+        return TELEFONE;
+    }
+
+    public void setTELEFONE(String TELEFONE) {
+        this.TELEFONE = TELEFONE;
+    }
+
+    public String getCELULAR() {
+        return CELULAR;
+    }
+
+    public void setCELULAR(String CELULAR) {
+        this.CELULAR = CELULAR;
+    }
+    
+    
+    //Cadastrar clientes
+    public void cadastrarCliente(Cliente cliente) throws Exception{
+        new clienteDAO().cadastrarCliente(cliente);
+
+    }
+    
+    
+}
