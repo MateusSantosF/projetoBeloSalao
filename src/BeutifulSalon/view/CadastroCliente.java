@@ -607,9 +607,6 @@ public class CadastroCliente extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 aguardeCamposCEP(evt);
             }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                limpaCamposCep(evt);
-            }
         });
         jTextFieldCep.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -865,12 +862,6 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jTextFieldNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNumeroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNumeroActionPerformed
-
-    private void limpaCamposCep(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_limpaCamposCep
-        jTextFieldRua.setText("");
-        jTextFieldBairro.setText("");
-        jTextFieldCidade.setText("");
-    }//GEN-LAST:event_limpaCamposCep
 
     private void aguardeCamposCEP(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_aguardeCamposCEP
         jTextFieldRua.setText("aguarde...");
