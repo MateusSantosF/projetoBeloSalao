@@ -13,6 +13,8 @@ import java.sql.SQLClientInfoException;
 import BeutifulSalon.model.Cliente;
 import java.sql.SQLException;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 
@@ -67,6 +69,116 @@ public class clienteDAO {
            
         }
         
+        
+        
+    }
+    
+    public ArrayList<Cliente> listarClientes(String nome) throws ExceptionDAO {
+        
+        
+        String sql  = "SELECT NOME,SOBRENOME,CELULAR,EMAIL FROM CLIENTE WHERE NOME LIKE '%" + nome + "%' ORDER BY NOME";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        
+        ArrayList<Cliente> clientes =  null;
+            
+        try {
+            connection = new ConnectionMVC().getConnection();
+            
+            pStatement = connection.prepareStatement(sql);
+            
+            ResultSet rs = pStatement.executeQuery(sql);
+            
+            if(rs != null){
+                clientes = new ArrayList<Cliente>();
+                
+                while(rs.next()){
+                    Cliente clienteAtual = new Cliente();
+                    clienteAtual.setNOME(rs.getString("NOME"));
+                    clienteAtual.setSOBRENOME(rs.getString("SOBRENOME"));
+                    clienteAtual.setCELULAR(rs.getString("CELULAR"));
+                    clienteAtual.setEMAIL(rs.getString("EMAIL"));
+                    clientes.add(clienteAtual);
+                }
+            }
+            
+            
+        } catch (SQLException e) {
+            throw new ExceptionDAO("Erro ao consultar cliente (classClienteDAO)");
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+                
+        
+        return clientes;
+        
+                
+    }
+    
+    public ArrayList<Cliente> listarClientes(){
+        
+        String sql  = "SELECT  NOME, SOBRENOME, CELULAR, EMAIL FROM CLIENTE";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ArrayList<Cliente> clientes =  null;
+        
+        try{
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            
+            ResultSet rs = pStatement.executeQuery(sql);
+            
+            if(rs != null){
+                clientes = new ArrayList<Cliente>();
+                
+                while(rs.next()){
+                    Cliente clienteAtual = new Cliente();
+                    clienteAtual.setNOME(rs.getString("NOME"));
+                    clienteAtual.setSOBRENOME(rs.getString("SOBRENOME"));
+                    clienteAtual.setCELULAR(rs.getString("CELULAR"));
+                    clienteAtual.setEMAIL(rs.getString("EMAIL"));
+                    clientes.add(clienteAtual);
+                }
+                
+            }
+            
+            
+            
+            
+        } catch (SQLException e){
+            
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+        
+        return clientes;
         
         
     }

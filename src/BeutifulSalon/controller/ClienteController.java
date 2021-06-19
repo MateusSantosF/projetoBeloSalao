@@ -5,9 +5,11 @@
  */
 package BeutifulSalon.controller;
 
+import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -56,12 +58,23 @@ public class ClienteController {
         for(int i = 0; i < cpf.length(); i++){
             if(! Character.isDigit(cpf.charAt(i))){
                 if( ! (i == 3 || i == 7 || i == 11)){
+                    JOptionPane.showMessageDialog(null, "CPF Inválido");
                     return false;
                 }
               
             }    
         }
              return true;
+    }
+    
+    
+    public ArrayList<Cliente> listarClientes(String nome) throws ExceptionDAO{
+        
+        return new Cliente().listarClientes(nome);
+    }
+    
+    public ArrayList<Cliente> listarClientes() throws ExceptionDAO{
+        return new Cliente().listarClientes();
     }
     
     

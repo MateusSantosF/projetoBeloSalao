@@ -7,6 +7,11 @@ package BeutifulSalon.view;
 
 import BeutifulSalon.controller.ClienteController;
 import java.awt.HeadlessException;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -22,6 +27,46 @@ public class CadastroCliente extends javax.swing.JFrame {
      */
     public CadastroCliente() {
         initComponents();
+    }
+    
+    public void buscarCep(String cep){
+        String json;
+ 
+        try {
+            URL url = new URL("http://viacep.com.br/ws/"+ cep +"/json");
+            URLConnection urlConnection = url.openConnection();
+            
+            InputStream is = urlConnection.getInputStream();
+            
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            
+            StringBuilder jsonSb = new StringBuilder();
+            
+            br.lines().forEach(l -> jsonSb.append(l.trim()));
+            json = jsonSb.toString();
+            
+           
+            
+            json = json.replaceAll("[{},:]", "");
+            json = json.replaceAll("\"","\n");
+            
+            String array[] = new String[30];
+            array = json.split("\n");
+           
+             
+             String rua = array[7];
+             String bairro = array[15];
+             String cidade = array[23];
+ 
+             
+             
+             jTextFieldRua.setText(rua);
+             jTextFieldBairro.setText(bairro);
+             jTextFieldCidade.setText(cidade);
+                           
+        } catch (Exception e) {
+            
+        }
     }
 
     /**
@@ -68,9 +113,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jPanel19 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
-        jTextFieldCelular = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         jFormattedTextFieldDataNasc = new javax.swing.JFormattedTextField();
+        jTextFieldCelular = new javax.swing.JFormattedTextField();
         jPanel20 = new javax.swing.JPanel();
         jTextFieldTelefone = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
@@ -78,16 +123,14 @@ public class CadastroCliente extends javax.swing.JFrame {
         jPanel21 = new javax.swing.JPanel();
         jTextFieldCep = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
-        jPanel22 = new javax.swing.JPanel();
         jTextFieldRua = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
-        jPanel23 = new javax.swing.JPanel();
-        jTextFieldBairro = new javax.swing.JTextField();
-        jLabel27 = new javax.swing.JLabel();
-        jPanel24 = new javax.swing.JPanel();
+        jPanel22 = new javax.swing.JPanel();
         jTextFieldCidade = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
-        jPanel25 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jTextFieldBairro = new javax.swing.JTextField();
+        jPanel24 = new javax.swing.JPanel();
         jTextFieldNumero = new javax.swing.JTextField();
         jLabel29 = new javax.swing.JLabel();
         jPanel26 = new javax.swing.JPanel();
@@ -321,6 +364,8 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jTextFieldNome.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldNome.setToolTipText("Nome");
+        jTextFieldNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -329,7 +374,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
                     .addComponent(jLabel18))
                 .addGap(22, 22, 22))
         );
@@ -352,6 +397,8 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jTextFieldSobrenome.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldSobrenome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldSobrenome.setToolTipText("Sobrenome");
+        jTextFieldSobrenome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
@@ -361,7 +408,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel19)
-                    .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
+                    .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE))
                 .addGap(50, 50, 50))
         );
         jPanel16Layout.setVerticalGroup(
@@ -382,13 +429,14 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel20.setText("CPF");
 
         jFormattedTextFieldCPF.setBackground(new java.awt.Color(255, 255, 255));
-        jFormattedTextFieldCPF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jFormattedTextFieldCPF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         try {
             jFormattedTextFieldCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         jFormattedTextFieldCPF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFormattedTextFieldCPF.setToolTipText("Informe o CPF");
         jFormattedTextFieldCPF.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
@@ -399,8 +447,8 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel20)
-                    .addComponent(jFormattedTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(123, Short.MAX_VALUE))
+                    .addComponent(jFormattedTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(218, Short.MAX_VALUE))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -422,6 +470,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jTextFieldEmail.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextFieldEmail.setToolTipText("Informe o email do cliente");
+        jTextFieldEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel21.setText("*Email");
@@ -433,7 +482,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldEmail)
+                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
                     .addComponent(jLabel21))
                 .addContainerGap())
         );
@@ -454,14 +503,11 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel22.setText("Data de Nascimento");
 
-        jTextFieldCelular.setBackground(new java.awt.Color(255, 255, 255));
-        jTextFieldCelular.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel23.setText("Celular");
 
         jFormattedTextFieldDataNasc.setBackground(new java.awt.Color(255, 255, 255));
-        jFormattedTextFieldDataNasc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jFormattedTextFieldDataNasc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         try {
             jFormattedTextFieldDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
@@ -469,6 +515,17 @@ public class CadastroCliente extends javax.swing.JFrame {
         }
         jFormattedTextFieldDataNasc.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jFormattedTextFieldDataNasc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jTextFieldCelular.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldCelular.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
+        try {
+            jTextFieldCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jTextFieldCelular.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        jTextFieldCelular.setToolTipText("Digite o celular");
+        jTextFieldCelular.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
@@ -481,11 +538,11 @@ public class CadastroCliente extends javax.swing.JFrame {
                     .addComponent(jFormattedTextFieldDataNasc))
                 .addGap(24, 24, 24)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                     .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addComponent(jTextFieldCelular)
-                        .addGap(6, 6, 6)))
-                .addGap(0, 0, 0))
+                        .addGap(6, 6, 6)
+                        .addComponent(jTextFieldCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)))
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -495,9 +552,9 @@ public class CadastroCliente extends javax.swing.JFrame {
                     .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel22))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextFieldDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jFormattedTextFieldDataNasc, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(jTextFieldCelular))
                 .addContainerGap())
         );
 
@@ -507,6 +564,7 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jTextFieldTelefone.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldTelefone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldTelefone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel24.setText("Telefone");
@@ -517,12 +575,12 @@ public class CadastroCliente extends javax.swing.JFrame {
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel20Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                    .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addComponent(jTextFieldTelefone)
-                        .addGap(144, 144, 144)))
+                .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel20Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel20Layout.setVerticalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -537,34 +595,68 @@ public class CadastroCliente extends javax.swing.JFrame {
         jPanelEmail1.add(jPanel20);
 
         jPanelCep1.setBackground(new java.awt.Color(243, 244, 245));
-        jPanelCep1.setLayout(new java.awt.GridLayout(1, 5));
+        jPanelCep1.setLayout(new java.awt.GridLayout(1, 3));
 
         jPanel21.setBackground(new java.awt.Color(243, 244, 245));
 
         jTextFieldCep.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldCep.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldCep.setToolTipText("Informe o CEP");
+        jTextFieldCep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
+        jTextFieldCep.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                aguardeCamposCEP(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                limpaCamposCep(evt);
+            }
+        });
+        jTextFieldCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldCepKeyReleased(evt);
+            }
+        });
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel25.setText("CEP");
+
+        jTextFieldRua.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldRua.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldRua.setToolTipText("Preencha o CEP");
+        jTextFieldRua.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel26.setText("Rua");
 
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
         jPanel21Layout.setHorizontalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel21Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldCep)
-                    .addComponent(jLabel25))
-                .addContainerGap())
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addComponent(jLabel25)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel26)
+                        .addGap(222, 222, 222))
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addComponent(jTextFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextFieldRua, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))))
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel21Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel25)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE)
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel25)
+                    .addComponent(jLabel26))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldRua, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -572,127 +664,92 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jPanel22.setBackground(new java.awt.Color(243, 244, 245));
 
-        jTextFieldRua.setBackground(new java.awt.Color(255, 255, 255));
-        jTextFieldRua.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldCidade.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldCidade.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldCidade.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
-        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel26.setText("Rua");
+        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel28.setText("Cidade");
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel27.setText("Bairro");
+
+        jTextFieldBairro.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldBairro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldBairro.setToolTipText("");
+        jTextFieldBairro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
         jPanel22Layout.setHorizontalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel22Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldRua)
-                    .addComponent(jLabel26))
-                .addContainerGap())
+                    .addComponent(jTextFieldBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel27))
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel22Layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jLabel28))
+                    .addGroup(jPanel22Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel22Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel26)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel22Layout.createSequentialGroup()
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel27))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldRua, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         jPanelCep1.add(jPanel22);
 
-        jPanel23.setBackground(new java.awt.Color(243, 244, 245));
-
-        jTextFieldBairro.setBackground(new java.awt.Color(255, 255, 255));
-        jTextFieldBairro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel27.setText("Bairro");
-
-        javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
-        jPanel23.setLayout(jPanel23Layout);
-        jPanel23Layout.setHorizontalGroup(
-            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel23Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldBairro)
-                    .addComponent(jLabel27))
-                .addContainerGap())
-        );
-        jPanel23Layout.setVerticalGroup(
-            jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel23Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel27)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanelCep1.add(jPanel23);
-
         jPanel24.setBackground(new java.awt.Color(243, 244, 245));
 
-        jTextFieldCidade.setBackground(new java.awt.Color(255, 255, 255));
-        jTextFieldCidade.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldNumero.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldNumero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldNumero.setToolTipText("Informe o numero da Residência");
+        jTextFieldNumero.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
+        jTextFieldNumero.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNumeroActionPerformed(evt);
+            }
+        });
 
-        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel28.setText("Cidade");
+        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel29.setText("Numero");
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
         jPanel24Layout.setHorizontalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel24Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap()
                 .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldCidade)
-                    .addComponent(jLabel28))
-                .addContainerGap())
+                    .addComponent(jLabel29)
+                    .addComponent(jTextFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(218, Short.MAX_VALUE))
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel24Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel28)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jPanelCep1.add(jPanel24);
-
-        jPanel25.setBackground(new java.awt.Color(243, 244, 245));
-
-        jTextFieldNumero.setBackground(new java.awt.Color(255, 255, 255));
-        jTextFieldNumero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel29.setText("Numero");
-
-        javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
-        jPanel25.setLayout(jPanel25Layout);
-        jPanel25Layout.setHorizontalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel25Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldNumero)
-                    .addComponent(jLabel29))
-                .addContainerGap())
-        );
-        jPanel25Layout.setVerticalGroup(
-            jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel25Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(jLabel29)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jPanelCep1.add(jPanel25);
+        jPanelCep1.add(jPanel24);
 
         jPanel26.setBackground(new java.awt.Color(243, 244, 245));
         jPanel26.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 5));
@@ -728,19 +785,17 @@ public class CadastroCliente extends javax.swing.JFrame {
             .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
                 .addGap(52, 52, 52)
                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
                         .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(68, 68, 68))
+                        .addGap(4, 4, 4))
                     .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                        .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, JPCadastroClientes1Layout.createSequentialGroup()
-                                .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jPanelEmail1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 830, Short.MAX_VALUE)
-                                    .addComponent(jPanelCep1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(JPanelNome1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(92, 92, 92)))
-                        .addContainerGap())))
+                        .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JPanelNome1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelEmail1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanelCep1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(0, 0, 0)))
+                .addContainerGap())
         );
         JPCadastroClientes1Layout.setVerticalGroup(
             JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -753,9 +808,9 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addComponent(jPanelEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelCep1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81)
-                .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(185, Short.MAX_VALUE))
+                .addGap(60, 60, 60)
+                .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(116, 116, 116))
         );
 
         getContentPane().add(JPCadastroClientes1, java.awt.BorderLayout.CENTER);
@@ -796,6 +851,32 @@ public class CadastroCliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Erro: " + e);
         }
     }//GEN-LAST:event_btnCadastrar
+
+    private void jTextFieldCepKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCepKeyReleased
+        jTextFieldRua.setText("aguarde...");
+        jTextFieldBairro.setText("aguarde...");
+        jTextFieldCidade.setText("aguarde...");
+        
+        if(jTextFieldCep.getText().length() == 8){
+            buscarCep(jTextFieldCep.getText());
+        }
+    }//GEN-LAST:event_jTextFieldCepKeyReleased
+
+    private void jTextFieldNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNumeroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNumeroActionPerformed
+
+    private void limpaCamposCep(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_limpaCamposCep
+        jTextFieldRua.setText("");
+        jTextFieldBairro.setText("");
+        jTextFieldCidade.setText("");
+    }//GEN-LAST:event_limpaCamposCep
+
+    private void aguardeCamposCEP(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_aguardeCamposCEP
+        jTextFieldRua.setText("aguarde...");
+        jTextFieldBairro.setText("aguarde...");
+        jTextFieldCidade.setText("aguarde...");
+    }//GEN-LAST:event_aguardeCamposCEP
   
     public void limparTelaCadastroCliente(){
                 jFormattedTextFieldCPF.setText("");
@@ -886,16 +967,14 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
-    private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel24;
-    private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel26;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelCep1;
     private javax.swing.JPanel jPanelEmail1;
     private javax.swing.JLabel jTFClientes;
     private javax.swing.JTextField jTextFieldBairro;
-    private javax.swing.JTextField jTextFieldCelular;
+    private javax.swing.JFormattedTextField jTextFieldCelular;
     private javax.swing.JTextField jTextFieldCep;
     private javax.swing.JTextField jTextFieldCidade;
     private javax.swing.JTextField jTextFieldEmail;

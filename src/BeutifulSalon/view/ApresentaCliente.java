@@ -5,7 +5,15 @@
  */
 package BeutifulSalon.view;
 
+import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.model.Cliente;
 import java.awt.event.MouseEvent;
+import java.lang.System.Logger;
+import java.lang.System.Logger.Level;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -66,19 +74,30 @@ public class ApresentaCliente extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableConsultaCliente = new javax.swing.JTable();
         jButtonDetalhes = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldNomeCliente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jLabel8.setText("jLabel8");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+                listarTodosClientes(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 fecharJanela(evt);
+            }
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                listarTodosClientes(evt);
             }
         });
 
@@ -315,8 +334,8 @@ public class ApresentaCliente extends javax.swing.JFrame {
         jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableConsultaCliente.setBackground(new java.awt.Color(255, 255, 255));
+        jTableConsultaCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -342,7 +361,10 @@ public class ApresentaCliente extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jTableConsultaCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTableConsultaCliente.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jTableConsultaCliente.setShowGrid(true);
+        jScrollPane2.setViewportView(jTableConsultaCliente);
 
         jButtonDetalhes.setBackground(new java.awt.Color(36, 141, 248));
         jButtonDetalhes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -373,10 +395,17 @@ public class ApresentaCliente extends javax.swing.JFrame {
         jButtonEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonEditar.setPreferredSize(new java.awt.Dimension(150, 65));
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextFieldNomeCliente.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldNomeCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconLupa.png"))); // NOI18N
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                ConsultarCliente(evt);
+            }
+        });
+
+        jLabel3.setText("Busca por nome");
 
         javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
         container.setLayout(containerLayout);
@@ -403,9 +432,12 @@ public class ApresentaCliente extends javax.swing.JFrame {
                 .addGap(63, 63, 63))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
+                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addGroup(containerLayout.createSequentialGroup()
+                        .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel4)))
                 .addGap(62, 62, 62))
         );
         containerLayout.setVerticalGroup(
@@ -415,9 +447,11 @@ public class ApresentaCliente extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(74, 74, 74)
+                .addGap(52, 52, 52)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -448,6 +482,77 @@ public class ApresentaCliente extends javax.swing.JFrame {
         telaChamadoraMainMenu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnDashboard
+
+    private void ConsultarCliente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConsultarCliente
+      
+        String nome = jTextFieldNomeCliente.getText(); // nome do TextField
+        DefaultTableModel tabelaClienteModel = (DefaultTableModel) jTableConsultaCliente.getModel(); // tabela
+        tabelaClienteModel.setRowCount(0);
+       
+        ClienteController cc = new ClienteController();
+        
+       
+        ArrayList<Cliente> clientesConsultados = null;
+        try {
+            clientesConsultados = cc.listarClientes(nome);
+        } catch (ExceptionDAO ex) {
+            java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+            
+            try {
+               clientesConsultados.forEach( (Cliente cliente) -> {
+                 tabelaClienteModel.addRow(new Object[] {cliente.getNOME(),
+                                                        cliente.getSOBRENOME(),
+                                                        cliente.getCELULAR(),
+                                                        cliente.getEMAIL()});
+            
+               });
+               
+               jTableConsultaCliente.setModel(tabelaClienteModel);
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
+            }
+         
+                
+       
+       
+       
+       
+    }//GEN-LAST:event_ConsultarCliente
+
+    private void listarTodosClientes(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_listarTodosClientes
+          
+        
+        DefaultTableModel tabelaClienteModel = (DefaultTableModel) jTableConsultaCliente.getModel(); // tabela
+        tabelaClienteModel.setRowCount(0);
+       
+        ClienteController cc = new ClienteController();
+        
+       
+        ArrayList<Cliente> clientesConsultados = null;
+        try {
+            clientesConsultados = cc.listarClientes();
+        } catch (ExceptionDAO ex) {
+            java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+            
+            try {
+               clientesConsultados.forEach( (Cliente cliente) -> {
+                 tabelaClienteModel.addRow(new Object[] {cliente.getNOME(),
+                                                        cliente.getSOBRENOME(),
+                                                        cliente.getCELULAR(),
+                                                        cliente.getEMAIL()});
+            
+               });
+               
+               jTableConsultaCliente.setModel(tabelaClienteModel);
+                
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
+            }
+         
+    }//GEN-LAST:event_listarTodosClientes
 
     /**
      * @param args the command line arguments
@@ -500,14 +605,15 @@ public class ApresentaCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel jTFClientes;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jTableConsultaCliente;
+    private javax.swing.JTextField jTextFieldNomeCliente;
     private javax.swing.JPanel menuLateral;
     private javax.swing.JPanel panelClientes;
     private javax.swing.JPanel panelDashboard;
