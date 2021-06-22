@@ -3,10 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/view/CadastroCliente.java</file>
             <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/view/ApresentaCliente.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/view/CadastroCliente.java</file>
             <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/model/Cliente.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/dao/clienteDAO.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/model/Orcamento.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/view/OrcamentoPrevisto.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/view/NovoRegistro.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/view/CadastroProduto.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/controller/OrcamentoController.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/view/MainMenu.java</file>
             <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/controller/ClienteController.java</file>
         </group>
     </open-files>

@@ -419,14 +419,9 @@
                           <Component id="jPanel26" max="32767" attributes="0"/>
                           <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="JPanelNome1" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jPanelEmail1" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jPanelCep1" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="JPanelNome1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jPanelEmail1" alignment="1" max="32767" attributes="0"/>
+                      <Component id="jPanelCep1" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
@@ -990,6 +985,7 @@
                   </Properties>
                   <Events>
                     <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="aguardeCamposCEP"/>
+                    <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="limparCamposPerdeuFoco"/>
                     <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldCepKeyReleased"/>
                   </Events>
                 </Component>
@@ -1257,6 +1253,9 @@
                   <Dimension value="[150, 65]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCancelarActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

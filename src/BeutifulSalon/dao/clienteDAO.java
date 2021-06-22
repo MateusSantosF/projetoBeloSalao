@@ -87,7 +87,7 @@ public class clienteDAO {
             
             pStatement = connection.prepareStatement(sql);
             
-            ResultSet rs = pStatement.executeQuery(sql);
+            ResultSet rs = pStatement.executeQuery();
             
             if(rs != null){
                 clientes = new ArrayList<Cliente>();
@@ -130,7 +130,7 @@ public class clienteDAO {
     
     public ArrayList<Cliente> listarClientes(){
         
-        String sql  = "SELECT  NOME, SOBRENOME, CELULAR, EMAIL FROM CLIENTE";
+        String sql  = "SELECT NOME, SOBRENOME, CELULAR, EMAIL FROM CLIENTE";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -140,10 +140,10 @@ public class clienteDAO {
             connection = new ConnectionMVC().getConnection();
             pStatement = connection.prepareStatement(sql);
             
-            ResultSet rs = pStatement.executeQuery(sql);
+            ResultSet rs = pStatement.executeQuery();
             
             if(rs != null){
-                clientes = new ArrayList<Cliente>();
+                clientes = new ArrayList<>();
                 
                 while(rs.next()){
                     Cliente clienteAtual = new Cliente();
@@ -155,12 +155,9 @@ public class clienteDAO {
                 }
                 
             }
-            
-            
-            
-            
+         
         } catch (SQLException e){
-            
+            JOptionPane.showMessageDialog(null, "Erro ConnectionMVC: " + e);
         }finally{
             
             try {

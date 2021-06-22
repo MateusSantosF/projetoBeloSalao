@@ -17,25 +17,13 @@ import javax.swing.JOptionPane;
 
 public class ConnectionMVC {
    
-
-    private String serverName;
-    private String portNumber;
     
     public Connection getConnection(){
         
              Connection conn = null;
-             serverName = "localhost";
-             portNumber = "3306";
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("Erro jdbc.driver: " + ex);
-        }
+          
             try {
-                conn = DriverManager.getConnection(
-                   "jdbc:mysql://"+
-                   this.serverName +
-                   ":" + this.portNumber + "/beutifulsalondb?useSSL=false","root", "Jaralin123@");
+                conn = DriverManager.getConnection("jdbc:sqlite:BancoDeDados/beutifulsalondb.db");                  
                
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "erro: " + e);

@@ -607,6 +607,9 @@ public class CadastroCliente extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 aguardeCamposCEP(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                limparCamposPerdeuFoco(evt);
+            }
         });
         jTextFieldCep.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -773,6 +776,11 @@ public class CadastroCliente extends javax.swing.JFrame {
         jButtonCancelar.setBorder(null);
         jButtonCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonCancelar.setPreferredSize(new java.awt.Dimension(150, 65));
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
         jPanel26.add(jButtonCancelar);
 
         javax.swing.GroupLayout JPCadastroClientes1Layout = new javax.swing.GroupLayout(JPCadastroClientes1);
@@ -786,12 +794,9 @@ public class CadastroCliente extends javax.swing.JFrame {
                     .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
                         .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(4, 4, 4))
-                    .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                        .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JPanelNome1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelEmail1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanelCep1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addGap(0, 0, 0)))
+                    .addComponent(JPanelNome1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelEmail1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelCep1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         JPCadastroClientes1Layout.setVerticalGroup(
@@ -868,6 +873,27 @@ public class CadastroCliente extends javax.swing.JFrame {
         jTextFieldBairro.setText("aguarde...");
         jTextFieldCidade.setText("aguarde...");
     }//GEN-LAST:event_aguardeCamposCEP
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        
+        int opc = JOptionPane.showConfirmDialog(null,"Realmente deseja sair?", "Cadastro Cliente", JOptionPane.YES_NO_OPTION);
+         
+        if(opc == 0){
+            this.dispose();
+        }
+        
+      
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void limparCamposPerdeuFoco(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_limparCamposPerdeuFoco
+        
+        //Limpa os campos caso o JTextFieldCep perca o foco e o texto seja menor que 8, ou seja, cep inválido
+        if(jTextFieldCep.getText().length() < 8){
+            jTextFieldBairro.setText("");
+            jTextFieldRua.setText("");
+            jTextFieldCidade.setText("");
+        }
+    }//GEN-LAST:event_limparCamposPerdeuFoco
   
     public void limparTelaCadastroCliente(){
                 jFormattedTextFieldCPF.setText("");
