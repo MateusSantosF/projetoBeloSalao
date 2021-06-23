@@ -53,7 +53,7 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" attributes="0">
-                                          <Component id="nomeDespesa" min="-2" pref="277" max="-2" attributes="0"/>
+                                          <Component id="JTextFieldNomeDespesa" min="-2" pref="277" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                                           <Component id="jCheckBoxFixo" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -81,7 +81,7 @@
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="nomeDespesa" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="JTextFieldNomeDespesa" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                       <Component id="jCheckBoxFixo" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -722,7 +722,7 @@
             <Property name="text" type="java.lang.String" value="Nome despeza"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="nomeDespesa">
+        <Component class="javax.swing.JTextField" name="JTextFieldNomeDespesa">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -733,7 +733,7 @@
             <Property name="text" type="java.lang.String" value="Ex: Conta de &#xe1;gua"/>
           </Properties>
           <Events>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="nomeDespesaKeyTyped"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTextFieldNomeDespesaKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JCheckBox" name="jCheckBoxFixo">

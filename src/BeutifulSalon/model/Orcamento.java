@@ -1,6 +1,8 @@
 
 package BeutifulSalon.model;
 
+import BeutifulSalon.dao.OrcamentoDAO;
+
 /**
  *
  * @author Mateus
@@ -24,7 +26,8 @@ public class Orcamento {
     
     public Orcamento(){};
 
-    public Orcamento(boolean previsto, String nome, double jan, double fev, double mar, double abr, double mai, double jun, double jul, double ago, double set, double out, double nov, double dez) {
+    public Orcamento(boolean previsto, String nome, double jan, double fev, double mar,
+            double abr, double mai, double jun, double jul, double ago, double set, double out, double nov, double dez) {
         this.previsto = previsto;
         this.nome = nome;
         this.jan = jan;
@@ -153,7 +156,9 @@ public class Orcamento {
         this.dez = dez;
     }
     
-    
+    public void cadastrarOrcamento(Orcamento orcamento){
+        new OrcamentoDAO().cadastrarOrcamento(orcamento);
+    }
     
     
  

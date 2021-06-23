@@ -767,6 +767,11 @@ public class CadastroCliente extends javax.swing.JFrame {
                 btnCadastrar(evt);
             }
         });
+        jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCadastrarActionPerformed(evt);
+            }
+        });
         jPanel26.add(jButtonCadastrar);
 
         jButtonCancelar.setBackground(new java.awt.Color(248, 67, 69));
@@ -822,7 +827,8 @@ public class CadastroCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrar
-              boolean sucessoAoCadastrar;
+        
+        boolean sucessoAoCadastrar;
         
         try {
             ClienteController cc = new ClienteController();
@@ -894,6 +900,10 @@ public class CadastroCliente extends javax.swing.JFrame {
             jTextFieldCidade.setText("");
         }
     }//GEN-LAST:event_limparCamposPerdeuFoco
+
+    private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonCadastrarActionPerformed
   
     public void limparTelaCadastroCliente(){
                 jFormattedTextFieldCPF.setText("");

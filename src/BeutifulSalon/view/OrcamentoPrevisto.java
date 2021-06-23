@@ -6,8 +6,11 @@
 package BeutifulSalon.view;
 
 
+import BeutifulSalon.controller.OrcamentoController;
+import java.awt.HeadlessException;
 import java.text.NumberFormat;
 import java.util.Locale;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -65,7 +68,7 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        nomeDespesa = new javax.swing.JTextField();
+        JTextFieldNomeDespesa = new javax.swing.JTextField();
         jCheckBoxFixo = new javax.swing.JCheckBox();
         btnReg = new javax.swing.JButton();
         btnCanc = new javax.swing.JButton();
@@ -396,12 +399,12 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(34, 34, 34));
         jLabel2.setText("Nome despeza");
 
-        nomeDespesa.setBackground(new java.awt.Color(255, 255, 255));
-        nomeDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        nomeDespesa.setText("Ex: Conta de água");
-        nomeDespesa.addKeyListener(new java.awt.event.KeyAdapter() {
+        JTextFieldNomeDespesa.setBackground(new java.awt.Color(255, 255, 255));
+        JTextFieldNomeDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        JTextFieldNomeDespesa.setText("Ex: Conta de água");
+        JTextFieldNomeDespesa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                nomeDespesaKeyTyped(evt);
+                JTextFieldNomeDespesaKeyTyped(evt);
             }
         });
 
@@ -464,7 +467,7 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(nomeDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(JTextFieldNomeDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(64, 64, 64)
                                         .addComponent(jCheckBoxFixo))))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -483,7 +486,7 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nomeDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTextFieldNomeDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBoxFixo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -541,16 +544,46 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_selecionaCheckBox
 
-    private void nomeDespesaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nomeDespesaKeyTyped
+    private void JTextFieldNomeDespesaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextFieldNomeDespesaKeyTyped
         
-        if(nomeDespesa.getText().equals("Ex: Conta de água")){
-            nomeDespesa.setText(""); 
+        if(JTextFieldNomeDespesa.getText().equals("Ex: Conta de água")){
+            JTextFieldNomeDespesa.setText(""); 
         }
    
-    }//GEN-LAST:event_nomeDespesaKeyTyped
+    }//GEN-LAST:event_JTextFieldNomeDespesaKeyTyped
 
     private void btnRegMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegMousePressed
-        // TODO add your handling code here:
+        
+        boolean sucessoAoCadastrar;
+        
+        try {
+            OrcamentoController co = new OrcamentoController ();
+ 
+            
+            sucessoAoCadastrar = co.CadastrarOrcamento(true,
+                    JTextFieldNomeDespesa.getText(),
+                    Double.parseDouble(jTextFieldJan.getText().replace(",", ".")),
+                    Double.parseDouble(jTextFieldFev.getText().replace(",", ".")),
+                    Double.parseDouble(jTextFieldMarc.getText().replace(",", ".")),
+                    Double.parseDouble(jTextFieldAbr.getText().replace(",", ".")),
+                    Double.parseDouble(jTextFieldMaio.getText().replace(",", ".")),
+                    Double.parseDouble(jTextFieldJun.getText().replace(",", ".")),
+                    Double.parseDouble(jTextFieldJul.getText().replace(",", ".")),
+                    Double.parseDouble(jTextFieldAgo.getText().replace(",", ".")),
+                    Double.parseDouble(jTextFieldSet.getText().replace(",", ".")),
+                    Double.parseDouble(jTextFieldOut.getText().replace(",", ".")),
+                    Double.parseDouble(jTextFieldNov.getText().replace(",", ".")),
+                    Double.parseDouble(jTextFieldDez.getText().replace(",", ".")));
+            
+            if(sucessoAoCadastrar){
+                JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
+               
+            }else{
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar");
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e);
+        }
     }//GEN-LAST:event_btnRegMousePressed
 
     /**
@@ -589,6 +622,7 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField JTextFieldNomeDespesa;
     private javax.swing.JButton btnCanc;
     private javax.swing.JButton btnReg;
     private javax.swing.JCheckBox jCheckBoxFixo;
@@ -626,6 +660,5 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jTextFieldNov;
     private javax.swing.JFormattedTextField jTextFieldOut;
     private javax.swing.JFormattedTextField jTextFieldSet;
-    private javax.swing.JTextField nomeDespesa;
     // End of variables declaration//GEN-END:variables
 }
