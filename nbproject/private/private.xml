@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/view/CadastroCliente.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/model/Cliente.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/model/Orcamento.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/view/OrcamentoPrevisto.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/controller/OrcamentoController.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/src/BeutifulSalon/dao/OrcamentoDAO.java</file>
+            <file>file:/home/mateus/Projects/BeutifulSalonProject/projetoBeloSalao/src/BeutifulSalon/view/CadastroProduto.java</file>
+            <file>file:/home/mateus/Projects/BeutifulSalonProject/projetoBeloSalao/src/BeutifulSalon/model/Cliente.java</file>
         </group>
     </open-files>
 </project-private>

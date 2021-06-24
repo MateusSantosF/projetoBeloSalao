@@ -52,6 +52,24 @@ public class Cliente {
         this.CELULAR = CELULAR;
         this.DATAREG = DATAREG;
     }
+    
+      public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, Date DATANASC, 
+            String CEP, String BAIRRO, String RUA, String CIDADE,String NUMERO,
+            String TELEFONE, String CELULAR) {
+        this.CPF = CPF;
+        this.NOME = NOME;
+        this.SOBRENOME = SOBRENOME;
+        this.EMAIL = EMAIL;
+        this.DATANASC = DATANASC;
+        this.CEP = CEP;
+        this.BAIRRO = BAIRRO;
+        this.RUA = RUA;
+        this.NUMERO = NUMERO;
+        this.CIDADE = CIDADE;
+        this.TELEFONE = TELEFONE;
+        this.CELULAR = CELULAR;
+
+    }
 
     public Date getDATAREG() {
         return DATAREG;
@@ -166,15 +184,29 @@ public class Cliente {
 
     }
     
+    //Atualizar Clientes
+    public void atualizarCliente(Cliente cliente) throws ExceptionDAO{
+        new clienteDAO().atualizarCliente(cliente);
+    }
+    
+    //Listar cliente pelo nome
     public ArrayList<Cliente> listarClientes(String nome) throws ExceptionDAO{
         
         return new clienteDAO().listarClientes(nome);
        
     }
-    
+    //Listar todos os clientes do sistema
     public ArrayList<Cliente> listarClientes(){
         return new clienteDAO().listarClientes();
     }
     
+    //Excluir cliente
+    public void excluirCliente(String cpf) throws ExceptionDAO{
+        new clienteDAO().deletarCliente(cpf);
+    }
+    
+    public void editarCliente(String cpf) throws ExceptionDAO{
+        new clienteDAO().editarCliente(cpf);
+    }
     
 }

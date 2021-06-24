@@ -51,6 +51,40 @@ public class ClienteController {
         return false;
     }
     
+    public boolean atualizarCliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC, 
+            String CEP, String BAIRRO, String RUA, String CIDADE,String NUMERO,
+            String TELEFONE, String CELULAR, String DATAREG){
+        
+        
+          if( NOME  != null && NOME.length() > 0 && validarCPF(CPF) && EMAIL != null && EMAIL.length() > 0){
+           
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            try {
+                //Convertendo datas de String para Date
+                Date dataNasc  = format.parse(DATANASC);
+                
+                //objeto cliente
+                Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, dataNasc, CEP,
+                        BAIRRO, RUA, CIDADE,NUMERO,TELEFONE, CELULAR);
+                try {       
+                    //Chamando construtor de Cliente
+                   cliente.atualizarCliente(cliente);             
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao criar objeto cliente");
+                    return false;
+                }
+                return true;
+            } catch (ParseException ex) {
+                //modal de erro na data de nascimento
+                return false;
+            }
+          
+        }
+        return false;
+        
+        
+    }
+    
     
     
     public boolean validarCPF(String cpf){
@@ -75,6 +109,34 @@ public class ClienteController {
     
     public ArrayList<Cliente> listarClientes() throws ExceptionDAO{
         return new Cliente().listarClientes();
+    }
+    
+    public boolean excluirCliente(String cpf){
+        
+        try {
+            Cliente c = new Cliente();
+            c.excluirCliente(cpf);
+          
+        } catch (Exception e) {
+            JOptionPane.showInputDialog(null, "Erro Controller, excluir cliente");
+            return false;
+        }
+        
+          return true;
+    }
+    
+    public boolean editarCliente(String cpf){
+        
+        try {
+            Cliente c = new Cliente();
+            c.editarCliente(cpf);
+            
+        } catch (ExceptionDAO e) {      
+            JOptionPane.showMessageDialog(null, "Erro ao criar objeto cliente");
+            return false;
+        }
+        
+        return true;
     }
     
     

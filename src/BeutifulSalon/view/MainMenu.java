@@ -48,6 +48,7 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel8.setText("jLabel8");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Dashboard");
 
         menuLateral.setBackground(new java.awt.Color(36, 46, 66));
         menuLateral.setPreferredSize(new java.awt.Dimension(300, 500));

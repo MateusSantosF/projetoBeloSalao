@@ -38,6 +38,8 @@ public class ApresentaCliente extends javax.swing.JFrame {
         this.telaChamadoraMainMenu = aThis;
         initComponents();
     }
+    
+    
 
 
     
@@ -330,20 +332,20 @@ public class ApresentaCliente extends javax.swing.JFrame {
         jTableConsultaCliente.setBackground(new java.awt.Color(255, 255, 255));
         jTableConsultaCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Sobrenome", "Celular", "Email", "ult. Visita"
+                "Nome", "Sobrenome", "Celular", "Email", "", "ult. Visita"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -358,6 +360,11 @@ public class ApresentaCliente extends javax.swing.JFrame {
         jTableConsultaCliente.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaCliente.setShowGrid(true);
         jScrollPane2.setViewportView(jTableConsultaCliente);
+        if (jTableConsultaCliente.getColumnModel().getColumnCount() > 0) {
+            jTableConsultaCliente.getColumnModel().getColumn(4).setMinWidth(1);
+            jTableConsultaCliente.getColumnModel().getColumn(4).setPreferredWidth(1);
+            jTableConsultaCliente.getColumnModel().getColumn(4).setMaxWidth(1);
+        }
 
         jButtonDetalhes.setBackground(new java.awt.Color(36, 141, 248));
         jButtonDetalhes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -377,6 +384,11 @@ public class ApresentaCliente extends javax.swing.JFrame {
         jButtonExcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButtonExcluir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonExcluir.setPreferredSize(new java.awt.Dimension(150, 65));
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
 
         jButtonEditar.setBackground(new java.awt.Color(57, 201, 114));
         jButtonEditar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -385,8 +397,14 @@ public class ApresentaCliente extends javax.swing.JFrame {
         jButtonEditar.setBorder(null);
         jButtonEditar.setBorderPainted(false);
         jButtonEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonEditar.setFocusPainted(false);
         jButtonEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonEditar.setPreferredSize(new java.awt.Dimension(150, 65));
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
 
         jTextFieldNomeCliente.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldNomeCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -497,7 +515,8 @@ public class ApresentaCliente extends javax.swing.JFrame {
                  tabelaClienteModel.addRow(new Object[] {cliente.getNOME(),
                                                         cliente.getSOBRENOME(),
                                                         cliente.getCELULAR(),
-                                                        cliente.getEMAIL()});
+                                                        cliente.getEMAIL(),
+                                                        cliente.getCPF()});
             
                });
                
@@ -515,8 +534,11 @@ public class ApresentaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_ConsultarCliente
 
     private void listarTodosClientes(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_listarTodosClientes
+        listarTodosClientes();
+    }//GEN-LAST:event_listarTodosClientes
+
+    public void listarTodosClientes(){
           
-        
         DefaultTableModel tabelaClienteModel = (DefaultTableModel) jTableConsultaCliente.getModel(); // tabela
         tabelaClienteModel.setRowCount(0);
        
@@ -535,7 +557,8 @@ public class ApresentaCliente extends javax.swing.JFrame {
                  tabelaClienteModel.addRow(new Object[] {cliente.getNOME(),
                                                         cliente.getSOBRENOME(),
                                                         cliente.getCELULAR(),
-                                                        cliente.getEMAIL()});
+                                                        cliente.getEMAIL(),
+                                                        cliente.getCPF()});
             
                });
                
@@ -544,9 +567,71 @@ public class ApresentaCliente extends javax.swing.JFrame {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
             }
+    }
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+      
+        int indice = jTableConsultaCliente.getSelectedRow();
+        
+        int opc = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja excluir o cliente: " +
+                jTableConsultaCliente.getValueAt(indice, 0) + " " + jTableConsultaCliente.getValueAt(indice, 1), "Excluir Cliente", JOptionPane.YES_NO_OPTION);
          
-    }//GEN-LAST:event_listarTodosClientes
+        if(opc == 0){
+           if( indice > -1){                
+                try {
+                   
+                   String cpfClienteSelecionado = (String) jTableConsultaCliente.getValueAt(indice, 4); // Retorna CPF
+                   ClienteController cc = new ClienteController();
+                   
+                   if(cc.excluirCliente(cpfClienteSelecionado)){
+                       JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso.");
+                        listarTodosClientes();
+                      
+                   }else{
+                       JOptionPane.showMessageDialog(null, "Não foi possível excluir o cliente. Selecione um índice válido na tabela");
+                   }
+               } catch (Exception e) {
+                   JOptionPane.showMessageDialog(null,"Erro ao excluir cliente: " + e);
+               }
+            
+            }
+        }
+        
+        
+        
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
 
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        
+        boolean resultado;
+        int indice = jTableConsultaCliente.getSelectedRow();
+        
+        if( indice > -1){                
+            try {
+
+                String cpfClienteSelecionado = (String) jTableConsultaCliente.getValueAt(indice, 4); // Retorna CPF
+                ClienteController cc = new ClienteController();
+                resultado = cc.editarCliente(cpfClienteSelecionado);
+                
+                if (!resultado) {
+                    JOptionPane.showInputDialog(null, "Erro ao selecionar PK");
+                }
+             
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null,"Erro ao retornar informações do cliente: " + e);
+                }
+            }else{
+                
+            JOptionPane.showMessageDialog(null, "Selecione um cliente.");
+                
+            }
+
+            
+    }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
