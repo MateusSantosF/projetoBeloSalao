@@ -33,9 +33,7 @@ public class NovoRegistro extends javax.swing.JFrame {
         jComboBoxTipoRegistro = new javax.swing.JComboBox<>();
         jButtonConfirmar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
-        setType(java.awt.Window.Type.POPUP);
 
         jPanel1.setBackground(new java.awt.Color(36, 46, 66));
 
@@ -53,8 +51,7 @@ public class NovoRegistro extends javax.swing.JFrame {
         jComboBoxTipoRegistro.setBackground(new java.awt.Color(255, 255, 255));
         jComboBoxTipoRegistro.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jComboBoxTipoRegistro.setForeground(new java.awt.Color(51, 51, 51));
-        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Finança", "Cliente" }));
-        jComboBoxTipoRegistro.setSelectedIndex(2);
+        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente" }));
         jComboBoxTipoRegistro.setBorder(null);
         jComboBoxTipoRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jComboBoxTipoRegistro.addActionListener(new java.awt.event.ActionListener() {
@@ -123,10 +120,12 @@ public class NovoRegistro extends javax.swing.JFrame {
         
         switch(opc){
             case 0: 
-                //abrir produto
+                new CadastroProduto().setVisible(true);
+                dispose();
                 break;
             case 1: 
-                //abrir finanças
+                new OrcamentoPrevisto().setVisible(true);
+                dispose();
                 break;
             case 2:
                 new CadastroCliente().setVisible(true);

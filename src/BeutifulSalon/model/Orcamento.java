@@ -2,6 +2,7 @@
 package BeutifulSalon.model;
 
 import BeutifulSalon.dao.OrcamentoDAO;
+import java.util.ArrayList;
 
 /**
  *
@@ -9,25 +10,25 @@ import BeutifulSalon.dao.OrcamentoDAO;
  */
 public class Orcamento {
     
-    private boolean previsto; //previsto ou realizado
+    private boolean previsto; //previsto(true) | realizado(false)
     private String nome;
-    private double jan;
-    private double fev;
-    private double mar;
-    private double abr;
-    private double mai;
-    private double jun;
-    private double jul;
-    private double ago;
-    private double set;
-    private double out;
-    private double nov;
-    private double dez;
+    private long jan;
+    private long fev;
+    private long mar;
+    private long abr;
+    private long mai;
+    private long jun;
+    private long jul;
+    private long ago;
+    private long set;
+    private long out;
+    private long nov;
+    private long dez;
     
     public Orcamento(){};
 
-    public Orcamento(boolean previsto, String nome, double jan, double fev, double mar,
-            double abr, double mai, double jun, double jul, double ago, double set, double out, double nov, double dez) {
+    public Orcamento(boolean previsto, String nome, long jan, long fev, long mar, 
+            long abr, long mai, long jun, long jul, long ago, long set, long out, long nov, long dez) {
         this.previsto = previsto;
         this.nome = nome;
         this.jan = jan;
@@ -43,6 +44,8 @@ public class Orcamento {
         this.nov = nov;
         this.dez = dez;
     }
+    
+    
 
     public boolean isPrevisto() {
         return previsto;
@@ -60,106 +63,114 @@ public class Orcamento {
         this.nome = nome;
     }
 
-    public double getJan() {
+    public long getJan() {
         return jan;
     }
 
-    public void setJan(double jan) {
+    public void setJan(long jan) {
         this.jan = jan;
     }
 
-    public double getFev() {
+    public long getFev() {
         return fev;
     }
 
-    public void setFev(double fev) {
+    public void setFev(long fev) {
         this.fev = fev;
     }
 
-    public double getMar() {
+    public long getMar() {
         return mar;
     }
 
-    public void setMar(double mar) {
+    public void setMar(long mar) {
         this.mar = mar;
     }
 
-    public double getAbr() {
+    public long getAbr() {
         return abr;
     }
 
-    public void setAbr(double abr) {
+    public void setAbr(long abr) {
         this.abr = abr;
     }
 
-    public double getMai() {
+    public long getMai() {
         return mai;
     }
 
-    public void setMai(double mai) {
+    public void setMai(long mai) {
         this.mai = mai;
     }
 
-    public double getJun() {
+    public long getJun() {
         return jun;
     }
 
-    public void setJun(double jun) {
+    public void setJun(long jun) {
         this.jun = jun;
     }
 
-    public double getJul() {
+    public long getJul() {
         return jul;
     }
 
-    public void setJul(double jul) {
+    public void setJul(long jul) {
         this.jul = jul;
     }
 
-    public double getAgo() {
+    public long getAgo() {
         return ago;
     }
 
-    public void setAgo(double ago) {
+    public void setAgo(long ago) {
         this.ago = ago;
     }
 
-    public double getSet() {
+    public long getSet() {
         return set;
     }
 
-    public void setSet(double set) {
+    public void setSet(long set) {
         this.set = set;
     }
 
-    public double getOut() {
+    public long getOut() {
         return out;
     }
 
-    public void setOut(double out) {
+    public void setOut(long out) {
         this.out = out;
     }
 
-    public double getNov() {
+    public long getNov() {
         return nov;
     }
 
-    public void setNov(double nov) {
+    public void setNov(long nov) {
         this.nov = nov;
     }
 
-    public double getDez() {
+    public long getDez() {
         return dez;
     }
 
-    public void setDez(double dez) {
+    public void setDez(long dez) {
         this.dez = dez;
     }
+
+    
+    
+    
     
     public void cadastrarOrcamento(Orcamento orcamento){
         new OrcamentoDAO().cadastrarOrcamento(orcamento);
     }
     
+     public ArrayList<Orcamento> listarOrcamentos(){
+         
+        return new OrcamentoDAO().listarOrcamento();
+    }
     
  
     

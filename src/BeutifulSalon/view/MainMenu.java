@@ -11,9 +11,11 @@ package BeutifulSalon.view;
  */
 public class MainMenu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainMenu
-     */
+  
+    //VARIAVEL DO MENU DE NOVO REGISTRO
+    NovoRegistro novoRegistro;
+    
+    
     public MainMenu() {
         initComponents();
     }
@@ -153,7 +155,13 @@ public class MainMenu extends javax.swing.JFrame {
         JTFFinancas.setForeground(new java.awt.Color(255, 255, 255));
         JTFFinancas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconWallet.png"))); // NOI18N
         JTFFinancas.setText("Finanças");
+        JTFFinancas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         JTFFinancas.setIconTextGap(20);
+        JTFFinancas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                JTFFinancasMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelFinancasLayout = new javax.swing.GroupLayout(panelFinancas);
         panelFinancas.setLayout(panelFinancasLayout);
@@ -291,9 +299,17 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_abrirTelaApresentaClientes
 
     private void JTFNovoRegistroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTFNovoRegistroMousePressed
-        new NovoRegistro().setVisible(true);
         
+        if(novoRegistro == null){
+            novoRegistro = new NovoRegistro();
+        }
+       
+        novoRegistro.setVisible(true);
     }//GEN-LAST:event_JTFNovoRegistroMousePressed
+
+    private void JTFFinancasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTFFinancasMousePressed
+        new ApresentaFinancas(this).setVisible(true);
+    }//GEN-LAST:event_JTFFinancasMousePressed
 
     /**
      * @param args the command line arguments

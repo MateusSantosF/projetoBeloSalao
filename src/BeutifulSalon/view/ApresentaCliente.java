@@ -36,6 +36,13 @@ public class ApresentaCliente extends javax.swing.JFrame {
     //Chamando a partir de MainMenu
     public ApresentaCliente(MainMenu aThis) {
         this.telaChamadoraMainMenu = aThis;
+        
+        try {          
+           this.setPreferredSize(aThis.getSize());
+        } catch (Exception e) {
+            
+        }
+       
         initComponents();
     }
     
@@ -486,6 +493,7 @@ public class ApresentaCliente extends javax.swing.JFrame {
 
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
         telaChamadoraMainMenu.setVisible(true);
+
         this.dispose();
     }//GEN-LAST:event_fecharJanela
 
