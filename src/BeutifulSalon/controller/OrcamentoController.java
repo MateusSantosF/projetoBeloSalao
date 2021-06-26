@@ -17,10 +17,10 @@ import javax.swing.JOptionPane;
 public class OrcamentoController {
     
      public boolean CadastrarOrcamento(boolean previsto, String nome, long jan, long fev, long mar, 
-            long abr, long mai, long jun, long jul, long ago, long set, long out, long nov, long dez) {
+            long abr, long mai, long jun, long jul, long ago, long set, long out, long nov, long dez, String ano) {
          
         if( nome.length() > 0){
-            Orcamento orc = new Orcamento(previsto, nome, jan, fev, mar, abr, mai, jun, jul, ago, set, out, nov, dez);
+            Orcamento orc = new Orcamento(previsto, nome, jan, fev, mar, abr, mai, jun, jul, ago, set, out, nov, dez,ano);
             
             try {
                 orc.cadastrarOrcamento(orc);
@@ -35,7 +35,15 @@ public class OrcamentoController {
          
      }
      
-     public ArrayList<Orcamento> listarOrcamentos() throws ExceptionDAO{
+    public ArrayList<Orcamento> listarOrcamentos() throws ExceptionDAO{
         return new Orcamento().listarOrcamentos();
+    }
+     
+    public ArrayList<Orcamento> listarOrcamentos(String ano) throws ExceptionDAO{
+        return new Orcamento().listarOrcamentos(ano);
+    }
+    
+    public long somarOrcamento(String mes, String ano){
+        return new Orcamento().somarOrcamento(mes, ano);
     }
 }

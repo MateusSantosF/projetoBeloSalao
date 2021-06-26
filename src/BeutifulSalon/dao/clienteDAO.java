@@ -9,14 +9,12 @@ package BeutifulSalon.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLClientInfoException;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.view.EditarCliente;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
-import java.sql.SQLException;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -32,6 +30,8 @@ public class clienteDAO {
         PreparedStatement pStatement = null;
         Connection connection = null;
         
+         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        
         try {
             
             connection = new ConnectionMVC().getConnection();
@@ -41,15 +41,14 @@ public class clienteDAO {
             pStatement.setString(2, cliente.getNOME());
             pStatement.setString(3, cliente.getSOBRENOME());
             pStatement.setString(4, cliente.getEMAIL());
-            pStatement.setDate(5, new Date(cliente.getDATANASC().getTime()));
-            //JOptionPane.showMessageDialog(null, "Data: " + new Date(cliente.getDATANASC().getTime()) );
+            pStatement.setDate(5,  new Date(cliente.getDATANASC().getTime()));
+            System.out.println(cliente.getDATANASC());
             pStatement.setString(6, cliente.getCEP());
             pStatement.setString(7, cliente.getBAIRRO());
             pStatement.setString(8, cliente.getRUA());
             pStatement.setString(9, cliente.getCIDADE());
             pStatement.setString(10, cliente.getTELEFONE());
             pStatement.setString(11, cliente.getCELULAR());
-            //JOptionPane.showMessageDialog(null, "Data: " + new Date(cliente.getDATAREG().getTime()) );
             pStatement.setDate(12, new Date(cliente.getDATAREG().getTime()));
             pStatement.setString(13, cliente.getNUMERO());
             pStatement.execute(); 

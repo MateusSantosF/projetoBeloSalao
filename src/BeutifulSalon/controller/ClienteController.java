@@ -25,11 +25,14 @@ public class ClienteController {
         
         if( NOME  != null && NOME.length() > 0 && validarCPF(CPF) && EMAIL != null && EMAIL.length() > 0){
            
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            
             try {
+                
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
                 //Convertendo datas de String para Date
                 Date dataNasc  = format.parse(DATANASC);
                 Date dataReg = format.parse(DATAREG);
+               
                 
                 //objeto cliente
                 Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, dataNasc, CEP,

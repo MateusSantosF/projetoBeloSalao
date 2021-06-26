@@ -178,6 +178,13 @@ public class Cliente {
     }
     
     
+    @Override
+    public String toString(){
+        return String.format("Nome: %s\nSobrenome: %s\nEmail: %s\nData Nasc:",
+                getNOME(),getSOBRENOME(), getEMAIL(), getDATANASC());
+    }
+    
+    
     //Cadastrar clientes
     public void cadastrarCliente(Cliente cliente) throws Exception{
         new clienteDAO().cadastrarCliente(cliente);

@@ -616,10 +616,12 @@ public class CadastroCliente extends javax.swing.JFrame {
             
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             
+      
+            
             sucessoAoCadastrar = cc.cadastrarCliente(jFormattedTextFieldCPF.getText(),
                 jTextFieldNome.getText(), 
                 jTextFieldSobrenome.getText(), 
-                jTextFieldEmail.getText(), 
+                jTextFieldEmail.getText().toLowerCase(), 
                 jFormattedTextFieldDataNasc.getText(), 
                 jTextFieldCep.getText(), 
                 jTextFieldBairro.getText(),
@@ -628,7 +630,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                 jTextFieldNumero.getText(),
                 jTextFieldTelefone.getText(),
                 jTextFieldCelular.getText(),
-                df.format(new Date()).toString());  
+                df.format(new Date()));  
             
             if(sucessoAoCadastrar){
                 JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");
@@ -644,7 +646,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jTextFieldCepKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCepKeyReleased
         jTextFieldRua.setText("aguarde...");
         jTextFieldBairro.setText("aguarde...");
-        jTextFieldCidade.setText("aguarde...");
+        jTextFieldCidade.setText("...");
         
         if(jTextFieldCep.getText().length() == 8){
             buscarCep(jTextFieldCep.getText());

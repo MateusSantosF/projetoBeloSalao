@@ -208,6 +208,11 @@ public class ApresentaCliente extends javax.swing.JFrame {
         JTFFinancas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconWallet.png"))); // NOI18N
         JTFFinancas.setText("Finanças");
         JTFFinancas.setIconTextGap(20);
+        JTFFinancas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                JTFFinancasMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelFinancasLayout = new javax.swing.GroupLayout(panelFinancas);
         panelFinancas.setLayout(panelFinancasLayout);
@@ -635,6 +640,11 @@ public class ApresentaCliente extends javax.swing.JFrame {
 
             
     }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void JTFFinancasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTFFinancasMousePressed
+        new ApresentaFinancas().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_JTFFinancasMousePressed
 
     
     

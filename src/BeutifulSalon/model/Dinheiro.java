@@ -47,4 +47,12 @@ public class Dinheiro {
         return df.format(ValorConvertido);
     }
     
+    public static String parseString(BigDecimal VALOR){
+              
+        BigDecimal ValorConvertido = VALOR;
+        DecimalFormat df = new DecimalFormat("R$ ,#,###.00");
+       
+        return df.format(ValorConvertido);
+    }
+    
 }

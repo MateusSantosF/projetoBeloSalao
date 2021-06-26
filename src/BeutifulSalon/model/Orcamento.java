@@ -12,6 +12,7 @@ public class Orcamento {
     
     private boolean previsto; //previsto(true) | realizado(false)
     private String nome;
+    private String ano;
     private long jan;
     private long fev;
     private long mar;
@@ -28,7 +29,7 @@ public class Orcamento {
     public Orcamento(){};
 
     public Orcamento(boolean previsto, String nome, long jan, long fev, long mar, 
-            long abr, long mai, long jun, long jul, long ago, long set, long out, long nov, long dez) {
+            long abr, long mai, long jun, long jul, long ago, long set, long out, long nov, long dez,String ano) {
         this.previsto = previsto;
         this.nome = nome;
         this.jan = jan;
@@ -43,8 +44,16 @@ public class Orcamento {
         this.out = out;
         this.nov = nov;
         this.dez = dez;
+        this.ano = ano;
     }
-    
+
+    public String getAno() {
+        return ano;
+    }
+
+    public void setAno(String ano) {
+        this.ano = ano;
+    }
     
 
     public boolean isPrevisto() {
@@ -167,11 +176,20 @@ public class Orcamento {
         new OrcamentoDAO().cadastrarOrcamento(orcamento);
     }
     
-     public ArrayList<Orcamento> listarOrcamentos(){
+    public ArrayList<Orcamento> listarOrcamentos(){
          
         return new OrcamentoDAO().listarOrcamento();
     }
     
+     public ArrayList<Orcamento> listarOrcamentos(String ano){
+         
+        return new OrcamentoDAO().listarOrcamento(ano);
+    }
+     
+    
+    public long somarOrcamento(String mes, String ano){
+        return new OrcamentoDAO().somarOrcamento(mes, ano);
+    }
  
     
     

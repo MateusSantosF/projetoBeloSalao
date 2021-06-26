@@ -36,11 +36,15 @@ public class EditarCliente extends javax.swing.JFrame {
        
         
         initComponents();
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
+        String dateString = formatter.format(cliente.getDATANASC().getTime());
+        
         jTextFieldNome.setText(cliente.getNOME());
         jTextFieldSobrenome.setText(cliente.getSOBRENOME());
         jFormattedTextFieldCPF.setText(cliente.getCPF());
         jTextFieldEmail.setText(cliente.getEMAIL());
-        jFormattedTextFieldDataNasc.setText(cliente.getDATANASC().toString());
+        jFormattedTextFieldDataNasc.setText(dateString);
         jTextFieldCelular.setText(cliente.getCELULAR());
         jTextFieldTelefone.setText(cliente.getTELEFONE());
         jTextFieldCep.setText(cliente.getCEP());
@@ -345,8 +349,8 @@ public class EditarCliente extends javax.swing.JFrame {
                     .addGroup(jPanel19Layout.createSequentialGroup()
                         .addComponent(jFormattedTextFieldDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextFieldCelular)
-                        .addGap(25, 25, 25))))
+                        .addComponent(jTextFieldCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -405,7 +409,6 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jTextFieldCep.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldCep.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextFieldCep.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldCep.setToolTipText("Informe o CEP");
         jTextFieldCep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         jTextFieldCep.addFocusListener(new java.awt.event.FocusAdapter() {
