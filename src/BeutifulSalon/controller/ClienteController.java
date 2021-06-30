@@ -134,8 +134,8 @@ public class ClienteController {
             Cliente c = new Cliente();
             c.editarCliente(cpf);
             
-        } catch (ExceptionDAO e) {      
-            JOptionPane.showMessageDialog(null, "Erro ao criar objeto cliente");
+        } catch (Exception e) {      
+            JOptionPane.showMessageDialog(null, "Erro ao criar objeto cliente" + e);
             return false;
         }
         

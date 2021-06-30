@@ -6,6 +6,7 @@
 package BeutifulSalon.dao;
 
 import BeutifulSalon.model.Orcamento;
+import BeutifulSalon.view.EditarOrcamento;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -76,7 +77,7 @@ public class OrcamentoDAO {
     
     
     public ArrayList<Orcamento> listarOrcamento(){
-        String sql  = "SELECT NOME,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
+        String sql  = "SELECT  ID_ORCAMENTO, NOME,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
                 + "NOVEMBRO,DEZEMBRO FROM ORCAMENTO WHERE ANO = ?";
         
         Connection connection = null;
@@ -100,6 +101,7 @@ public class OrcamentoDAO {
                 
                 while(rs.next()){
                     Orcamento orcamentoAtual = new Orcamento();
+                    orcamentoAtual.setId_orcamento(rs.getInt("ID_ORCAMENTO"));
                     orcamentoAtual.setNome(rs.getString("NOME"));
                     orcamentoAtual.setJan(rs.getLong("JANEIRO"));
                     orcamentoAtual.setFev(rs.getLong("FEVEREIRO"));
@@ -112,7 +114,9 @@ public class OrcamentoDAO {
                     orcamentoAtual.setSet(rs.getLong("SETEMBRO"));
                     orcamentoAtual.setOut(rs.getLong("OUTUBRO"));
                     orcamentoAtual.setNov(rs.getLong("NOVEMBRO"));
-                    orcamentoAtual.setDez(rs.getLong("DEZEMBRO"));                   
+                    orcamentoAtual.setDez(rs.getLong("DEZEMBRO")); 
+                    
+          
                     orcamentos.add(orcamentoAtual);
                 }
                 
@@ -141,7 +145,7 @@ public class OrcamentoDAO {
     }
     
     public ArrayList<Orcamento> listarOrcamento(String ano){
-        String sql  = "SELECT NOME,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
+        String sql  = "SELECT ID_ORCAMENTO, NOME,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
                 + "NOVEMBRO,DEZEMBRO FROM ORCAMENTO WHERE ANO = ?";
         
         Connection connection = null;
@@ -161,6 +165,7 @@ public class OrcamentoDAO {
                 
                 while(rs.next()){
                     Orcamento orcamentoAtual = new Orcamento();
+                    orcamentoAtual.setId_orcamento(rs.getInt("ID_ORCAMENTO"));
                     orcamentoAtual.setNome(rs.getString("NOME"));
                     orcamentoAtual.setJan(rs.getLong("JANEIRO"));
                     orcamentoAtual.setFev(rs.getLong("FEVEREIRO"));
@@ -173,7 +178,8 @@ public class OrcamentoDAO {
                     orcamentoAtual.setSet(rs.getLong("SETEMBRO"));
                     orcamentoAtual.setOut(rs.getLong("OUTUBRO"));
                     orcamentoAtual.setNov(rs.getLong("NOVEMBRO"));
-                    orcamentoAtual.setDez(rs.getLong("DEZEMBRO"));                   
+                    orcamentoAtual.setDez(rs.getLong("DEZEMBRO")); 
+                  
                     orcamentos.add(orcamentoAtual);
                 }
                 
@@ -236,5 +242,156 @@ public class OrcamentoDAO {
         }
         
         return somatoria;
+    }
+
+    public void excluirOrcamento(long id_orcamento) {
+        
+        String sql  = "DELETE FROM ORCAMENTO WHERE ID_ORCAMENTO = ?";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setLong(1, id_orcamento);
+            pStatement.executeUpdate();
+            
+        } catch (Exception e) {
+            
+            JOptionPane.showMessageDialog(null, "Erro ao excluir orçamento: " + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+    }
+
+    public void editarOrcamento(long id_orcamento) {
+        
+    String sqlScript = "SELECT ID_ORCAMENTO,NOME,JANEIRO,FEVEREIRO, MARCO"
+            + ", ABRIL, MAIO, JUNHO , JULHO, AGOSTO , SETEMBRO, OUTUBRO , NOVEMBRO, DEZEMBRO, ANO"
+            + " FROM ORCAMENTO WHERE ID_ORCAMENTO = ?";
+        
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        ResultSet rs = null;
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sqlScript);
+            pStatement.setLong(1, id_orcamento);
+            rs = pStatement.executeQuery();
+            Orcamento orcamento = new Orcamento(); 
+      
+            if(rs != null){                
+                while(rs.next()){
+                    orcamento.setNome(rs.getString("NOME"));
+                    orcamento.setJan(rs.getLong("JANEIRO"));
+                    orcamento.setFev(rs.getLong("FEVEREIRO"));
+                    orcamento.setMar(rs.getLong("MARCO"));
+                    orcamento.setAbr(rs.getLong("ABRIL"));
+                    orcamento.setMai(rs.getLong("MAIO"));
+                    orcamento.setJun(rs.getLong("JUNHO"));
+                    orcamento.setJul(rs.getLong("JULHO"));
+                    orcamento.setAgo(rs.getLong("AGOSTO"));
+                    orcamento.setSet(rs.getLong("SETEMBRO"));
+                    orcamento.setOut(rs.getLong("OUTUBRO"));
+                    orcamento.setNov(rs.getLong("NOVEMBRO"));
+                    orcamento.setDez(rs.getLong("DEZEMBRO"));
+                    orcamento.setAno(rs.getString("ANO"));
+                    orcamento.setId_orcamento(rs.getLong("ID_ORCAMENTO"));
+                    
+                }
+            }
+           
+            new EditarOrcamento(orcamento).setVisible(true); 
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Erro OrcamentoDAO " + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+           
+        }
+        
+    }
+    
+    public void atualizarOrcamento(Orcamento orcamento) {
+        
+        
+        String sqlScript = "UPDATE ORCAMENTO SET NOME = ? ,"
+                + "JANEIRO = ? , FEVEREIRO = ?, MARCO = ? , "
+                + "ABRIL = ? , MAIO = ? , JUNHO = ? , JULHO = ? , "
+                + "AGOSTO = ? , SETEMBRO = ?, OUTUBRO = ? , NOVEMBRO = ?, DEZEMBRO = ?, ANO = ? "
+                + "WHERE ID_ORCAMENTO = ? ";
+        
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        
+        try {
+            
+            connection = new ConnectionMVC().getConnection();
+            
+            pStatement = connection.prepareStatement(sqlScript);
+            pStatement.setLong(15, orcamento.getId_orcamento());
+            pStatement.setString(1, orcamento.getNome());
+            pStatement.setLong(2, orcamento.getJan());
+            pStatement.setLong(3, orcamento.getFev());
+            pStatement.setLong(4, orcamento.getMar());
+            pStatement.setLong(5, orcamento.getAbr());
+            pStatement.setLong(6, orcamento.getMai());
+            pStatement.setLong(7, orcamento.getJun());
+            pStatement.setLong(8, orcamento.getJul());
+            pStatement.setLong(9, orcamento.getAgo());
+            pStatement.setLong(10, orcamento.getSet());
+            pStatement.setLong(11, orcamento.getOut());
+            pStatement.setLong(12, orcamento.getNov());
+            pStatement.setLong(13, orcamento.getDez());
+            pStatement.setString(14, orcamento.getAno());
+            
+            pStatement.execute(); 
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Erro atualizar orçamento"  + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+           
+        }
+        
     }
 }

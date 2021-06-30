@@ -124,7 +124,7 @@ public class NovoRegistro extends javax.swing.JFrame {
                 dispose();
                 break;
             case 1: 
-                new OrcamentoPrevisto().setVisible(true);
+                new CadastroOrcamentoPrevisto().setVisible(true);
                 dispose();
                 break;
             case 2:

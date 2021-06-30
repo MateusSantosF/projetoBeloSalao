@@ -1,6 +1,7 @@
 
 package BeutifulSalon.model;
 
+import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.dao.OrcamentoDAO;
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 public class Orcamento {
     
     private boolean previsto; //previsto(true) | realizado(false)
+    private long id_orcamento;
     private String nome;
     private String ano;
     private long jan;
@@ -46,6 +48,36 @@ public class Orcamento {
         this.dez = dez;
         this.ano = ano;
     }
+    
+    public Orcamento(boolean previsto, String nome, long jan, long fev, long mar, 
+            long abr, long mai, long jun, long jul, long ago, long set, long out, long nov, long dez,String ano, long id_orcamento) {
+        this.previsto = previsto;
+        this.nome = nome;
+        this.jan = jan;
+        this.fev = fev;
+        this.mar = mar;
+        this.abr = abr;
+        this.mai = mai;
+        this.jun = jun;
+        this.jul = jul;
+        this.ago = ago;
+        this.set = set;
+        this.out = out;
+        this.nov = nov;
+        this.dez = dez;
+        this.ano = ano;
+        this.id_orcamento = id_orcamento;
+    }
+
+    public long getId_orcamento() {
+        return id_orcamento;
+    }
+
+    public void setId_orcamento(long id_orcamento) {
+        this.id_orcamento = id_orcamento;
+    }
+    
+    
 
     public String getAno() {
         return ano;
@@ -172,23 +204,37 @@ public class Orcamento {
     
     
     
-    public void cadastrarOrcamento(Orcamento orcamento){
+    public void cadastrarOrcamento(Orcamento orcamento) throws ExceptionDAO{
         new OrcamentoDAO().cadastrarOrcamento(orcamento);
     }
     
-    public ArrayList<Orcamento> listarOrcamentos(){
+    public ArrayList<Orcamento> listarOrcamentos() throws ExceptionDAO{
          
         return new OrcamentoDAO().listarOrcamento();
     }
     
-     public ArrayList<Orcamento> listarOrcamentos(String ano){
+     public ArrayList<Orcamento> listarOrcamentos(String ano) throws ExceptionDAO{
          
         return new OrcamentoDAO().listarOrcamento(ano);
     }
      
     
-    public long somarOrcamento(String mes, String ano){
+    public long somarOrcamento(String mes, String ano) throws ExceptionDAO {
         return new OrcamentoDAO().somarOrcamento(mes, ano);
+    }
+
+    public void excluirOrcamento(long id_orcamento) throws ExceptionDAO{
+       new OrcamentoDAO().excluirOrcamento(id_orcamento);
+    }
+    
+   
+
+    public void editarOrcamento(long id_orcamento) throws ExceptionDAO {
+         new OrcamentoDAO().editarOrcamento(id_orcamento);
+    }
+
+    public void AtualizarOrcamento(Orcamento orc) {
+        new OrcamentoDAO().atualizarOrcamento(orc);
     }
  
     

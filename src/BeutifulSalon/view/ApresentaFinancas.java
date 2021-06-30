@@ -101,8 +101,8 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         JTFFinancas = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jPanel9 = new javax.swing.JPanel();
-        panelNovoRegistro = new javax.swing.JPanel();
         JTFNovoRegistro = new javax.swing.JLabel();
+        panelNovoRegistro = new javax.swing.JPanel();
         container = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -262,29 +262,13 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 76, Short.MAX_VALUE)
+            .addGap(0, 71, Short.MAX_VALUE)
         );
 
         gridLateral.add(jPanel10);
 
         jPanel9.setBackground(new java.awt.Color(36, 46, 66));
         jPanel9.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 288, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 76, Short.MAX_VALUE)
-        );
-
-        gridLateral.add(jPanel9);
-
-        panelNovoRegistro.setBackground(new java.awt.Color(36, 46, 66));
-        panelNovoRegistro.setPreferredSize(new java.awt.Dimension(50, 200));
 
         JTFNovoRegistro.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         JTFNovoRegistro.setForeground(new java.awt.Color(255, 255, 255));
@@ -297,21 +281,34 @@ public class ApresentaFinancas extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(JTFNovoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(JTFNovoRegistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+        );
+
+        gridLateral.add(jPanel9);
+
+        panelNovoRegistro.setBackground(new java.awt.Color(36, 46, 66));
+        panelNovoRegistro.setPreferredSize(new java.awt.Dimension(50, 200));
+
         javax.swing.GroupLayout panelNovoRegistroLayout = new javax.swing.GroupLayout(panelNovoRegistro);
         panelNovoRegistro.setLayout(panelNovoRegistroLayout);
         panelNovoRegistroLayout.setHorizontalGroup(
             panelNovoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNovoRegistroLayout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(JTFNovoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 288, Short.MAX_VALUE)
         );
         panelNovoRegistroLayout.setVerticalGroup(
             panelNovoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNovoRegistroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JTFNovoRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGap(0, 71, Short.MAX_VALUE)
         );
 
         gridLateral.add(panelNovoRegistro);
@@ -335,8 +332,8 @@ public class ApresentaFinancas extends javax.swing.JFrame {
             .addGroup(menuLateralLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(41, 41, 41)
-                .addComponent(gridLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addComponent(gridLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE))
         );
 
         getContentPane().add(menuLateral, java.awt.BorderLayout.LINE_START);
@@ -355,7 +352,6 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setBorder(null);
         jScrollPane2.setForeground(new java.awt.Color(255, 255, 255));
-        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane2.setAutoscrolls(true);
@@ -364,20 +360,20 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         jTableConsultaOrcamento.setBackground(new java.awt.Color(255, 255, 255));
         jTableConsultaOrcamento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Janeiro", "Fevereiro", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+                "Nome", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro", "id_orcamento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -395,6 +391,9 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTableConsultaOrcamento);
         if (jTableConsultaOrcamento.getColumnModel().getColumnCount() > 0) {
             jTableConsultaOrcamento.getColumnModel().getColumn(0).setPreferredWidth(110);
+            jTableConsultaOrcamento.getColumnModel().getColumn(13).setMinWidth(1);
+            jTableConsultaOrcamento.getColumnModel().getColumn(13).setPreferredWidth(1);
+            jTableConsultaOrcamento.getColumnModel().getColumn(13).setMaxWidth(1);
         }
 
         jButtonExcluir.setBackground(new java.awt.Color(248, 67, 69));
@@ -405,6 +404,11 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         jButtonExcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButtonExcluir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonExcluir.setPreferredSize(new java.awt.Dimension(150, 65));
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
 
         jButtonEditar.setBackground(new java.awt.Color(57, 201, 114));
         jButtonEditar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -416,6 +420,11 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         jButtonEditar.setFocusPainted(false);
         jButtonEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonEditar.setPreferredSize(new java.awt.Dimension(150, 65));
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
 
         jLabelSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconLupa.png"))); // NOI18N
         jLabelSearch.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -435,22 +444,19 @@ public class ApresentaFinancas extends javax.swing.JFrame {
             containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(containerLayout.createSequentialGroup()
                 .addGap(275, 275, 275)
-                .addComponent(jButtonEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                 .addGap(86, 86, 86)
-                .addComponent(jButtonExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                 .addGap(320, 320, 320))
             .addGroup(containerLayout.createSequentialGroup()
                 .addGap(47, 47, 47)
                 .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addGap(202, 202, 202))
+                .addGap(202, 369, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(26, 26, 26)
                 .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
-                        .addGap(42, 42, 42))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
                         .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -458,7 +464,10 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                                 .addComponent(jTextFieldAno, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabelSearch)))
-                        .addGap(62, 62, 62))))
+                        .addGap(62, 62, 62))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2)
+                        .addGap(20, 20, 20))))
         );
         containerLayout.setVerticalGroup(
             containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,7 +476,7 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -479,7 +488,7 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                 .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(166, 166, 166))
+                .addGap(91, 91, 91))
         );
 
         getContentPane().add(container, java.awt.BorderLayout.CENTER);
@@ -510,12 +519,80 @@ public class ApresentaFinancas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDashboard
 
     private void jLabelSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearchMousePressed
-        listarTodosOrcamentos(jTextFieldAno.getText());
+        
+        if(jTextFieldAno.getText().equals("")){
+            SimpleDateFormat df = new SimpleDateFormat("yyyy");
+            java.util.Date ano = new java.util.Date();
+            listarTodosOrcamentos(df.format(ano).toString());
+        }else{
+            listarTodosOrcamentos(jTextFieldAno.getText());
+        }
+        
+        
     }//GEN-LAST:event_jLabelSearchMousePressed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
          listarTodosOrcamentos();
     }//GEN-LAST:event_formWindowOpened
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+        
+        int indice = jTableConsultaOrcamento.getSelectedRow();
+        System.out.println(indice);
+        
+        int opc = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja excluir este orçamento?: " +
+                jTableConsultaOrcamento.getValueAt(indice, 0), "Excluir Orçamento", JOptionPane.YES_NO_OPTION);
+        
+        if(opc == 0){
+           if( indice > -1){                
+                try {
+                   
+                   
+                   long id_orcamento = (long) jTableConsultaOrcamento.getValueAt(indice, 13); // Retorna ID_ORÇAMENTO
+                    System.out.println("id = " + id_orcamento);
+                   OrcamentoController oc = new OrcamentoController();
+                   
+                   
+                   if(oc.excluirOrcamento(id_orcamento)){
+                       JOptionPane.showMessageDialog(null, "Orçamento deletado com sucesso.");
+                       listarTodosOrcamentos();
+                      
+                   }else{
+                       JOptionPane.showMessageDialog(null, "Não foi possível excluir o Orçamento. Selecione um índice válido na tabela");
+                   }
+               } catch (Exception e) {
+                   JOptionPane.showMessageDialog(null,"Erro ao excluir orçamento: " + e);
+               }
+            
+            }
+        }
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        
+        boolean resultado;
+        int indice = jTableConsultaOrcamento.getSelectedRow();
+        
+        if( indice > -1){                
+            try {
+
+                long  id_orcamento = (long) jTableConsultaOrcamento.getValueAt(indice, 13); // Retorna IDORCAMENTO
+                OrcamentoController oc = new OrcamentoController();
+                resultado = oc.editarCliente(id_orcamento);
+                
+                if (!resultado) {
+                    JOptionPane.showInputDialog(null, "Erro ao selecionar PKOrçamento");
+                }
+             
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null,"Erro ao retornar informações do orçamento: " + e);
+                }
+        }else{
+        
+            JOptionPane.showMessageDialog(null, "Selecione um cliente.");        
+        }
+
+    }//GEN-LAST:event_jButtonEditarActionPerformed
     
     public void listarTodosOrcamentos(){
         
@@ -535,23 +612,29 @@ public class ApresentaFinancas extends javax.swing.JFrame {
             
             try {
                orcamentos.forEach((Orcamento orcamento) -> {
-                 tabelaOrcamentoModel.addRow(new Object[] {orcamento.getNome(),
-                                                        Dinheiro.parseString(orcamento.getJan()),
-                                                        Dinheiro.parseString(orcamento.getFev()),
-                                                        Dinheiro.parseString(orcamento.getMar()),
-                                                        Dinheiro.parseString(orcamento.getAbr()),
-                                                        Dinheiro.parseString(orcamento.getMai()),
-                                                        Dinheiro.parseString(orcamento.getJun()),
-                                                        Dinheiro.parseString(orcamento.getJul()),
-                                                        Dinheiro.parseString(orcamento.getAgo()),
-                                                        Dinheiro.parseString(orcamento.getSet()),
-                                                        Dinheiro.parseString(orcamento.getOut()),
-                                                        Dinheiro.parseString(orcamento.getNov()),
-                                                        Dinheiro.parseString(orcamento.getDez()),
-                                                        Dinheiro.parseString(orcamento.getJan())
-                                                        });
+                 tabelaOrcamentoModel.addRow(new Object[] {
+                     
+                       orcamento.getNome(),
+                       Dinheiro.parseString(orcamento.getJan()), 
+                       Dinheiro.parseString(orcamento.getFev()),
+                       Dinheiro.parseString(orcamento.getMar()),
+                       Dinheiro.parseString(orcamento.getAbr()),
+                       Dinheiro.parseString(orcamento.getMai()), 
+                       Dinheiro.parseString(orcamento.getJun()),
+                       Dinheiro.parseString(orcamento.getJul()),
+                       Dinheiro.parseString(orcamento.getAgo()), 
+                       Dinheiro.parseString(orcamento.getSet()),
+                       Dinheiro.parseString(orcamento.getOut()),
+                       Dinheiro.parseString(orcamento.getNov()),
+                       Dinheiro.parseString(orcamento.getDez()),
+                       orcamento.getId_orcamento()
+
+                   });
+                   
             
                });     
+               
+           
                
             SimpleDateFormat df = new SimpleDateFormat("yyyy");
             java.util.Date ano = new java.util.Date();
@@ -568,8 +651,8 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                                                         Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("SETEMBRO",df.format(ano)))),
                                                         Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("OUTUBRO",df.format(ano)))),
                                                         Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("NOVEMBRO",df.format(ano)))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("DEZEMBRO",df.format(ano))))
-                               
+                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("DEZEMBRO",df.format(ano)))),
+                      
                                                         });
                 
              
@@ -580,7 +663,7 @@ public class ApresentaFinancas extends javax.swing.JFrame {
               
                
              
-            } catch (Exception e) {
+            } catch (ExceptionDAO e) {
                 JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
             }
     }
@@ -640,7 +723,8 @@ public class ApresentaFinancas extends javax.swing.JFrame {
             
             try {
                orcamentos.forEach((Orcamento orcamento) -> {
-                 tabelaOrcamentoModel.addRow(new Object[] {orcamento.getNome(),
+                 tabelaOrcamentoModel.addRow(new Object[] {
+                                                        orcamento.getNome(),
                                                         Dinheiro.parseString(orcamento.getJan()),
                                                         Dinheiro.parseString(orcamento.getFev()),
                                                         Dinheiro.parseString(orcamento.getMar()),
@@ -653,7 +737,8 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                                                         Dinheiro.parseString(orcamento.getOut()),
                                                         Dinheiro.parseString(orcamento.getNov()),
                                                         Dinheiro.parseString(orcamento.getDez()),
-                                                        Dinheiro.parseString(orcamento.getJan())
+                                                        orcamento.getId_orcamento(),
+                                                        
                                                         });
             
                });
@@ -683,7 +768,7 @@ public class ApresentaFinancas extends javax.swing.JFrame {
 
                 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
+                JOptionPane.showMessageDialog(null,"Erro ao listar Orçamentos" + e);
             }
     }
     

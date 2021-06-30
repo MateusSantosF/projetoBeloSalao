@@ -65,7 +65,7 @@ public class CadastroCliente extends javax.swing.JFrame {
              jTextFieldCidade.setText(cidade);
                            
         } catch (Exception e) {
-            
+            JOptionPane.showMessageDialog(null, "Erro ao consultar CEP: " + e);
         }
     }
 
@@ -635,6 +635,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             if(sucessoAoCadastrar){
                 JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");
                 limparTelaCadastroCliente();
+               
             }else{
                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar, preencha todos os campos!");
             }

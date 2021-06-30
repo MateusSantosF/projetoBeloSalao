@@ -626,7 +626,7 @@ public class ApresentaCliente extends javax.swing.JFrame {
                 resultado = cc.editarCliente(cpfClienteSelecionado);
                 
                 if (!resultado) {
-                    JOptionPane.showInputDialog(null, "Erro ao selecionar PK");
+                    JOptionPane.showInputDialog(null, "Erro ao selecionar PKCliente");
                 }
              
                 } catch (Exception e) {

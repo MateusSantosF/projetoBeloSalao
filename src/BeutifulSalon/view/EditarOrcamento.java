@@ -8,6 +8,7 @@ package BeutifulSalon.view;
 
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.model.Dinheiro;
+import BeutifulSalon.model.Orcamento;
 import java.awt.HeadlessException;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -17,13 +18,33 @@ import javax.swing.JOptionPane;
  *
  * @author Mateus
  */
-public class OrcamentoPrevisto extends javax.swing.JFrame {
+public class EditarOrcamento extends javax.swing.JFrame {
 
     /**
      * Creates new form OrcamentoPrevisto
      */
-    public OrcamentoPrevisto() {
+    public EditarOrcamento() {
         initComponents();
+    }
+    
+    public EditarOrcamento(Orcamento orcamento){
+        initComponents();
+        
+        JTextFieldNomeDespesa.setText(orcamento.getNome());
+        jTextFieldAno.setText(orcamento.getAno());
+        jTextFieldJan.setText(Dinheiro.parseString(orcamento.getJan()));
+        jTextFieldFev.setText(Dinheiro.parseString(orcamento.getFev()));
+        jTextFieldMarc.setText(Dinheiro.parseString(orcamento.getMar()));
+        jTextFieldAbr.setText(Dinheiro.parseString(orcamento.getAbr()));
+        jTextFieldMaio.setText(Dinheiro.parseString(orcamento.getMai()));
+        jTextFieldJun.setText(Dinheiro.parseString(orcamento.getJun()));
+        jTextFieldJul.setText(Dinheiro.parseString(orcamento.getJul()));
+        jTextFieldAgo.setText(Dinheiro.parseString(orcamento.getAgo()));
+        jTextFieldSet.setText(Dinheiro.parseString(orcamento.getSet()));
+        jTextFieldOut.setText(Dinheiro.parseString(orcamento.getOut()));
+        jTextFieldNov.setText(Dinheiro.parseString(orcamento.getNov()));
+        jTextFieldDez.setText(Dinheiro.parseString(orcamento.getDez()));
+        jTextFieldID_ORCAMENTO.setText(Long.toString(orcamento.getId_orcamento()));
     }
 
     /**
@@ -75,6 +96,7 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
         btnCanc = new javax.swing.JButton();
         jTextFieldAno = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
+        jTextFieldID_ORCAMENTO = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -256,7 +278,7 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(34, 34, 34));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(34, 34, 34));
-        jLabel1.setText("Novo Orçamento Previsto");
+        jLabel1.setText("Editar Orçamento Previsto");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(34, 34, 34));
@@ -279,11 +301,6 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
         jCheckBoxFixo.setBackground(new java.awt.Color(243, 244, 245));
         jCheckBoxFixo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jCheckBoxFixo.setText("Fixo");
-        jCheckBoxFixo.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jCheckBoxFixoStateChanged(evt);
-            }
-        });
         jCheckBoxFixo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jCheckBoxClicado(evt);
@@ -293,19 +310,15 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
         btnReg.setBackground(new java.awt.Color(57, 201, 114));
         btnReg.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnReg.setForeground(new java.awt.Color(255, 255, 255));
-        btnReg.setText("Registrar");
+        btnReg.setText("Atualizar");
+        btnReg.setToolTipText("");
         btnReg.setBorder(null);
         btnReg.setBorderPainted(false);
         btnReg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnReg.setPreferredSize(new java.awt.Dimension(150, 65));
         btnReg.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnRegMousePressed(evt);
-            }
-        });
-        btnReg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegActionPerformed(evt);
+                atualizarOrcamento(evt);
             }
         });
 
@@ -452,7 +465,7 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
                         .addComponent(jLabel23)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldNov, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnCanc.setBackground(new java.awt.Color(248, 67, 69));
@@ -470,6 +483,10 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(34, 34, 34));
         jLabel3.setText("Exercício (AAAA)");
+
+        jTextFieldID_ORCAMENTO.setEnabled(false);
+        jTextFieldID_ORCAMENTO.setFocusable(false);
+        jTextFieldID_ORCAMENTO.setPreferredSize(new java.awt.Dimension(1, 1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -512,6 +529,10 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
                         .addComponent(btnCanc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(332, 332, 332)))
                 .addGap(12, 12, 12))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addComponent(jTextFieldID_ORCAMENTO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -533,7 +554,9 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
                                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(57, 57, 57)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldID_ORCAMENTO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnCanc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -544,7 +567,7 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldAno, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jCheckBoxFixo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -552,10 +575,6 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRegActionPerformed
 
     private void limparJTextFields(){
         JTextFieldNomeDespesa.setText("");
@@ -588,59 +607,10 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
             jTextFieldNov.setText(valor);
             jTextFieldDez.setText(valor);
 
-        }else{
-            String valor = "";
-
-            jTextFieldFev.setText(valor);
-            jTextFieldMarc.setText(valor);
-            jTextFieldAbr.setText(valor);
-            jTextFieldMaio.setText(valor);
-            jTextFieldJun.setText(valor);
-            jTextFieldJul.setText(valor);
-            jTextFieldAgo.setText(valor);
-            jTextFieldSet.setText(valor);
-            jTextFieldOut.setText(valor);
-            jTextFieldNov.setText(valor);
-            jTextFieldDez.setText(valor);
         }
+        
+       
     }
-    private void btnRegMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegMousePressed
-
-        boolean sucessoAoCadastrar;
-  
-        try {
-            OrcamentoController co = new OrcamentoController ();
-   
-          
-            sucessoAoCadastrar = co.CadastrarOrcamento(true,
-                    JTextFieldNomeDespesa.getText(), 
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldJan.getText())), 
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldFev.getText())), 
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldMarc.getText())), 
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldAbr.getText())), 
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldMaio.getText())), 
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldJun.getText())),
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldJul.getText())), 
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldAgo.getText())), 
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldSet.getText())), 
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldOut.getText())),
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldNov.getText())),
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDez.getText())),
-                    jTextFieldAno.getText());     
-
-            if(sucessoAoCadastrar){
-                JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
-                limparJTextFields();
-                jCheckBoxFixo.setSelected(false);
-
-            }else{
-                JOptionPane.showMessageDialog(null, "Erro ao cadastrar");
-            }
-        } catch (HeadlessException e) {
-            JOptionPane.showMessageDialog(null, "Erro: " + e);
-        }
-    }//GEN-LAST:event_btnRegMousePressed
-
     private void JTextFieldNomeDespesaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTextFieldNomeDespesaKeyTyped
 
         if(JTextFieldNomeDespesa.getText().equals("Ex: Conta de água")){
@@ -665,13 +635,44 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
         copiarValor();
     }//GEN-LAST:event_jTextFieldJanKeyTyped
 
-    private void jCheckBoxFixoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBoxFixoStateChanged
-        copiarValor();
-    }//GEN-LAST:event_jCheckBoxFixoStateChanged
-
     private void JTextFieldNomeDespesaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTextFieldNomeDespesaFocusLost
        copiarValor();
     }//GEN-LAST:event_JTextFieldNomeDespesaFocusLost
+
+    private void atualizarOrcamento(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_atualizarOrcamento
+        boolean sucessoAoAtualizar;
+        
+        try {
+            
+            OrcamentoController co = new OrcamentoController ();
+            sucessoAoAtualizar = co.AtualizarOrcamento(true,
+                    JTextFieldNomeDespesa.getText(), 
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldJan.getText())), 
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldFev.getText())), 
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldMarc.getText())), 
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldAbr.getText())), 
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldMaio.getText())), 
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldJun.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldJul.getText())), 
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldAgo.getText())), 
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldSet.getText())), 
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldOut.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldNov.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDez.getText())),
+                    jTextFieldAno.getText(), 
+                    Long.parseLong(jTextFieldID_ORCAMENTO.getText()));     
+            
+            if(sucessoAoAtualizar){
+                JOptionPane.showMessageDialog(null, "Atualização realizada com sucesso.");
+                this.dispose();
+           
+            }else{
+                JOptionPane.showMessageDialog(null, "Erro ao atualizar, preencha todos os campos!");
+            }
+        } catch (HeadlessException e) {
+            JOptionPane.showMessageDialog(null, "Erro: " + e);
+        }
+    }//GEN-LAST:event_atualizarOrcamento
 
     /**
      * @param args the command line arguments
@@ -690,20 +691,23 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(OrcamentoPrevisto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarOrcamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(OrcamentoPrevisto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarOrcamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(OrcamentoPrevisto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarOrcamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(OrcamentoPrevisto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarOrcamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new OrcamentoPrevisto().setVisible(true);
+                new EditarOrcamento().setVisible(true);
             }
         });
     }
@@ -741,6 +745,7 @@ public class OrcamentoPrevisto extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jTextFieldAno;
     private javax.swing.JFormattedTextField jTextFieldDez;
     private javax.swing.JFormattedTextField jTextFieldFev;
+    private javax.swing.JTextField jTextFieldID_ORCAMENTO;
     private javax.swing.JFormattedTextField jTextFieldJan;
     private javax.swing.JFormattedTextField jTextFieldJul;
     private javax.swing.JFormattedTextField jTextFieldJun;

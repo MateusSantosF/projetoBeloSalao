@@ -29,7 +29,11 @@ public class ConnectionMVC {
                 JOptionPane.showMessageDialog(null, "erro: " + e);
                 
             }
-        
+      
         return conn;
+    }
+    
+    public static void main(String[] args){
+        new ConnectionMVC().getConnection();
     }
 }
