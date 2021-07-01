@@ -1,23 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package BeutifulSalon.view;
+
+import BeutifulSalon.model.Produto;
+import BeutifulSalon.controller.ProdutoController;
+import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.model.Dinheiro;
+import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author Mateus
+ * @author Melissa
  */
-public class CadastroProduto extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainMenu
-     */
+//VIEW
+public class CadastroProduto extends javax.swing.JFrame {
+    
     public CadastroProduto() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,10 +59,10 @@ public class CadastroProduto extends javax.swing.JFrame {
         jPanel17 = new javax.swing.JPanel();
         jPanelEmail1 = new javax.swing.JPanel();
         jPanel19 = new javax.swing.JPanel();
-        jTextFieldNome1 = new javax.swing.JTextField();
+        jTextFieldProduto = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
-        jTextFieldMarca1 = new javax.swing.JTextField();
+        jTextFieldMarca = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jPanelCep1 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
@@ -63,8 +70,8 @@ public class CadastroProduto extends javax.swing.JFrame {
         jTextFieldPreco = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
         jPanel23 = new javax.swing.JPanel();
-        jTextFieldDataValidade = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
+        jFormattedTextFieldDataValidade = new javax.swing.JFormattedTextField();
         jPanel24 = new javax.swing.JPanel();
         jPanel25 = new javax.swing.JPanel();
         jPanel26 = new javax.swing.JPanel();
@@ -276,7 +283,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(41, 41, 41)
-                .addComponent(gridLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE))
+                .addComponent(gridLateral, javax.swing.GroupLayout.PREFERRED_SIZE, 568, Short.MAX_VALUE))
         );
 
         getContentPane().add(menuLateral, java.awt.BorderLayout.LINE_START);
@@ -341,7 +348,12 @@ public class CadastroProduto extends javax.swing.JFrame {
 
         jPanel19.setBackground(new java.awt.Color(243, 244, 245));
 
-        jTextFieldNome1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldProduto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldProdutoActionPerformed(evt);
+            }
+        });
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setText("*Nome Produto");
@@ -356,7 +368,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                     .addGroup(jPanel19Layout.createSequentialGroup()
                         .addComponent(jLabel18)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextFieldNome1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE))
+                    .addComponent(jTextFieldProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel19Layout.setVerticalGroup(
@@ -365,7 +377,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel18)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextFieldNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -373,7 +385,7 @@ public class CadastroProduto extends javax.swing.JFrame {
 
         jPanel20.setBackground(new java.awt.Color(243, 244, 245));
 
-        jTextFieldMarca1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldMarca.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel19.setText("Marca");
@@ -386,7 +398,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                 .addGap(56, 56, 56)
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel19)
-                    .addComponent(jTextFieldMarca1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(329, Short.MAX_VALUE))
         );
         jPanel20Layout.setVerticalGroup(
@@ -395,7 +407,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextFieldMarca1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -431,21 +443,20 @@ public class CadastroProduto extends javax.swing.JFrame {
         jPanel22Layout.setHorizontalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel22Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(75, 75, 75)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel22Layout.createSequentialGroup()
-                        .addComponent(jTextFieldPreco, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-                        .addGap(50, 50, 50))
-                    .addGroup(jPanel22Layout.createSequentialGroup()
                         .addComponent(jLabel26)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTextFieldPreco, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel22Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel26)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -454,35 +465,36 @@ public class CadastroProduto extends javax.swing.JFrame {
 
         jPanel23.setBackground(new java.awt.Color(243, 244, 245));
 
-        jTextFieldDataValidade.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextFieldDataValidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldDataValidadeActionPerformed(evt);
-            }
-        });
-
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel27.setText("Data de Validade");
+
+        try {
+            jFormattedTextFieldDataValidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextFieldDataValidade.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFormattedTextFieldDataValidade.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
         jPanel23Layout.setHorizontalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel23Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel23Layout.createSequentialGroup()
+                .addContainerGap(102, Short.MAX_VALUE)
                 .addGroup(jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldDataValidade)
+                    .addComponent(jFormattedTextFieldDataValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel27))
-                .addContainerGap())
+                .addGap(35, 35, 35))
         );
         jPanel23Layout.setVerticalGroup(
             jPanel23Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel23Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jLabel27)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldDataValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jFormattedTextFieldDataValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanelCep1.add(jPanel23);
@@ -528,6 +540,11 @@ public class CadastroProduto extends javax.swing.JFrame {
         jButton3.setBorderPainted(false);
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton3.setPreferredSize(new java.awt.Dimension(150, 65));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel26.add(jButton3);
 
         jButton4.setBackground(new java.awt.Color(248, 67, 69));
@@ -544,12 +561,9 @@ public class CadastroProduto extends javax.swing.JFrame {
         JPCadastroClientes1Layout.setHorizontalGroup(
             JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                        .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(68, 68, 68))
-                    .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
                         .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel17, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, JPCadastroClientes1Layout.createSequentialGroup()
@@ -557,8 +571,11 @@ public class CadastroProduto extends javax.swing.JFrame {
                                     .addComponent(jPanelEmail1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jPanelCep1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 1247, Short.MAX_VALUE)
                                     .addComponent(JPanelNome1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(92, 92, 92)))
-                        .addContainerGap())))
+                                .addGap(92, 92, 92))))
+                    .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         JPCadastroClientes1Layout.setVerticalGroup(
             JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -582,9 +599,42 @@ public class CadastroProduto extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldDataValidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDataValidadeActionPerformed
+    //salvar produto
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+            //Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldPreco.getText())),
+            boolean sucesso;
+            String produto = jTextFieldProduto.getText();
+            String marca = jTextFieldMarca.getText();
+            String preco = jTextFieldPreco.getText();
+            long parseLong = Long.parseLong("jTextFieldPreco");
+            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+            Date dataRegistro = new Date();
+            //Date dataValidade = formato.parse(jFormattedTextFieldDataValidade.getText());
+            //formato.format(new Date())
+        
+        try {
+                ProdutoController produtoController = new ProdutoController(); //instanciar o controlador, que recebe um novo controador
+                try {
+                    sucesso = produtoController.cadastrarProduto(produto, marca, parseLong,dataRegistro, formato.parse(jFormattedTextFieldDataValidade.getText()));
+                    
+                    if(sucesso == true){
+                    JOptionPane.showMessageDialog(null, "Cadastro concluído com sucesso.");
+                    this.limparTelaCadastroProduto(evt);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Os campos não foram preenchidos corretamente!");
+                }
+                }catch (ExceptionDAO | ParseException ex) {
+                   Logger.getLogger(CadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+            } catch (HeadlessException e) { //depois será ExceptionDAO
+            JOptionPane.showMessageDialog(null, "Erro: " + e);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextFieldProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldProdutoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDataValidadeActionPerformed
+    }//GEN-LAST:event_jTextFieldProdutoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -638,6 +688,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JPanel gridLateral;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JFormattedTextField jFormattedTextFieldDataValidade;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -662,10 +713,9 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelCep1;
     private javax.swing.JPanel jPanelEmail1;
     private javax.swing.JLabel jTFClientes;
-    private javax.swing.JTextField jTextFieldDataValidade;
-    private javax.swing.JTextField jTextFieldMarca1;
-    private javax.swing.JTextField jTextFieldNome1;
+    private javax.swing.JTextField jTextFieldMarca;
     private javax.swing.JTextField jTextFieldPreco;
+    private javax.swing.JTextField jTextFieldProduto;
     private javax.swing.JPanel menuLateral;
     private javax.swing.JPanel panelClientes;
     private javax.swing.JPanel panelDashboard;
@@ -673,4 +723,11 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JPanel panelNovoRegistro;
     private javax.swing.JPanel panelProdutos;
     // End of variables declaration//GEN-END:variables
+
+    private void limparTelaCadastroProduto(ActionEvent evt) {
+                jTextFieldProduto.setText(""); 
+                jTextFieldMarca.setText(""); 
+                jTextFieldPreco.setText(""); 
+                jFormattedTextFieldDataValidade.setText("");
+    }
 }
