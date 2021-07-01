@@ -7,6 +7,7 @@ package BeutifulSalon.controller;
 
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
+import BeutifulSalon.view.EditarCliente;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -132,8 +133,17 @@ public class ClienteController {
         
         try {
             Cliente c = new Cliente();
-            c.editarCliente(cpf);
+            Cliente clienteEditado;
             
+            clienteEditado = c.editarCliente(cpf);
+            
+            if(clienteEditado != null){
+               new EditarCliente(clienteEditado).setVisible(true); 
+            }else{
+                return false;
+            }
+            
+          
         } catch (Exception e) {      
             JOptionPane.showMessageDialog(null, "Erro ao criar objeto cliente" + e);
             return false;

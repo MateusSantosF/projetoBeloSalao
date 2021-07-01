@@ -42,7 +42,6 @@ public class clienteDAO {
             pStatement.setString(3, cliente.getSOBRENOME());
             pStatement.setString(4, cliente.getEMAIL());
             pStatement.setDate(5,  new Date(cliente.getDATANASC().getTime()));
-            System.out.println(cliente.getDATANASC());
             pStatement.setString(6, cliente.getCEP());
             pStatement.setString(7, cliente.getBAIRRO());
             pStatement.setString(8, cliente.getRUA());
@@ -79,7 +78,7 @@ public class clienteDAO {
     public ArrayList<Cliente> listarClientes(String nome) throws ExceptionDAO {
         
         
-        String sql  = "SELECT NOME,SOBRENOME,CELULAR,EMAIL,CPF FROM CLIENTE WHERE NOME LIKE '%" + nome + "%' ORDER BY NOME";
+        String sql  = "SELECT NOME,SOBRENOME,CELULAR,EMAIL,CPF FROM CLIENTE WHERE NOME LIKE '%" + nome + "%' ORDER BY DATAREG DESC";
         Connection connection = null;
         PreparedStatement pStatement = null;
         
@@ -134,7 +133,7 @@ public class clienteDAO {
     
     public ArrayList<Cliente> listarClientes(){
         
-        String sql  = "SELECT CPF, NOME, SOBRENOME, CELULAR, EMAIL FROM CLIENTE";
+        String sql  = "SELECT CPF, NOME, SOBRENOME, CELULAR, EMAIL FROM CLIENTE ORDER BY DATAREG DESC";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -222,7 +221,7 @@ public class clienteDAO {
         
     }
     
-    public void editarCliente(String cpf){
+    public Cliente editarCliente(String cpf){
         
         
         String sqlScript = "SELECT NOME,SOBRENOME,CPF, EMAIL, CELULAR, DATANASC, CEP, BAIRRO, RUA,NUMERO, CIDADE,CELULAR, TELEFONE FROM CLIENTE WHERE CPF = ?";
@@ -256,7 +255,7 @@ public class clienteDAO {
                 }
             }
            
-            new EditarCliente(cliente).setVisible(true); 
+            return cliente;
             
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,"Erro ClienteDAO " + e);
@@ -276,7 +275,8 @@ public class clienteDAO {
             }
            
         }
-        
+       
+        return null;
     }
 
     public void atualizarCliente(Cliente cliente) {

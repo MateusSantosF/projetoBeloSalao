@@ -5,6 +5,9 @@
  */
 package BeutifulSalon.view;
 
+import java.awt.Frame;
+import java.util.Arrays;
+
 /**
  *
  * @author Mateus
@@ -49,7 +52,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel8.setText("jLabel8");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Dashboard");
 
         menuLateral.setBackground(new java.awt.Color(36, 46, 66));
@@ -342,6 +345,7 @@ public class MainMenu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainMenu().setVisible(true);
+             
             }
         });
     }

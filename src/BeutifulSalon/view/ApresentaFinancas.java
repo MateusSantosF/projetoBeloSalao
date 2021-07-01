@@ -549,7 +549,7 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                    
                    
                    long id_orcamento = (long) jTableConsultaOrcamento.getValueAt(indice, 13); // Retorna ID_ORÇAMENTO
-                    System.out.println("id = " + id_orcamento);
+                    
                    OrcamentoController oc = new OrcamentoController();
                    
                    
@@ -589,7 +589,7 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                 }
         }else{
         
-            JOptionPane.showMessageDialog(null, "Selecione um cliente.");        
+            JOptionPane.showMessageDialog(null, "Selecione um orçamento.");        
         }
 
     }//GEN-LAST:event_jButtonEditarActionPerformed
@@ -664,7 +664,7 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                
              
             } catch (ExceptionDAO e) {
-                JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
+                JOptionPane.showMessageDialog(null,"Erro ao listar Orçamentos" + e);
             }
     }
     

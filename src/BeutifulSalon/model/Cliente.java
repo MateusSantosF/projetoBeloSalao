@@ -212,8 +212,8 @@ public class Cliente {
         new clienteDAO().deletarCliente(cpf);
     }
     
-    public void editarCliente(String cpf) throws ExceptionDAO{
-        new clienteDAO().editarCliente(cpf);
+    public Cliente editarCliente(String cpf) throws ExceptionDAO{
+        return new clienteDAO().editarCliente(cpf);
     }
     
 }
