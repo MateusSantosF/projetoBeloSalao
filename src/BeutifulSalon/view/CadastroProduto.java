@@ -67,8 +67,8 @@ public class CadastroProduto extends javax.swing.JFrame {
         jPanelCep1 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
         jPanel22 = new javax.swing.JPanel();
-        jTextFieldPreco = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
+        jFormattedTextFieldPreco = new javax.swing.JFormattedTextField();
         jPanel23 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         jFormattedTextFieldDataValidade = new javax.swing.JFormattedTextField();
@@ -283,7 +283,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(41, 41, 41)
-                .addComponent(gridLateral, javax.swing.GroupLayout.PREFERRED_SIZE, 568, Short.MAX_VALUE))
+                .addComponent(gridLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE))
         );
 
         getContentPane().add(menuLateral, java.awt.BorderLayout.LINE_START);
@@ -422,7 +422,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         jPanel21.setLayout(jPanel21Layout);
         jPanel21Layout.setHorizontalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 249, Short.MAX_VALUE)
+            .addGap(0, 250, Short.MAX_VALUE)
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -433,10 +433,10 @@ public class CadastroProduto extends javax.swing.JFrame {
 
         jPanel22.setBackground(new java.awt.Color(243, 244, 245));
 
-        jTextFieldPreco.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel26.setText("*Preço Unitário");
+
+        jFormattedTextFieldPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
 
         javax.swing.GroupLayout jPanel22Layout = new javax.swing.GroupLayout(jPanel22);
         jPanel22.setLayout(jPanel22Layout);
@@ -445,20 +445,18 @@ public class CadastroProduto extends javax.swing.JFrame {
             .addGroup(jPanel22Layout.createSequentialGroup()
                 .addGap(75, 75, 75)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel22Layout.createSequentialGroup()
-                        .addComponent(jLabel26)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextFieldPreco, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jFormattedTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel26))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel22Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel26)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jFormattedTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jPanelCep1.add(jPanel22);
@@ -505,7 +503,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         jPanel24.setLayout(jPanel24Layout);
         jPanel24Layout.setHorizontalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 249, Short.MAX_VALUE)
+            .addGap(0, 250, Short.MAX_VALUE)
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -602,12 +600,10 @@ public class CadastroProduto extends javax.swing.JFrame {
     //salvar produto
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-            //Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldPreco.getText())),
             boolean sucesso;
             String produto = jTextFieldProduto.getText();
             String marca = jTextFieldMarca.getText();
-            String preco = jTextFieldPreco.getText();
-            long parseLong = Long.parseLong("jTextFieldPreco");
+            long parseLong = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jFormattedTextFieldPreco.getText()));
             SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
             Date dataRegistro = new Date();
             //Date dataValidade = formato.parse(jFormattedTextFieldDataValidade.getText());
@@ -620,7 +616,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                     
                     if(sucesso == true){
                     JOptionPane.showMessageDialog(null, "Cadastro concluído com sucesso.");
-                    this.limparTelaCadastroProduto(evt);
+                    limparTelaCadastroProduto();
                 }else{
                     JOptionPane.showMessageDialog(null, "Os campos não foram preenchidos corretamente!");
                 }
@@ -689,6 +685,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataValidade;
+    private javax.swing.JFormattedTextField jFormattedTextFieldPreco;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -714,7 +711,6 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelEmail1;
     private javax.swing.JLabel jTFClientes;
     private javax.swing.JTextField jTextFieldMarca;
-    private javax.swing.JTextField jTextFieldPreco;
     private javax.swing.JTextField jTextFieldProduto;
     private javax.swing.JPanel menuLateral;
     private javax.swing.JPanel panelClientes;
@@ -724,10 +720,10 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JPanel panelProdutos;
     // End of variables declaration//GEN-END:variables
 
-    private void limparTelaCadastroProduto(ActionEvent evt) {
+    public void limparTelaCadastroProduto() {
                 jTextFieldProduto.setText(""); 
                 jTextFieldMarca.setText(""); 
-                jTextFieldPreco.setText(""); 
+                jFormattedTextFieldPreco.setText(""); 
                 jFormattedTextFieldDataValidade.setText("");
     }
 }
