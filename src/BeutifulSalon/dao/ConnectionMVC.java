@@ -34,19 +34,19 @@ public class ConnectionMVC {
             try {
 //                //NAO APAGAR PELO AMOR DE DEUS!
 ////            //recupera path de onde o .jar foi executado para indicar caminho do banco
-            //String path = ConnectionMVC.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+           //String path = ConnectionMVC.class.getProtectionDomain().getCodeSource().getLocation().getPath();
            //String decodedPath = URLDecoder.decode(path, "UTF-8");
            //String caminhoBanco = decodedPath.replace("BeutifulSalon.jar", "BancoDeDados/beutifulsalondb.db");
-            //conn = DriverManager.getConnection("jdbc:sqlite:"+caminhoBanco); 
+           //conn = DriverManager.getConnection("jdbc:sqlite:"+caminhoBanco); 
               
                
                 //UTILIZAR ENQUANTO NO NETBEANS
-                conn = DriverManager.getConnection("jdbc:sqlite:BancoDeDados/beutifulsalondb.db");
+                conn = DriverManager.getConnection("jdbc:sqlite:src/BancoDeDados/beutifulsalondb.db");
                
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "erro: " + e);
                 
-            //} catch (UnsupportedEncodingException ex) {
+           //} catch (UnsupportedEncodingException ex) {
             //Logger.getLogger(ConnectionMVC.class.getName()).log(Level.SEVERE, null, ex);
         }
       
