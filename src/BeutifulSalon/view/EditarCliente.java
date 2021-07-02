@@ -694,6 +694,7 @@ public class EditarCliente extends javax.swing.JFrame {
             
             if(sucessoAoAtualizar){
                 JOptionPane.showMessageDialog(null, "Atualização realizada com sucesso.");
+                
                 this.dispose();
            
             }else{

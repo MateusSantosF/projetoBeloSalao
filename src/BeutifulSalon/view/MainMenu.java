@@ -6,7 +6,9 @@
 package BeutifulSalon.view;
 
 import java.awt.Frame;
+import java.util.ArrayList;
 import java.util.Arrays;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,12 +19,39 @@ public class MainMenu extends javax.swing.JFrame {
   
     //VARIAVEL DO MENU DE NOVO REGISTRO
     NovoRegistro novoRegistro;
+    ApresentaCliente telaChamadoraApresentaCliente;
+    ApresentaFinancas telaChamadoraApresentaFinancas;
     
     
     public MainMenu() {
         initComponents();
     }
 
+     public MainMenu(ApresentaCliente apresentaCliente) {
+        
+         this.telaChamadoraApresentaCliente = apresentaCliente;
+        
+        try {          
+           this.setPreferredSize(apresentaCliente.getSize());
+        } catch (Exception e) {
+            
+        }
+         
+        initComponents();
+    }
+     
+      public MainMenu(ApresentaFinancas apresentaFinancas) {
+        
+         this.telaChamadoraApresentaFinancas = apresentaFinancas;
+        
+        try {          
+           this.setPreferredSize(apresentaFinancas.getSize());
+        } catch (Exception e) {
+            
+        }
+         
+        initComponents();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -52,8 +81,16 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel8.setText("jLabel8");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Dashboard");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                saindoPrograma(evt);
+            }
+        });
 
         menuLateral.setBackground(new java.awt.Color(36, 46, 66));
         menuLateral.setPreferredSize(new java.awt.Dimension(300, 500));
@@ -130,7 +167,13 @@ public class MainMenu extends javax.swing.JFrame {
         JTFProdutos.setForeground(new java.awt.Color(255, 255, 255));
         JTFProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconPrice.png"))); // NOI18N
         JTFProdutos.setText("Produtos");
+        JTFProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         JTFProdutos.setIconTextGap(20);
+        JTFProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                abrirTelaProduto(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelProdutosLayout = new javax.swing.GroupLayout(panelProdutos);
         panelProdutos.setLayout(panelProdutosLayout);
@@ -311,8 +354,49 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_JTFNovoRegistroMousePressed
 
     private void JTFFinancasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTFFinancasMousePressed
-        new ApresentaFinancas(this).setVisible(true);
+       
+       if(telaChamadoraApresentaFinancas != null){
+           this.telaChamadoraApresentaFinancas.setVisible(true);
+           this.setVisible(false);
+       }else{
+            ApresentaFinancas ap = new ApresentaFinancas(this);
+            this.setVisible(false);
+            ap.setVisible(true);
+       }
+   
     }//GEN-LAST:event_JTFFinancasMousePressed
+
+    private void abrirTelaProduto(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_abrirTelaProduto
+       ApresentaProduto ap = new ApresentaProduto(this);
+       this.setVisible(false);
+       ap.setVisible(true);
+    }//GEN-LAST:event_abrirTelaProduto
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+   
+      
+      
+    }//GEN-LAST:event_formWindowClosed
+
+    private void saindoPrograma(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_saindoPrograma
+        
+        int opc = JOptionPane.showConfirmDialog(null,"Realmente deseja sair do programa?", "Sair", JOptionPane.YES_NO_OPTION);
+         
+        if(opc == 0){
+            try {
+                
+                Frame[] telasAbertas = Frame.getFrames();
+            
+                for(int i = 0; i <= telasAbertas.length; i++){
+                    telasAbertas[i].dispose();
+                }
+            
+            } catch (Exception e) {
+                
+            }
+             this.dispose();
+        }
+    }//GEN-LAST:event_saindoPrograma
 
     /**
      * @param args the command line arguments

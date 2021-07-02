@@ -73,8 +73,8 @@ public class ClienteController {
                 try {       
                     //Chamando construtor de Cliente
                    cliente.atualizarCliente(cliente);             
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Erro ao criar objeto cliente");
+                } catch (ExceptionDAO ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao criar objeto cliente" + ex);
                     return false;
                 }
                 return true;
@@ -83,8 +83,10 @@ public class ClienteController {
                 return false;
             }
           
+        }else{
+             return false;
         }
-        return false;
+
         
         
     }

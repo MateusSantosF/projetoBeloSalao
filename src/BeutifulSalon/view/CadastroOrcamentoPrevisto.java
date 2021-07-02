@@ -457,6 +457,11 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame {
         btnCanc.setBorder(null);
         btnCanc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCanc.setPreferredSize(new java.awt.Dimension(150, 65));
+        btnCanc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancActionPerformed(evt);
+            }
+        });
 
         jTextFieldAno.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldAno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y"))));
@@ -554,8 +559,10 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame {
 
     private void limparJTextFields(){
         JTextFieldNomeDespesa.setText("");
+        jTextFieldAno.setText("");
         jTextFieldJan.setText("");
         jTextFieldFev.setText("");
+        jTextFieldMarc.setText("");
         jTextFieldAbr.setText("");
         jTextFieldMaio.setText("");
         jTextFieldJun.setText("");
@@ -619,7 +626,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame {
                
 
             }else{
-                JOptionPane.showMessageDialog(null, "Erro ao cadastrar");
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar orçamento. Preencha todos os campos!");
             }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e);
@@ -655,6 +662,14 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame {
     private void JTextFieldNomeDespesaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTextFieldNomeDespesaFocusLost
        copiarValor();
     }//GEN-LAST:event_JTextFieldNomeDespesaFocusLost
+
+    private void btnCancActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancActionPerformed
+        int opc = JOptionPane.showConfirmDialog(null,"Realmente deseja sair?", "Cadastro Orçamento Previsto", JOptionPane.YES_NO_OPTION);
+         
+        if(opc == 0){
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnCancActionPerformed
 
     /**
      * @param args the command line arguments

@@ -37,7 +37,7 @@ public class ApresentaFinancas extends javax.swing.JFrame {
      */
     
     // IMPLEMENTANDO SISTEMA DE FECHAR E ABRIR TELA
-    
+    NovoRegistro novoRegistro = null;
     private MainMenu telaChamadoraMainMenu = null;
     private ApresentaCliente telaChamadoraApresentaCliente = null;
     
@@ -116,10 +116,14 @@ public class ApresentaFinancas extends javax.swing.JFrame {
 
         jLabel8.setText("jLabel8");
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Finanças");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 fecharJanela(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -175,6 +179,11 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         jTFClientes.setText("Clientes");
         jTFClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTFClientes.setIconTextGap(16);
+        jTFClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTFClientesMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelClientesLayout = new javax.swing.GroupLayout(panelClientes);
         panelClientes.setLayout(panelClientesLayout);
@@ -203,6 +212,11 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         JTFProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconPrice.png"))); // NOI18N
         JTFProdutos.setText("Produtos");
         JTFProdutos.setIconTextGap(20);
+        JTFProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                JTFProdutosMousePressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelProdutosLayout = new javax.swing.GroupLayout(panelProdutos);
         panelProdutos.setLayout(panelProdutosLayout);
@@ -356,6 +370,7 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane2.setAutoscrolls(true);
         jScrollPane2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(1011, 80));
 
         jTableConsultaOrcamento.setBackground(new java.awt.Color(255, 255, 255));
         jTableConsultaOrcamento.setModel(new javax.swing.table.DefaultTableModel(
@@ -384,7 +399,6 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableConsultaOrcamento.setAutoscrolls(false);
         jTableConsultaOrcamento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableConsultaOrcamento.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaOrcamento.setShowGrid(true);
@@ -466,7 +480,7 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                                 .addComponent(jLabelSearch)))
                         .addGap(62, 62, 62))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(20, 20, 20))))
         );
         containerLayout.setVerticalGroup(
@@ -498,15 +512,24 @@ public class ApresentaFinancas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoRegistro(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoRegistro
-         new NovoRegistro().setVisible(true);
+         
+        if(novoRegistro == null){
+            novoRegistro = new NovoRegistro();
+            novoRegistro.setVisible(true);
+        }else{
+             novoRegistro.setVisible(true);
+        }
+       
+       
     }//GEN-LAST:event_btnNovoRegistro
 
     private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
-        
+     
         if(telaChamadoraMainMenu == null){
             new MainMenu().setVisible(true);
         }else{
             telaChamadoraMainMenu.setVisible(true);
+            this.dispose();
         }
                 
         
@@ -581,7 +604,7 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                 resultado = oc.editarCliente(id_orcamento);
                 
                 if (!resultado) {
-                    JOptionPane.showInputDialog(null, "Erro ao selecionar PKOrçamento");
+                    JOptionPane.showMessageDialog(null, "Erro ao selecionar PKOrçamento");
                 }
              
                 } catch (Exception e) {
@@ -593,6 +616,35 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void jTFClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFClientesMousePressed
+       if(telaChamadoraApresentaCliente == null){
+            ApresentaCliente ap = new ApresentaCliente(this);
+            this.setVisible(false);
+            ap.setVisible(true);
+       }else{
+           this.setVisible(false);
+            telaChamadoraApresentaCliente.setVisible(true);
+       }
+     
+    }//GEN-LAST:event_jTFClientesMousePressed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        if(telaChamadoraMainMenu != null){
+            telaChamadoraMainMenu.setVisible(true);
+            this.dispose();
+        }else{
+            MainMenu menu = new MainMenu(this);
+            menu.setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void JTFProdutosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTFProdutosMousePressed
+        ApresentaFinancas ap = new ApresentaFinancas();
+        ap.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_JTFProdutosMousePressed
     
     public void listarTodosOrcamentos(){
         

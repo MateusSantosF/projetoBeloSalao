@@ -19,7 +19,10 @@ public class OrcamentoController {
      public boolean CadastrarOrcamento(boolean previsto, String nome, long jan, long fev, long mar, 
             long abr, long mai, long jun, long jul, long ago, long set, long out, long nov, long dez, String ano) {
          
-        if( nome.length() > 0){
+        if( nome.length() > 0 && !nome.equals("Ex: Conta de água") && jan >= 0 && 
+                fev >= 0 && mar >= 0 && abr >= 0 && mai >= 0 && jun >= 0 && jul >= 0 && ago >= 0 && set >= 0 && 
+                out >= 0 && nov >= 0 && dez >= 0 && ano != null){
+              
             Orcamento orc = new Orcamento(previsto, nome, jan, fev, mar, abr, mai, jun, jul, ago, set, out, nov, dez,ano);
             
             try {
@@ -29,6 +32,8 @@ public class OrcamentoController {
                 return false;
             }
             
+        }else{
+            return false;
         }
         
         return true;

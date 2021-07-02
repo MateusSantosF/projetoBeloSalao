@@ -75,7 +75,7 @@ public class clienteDAO {
         
     }
     
-    public ArrayList<Cliente> listarClientes(String nome) throws ExceptionDAO {
+    public ArrayList<Cliente> listarClientes(String nome) throws ExceptionDAO{
         
         
         String sql  = "SELECT NOME,SOBRENOME,CELULAR,EMAIL,CPF FROM CLIENTE WHERE NOME LIKE '%" + nome + "%' ORDER BY DATAREG DESC";

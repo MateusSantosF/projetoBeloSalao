@@ -6,6 +6,7 @@
 package BeutifulSalon.view;
 
 import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.dao.ExceptionDAO;
 import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.InputStream;
