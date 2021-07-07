@@ -5,21 +5,14 @@
  */
 package BeutifulSalon.view;
 
-import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.dao.ExceptionDAO;
-import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Orcamento;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.MouseEvent;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -30,54 +23,18 @@ import javax.swing.table.TableCellRenderer;
  *
  * @author Mateus
  */
-public class ApresentaFinancas extends javax.swing.JFrame {
+public class ApresentaFinancas extends javax.swing.JPanel {
 
     /**
-     * Creates new form MainMenu
+     * Creates new form ApreFinancas
      */
-    
-    // IMPLEMENTANDO SISTEMA DE FECHAR E ABRIR TELA
-    NovoRegistro novoRegistro = null;
-    private MainMenu telaChamadoraMainMenu = null;
-    private ApresentaCliente telaChamadoraApresentaCliente = null;
-    
     public ApresentaFinancas() {
         initComponents();
-    }
-    
-    //Chamando a partir de MainMenu
-    public ApresentaFinancas(MainMenu aThis) {
-        this.telaChamadoraMainMenu = aThis;
-        telaChamadoraMainMenu.setVisible(false);
-        try {          
-           this.setPreferredSize(aThis.getSize());
-        } catch (Exception e) {
-            
-        }
-       
-        initComponents();
-    }
-    
-    //Chamando a partir de Cliente
-    public ApresentaFinancas(ApresentaCliente aCliente){
-        this.telaChamadoraApresentaCliente = aCliente;
         
-        try {
-            this.setPreferredSize(aCliente.getSize());
-        } catch (Exception e) {
-        }
-        
-        initComponents();
+        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
+        listarTodosOrcamentos();
     }
-    
-    
 
-
-    
-    //============================//
-    
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -87,22 +44,6 @@ public class ApresentaFinancas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel8 = new javax.swing.JLabel();
-        menuLateral = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        gridLateral = new javax.swing.JPanel();
-        panelDashboard = new javax.swing.JPanel();
-        dashboard = new javax.swing.JLabel();
-        panelClientes = new javax.swing.JPanel();
-        jTFClientes = new javax.swing.JLabel();
-        panelProdutos = new javax.swing.JPanel();
-        JTFProdutos = new javax.swing.JLabel();
-        panelFinancas = new javax.swing.JPanel();
-        JTFFinancas = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        JTFNovoRegistro = new javax.swing.JLabel();
-        panelNovoRegistro = new javax.swing.JPanel();
         container = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -113,244 +54,6 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         jLabelSearch = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextFieldAno = new javax.swing.JFormattedTextField();
-
-        jLabel8.setText("jLabel8");
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Finanças");
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                fecharJanela(evt);
-            }
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
-
-        menuLateral.setBackground(new java.awt.Color(36, 46, 66));
-        menuLateral.setPreferredSize(new java.awt.Dimension(300, 500));
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logo.png"))); // NOI18N
-
-        gridLateral.setBackground(new java.awt.Color(36, 46, 66));
-        gridLateral.setLayout(new java.awt.GridLayout(8, 0));
-
-        panelDashboard.setBackground(new java.awt.Color(36, 46, 66));
-        panelDashboard.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        dashboard.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        dashboard.setForeground(new java.awt.Color(255, 255, 255));
-        dashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconHome.png"))); // NOI18N
-        dashboard.setLabelFor(container);
-        dashboard.setText("Dashboard");
-        dashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        dashboard.setIconTextGap(20);
-        dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnDashboard(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelDashboardLayout = new javax.swing.GroupLayout(panelDashboard);
-        panelDashboard.setLayout(panelDashboardLayout);
-        panelDashboardLayout.setHorizontalGroup(
-            panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDashboardLayout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(dashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelDashboardLayout.setVerticalGroup(
-            panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
-        gridLateral.add(panelDashboard);
-
-        panelClientes.setBackground(new java.awt.Color(36, 46, 66));
-        panelClientes.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        jTFClientes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTFClientes.setForeground(new java.awt.Color(255, 255, 255));
-        jTFClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconPeoples.png"))); // NOI18N
-        jTFClientes.setText("Clientes");
-        jTFClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTFClientes.setIconTextGap(16);
-        jTFClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jTFClientesMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelClientesLayout = new javax.swing.GroupLayout(panelClientes);
-        panelClientes.setLayout(panelClientesLayout);
-        panelClientesLayout.setHorizontalGroup(
-            panelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelClientesLayout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(jTFClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelClientesLayout.setVerticalGroup(
-            panelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelClientesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTFClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        gridLateral.add(panelClientes);
-
-        panelProdutos.setBackground(new java.awt.Color(36, 46, 66));
-        panelProdutos.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        JTFProdutos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        JTFProdutos.setForeground(new java.awt.Color(255, 255, 255));
-        JTFProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconPrice.png"))); // NOI18N
-        JTFProdutos.setText("Produtos");
-        JTFProdutos.setIconTextGap(20);
-        JTFProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                JTFProdutosMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelProdutosLayout = new javax.swing.GroupLayout(panelProdutos);
-        panelProdutos.setLayout(panelProdutosLayout);
-        panelProdutosLayout.setHorizontalGroup(
-            panelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelProdutosLayout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(JTFProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelProdutosLayout.setVerticalGroup(
-            panelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelProdutosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JTFProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        gridLateral.add(panelProdutos);
-
-        panelFinancas.setBackground(new java.awt.Color(36, 46, 66));
-        panelFinancas.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        JTFFinancas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        JTFFinancas.setForeground(new java.awt.Color(255, 255, 255));
-        JTFFinancas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconWallet.png"))); // NOI18N
-        JTFFinancas.setText("Finanças");
-        JTFFinancas.setIconTextGap(20);
-
-        javax.swing.GroupLayout panelFinancasLayout = new javax.swing.GroupLayout(panelFinancas);
-        panelFinancas.setLayout(panelFinancasLayout);
-        panelFinancasLayout.setHorizontalGroup(
-            panelFinancasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFinancasLayout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(JTFFinancas, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelFinancasLayout.setVerticalGroup(
-            panelFinancasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFinancasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JTFFinancas, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        gridLateral.add(panelFinancas);
-
-        jPanel10.setBackground(new java.awt.Color(36, 46, 66));
-        jPanel10.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 288, Short.MAX_VALUE)
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 71, Short.MAX_VALUE)
-        );
-
-        gridLateral.add(jPanel10);
-
-        jPanel9.setBackground(new java.awt.Color(36, 46, 66));
-        jPanel9.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        JTFNovoRegistro.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        JTFNovoRegistro.setForeground(new java.awt.Color(255, 255, 255));
-        JTFNovoRegistro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconAdd.png"))); // NOI18N
-        JTFNovoRegistro.setText("Novo Registro");
-        JTFNovoRegistro.setIconTextGap(20);
-        JTFNovoRegistro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnNovoRegistro(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(JTFNovoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JTFNovoRegistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
-        );
-
-        gridLateral.add(jPanel9);
-
-        panelNovoRegistro.setBackground(new java.awt.Color(36, 46, 66));
-        panelNovoRegistro.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        javax.swing.GroupLayout panelNovoRegistroLayout = new javax.swing.GroupLayout(panelNovoRegistro);
-        panelNovoRegistro.setLayout(panelNovoRegistroLayout);
-        panelNovoRegistroLayout.setHorizontalGroup(
-            panelNovoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 288, Short.MAX_VALUE)
-        );
-        panelNovoRegistroLayout.setVerticalGroup(
-            panelNovoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 71, Short.MAX_VALUE)
-        );
-
-        gridLateral.add(panelNovoRegistro);
-
-        javax.swing.GroupLayout menuLateralLayout = new javax.swing.GroupLayout(menuLateral);
-        menuLateral.setLayout(menuLateralLayout);
-        menuLateralLayout.setHorizontalGroup(
-            menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLateralLayout.createSequentialGroup()
-                .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(menuLateralLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(gridLateral, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(menuLateralLayout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel12)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        menuLateralLayout.setVerticalGroup(
-            menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLateralLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(39, 39, 39)
-                .addComponent(gridLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(menuLateral, java.awt.BorderLayout.LINE_START);
 
         container.setBackground(new java.awt.Color(243, 244, 245));
 
@@ -400,13 +103,12 @@ public class ApresentaFinancas extends javax.swing.JFrame {
             }
         });
         jTableConsultaOrcamento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTableConsultaOrcamento.setGridColor(new java.awt.Color(34, 34, 34));
         jTableConsultaOrcamento.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaOrcamento.setShowGrid(true);
         jScrollPane2.setViewportView(jTableConsultaOrcamento);
         if (jTableConsultaOrcamento.getColumnModel().getColumnCount() > 0) {
-            jTableConsultaOrcamento.getColumnModel().getColumn(0).setPreferredWidth(110);
             jTableConsultaOrcamento.getColumnModel().getColumn(13).setMinWidth(1);
-            jTableConsultaOrcamento.getColumnModel().getColumn(13).setPreferredWidth(1);
             jTableConsultaOrcamento.getColumnModel().getColumn(13).setMaxWidth(1);
         }
 
@@ -456,20 +158,8 @@ public class ApresentaFinancas extends javax.swing.JFrame {
         container.setLayout(containerLayout);
         containerLayout.setHorizontalGroup(
             containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(containerLayout.createSequentialGroup()
-                .addGap(275, 275, 275)
-                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                .addGap(86, 86, 86)
-                .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
-                .addGap(320, 320, 320))
-            .addGroup(containerLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addGap(202, 369, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(29, 29, 29)
                 .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
                         .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -480,8 +170,21 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                                 .addComponent(jLabelSearch)))
                         .addGap(62, 62, 62))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(20, 20, 20))))
+            .addGroup(containerLayout.createSequentialGroup()
+                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(containerLayout.createSequentialGroup()
+                        .addGap(225, 225, 225)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                        .addGap(81, 81, 81)
+                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))
+                    .addGroup(containerLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))))
+                .addGap(332, 332, 332))
         );
         containerLayout.setVerticalGroup(
             containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -497,7 +200,7 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                     .addComponent(jLabelSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldAno, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addGap(30, 30, 30)
                 .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -505,148 +208,54 @@ public class ApresentaFinancas extends javax.swing.JFrame {
                 .addGap(91, 91, 91))
         );
 
-        getContentPane().add(container, java.awt.BorderLayout.CENTER);
-
-        pack();
-        setLocationRelativeTo(null);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 980, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 750, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(container, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNovoRegistro(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoRegistro
-         
-        if(novoRegistro == null){
-            novoRegistro = new NovoRegistro();
-            novoRegistro.setVisible(true);
-        }else{
-             novoRegistro.setVisible(true);
-        }
-       
-       
-    }//GEN-LAST:event_btnNovoRegistro
-
-    private void fecharJanela(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_fecharJanela
-     
-        if(telaChamadoraMainMenu == null){
-            new MainMenu().setVisible(true);
-        }else{
-            telaChamadoraMainMenu.setVisible(true);
-            this.dispose();
-        }
-                
-        
-        this.dispose();
-    }//GEN-LAST:event_fecharJanela
-
-    private void btnDashboard(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDashboard
-        telaChamadoraMainMenu.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnDashboard
-
-    private void jLabelSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearchMousePressed
-        
-        if(jTextFieldAno.getText().equals("")){
-            SimpleDateFormat df = new SimpleDateFormat("yyyy");
-            java.util.Date ano = new java.util.Date();
-            listarTodosOrcamentos(df.format(ano).toString());
-        }else{
-            listarTodosOrcamentos(jTextFieldAno.getText());
-        }
-        
-        
-    }//GEN-LAST:event_jLabelSearchMousePressed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-         listarTodosOrcamentos();
-    }//GEN-LAST:event_formWindowOpened
-
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-        
+
         int indice = jTableConsultaOrcamento.getSelectedRow();
         System.out.println(indice);
-        
+
         int opc = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja excluir este orçamento?: " +
-                jTableConsultaOrcamento.getValueAt(indice, 0), "Excluir Orçamento", JOptionPane.YES_NO_OPTION);
-        
+            jTableConsultaOrcamento.getValueAt(indice, 0), "Excluir Orçamento", JOptionPane.YES_NO_OPTION);
+
         if(opc == 0){
-           if( indice > -1){                
+            if( indice > -1){
                 try {
-                   
-                   
-                   long id_orcamento = (long) jTableConsultaOrcamento.getValueAt(indice, 13); // Retorna ID_ORÇAMENTO
-                    
-                   OrcamentoController oc = new OrcamentoController();
-                   
-                   
-                   if(oc.excluirOrcamento(id_orcamento)){
-                       JOptionPane.showMessageDialog(null, "Orçamento deletado com sucesso.");
-                       listarTodosOrcamentos();
-                      
-                   }else{
-                       JOptionPane.showMessageDialog(null, "Não foi possível excluir o Orçamento. Selecione um índice válido na tabela");
-                   }
-               } catch (Exception e) {
-                   JOptionPane.showMessageDialog(null,"Erro ao excluir orçamento: " + e);
-               }
-            
+
+                    long id_orcamento = (long) jTableConsultaOrcamento.getValueAt(indice, 13); // Retorna ID_ORÇAMENTO
+
+                    OrcamentoController oc = new OrcamentoController();
+
+                    if(oc.excluirOrcamento(id_orcamento)){
+                        JOptionPane.showMessageDialog(null, "Orçamento deletado com sucesso.");
+                        listarTodosOrcamentos();
+
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Não foi possível excluir o Orçamento. Selecione um índice válido na tabela");
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null,"Erro ao excluir orçamento: " + e);
+                }
+
             }
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
-
-    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        
-        boolean resultado;
-        int indice = jTableConsultaOrcamento.getSelectedRow();
-        
-        if( indice > -1){                
-            try {
-
-                long  id_orcamento = (long) jTableConsultaOrcamento.getValueAt(indice, 13); // Retorna IDORCAMENTO
-                OrcamentoController oc = new OrcamentoController();
-                resultado = oc.editarCliente(id_orcamento);
-                
-                if (!resultado) {
-                    JOptionPane.showMessageDialog(null, "Erro ao selecionar PKOrçamento");
-                }
-             
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null,"Erro ao retornar informações do orçamento: " + e);
-                }
-        }else{
-        
-            JOptionPane.showMessageDialog(null, "Selecione um orçamento.");        
-        }
-
-    }//GEN-LAST:event_jButtonEditarActionPerformed
-
-    private void jTFClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTFClientesMousePressed
-       if(telaChamadoraApresentaCliente == null){
-            ApresentaCliente ap = new ApresentaCliente(this);
-            this.setVisible(false);
-            ap.setVisible(true);
-       }else{
-           this.setVisible(false);
-            telaChamadoraApresentaCliente.setVisible(true);
-       }
-     
-    }//GEN-LAST:event_jTFClientesMousePressed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if(telaChamadoraMainMenu != null){
-            telaChamadoraMainMenu.setVisible(true);
-            this.dispose();
-        }else{
-            MainMenu menu = new MainMenu(this);
-            menu.setVisible(true);
-            this.dispose();
-        }
-    }//GEN-LAST:event_formWindowClosing
-
-    private void JTFProdutosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTFProdutosMousePressed
-        ApresentaFinancas ap = new ApresentaFinancas();
-        ap.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_JTFProdutosMousePressed
-    
-    public void listarTodosOrcamentos(){
+ 
+    private void listarTodosOrcamentos(){
         
         DefaultTableModel tabelaOrcamentoModel = (DefaultTableModel) jTableConsultaOrcamento.getModel(); // tabela
         tabelaOrcamentoModel.setRowCount(0);
@@ -824,77 +433,54 @@ public class ApresentaFinancas extends javax.swing.JFrame {
             }
     }
     
-    
-    
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ApresentaFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ApresentaFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ApresentaFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ApresentaFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ApresentaFinancas().setVisible(true);
+        boolean resultado;
+        int indice = jTableConsultaOrcamento.getSelectedRow();
+
+        if( indice > -1){
+            try {
+
+                long  id_orcamento = (long) jTableConsultaOrcamento.getValueAt(indice, 13); // Retorna IDORCAMENTO
+                OrcamentoController oc = new OrcamentoController();
+                resultado = oc.editarCliente(id_orcamento);
+
+                if (!resultado) {
+                    JOptionPane.showMessageDialog(null, "Erro ao selecionar PKOrçamento");
+                }
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Erro ao retornar informações do orçamento: " + e);
             }
-        });
-    }
+        }else{
+
+            JOptionPane.showMessageDialog(null, "Selecione um orçamento.");
+        }
+    }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void jLabelSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearchMousePressed
+
+        if(jTextFieldAno.getText().equals("")){
+            SimpleDateFormat df = new SimpleDateFormat("yyyy");
+            java.util.Date ano = new java.util.Date();
+            listarTodosOrcamentos(df.format(ano).toString());
+        }else{
+            listarTodosOrcamentos(jTextFieldAno.getText());
+        }
+
+    }//GEN-LAST:event_jLabelSearchMousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel JTFFinancas;
-    private javax.swing.JLabel JTFNovoRegistro;
-    private javax.swing.JLabel JTFProdutos;
     private javax.swing.JPanel container;
-    private javax.swing.JLabel dashboard;
-    private javax.swing.JPanel gridLateral;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelSearch;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel jTFClientes;
     private javax.swing.JTable jTableConsultaOrcamento;
     private javax.swing.JFormattedTextField jTextFieldAno;
-    private javax.swing.JPanel menuLateral;
-    private javax.swing.JPanel panelClientes;
-    private javax.swing.JPanel panelDashboard;
-    private javax.swing.JPanel panelFinancas;
-    private javax.swing.JPanel panelNovoRegistro;
-    private javax.swing.JPanel panelProdutos;
     // End of variables declaration//GEN-END:variables
 }

@@ -24,6 +24,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame {
      */
     public CadastroOrcamentoPrevisto() {
         initComponents();
+        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
     }
 
     /**

@@ -23,6 +23,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     
     public CadastroProduto() {
         initComponents();
+        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
     }
     
     /**

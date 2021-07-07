@@ -5,6 +5,8 @@
  */
 package BeutifulSalon.view;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Mateus
@@ -16,6 +18,7 @@ public class NovoRegistro extends javax.swing.JFrame {
      */
     public NovoRegistro() {
         initComponents();
+        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
     }
 
     /**
@@ -51,7 +54,8 @@ public class NovoRegistro extends javax.swing.JFrame {
         jComboBoxTipoRegistro.setBackground(new java.awt.Color(255, 255, 255));
         jComboBoxTipoRegistro.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jComboBoxTipoRegistro.setForeground(new java.awt.Color(51, 51, 51));
-        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente" }));
+        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente", "Fluxo de Caixa", "" }));
+        jComboBoxTipoRegistro.setSelectedIndex(3);
         jComboBoxTipoRegistro.setBorder(null);
         jComboBoxTipoRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jComboBoxTipoRegistro.addActionListener(new java.awt.event.ActionListener() {
@@ -130,6 +134,14 @@ public class NovoRegistro extends javax.swing.JFrame {
             case 2:
                 new CadastroCliente().setVisible(true);
                 dispose();
+                break;
+            case 3:
+                new CadastroFluxoDeCaixa().setVisible(true);
+                dispose();
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Erro ao selecionar");
+                break;
         }
     }//GEN-LAST:event_jButtonConfirmarActionPerformed
 

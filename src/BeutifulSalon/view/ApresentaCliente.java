@@ -8,9 +8,6 @@ package BeutifulSalon.view;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
-import java.awt.event.MouseEvent;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,69 +16,17 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Mateus
  */
-public class ApresentaCliente extends javax.swing.JFrame {
+public class ApresentaCliente extends javax.swing.JPanel {
 
     /**
-     * Creates new form MainMenu
+     * Creates new form testando
      */
-    
-    // IMPLEMENTANDO SISTEMA DE FECHAR E ABRIR TELA
-    NovoRegistro novoRegistro;
-  
-    MainMenu telaChamadoraMainMenu = null;
-    ApresentaFinancas telaChamadoraApresentaFinancas = null;
-    ApresentaProduto telaChamadoraApresentaProduto = null;
-    
     public ApresentaCliente() {
         initComponents();
+        listarTodosClientes();
+          new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
     }
-    
-    //Chamada a partir de MainMenu
-    public ApresentaCliente(MainMenu aThis) {
-        this.telaChamadoraMainMenu = aThis;
-        
-        try {          
-           this.setPreferredSize(aThis.getSize());
-        } catch (Exception e) {
-            
-        }
-       
-        initComponents();
-    }
-    
-    public ApresentaCliente(ApresentaFinancas aThis) {
-        this.telaChamadoraApresentaFinancas = aThis;
-        
-        try {          
-           this.setPreferredSize(aThis.getSize());
-        } catch (Exception e) {
-            
-        }
-       
-        initComponents();
-    }
-     public ApresentaCliente(ApresentaProduto aThis) {
-        this.telaChamadoraApresentaProduto = aThis;
-        
-        try {          
-           this.setPreferredSize(aThis.getSize());
-        } catch (Exception e) {
-            
-        }
-       
-        initComponents();
-    }
-     
-   
-    
-    
 
-
-    
-    //============================//
-    
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,22 +36,6 @@ public class ApresentaCliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel8 = new javax.swing.JLabel();
-        menuLateral = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        gridLateral = new javax.swing.JPanel();
-        panelDashboard = new javax.swing.JPanel();
-        dashboard = new javax.swing.JLabel();
-        panelClientes = new javax.swing.JPanel();
-        jTFClientes = new javax.swing.JLabel();
-        panelProdutos = new javax.swing.JPanel();
-        JTFProdutos = new javax.swing.JLabel();
-        panelFinancas = new javax.swing.JPanel();
-        JTFFinancas = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        panelNovoRegistro = new javax.swing.JPanel();
-        JTFNovoRegistro = new javax.swing.JLabel();
         container = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -118,247 +47,6 @@ public class ApresentaCliente extends javax.swing.JFrame {
         jTextFieldNomeCliente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-
-        jLabel8.setText("jLabel8");
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Clientes");
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                listarTodosClientes(evt);
-            }
-        });
-
-        menuLateral.setBackground(new java.awt.Color(36, 46, 66));
-        menuLateral.setPreferredSize(new java.awt.Dimension(300, 500));
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logo.png"))); // NOI18N
-
-        gridLateral.setBackground(new java.awt.Color(36, 46, 66));
-        gridLateral.setLayout(new java.awt.GridLayout(8, 0));
-
-        panelDashboard.setBackground(new java.awt.Color(36, 46, 66));
-        panelDashboard.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        dashboard.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        dashboard.setForeground(new java.awt.Color(255, 255, 255));
-        dashboard.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconHome.png"))); // NOI18N
-        dashboard.setLabelFor(container);
-        dashboard.setText("Dashboard");
-        dashboard.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        dashboard.setIconTextGap(20);
-        dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dashboardMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnDashboard(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelDashboardLayout = new javax.swing.GroupLayout(panelDashboard);
-        panelDashboard.setLayout(panelDashboardLayout);
-        panelDashboardLayout.setHorizontalGroup(
-            panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelDashboardLayout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(dashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelDashboardLayout.setVerticalGroup(
-            panelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
-        gridLateral.add(panelDashboard);
-
-        panelClientes.setBackground(new java.awt.Color(36, 46, 66));
-        panelClientes.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        jTFClientes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTFClientes.setForeground(new java.awt.Color(255, 255, 255));
-        jTFClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconPeoples.png"))); // NOI18N
-        jTFClientes.setText("Clientes");
-        jTFClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTFClientes.setIconTextGap(16);
-
-        javax.swing.GroupLayout panelClientesLayout = new javax.swing.GroupLayout(panelClientes);
-        panelClientes.setLayout(panelClientesLayout);
-        panelClientesLayout.setHorizontalGroup(
-            panelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelClientesLayout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(jTFClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelClientesLayout.setVerticalGroup(
-            panelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelClientesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTFClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        gridLateral.add(panelClientes);
-
-        panelProdutos.setBackground(new java.awt.Color(36, 46, 66));
-        panelProdutos.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        JTFProdutos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        JTFProdutos.setForeground(new java.awt.Color(255, 255, 255));
-        JTFProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconPrice.png"))); // NOI18N
-        JTFProdutos.setText("Produtos");
-        JTFProdutos.setIconTextGap(20);
-        JTFProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                JTFProdutosMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelProdutosLayout = new javax.swing.GroupLayout(panelProdutos);
-        panelProdutos.setLayout(panelProdutosLayout);
-        panelProdutosLayout.setHorizontalGroup(
-            panelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelProdutosLayout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(JTFProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelProdutosLayout.setVerticalGroup(
-            panelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelProdutosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JTFProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        gridLateral.add(panelProdutos);
-
-        panelFinancas.setBackground(new java.awt.Color(36, 46, 66));
-        panelFinancas.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        JTFFinancas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        JTFFinancas.setForeground(new java.awt.Color(255, 255, 255));
-        JTFFinancas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconWallet.png"))); // NOI18N
-        JTFFinancas.setText("Finanças");
-        JTFFinancas.setIconTextGap(20);
-        JTFFinancas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                JTFFinancasMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelFinancasLayout = new javax.swing.GroupLayout(panelFinancas);
-        panelFinancas.setLayout(panelFinancasLayout);
-        panelFinancasLayout.setHorizontalGroup(
-            panelFinancasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelFinancasLayout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(JTFFinancas, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelFinancasLayout.setVerticalGroup(
-            panelFinancasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelFinancasLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JTFFinancas, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        gridLateral.add(panelFinancas);
-
-        jPanel10.setBackground(new java.awt.Color(36, 46, 66));
-        jPanel10.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 288, Short.MAX_VALUE)
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 60, Short.MAX_VALUE)
-        );
-
-        gridLateral.add(jPanel10);
-
-        jPanel9.setBackground(new java.awt.Color(36, 46, 66));
-        jPanel9.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 288, Short.MAX_VALUE)
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 60, Short.MAX_VALUE)
-        );
-
-        gridLateral.add(jPanel9);
-
-        panelNovoRegistro.setBackground(new java.awt.Color(36, 46, 66));
-        panelNovoRegistro.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        JTFNovoRegistro.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        JTFNovoRegistro.setForeground(new java.awt.Color(255, 255, 255));
-        JTFNovoRegistro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconAdd.png"))); // NOI18N
-        JTFNovoRegistro.setText("Novo Registro");
-        JTFNovoRegistro.setIconTextGap(20);
-        JTFNovoRegistro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnNovoRegistro(evt);
-            }
-        });
-
-        javax.swing.GroupLayout panelNovoRegistroLayout = new javax.swing.GroupLayout(panelNovoRegistro);
-        panelNovoRegistro.setLayout(panelNovoRegistroLayout);
-        panelNovoRegistroLayout.setHorizontalGroup(
-            panelNovoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNovoRegistroLayout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(JTFNovoRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        panelNovoRegistroLayout.setVerticalGroup(
-            panelNovoRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelNovoRegistroLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JTFNovoRegistro, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        gridLateral.add(panelNovoRegistro);
-
-        javax.swing.GroupLayout menuLateralLayout = new javax.swing.GroupLayout(menuLateral);
-        menuLateral.setLayout(menuLateralLayout);
-        menuLateralLayout.setHorizontalGroup(
-            menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLateralLayout.createSequentialGroup()
-                .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(menuLateralLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(gridLateral, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(menuLateralLayout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel12)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        menuLateralLayout.setVerticalGroup(
-            menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLateralLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(41, 41, 41)
-                .addComponent(gridLateral, javax.swing.GroupLayout.PREFERRED_SIZE, 480, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(menuLateral, java.awt.BorderLayout.LINE_START);
 
         container.setBackground(new java.awt.Color(243, 244, 245));
 
@@ -388,7 +76,7 @@ public class ApresentaCliente extends javax.swing.JFrame {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Sobrenome", "Celular", "Email", "", "ult. Visita"
+                "Nome", "Sobrenome", "Celular", "Email", "CPF", "ult. Visita"
             }
         ) {
             Class[] types = new Class [] {
@@ -407,14 +95,10 @@ public class ApresentaCliente extends javax.swing.JFrame {
             }
         });
         jTableConsultaCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTableConsultaCliente.setGridColor(new java.awt.Color(34, 34, 34));
         jTableConsultaCliente.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaCliente.setShowGrid(true);
         jScrollPane2.setViewportView(jTableConsultaCliente);
-        if (jTableConsultaCliente.getColumnModel().getColumnCount() > 0) {
-            jTableConsultaCliente.getColumnModel().getColumn(4).setMinWidth(1);
-            jTableConsultaCliente.getColumnModel().getColumn(4).setPreferredWidth(1);
-            jTableConsultaCliente.getColumnModel().getColumn(4).setMaxWidth(1);
-        }
 
         jButtonDetalhes.setBackground(new java.awt.Color(36, 141, 248));
         jButtonDetalhes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -462,7 +146,7 @@ public class ApresentaCliente extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconLupa.png"))); // NOI18N
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                ConsultarCliente(evt);
+                jLabel4ConsultarCliente(evt);
             }
         });
 
@@ -481,11 +165,11 @@ public class ApresentaCliente extends javax.swing.JFrame {
                             .addComponent(jLabel2)))
                     .addGroup(containerLayout.createSequentialGroup()
                         .addGap(192, 192, 192)
-                        .addComponent(jButtonDetalhes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonDetalhes, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                         .addGap(74, 74, 74)
-                        .addComponent(jButtonEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
                         .addGap(63, 63, 63)
-                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)))
                 .addGap(202, 202, 202))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
                 .addGap(77, 77, 77)
@@ -524,69 +208,54 @@ public class ApresentaCliente extends javax.swing.JFrame {
                 .addGap(60, 60, 60))
         );
 
-        getContentPane().add(container, java.awt.BorderLayout.CENTER);
-
-        pack();
-        setLocationRelativeTo(null);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 981, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 752, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(container, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNovoRegistro(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoRegistro
-        if(novoRegistro == null){
-            novoRegistro = new NovoRegistro();
-        }
-       
-        novoRegistro.setVisible(true);
-    }//GEN-LAST:event_btnNovoRegistro
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
 
-    private void btnDashboard(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDashboard
-        telaChamadoraMainMenu.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnDashboard
+        int indice = jTableConsultaCliente.getSelectedRow();
 
-    private void ConsultarCliente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ConsultarCliente
-      
-        String nome = jTextFieldNomeCliente.getText(); // nome do TextField
-        DefaultTableModel tabelaClienteModel = (DefaultTableModel) jTableConsultaCliente.getModel(); // tabela
-        tabelaClienteModel.setRowCount(0);
-       
-        ClienteController cc = new ClienteController();
-        
-       
-        ArrayList<Cliente> clientesConsultados = null;
-        try {
-            clientesConsultados = cc.listarClientes(nome);
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-            
-            try {
-               clientesConsultados.forEach( (Cliente cliente) -> {
-                 tabelaClienteModel.addRow(new Object[] {cliente.getNOME(),
-                                                        cliente.getSOBRENOME(),
-                                                        cliente.getCELULAR(),
-                                                        cliente.getEMAIL(),
-                                                        cliente.getCPF()});
-            
-               });
-               
-               jTableConsultaCliente.setModel(tabelaClienteModel);
-                
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
+        int opc = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja excluir o cliente: " +
+            jTableConsultaCliente.getValueAt(indice, 0) + " " + jTableConsultaCliente.getValueAt(indice, 1), "Excluir Cliente", JOptionPane.YES_NO_OPTION);
+
+        if(opc == 0){
+            if( indice > -1){
+                try {
+
+                    String cpfClienteSelecionado = (String) jTableConsultaCliente.getValueAt(indice, 4); // Retorna CPF
+                    ClienteController cc = new ClienteController();
+
+                    if(cc.excluirCliente(cpfClienteSelecionado)){
+                        JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso.");
+                        listarTodosClientes();
+
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Não foi possível excluir o cliente. Selecione um índice válido na tabela");
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null,"Erro ao excluir cliente: " + e);
+                }
+
             }
-         
-                
-       
-       
-       
-       
-    }//GEN-LAST:event_ConsultarCliente
+        }
 
-    private void listarTodosClientes(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_listarTodosClientes
-        listarTodosClientes();
-    }//GEN-LAST:event_listarTodosClientes
-
-    public void listarTodosClientes(){
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
+     private void listarTodosClientes(){
           
         DefaultTableModel tabelaClienteModel = (DefaultTableModel) jTableConsultaCliente.getModel(); // tabela
         tabelaClienteModel.setRowCount(0);
@@ -617,165 +286,78 @@ public class ApresentaCliente extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
             }
     }
-    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-      
-        int indice = jTableConsultaCliente.getSelectedRow();
-        
-        int opc = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja excluir o cliente: " +
-                jTableConsultaCliente.getValueAt(indice, 0) + " " + jTableConsultaCliente.getValueAt(indice, 1), "Excluir Cliente", JOptionPane.YES_NO_OPTION);
-         
-        if(opc == 0){
-           if( indice > -1){                
-                try {
-                   
-                   String cpfClienteSelecionado = (String) jTableConsultaCliente.getValueAt(indice, 4); // Retorna CPF
-                   ClienteController cc = new ClienteController();
-                   
-                   if(cc.excluirCliente(cpfClienteSelecionado)){
-                       JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso.");
-                        listarTodosClientes();
-                      
-                   }else{
-                       JOptionPane.showMessageDialog(null, "Não foi possível excluir o cliente. Selecione um índice válido na tabela");
-                   }
-               } catch (Exception e) {
-                   JOptionPane.showMessageDialog(null,"Erro ao excluir cliente: " + e);
-               }
-            
-            }
-        }
-               
-    }//GEN-LAST:event_jButtonExcluirActionPerformed
-
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        
+
         boolean resultado;
         int indice = jTableConsultaCliente.getSelectedRow();
-        
-        if( indice > -1){                
+
+        if( indice > -1){
             try {
 
                 String cpfClienteSelecionado = (String) jTableConsultaCliente.getValueAt(indice, 4); // Retorna CPF
                 ClienteController cc = new ClienteController();
                 resultado = cc.editarCliente(cpfClienteSelecionado);
-                
+
                 if (!resultado) {
                     JOptionPane.showMessageDialog(null, "Erro ao selecionar PKCliente");
                 }
-             
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null,"Erro ao retornar informações do cliente: " + e);
-                }
-            }else{
-                
-            JOptionPane.showMessageDialog(null, "Selecione um cliente.");
-                
-            }
 
-            
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null,"Erro ao retornar informações do cliente: " + e);
+            }
+        }else{
+
+            JOptionPane.showMessageDialog(null, "Selecione um cliente.");
+
+        }
+
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void JTFFinancasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTFFinancasMousePressed
-       
-       
-    }//GEN-LAST:event_JTFFinancasMousePressed
+    private void jLabel4ConsultarCliente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4ConsultarCliente
 
-    private void dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseClicked
-        
-        if(telaChamadoraMainMenu == null){
-            MainMenu menu = new MainMenu(this);
-            menu.setVisible(true);
-            this.dispose();
-        }else{
-            telaChamadoraMainMenu.setVisible(true);
-            this.dispose();
-        }
-     
-    }//GEN-LAST:event_dashboardMouseClicked
+        String nome = jTextFieldNomeCliente.getText(); // nome do TextField
+        DefaultTableModel tabelaClienteModel = (DefaultTableModel) jTableConsultaCliente.getModel(); // tabela
+        tabelaClienteModel.setRowCount(0);
 
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        if(telaChamadoraMainMenu != null){
-           telaChamadoraMainMenu.setVisible(true);
-        }
-       
-        this.dispose();
-    }//GEN-LAST:event_formWindowClosing
+        ClienteController cc = new ClienteController();
 
-    private void JTFProdutosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTFProdutosMousePressed
-        ApresentaProduto p = new ApresentaProduto();
-        p.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_JTFProdutosMousePressed
-
-    
-    
-    
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        ArrayList<Cliente> clientesConsultados = null;
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            clientesConsultados = cc.listarClientes(nome);
+        } catch (ExceptionDAO ex) {
             java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ApresentaCliente().setVisible(true);
-            }
+        try {
+            clientesConsultados.forEach( (Cliente cliente) -> {
+                tabelaClienteModel.addRow(new Object[] {cliente.getNOME(),
+                    cliente.getSOBRENOME(),
+                    cliente.getCELULAR(),
+                    cliente.getEMAIL(),
+                    cliente.getCPF()});
+
         });
-    }
+
+        jTableConsultaCliente.setModel(tabelaClienteModel);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
+        }
+
+    }//GEN-LAST:event_jLabel4ConsultarCliente
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel JTFFinancas;
-    private javax.swing.JLabel JTFNovoRegistro;
-    private javax.swing.JLabel JTFProdutos;
     private javax.swing.JPanel container;
-    private javax.swing.JLabel dashboard;
-    private javax.swing.JPanel gridLateral;
     private javax.swing.JButton jButtonDetalhes;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel jTFClientes;
     private javax.swing.JTable jTableConsultaCliente;
     private javax.swing.JTextField jTextFieldNomeCliente;
-    private javax.swing.JPanel menuLateral;
-    private javax.swing.JPanel panelClientes;
-    private javax.swing.JPanel panelDashboard;
-    private javax.swing.JPanel panelFinancas;
-    private javax.swing.JPanel panelNovoRegistro;
-    private javax.swing.JPanel panelProdutos;
     // End of variables declaration//GEN-END:variables
 }

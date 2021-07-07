@@ -30,6 +30,7 @@ public class EditarCliente extends javax.swing.JFrame {
     
     public EditarCliente() {
         initComponents();
+        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
     }
 
     public EditarCliente(Cliente cliente) {
@@ -128,8 +129,8 @@ public class EditarCliente extends javax.swing.JFrame {
         jFormattedTextFieldDataNasc = new javax.swing.JFormattedTextField();
         jTextFieldCelular = new javax.swing.JFormattedTextField();
         jPanel20 = new javax.swing.JPanel();
-        jTextFieldTelefone = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
+        jTextFieldTelefone = new javax.swing.JFormattedTextField();
         jPanelCep1 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
         jTextFieldCep = new javax.swing.JTextField();
@@ -370,12 +371,17 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jPanel20.setBackground(new java.awt.Color(243, 244, 245));
 
-        jTextFieldTelefone.setBackground(new java.awt.Color(255, 255, 255));
-        jTextFieldTelefone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextFieldTelefone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
-
         jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel24.setText("Telefone");
+
+        jTextFieldTelefone.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldTelefone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
+        try {
+            jTextFieldTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jTextFieldTelefone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
@@ -384,16 +390,16 @@ public class EditarCliente extends javax.swing.JFrame {
             .addGroup(jPanel20Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                     .addGroup(jPanel20Layout.createSequentialGroup()
-                        .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 136, Short.MAX_VALUE))
-                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE))
+                        .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel20Layout.setVerticalGroup(
             jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel20Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(20, Short.MAX_VALUE)
                 .addComponent(jLabel24)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -804,6 +810,6 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldNumero;
     private javax.swing.JTextField jTextFieldRua;
     private javax.swing.JTextField jTextFieldSobrenome;
-    private javax.swing.JTextField jTextFieldTelefone;
+    private javax.swing.JFormattedTextField jTextFieldTelefone;
     // End of variables declaration//GEN-END:variables
 }
