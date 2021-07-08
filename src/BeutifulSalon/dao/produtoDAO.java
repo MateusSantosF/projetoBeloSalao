@@ -293,5 +293,57 @@ public class produtoDAO {
 
 
     }
+
+    public Produto buscarProduto(long id) {
+
+        String sql = "SELECT NOME, MARCA, PRECO, IDPRODUTO FROM PRODUTO WHERE IDPRODUTO = ?";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+      
+        
+        try{
+            
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setLong(1, id);         
+            rs = pStatement.executeQuery();
+            
+            Produto produtoBuscado = new Produto();
+   
+            if(rs != null){                
+                while(rs.next()){  
+             
+                produtoBuscado.setNome(rs.getString("NOME"));
+                produtoBuscado.setMarca(rs.getString("MARCA"));
+                produtoBuscado.setPreco(rs.getLong("PRECO"));
+                produtoBuscado.setId_produto(rs.getLong("IDPRODUTO"));
+  
+                }
+            }
+            
+            return produtoBuscado;
+       
+            
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) " + e);
+        }finally{
+              try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+
+        return null;
+    }
     
 }

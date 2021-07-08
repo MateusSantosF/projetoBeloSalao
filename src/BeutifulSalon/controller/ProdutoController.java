@@ -52,7 +52,10 @@ public class ProdutoController {
     public ArrayList<Produto> listarProdutos() throws ExceptionDAO{
         return new Produto().listarProdutos();
     }
-
+    
+    public Produto buscarProduto(long id) throws ExceptionDAO{
+        return new Produto().buscarProduto(id);
+    }
 
     public boolean excluirProduto(long idProdutoSelecionado) {
          try {

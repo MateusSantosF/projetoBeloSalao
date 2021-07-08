@@ -131,4 +131,8 @@ public class Produto {
     public void atualizarProduto(Produto produto) throws ExceptionDAO{
        new produtoDAO().atualizarProduto(produto);
     }
+    
+    public Produto buscarProduto(long id) throws ExceptionDAO{
+        return new produtoDAO().buscarProduto(id);
+    }
 }

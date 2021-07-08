@@ -70,6 +70,13 @@ public class Cliente {
         this.CELULAR = CELULAR;
 
     }
+      
+      
+      //Cosntrutor para a tela de FluxoDeCaixa
+    public Cliente (String nome, String CPF){
+        this.NOME = nome;
+        this.CPF = CPF;
+    }
 
     public Date getDATAREG() {
         return DATAREG;
