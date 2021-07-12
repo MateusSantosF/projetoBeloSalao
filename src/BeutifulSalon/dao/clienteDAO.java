@@ -65,7 +65,7 @@ public class clienteDAO {
             
             try {
                 if(connection != null) connection.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
             }
            

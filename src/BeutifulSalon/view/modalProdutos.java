@@ -60,17 +60,17 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
 
         jTableProdutosComprados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Marca", "Preço", "id"
+                "Nome", "Marca", "Preço", "Qtd.", "id"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -79,9 +79,9 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
         });
         jScrollPane1.setViewportView(jTableProdutosComprados);
         if (jTableProdutosComprados.getColumnModel().getColumnCount() > 0) {
-            jTableProdutosComprados.getColumnModel().getColumn(3).setMinWidth(1);
-            jTableProdutosComprados.getColumnModel().getColumn(3).setPreferredWidth(1);
-            jTableProdutosComprados.getColumnModel().getColumn(3).setMaxWidth(1);
+            jTableProdutosComprados.getColumnModel().getColumn(4).setMinWidth(1);
+            jTableProdutosComprados.getColumnModel().getColumn(4).setPreferredWidth(1);
+            jTableProdutosComprados.getColumnModel().getColumn(4).setMaxWidth(1);
         }
 
         jTableConsultaProdutos.setModel(new javax.swing.table.DefaultTableModel(
@@ -128,7 +128,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
             }
         });
 
-        jLabel2.setText("Nome Produto");
+        jLabel2.setText("Busca por Nome");
 
         jLabel3.setText("Produtos Comprados");
 
@@ -214,6 +214,8 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
         
         if(indice > -1){
             try{
+                
+                int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade comprada: "));
                 DefaultTableModel tabelaProdutosComprados = (DefaultTableModel) jTableProdutosComprados.getModel();
                 ProdutoController po = new ProdutoController();
                 long idProdutoBuscado = (long ) jTableConsultaProdutos.getValueAt(indice, 3);
@@ -225,6 +227,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
                     produtoBuscado.getNome(),
                     produtoBuscado.getMarca(),
                     Dinheiro.parseString(produtoBuscado.getPreco()),
+                    quantidade,
                     produtoBuscado.getId_produto()
                 });
 

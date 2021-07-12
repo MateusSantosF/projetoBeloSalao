@@ -25,6 +25,8 @@ public class Produto {
     
     //construtor padrão
     public Produto(){}
+
+   
     
     //Construtor não padrão
     public Produto(String nome, String marca, long preco, Date dataValidade, Date dataReg) {
@@ -33,6 +35,13 @@ public class Produto {
         this.preco = preco; 
         this.dataReg = dataReg;
         this.dataValidade = dataValidade;
+    }
+    
+    public Produto(String nome, String marca, long preco, long id_produto){
+        this.nome = nome;
+        this.marca = marca;
+        this.preco = preco;
+        this.id_produto = id_produto;
     }
     
     
@@ -63,7 +72,7 @@ public class Produto {
     public void setId_produto(long id_produto) {
         this.id_produto = id_produto;
     }
-
+   
    
     public String getNome() {
         return nome;

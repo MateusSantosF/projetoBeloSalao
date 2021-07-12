@@ -5,15 +5,9 @@
  */
 package BeutifulSalon.view;
 
+
 import BeutifulSalon.model.GerenciadorJPanel;
-import java.awt.Frame;
-import java.util.ArrayList;
-import java.util.Arrays;
-import javax.swing.JOptionPane;
-import BeutifulSalon.model.GerenciadorJPanel;
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
+
 
 
 /**
@@ -22,13 +16,12 @@ import javax.swing.UnsupportedLookAndFeelException;
  */
 public class MainMenu extends javax.swing.JFrame {
 
-     NovoRegistro novoRegistro;
+    NovoRegistro novoRegistro = null;
     
     public MainMenu() {
         initComponents();
-         initComponents();
+
         this.setExtendedState(MAXIMIZED_BOTH);
-        this.setLocationRelativeTo(this);
          
         new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
         new GerenciadorJPanel(painelPrincipal, new Dashboard());
@@ -285,7 +278,8 @@ public class MainMenu extends javax.swing.JFrame {
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
        
         if(novoRegistro == null){
-            new NovoRegistro().setVisible(true);
+            novoRegistro = new NovoRegistro();
+            novoRegistro.setVisible(true);
         }else{
             novoRegistro.setVisible(true);
         }

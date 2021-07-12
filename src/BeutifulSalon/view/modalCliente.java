@@ -88,7 +88,7 @@ public class modalCliente extends javax.swing.JFrame implements Observado {
             }
         });
 
-        jLabel1.setText("Nome");
+        jLabel1.setText("Busca por Nome:");
 
         jButton1.setText("Confirmar");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
