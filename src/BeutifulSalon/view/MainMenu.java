@@ -6,6 +6,10 @@
 package BeutifulSalon.view;
 
 
+import BeutifulSalon.view.modais.NovoRegistro;
+import BeutifulSalon.view.Apresenta.ApresentaFinancas;
+import BeutifulSalon.view.Apresenta.ApresentaProduto;
+import BeutifulSalon.view.Apresenta.ApresentaCliente;
 import BeutifulSalon.model.GerenciadorJPanel;
 
 

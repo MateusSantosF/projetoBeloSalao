@@ -2,14 +2,9 @@
 package BeutifulSalon.model;
 
 import BeutifulSalon.dao.ExceptionDAO;
-import BeutifulSalon.dao.clienteDAO;
 import java.util.Date;
 import BeutifulSalon.dao.clienteDAO;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *

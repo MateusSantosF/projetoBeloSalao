@@ -5,6 +5,8 @@
  */
 package BeutifulSalon.model;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author mateus
@@ -12,4 +14,10 @@ package BeutifulSalon.model;
 public interface Observador {
     
     public void update(Object obj);
+    
+    public void update(DefaultTableModel model);
+    
+    public void update(String valorDesconto);
+    
+    public void update(Cliente cliente);
 }

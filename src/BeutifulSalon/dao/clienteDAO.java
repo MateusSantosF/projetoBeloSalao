@@ -10,7 +10,7 @@ package BeutifulSalon.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import BeutifulSalon.model.Cliente;
-import BeutifulSalon.view.EditarCliente;
+import BeutifulSalon.view.Edicao.EditarCliente;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.ResultSet;

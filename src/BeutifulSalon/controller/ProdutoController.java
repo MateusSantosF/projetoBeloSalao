@@ -2,7 +2,7 @@ package BeutifulSalon.controller;
 
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Produto;
-import BeutifulSalon.view.EditarProduto;
+import BeutifulSalon.view.Edicao.EditarProduto;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

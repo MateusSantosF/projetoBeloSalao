@@ -6,7 +6,7 @@
 package BeutifulSalon.dao;
 
 import BeutifulSalon.model.Orcamento;
-import BeutifulSalon.view.EditarOrcamento;
+import BeutifulSalon.view.Edicao.EditarOrcamento;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
