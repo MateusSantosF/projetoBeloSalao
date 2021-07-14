@@ -9,6 +9,7 @@ import BeutifulSalon.view.Cadastros.CadastroProduto;
 import BeutifulSalon.view.Cadastros.CadastroCliente;
 import BeutifulSalon.view.Cadastros.CadastroFluxoDeCaixa;
 import BeutifulSalon.view.Cadastros.CadastroOrcamentoPrevisto;
+import BeutifulSalon.view.Cadastros.CadastroServico;
 import javax.swing.JOptionPane;
 
 /**
@@ -58,9 +59,9 @@ public class NovoRegistro extends javax.swing.JFrame {
         jComboBoxTipoRegistro.setBackground(new java.awt.Color(255, 255, 255));
         jComboBoxTipoRegistro.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jComboBoxTipoRegistro.setForeground(new java.awt.Color(51, 51, 51));
-        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente", "Fluxo de Caixa" }));
+        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente", "Fluxo de Caixa", "Serviço" }));
         jComboBoxTipoRegistro.setBorder(null);
-        jComboBoxTipoRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jComboBoxTipoRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jComboBoxTipoRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxTipoRegistroActionPerformed(evt);
@@ -73,7 +74,7 @@ public class NovoRegistro extends javax.swing.JFrame {
         jButtonConfirmar.setText("Confirmar");
         jButtonConfirmar.setBorder(null);
         jButtonConfirmar.setBorderPainted(false);
-        jButtonConfirmar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButtonConfirmar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButtonConfirmar.setPreferredSize(new java.awt.Dimension(150, 65));
         jButtonConfirmar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,6 +141,10 @@ public class NovoRegistro extends javax.swing.JFrame {
                 break;
             case 3:
                 new CadastroFluxoDeCaixa().setVisible(true);
+                dispose();
+                break;
+            case 4:
+                new CadastroServico().setVisible(true);
                 dispose();
                 break;
             default:
