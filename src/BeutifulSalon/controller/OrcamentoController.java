@@ -27,7 +27,7 @@ public class OrcamentoController {
             
             try {
                 orc.cadastrarOrcamento(orc);
-            } catch (Exception e) {
+            } catch (ExceptionDAO e) {
                 JOptionPane.showMessageDialog(null, "Erro ao criar objeto orçamento" + e);
                 return false;
             }

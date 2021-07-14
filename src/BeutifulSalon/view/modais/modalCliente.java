@@ -292,11 +292,7 @@ public class modalCliente extends javax.swing.JFrame implements Observado {
     public void notificarObservadores() {
       
         observadores.forEach((Observador ob)->{
-            
-            if(ob instanceof CadastroFluxoDeCaixa){
-                ob.update(clienteSelecionado());
-            }
-     
+            ob.update(clienteSelecionado());
         });
     }
 

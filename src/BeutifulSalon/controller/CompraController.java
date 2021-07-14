@@ -22,7 +22,7 @@ public class CompraController {
     
      public boolean RegistraCompra(Date data, long valorDesconto, String cpfCliente, ArrayList<ItemCompra> itensCompra) throws ExceptionDAO {
          
-         if(cpfCliente.length() > 0){
+         if(cpfCliente.length() > 0 && cpfCliente.length() > 0){
           
              Compra compraAtual = new Compra();
              
@@ -39,6 +39,8 @@ public class CompraController {
                 return false;
              }
              
+         }else{
+             return false;
          }
          
          return true;

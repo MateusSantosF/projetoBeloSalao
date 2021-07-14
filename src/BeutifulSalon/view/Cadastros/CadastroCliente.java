@@ -30,42 +30,37 @@ public class CadastroCliente extends javax.swing.JFrame {
         initComponents();
         new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
     }
-    
-    public void buscarCep(String cep){
+
+    public void buscarCep(String cep) {
         String json;
- 
+
         try {
-            URL url = new URL("http://viacep.com.br/ws/"+ cep +"/json");
+            URL url = new URL("http://viacep.com.br/ws/" + cep + "/json");
             URLConnection urlConnection = url.openConnection();
-            
+
             InputStream is = urlConnection.getInputStream();
-            
+
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            
+
             StringBuilder jsonSb = new StringBuilder();
-            
+
             br.lines().forEach(l -> jsonSb.append(l.trim()));
             json = jsonSb.toString();
-            
-           
-            
+
             json = json.replaceAll("[{},:]", "");
-            json = json.replaceAll("\"","\n");
-            
+            json = json.replaceAll("\"", "\n");
+
             String array[] = new String[30];
             array = json.split("\n");
-           
-             
-             String rua = array[7];
-             String bairro = array[15];
-             String cidade = array[23];
- 
-             
-             
-             jTextFieldRua.setText(rua);
-             jTextFieldBairro.setText(bairro);
-             jTextFieldCidade.setText(cidade);
-                           
+
+            String rua = array[7];
+            String bairro = array[15];
+            String cidade = array[23];
+
+            jTextFieldRua.setText(rua);
+            jTextFieldBairro.setText(bairro);
+            jTextFieldCidade.setText(cidade);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao consultar CEP.");
         }
@@ -615,36 +610,32 @@ public class CadastroCliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrar(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrar
-        
+
         boolean sucessoAoCadastrar;
-        
+
         try {
             ClienteController cc = new ClienteController();
-            
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            
-      
-            
-            sucessoAoCadastrar = cc.cadastrarCliente(jFormattedTextFieldCPF.getText(),
-                jTextFieldNome.getText(), 
-                jTextFieldSobrenome.getText(), 
-                jTextFieldEmail.getText().toLowerCase(), 
-                jFormattedTextFieldDataNasc.getText(), 
-                jTextFieldCep.getText(), 
-                jTextFieldBairro.getText(),
-                jTextFieldRua.getText(), 
-                jTextFieldCidade.getText().toUpperCase(),
-                jTextFieldNumero.getText(),
-                jTextFieldTelefone.getText(),
-                jTextFieldCelular.getText(),
-                df.format(new Date()));  
 
-            
-            if(sucessoAoCadastrar){
+            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            sucessoAoCadastrar = cc.cadastrarCliente(jFormattedTextFieldCPF.getText(),
+                    jTextFieldNome.getText(),
+                    jTextFieldSobrenome.getText(),
+                    jTextFieldEmail.getText().toLowerCase(),
+                    jFormattedTextFieldDataNasc.getText(),
+                    jTextFieldCep.getText(),
+                    jTextFieldBairro.getText(),
+                    jTextFieldRua.getText(),
+                    jTextFieldCidade.getText().toUpperCase(),
+                    jTextFieldNumero.getText(),
+                    jTextFieldTelefone.getText(),
+                    jTextFieldCelular.getText(),
+                    df.format(new Date()));
+
+            if (sucessoAoCadastrar) {
                 JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");
                 limparTelaCadastroCliente();
-               
-            }else{
+
+            } else {
                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar, preencha todos os campos!");
             }
         } catch (HeadlessException e) {
@@ -656,8 +647,8 @@ public class CadastroCliente extends javax.swing.JFrame {
         jTextFieldRua.setText("aguarde...");
         jTextFieldBairro.setText("aguarde...");
         jTextFieldCidade.setText("...");
-        
-        if(jTextFieldCep.getText().length() == 8){
+
+        if (jTextFieldCep.getText().length() == 8) {
             buscarCep(jTextFieldCep.getText());
         }
     }//GEN-LAST:event_jTextFieldCepKeyReleased
@@ -673,20 +664,20 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_aguardeCamposCEP
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        
-        int opc = JOptionPane.showConfirmDialog(null,"Realmente deseja sair?", "Cadastro Cliente", JOptionPane.YES_NO_OPTION);
-         
-        if(opc == 0){
+
+        int opc = JOptionPane.showConfirmDialog(null, "Realmente deseja sair?", "Cadastro Cliente", JOptionPane.YES_NO_OPTION);
+
+        if (opc == 0) {
             this.dispose();
         }
-        
-      
+
+
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void limparCamposPerdeuFoco(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_limparCamposPerdeuFoco
-        
+
         //Limpa os campos caso o JTextFieldCep perca o foco e o texto seja menor que 8, ou seja, cep inválido
-        if(jTextFieldCep.getText().length() < 8){
+        if (jTextFieldCep.getText().length() < 8) {
             jTextFieldBairro.setText("");
             jTextFieldRua.setText("");
             jTextFieldCidade.setText("");
@@ -696,21 +687,22 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
-  
-    public void limparTelaCadastroCliente(){
-                jFormattedTextFieldCPF.setText("");
-                jTextFieldNome.setText("");
-                jTextFieldSobrenome.setText("");
-                jTextFieldEmail.setText("");
-                jFormattedTextFieldDataNasc.setText("");
-                jTextFieldCep.setText("");
-                jTextFieldBairro.setText("");
-                jTextFieldRua.setText("");
-                jTextFieldCidade.setText("");
-                jTextFieldNumero.setText("");
-                jTextFieldTelefone.setText("");
-                jTextFieldCelular.setText("");
-    }  
+
+    public void limparTelaCadastroCliente() {
+        jFormattedTextFieldCPF.setText("");
+        jTextFieldNome.setText("");
+        jTextFieldSobrenome.setText("");
+        jTextFieldEmail.setText("");
+        jFormattedTextFieldDataNasc.setText("");
+        jTextFieldCep.setText("");
+        jTextFieldBairro.setText("");
+        jTextFieldRua.setText("");
+        jTextFieldCidade.setText("");
+        jTextFieldNumero.setText("");
+        jTextFieldTelefone.setText("");
+        jTextFieldCelular.setText("");
+    }
+
     /**
      * @param args the command line arguments
      */

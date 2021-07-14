@@ -198,10 +198,7 @@ public class modalInputMonetarios extends javax.swing.JFrame implements Observad
     public void notificarObservadores() {
         
           observadores.forEach((Observador ob)->{
-            
-            if(ob instanceof CadastroFluxoDeCaixa){
                 ob.update(valorMonetario());
-            }
      
         });
     }
