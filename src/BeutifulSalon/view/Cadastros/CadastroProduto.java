@@ -113,7 +113,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         jFormattedTextFieldPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel26.setText("*Preço Unitário");
+        jLabel26.setText("*Preço Unitário ");
 
         jFormattedTextFieldDataValidade.setBackground(new java.awt.Color(255, 255, 255));
         try {
@@ -149,7 +149,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, JPCadastroClientes1Layout.createSequentialGroup()
                                 .addGap(123, 123, 123)
                                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jFormattedTextFieldPreco, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                    .addComponent(jFormattedTextFieldPreco)
                                     .addComponent(jLabel26))
                                 .addGap(220, 220, 220)
                                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

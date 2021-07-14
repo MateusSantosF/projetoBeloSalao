@@ -13,10 +13,10 @@ import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.view.Apresenta.ApresentaProduto;
 import BeutifulSalon.view.Cadastros.CadastroFluxoDeCaixa;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -28,6 +28,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
      * Creates new form modalProdutos
      */
     ArrayList<Observador> observadores = new ArrayList<>();
+    private boolean cabeleleiro;
     
     public modalProdutos() {
         initComponents();
@@ -37,6 +38,19 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
         DefaultTableModel model = (DefaultTableModel) jTableProdutosComprados.getModel();
         model.setRowCount(0);
         jTableProdutosComprados.setModel(model);
+    }
+    
+    public modalProdutos(boolean cabeleleiro){
+        
+        initComponents();
+        this.cabeleleiro = cabeleleiro;
+        listarTodosProdutos();
+        
+        //Limpa linhas da tabela de produtos comprados
+        DefaultTableModel model = (DefaultTableModel) jTableProdutosComprados.getModel();
+        model.setRowCount(0);
+        jTableProdutosComprados.setModel(model);
+    
     }
 
     /**
@@ -219,6 +233,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
                 
                 int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade comprada: "));
                 DefaultTableModel tabelaProdutosComprados = (DefaultTableModel) jTableProdutosComprados.getModel();
+               
                 ProdutoController po = new ProdutoController();
                 long idProdutoBuscado = (long ) jTableConsultaProdutos.getValueAt(indice, 3);
 
@@ -379,12 +394,8 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
     public void notificarObservadores() {
 
         observadores.forEach((Observador ob)->{
-            
-            if(ob instanceof CadastroFluxoDeCaixa){
-                ob.update(produtosEscolhidos());
-            }
-       
-        
+            ob.update(produtosEscolhidos());
+   
         });
     }
 }
