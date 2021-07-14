@@ -7,6 +7,8 @@ package BeutifulSalon.model;
 
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.dao.ServicoDAO;
+import java.sql.SQLException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 /**
@@ -17,15 +19,32 @@ public class Servico {
     
     long id;
     String nome;
-    long valor;
+    long preco;
+    ArrayList<Produto> produtos;
+    LocalTime tempoGasto;
 
+    public LocalTime getTempoGasto() {
+        return tempoGasto;
+    }
+
+    public void setTempoGasto(LocalTime tempoGasto) {
+        this.tempoGasto = tempoGasto;
+    }
+    
+    public ArrayList<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(ArrayList<Produto> produtos) {
+        this.produtos = produtos;
+    }
     
     public Servico(){};
     
     public Servico(long id, String nome, long valor) {
         this.id = id;
         this.nome = nome;
-        this.valor = valor;
+        this.preco = valor;
     }
     
 
@@ -45,12 +64,12 @@ public class Servico {
         this.nome = nome;
     }
 
-    public long getValor() {
-        return valor;
+    public long getPreco() {
+        return preco;
     }
 
-    public void setValor(long valor) {
-        this.valor = valor;
+    public void setPreco(long preco) {
+        this.preco = preco;
     }
     
     public ArrayList<Servico> listarServicos() throws ExceptionDAO{
@@ -63,6 +82,10 @@ public class Servico {
     
     public Servico buscarServico(long idServicoBuscado) throws ExceptionDAO{
         return new ServicoDAO().buscarServico(idServicoBuscado);
+    }
+    
+    public void cadastrarServico(Servico servico) throws SQLException{
+        new ServicoDAO().cadastrarServico(servico);
     }
     
     

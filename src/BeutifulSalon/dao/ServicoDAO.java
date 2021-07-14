@@ -6,8 +6,11 @@
 package BeutifulSalon.dao;
 
 import BeutifulSalon.model.Cliente;
+import BeutifulSalon.model.ItemCompra;
+import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,7 +43,7 @@ public class ServicoDAO {
                 while (rs.next()) {
                     Servico servicoAtual = new Servico();
                     servicoAtual.setNome(rs.getString("NOME"));
-                    servicoAtual.setValor(rs.getLong("PRECO"));
+                    servicoAtual.setPreco(rs.getLong("PRECO"));
                     servicoAtual.setId(rs.getLong("ID_SERVICO"));
                     servicos.add(servicoAtual);
                 }
@@ -94,7 +97,7 @@ public class ServicoDAO {
                 while (rs.next()) {
                     Servico servicoAtual = new Servico();
                     servicoAtual.setNome(rs.getString("NOME"));
-                    servicoAtual.setValor(rs.getLong("PRECO"));
+                    servicoAtual.setPreco(rs.getLong("PRECO"));
                     servicoAtual.setId(rs.getLong("ID_SERVICO"));
                     servicos.add(servicoAtual);
                 }
@@ -149,7 +152,7 @@ public class ServicoDAO {
                 while(rs.next()){  
              
                 servicoBuscado.setNome(rs.getString("NOME"));
-                servicoBuscado.setValor(rs.getLong("PRECO"));
+                servicoBuscado.setPreco(rs.getLong("PRECO"));
                 servicoBuscado.setId(rs.getLong("ID_SERVICO"));
   
                 }
@@ -179,4 +182,69 @@ public class ServicoDAO {
         return null;
     }
 
-}
+    public void cadastrarServico(Servico servico) throws SQLException {
+        String cadastraServico = "INSERT INTO SERVICO (NOME, PRECO, TEMPOGASTO) VALUES (?, ?, ?)";
+        String cadastraProdutosServicos = "INSERT INTO SERVICO_PRODUTO (ID_PRODUTO, ID_SERVICO) VALUES (? ,(SELECT ID_SERVICO FROM SERVICO ORDER BY ID_SERVICO DESC LIMIT 1))";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            connection.setAutoCommit(false);
+
+            pStatement = connection.prepareStatement(cadastraServico);
+            pStatement.setString(1, servico.getNome());
+            pStatement.setLong(2, servico.getPreco());
+            pStatement.setDate(3, new Date(servico.getTempoGasto().toNanoOfDay()));
+
+            int firstInsert = pStatement.executeUpdate();
+
+            if (firstInsert > 0) {
+                try {
+
+                    ArrayList<Produto> produtos = servico.getProdutos();
+
+                    for (Produto it : produtos) {
+                        pStatement = connection.prepareStatement(cadastraProdutosServicos);
+                        pStatement.setLong(1, it.getId_produto());
+                        pStatement.executeUpdate();
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Erro registrar itemCompra" + e);
+                    connection.rollback();
+                }
+            }
+
+            connection.commit();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+            connection.rollback();
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+
+    }
+    }
+
+

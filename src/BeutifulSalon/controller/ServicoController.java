@@ -6,7 +6,10 @@
 package BeutifulSalon.controller;
 
 import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.model.Dinheiro;
+import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
+import java.time.LocalTime;
 import java.util.ArrayList;
 /**
  *
@@ -27,4 +30,19 @@ public class ServicoController {
         
         return new Servico().buscarServico(idServicoBuscado);
     }
+    
+    public boolean cadastrarServico(String nome, String preco, LocalTime tempoGasto, ArrayList<Produto> produto){
+        Servico servico = new Servico();
+        servico.setNome(nome);
+        servico.setPreco(Dinheiro.parseCent(Dinheiro.retiraCaracteres(preco)));
+        servico.setTempoGasto(tempoGasto);
+        servico.setProdutos(produto);
+        
+        servico.cadastrarServico(servico);
+        
+        //verificações if >0 etc retornando true/false
+        return true;
+    }
+    
+    
 }

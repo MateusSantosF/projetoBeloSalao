@@ -199,7 +199,7 @@ public class modalServicos extends javax.swing.JFrame implements Observado{
 
                 tabelaServicosRealizados.addRow(new Object[]{
                     produtoBuscado.getNome(),
-                    Dinheiro.parseString(produtoBuscado.getValor()),
+                    Dinheiro.parseString(produtoBuscado.getPreco()),
                     produtoBuscado.getId()
                 });
 
@@ -242,7 +242,7 @@ public class modalServicos extends javax.swing.JFrame implements Observado{
             servicos.forEach((Servico s) ->  {            
                     model.addRow(new Object[]{ 
                         s.getNome(),
-                        Dinheiro.parseString(s.getValor()),
+                        Dinheiro.parseString(s.getPreco()),
                         s.getId()
                     });
             });
@@ -280,7 +280,7 @@ public class modalServicos extends javax.swing.JFrame implements Observado{
             servicos.forEach((Servico s) ->  {            
                     model.addRow(new Object[]{ 
                         s.getNome(),
-                        Dinheiro.parseString(s.getValor()),
+                        Dinheiro.parseString(s.getPreco()),
                         s.getId()
                     });
             });

@@ -6,6 +6,7 @@
 package BeutifulSalon.model;
 
 import BeutifulSalon.dao.AgendamentoDAO;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,7 +75,7 @@ public class Agendamento {
     }
     
     
-    public void cadastraAgendamento(Agendamento agendamento){
+    public void cadastraAgendamento(Agendamento agendamento) throws SQLException{
         new AgendamentoDAO().cadastraAgendamento(agendamento);
     }
     

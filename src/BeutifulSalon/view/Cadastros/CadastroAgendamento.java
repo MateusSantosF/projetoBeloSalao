@@ -409,7 +409,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                 } else if (j == 1) {
 
                     System.out.println(jTableServicosSolicitados.getValueAt(i, j).toString());
-                    servicoAtual.setValor(Dinheiro.parseCent(
+                    servicoAtual.setPreco(Dinheiro.parseCent(
                             Dinheiro.retiraCaracteres(jTableServicosSolicitados.getValueAt(i, j).toString())));
 
                 } else {
@@ -430,8 +430,8 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
             try {
                 for (Servico s : servicos) {
-                    System.out.println(s.getValor());
-                    total += s.getValor();
+                    System.out.println(s.getPreco());
+                    total += s.getPreco();
                 }
 
             } catch (Exception e) {

@@ -22,6 +22,15 @@ public class Produto {
     private long preco; 
     private Date dataReg; //Data que o produto foi registrado no sistema
     private Date dataValidade; //Data de validade do produto 
+    private int rendimento;
+
+    public int getRendimento() {
+        return rendimento;
+    }
+
+    public void setRendimento(int rendimento) {
+        this.rendimento = rendimento;
+    }
     
     //construtor padrão
     public Produto(){}

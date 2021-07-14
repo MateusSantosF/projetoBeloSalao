@@ -108,16 +108,13 @@
               <Color blue="22" green="22" red="22" type="rgb"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="5">
+              <StringArray count="6">
                 <StringItem index="0" value="Produto"/>
                 <StringItem index="1" value="Or&#xe7;amento"/>
                 <StringItem index="2" value="Cliente"/>
                 <StringItem index="3" value="Fluxo de Caixa"/>
-<<<<<<< HEAD
                 <StringItem index="4" value="Servi&#xe7;o"/>
-=======
-                <StringItem index="4" value="Agendamento"/>
->>>>>>> b3ea011d3009a23602dd1c87c822b6a6c777a00d
+                <StringItem index="5" value="Agendamento"/>
               </StringArray>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

@@ -59,13 +59,8 @@ public class NovoRegistro extends javax.swing.JFrame {
 
         jComboBoxTipoRegistro.setBackground(new java.awt.Color(255, 255, 255));
         jComboBoxTipoRegistro.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-<<<<<<< HEAD
-        jComboBoxTipoRegistro.setForeground(new java.awt.Color(51, 51, 51));
-        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente", "Fluxo de Caixa", "Serviço" }));
-=======
         jComboBoxTipoRegistro.setForeground(new java.awt.Color(34, 34, 34));
-        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente", "Fluxo de Caixa", "Agendamento" }));
->>>>>>> b3ea011d3009a23602dd1c87c822b6a6c777a00d
+        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente", "Fluxo de Caixa", "Serviço", "Agendamento" }));
         jComboBoxTipoRegistro.setBorder(null);
         jComboBoxTipoRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jComboBoxTipoRegistro.addActionListener(new java.awt.event.ActionListener() {
@@ -150,15 +145,14 @@ public class NovoRegistro extends javax.swing.JFrame {
                 dispose();
                 break;
             case 4:
-<<<<<<< HEAD
                 new CadastroServico().setVisible(true);
+                System.out.println("chegou");
                 dispose();
                 break;
-=======
+            case 5:
                 new CadastroAgendamento().setVisible(true);
                 break;
-            
->>>>>>> b3ea011d3009a23602dd1c87c822b6a6c777a00d
+
             default:
                 JOptionPane.showMessageDialog(null, "Erro ao selecionar");
                 break;
