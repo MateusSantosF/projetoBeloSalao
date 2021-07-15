@@ -6,6 +6,7 @@
 package BeutifulSalon.view.Cadastros;
 
 import BeutifulSalon.controller.AgendamentoController;
+import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observador;
@@ -21,6 +22,8 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -36,17 +39,17 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
      */
     public CadastroAgendamento() {
         initComponents();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");             
-        DateTimeFormatter parserHora= DateTimeFormatter.ofPattern("HH:mm");
-        
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        DateTimeFormatter parserHora = DateTimeFormatter.ofPattern("HH:mm");
+
         try {
 
-        String dataAtual = df.format(new Date());
-        jTextFieldData.setText(dataAtual);
+            String dataAtual = df.format(new Date());
+            jTextFieldData.setText(dataAtual);
 
         } catch (Exception e) {
         }
-               
+
     }
 
     /**
@@ -91,7 +94,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jLabel4.setText("Nome do Cliente");
 
         jLabelAddCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
-        jLabelAddCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelAddCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabelAddCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabelAddClienteMousePressed(evt);
@@ -132,7 +135,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         }
 
         jLabelAddServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
-        jLabelAddServicos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelAddServicos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabelAddServicos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabelAddServicosMousePressed(evt);
@@ -255,19 +258,22 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel9)
-                                    .addComponent(jLabel7))
-                                .addGap(50, 50, 50)
+                                    .addComponent(jLabel8))
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jCheckBoxDesconto)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel8)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGap(4, 4, 4)
                                         .addComponent(jLabel10)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jTextFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(9, 9, 9)
+                                        .addComponent(jLabel7)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(18, 18, 18)
@@ -312,12 +318,12 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                                 .addComponent(jCheckBoxDesconto)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jTextFieldTotalBruto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextFieldTotalBruto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7))
                                 .addGap(19, 19, 19)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -366,32 +372,27 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
     }//GEN-LAST:event_jButtonFinalizarCompraMousePressed
 
     private void jButtonFinalizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarCompraActionPerformed
-        
-        boolean sucesso;    
-        
-        try{
-            //HORARIO
-            DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime horario = LocalTime.parse(jTextFieldHorario.getText(), formatterHora);
-            //DATA
-            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            Date dataAgendamento = df.parse(jTextFieldData.getText());
-            
-            AgendamentoController ac = new AgendamentoController();
 
-            sucesso = ac.cadastraAgendamento(dataAgendamento, horario,
-                    jTextFieldCPF.getText(), 
+        boolean sucesso;
+
+        AgendamentoController ac = new AgendamentoController();
+
+        try {
+            sucesso = ac.cadastraAgendamento(jTextFieldData.getText(),
+                    jTextFieldHorario.getText(),
+                    jTextFieldCPF.getText(),
                     recuperaServicos());
-            
-                if (sucesso) {
-                    JOptionPane.showMessageDialog(null, "Agendamento Realizado com sucesso");
-                }else{
-                    JOptionPane.showMessageDialog(null, "Erro ao cadastrar Agendamento");  
-                }
-            
-            } catch (ParseException e) {
-                JOptionPane.showMessageDialog(null, "Erro na conversão das datas: " + e);
+
+            if (sucesso) {
+                JOptionPane.showMessageDialog(null, "Agendamento Realizado com sucesso");
+                limparCampos();
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar Agendamento. Verifique os dados inseridos!");
             }
+        } catch (ExceptionDAO ex) {
+            Logger.getLogger(CadastroAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_jButtonFinalizarCompraActionPerformed
 
     private ArrayList<Servico> recuperaServicos() {
@@ -422,6 +423,20 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
         return servicosSolicitados;
     }
+    
+    private void limparCampos(){
+        jTextFieldNome.setText("");
+        jTextFieldCPF.setText("");
+        jTextFieldDesconto.setText("-R$ 0,00");
+        jTextFieldTotalBruto.setText("R$ 0,00");
+        jTextFieldTotal.setText("");
+        jTextFieldData.setText("");
+        jTextFieldHorario.setText("");
+        
+        DefaultTableModel modal = (DefaultTableModel) jTableServicosSolicitados.getModel();
+        modal.setRowCount(0);
+        jTableServicosSolicitados.setModel(modal);
+    }
 
     private void calculaTotalBruto() {
         long total = 0;
@@ -444,9 +459,9 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jTextFieldTotalBruto.setText(Dinheiro.parseString(total));
 
     }
-    
-    private void calculaTotal(){
-        
+
+    private void calculaTotal() {
+
         try {
 
             long valorDesconto = 0;

@@ -6,7 +6,9 @@
 package BeutifulSalon.model;
 
 import BeutifulSalon.dao.AgendamentoDAO;
+import BeutifulSalon.dao.ExceptionDAO;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,15 +20,16 @@ import java.util.Date;
 public class Agendamento {
     
     long id;
-    Date data;
+    LocalDate data;
     LocalTime horario;
     String cpfCliente;
+    Boolean realizado;
     ArrayList<Servico> servicos;
 
     
     public Agendamento(){};
     
-    public Agendamento(Date data, LocalTime horario, String cpfCliente, ArrayList<Servico> servicos) {
+    public Agendamento(LocalDate data, LocalTime horario, String cpfCliente, ArrayList<Servico> servicos) {
       
         this.data = data;
         this.horario = horario;
@@ -34,6 +37,16 @@ public class Agendamento {
         this.servicos = servicos;
     }
 
+    public Boolean getRealizado() {
+        return realizado;
+    }
+
+    public void setRealizado(Boolean realizado) {
+        this.realizado = realizado;
+    }
+
+    
+    
     public long getId() {
         return id;
     }
@@ -42,13 +55,15 @@ public class Agendamento {
         this.id = id;
     }
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
+
+   
 
     public LocalTime getHorario() {
         return horario;
@@ -75,8 +90,12 @@ public class Agendamento {
     }
     
     
-    public void cadastraAgendamento(Agendamento agendamento) throws SQLException{
+    public void cadastraAgendamento(Agendamento agendamento) throws ExceptionDAO, SQLException{
         new AgendamentoDAO().cadastraAgendamento(agendamento);
+    }
+
+    public ArrayList<Agendamento> listarAgendamentos() throws ExceptionDAO {        
+        return new AgendamentoDAO().listarAgendamentos();
     }
     
     

@@ -14,6 +14,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -38,8 +39,10 @@ public class EditarCliente extends javax.swing.JFrame {
         
         initComponents();
         
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
-        String dateString = formatter.format(cliente.getDATANASC().getTime());
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dateString = cliente.getDATANASC().format(formatterData);
+        
+        System.out.println(dateString);
         
         jTextFieldNome.setText(cliente.getNOME());
         jTextFieldSobrenome.setText(cliente.getSOBRENOME());

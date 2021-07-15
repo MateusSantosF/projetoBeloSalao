@@ -113,7 +113,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         jFormattedTextFieldPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel26.setText("*Preço Unitário ");
+        jLabel26.setText("*Preço de Venda ");
 
         jFormattedTextFieldDataValidade.setBackground(new java.awt.Color(255, 255, 255));
         try {

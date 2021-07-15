@@ -146,11 +146,11 @@ public class NovoRegistro extends javax.swing.JFrame {
                 break;
             case 4:
                 new CadastroServico().setVisible(true);
-                System.out.println("chegou");
                 dispose();
                 break;
             case 5:
                 new CadastroAgendamento().setVisible(true);
+                dispose();
                 break;
 
             default:

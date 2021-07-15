@@ -7,15 +7,15 @@ package BeutifulSalon.view.Cadastros;
 
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Cliente;
-import BeutifulSalon.model.Dinheiro;
-import BeutifulSalon.model.ItemCompra;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Produto;
-import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalProdutosUtilizados;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Visitante
  */
-public class CadastroServico extends javax.swing.JFrame implements Observador{
+public class CadastroServico extends javax.swing.JFrame implements Observador {
 
     /**
      * Creates new form CadastroServico
@@ -41,7 +41,6 @@ public class CadastroServico extends javax.swing.JFrame implements Observador{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jPanelCadastroServico = new javax.swing.JPanel();
         jLabelPreco = new javax.swing.JLabel();
         jTextFieldNomeServico = new javax.swing.JTextField();
@@ -55,16 +54,15 @@ public class CadastroServico extends javax.swing.JFrame implements Observador{
         jFormattedTextFieldPreco1 = new javax.swing.JFormattedTextField();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(204, 255, 204));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setText("Cadastro Serviço");
+        jPanelCadastroServico.setBackground(new java.awt.Color(243, 244, 245));
 
-        jPanelCadastroServico.setBackground(new java.awt.Color(102, 102, 102));
-
-        jLabelPreco.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabelPreco.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelPreco.setForeground(new java.awt.Color(34, 34, 34));
         jLabelPreco.setText("Preço");
 
         jTextFieldNomeServico.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
@@ -74,7 +72,8 @@ public class CadastroServico extends javax.swing.JFrame implements Observador{
             }
         });
 
-        jLabelTempoGasto.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabelTempoGasto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelTempoGasto.setForeground(new java.awt.Color(34, 34, 34));
         jLabelTempoGasto.setText("Tempo gasto");
 
         try {
@@ -82,6 +81,7 @@ public class CadastroServico extends javax.swing.JFrame implements Observador{
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jFormattedTextFieldTempoGasto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jFormattedTextFieldTempoGasto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextFieldTempoGastoActionPerformed(evt);
@@ -90,20 +90,20 @@ public class CadastroServico extends javax.swing.JFrame implements Observador{
 
         jTableMostraProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nome", "Marca", "Rendimento"
+                "Nome", "Marca", "Rendimento", "id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -115,8 +115,14 @@ public class CadastroServico extends javax.swing.JFrame implements Observador{
             }
         });
         jScrollPane2.setViewportView(jTableMostraProdutos);
+        if (jTableMostraProdutos.getColumnModel().getColumnCount() > 0) {
+            jTableMostraProdutos.getColumnModel().getColumn(3).setMinWidth(1);
+            jTableMostraProdutos.getColumnModel().getColumn(3).setPreferredWidth(1);
+            jTableMostraProdutos.getColumnModel().getColumn(3).setMaxWidth(1);
+        }
 
-        jLabelProdutos.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabelProdutos.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelProdutos.setForeground(new java.awt.Color(34, 34, 34));
         jLabelProdutos.setText("Produtos Utilizados");
 
         jLabelBotao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
@@ -126,7 +132,8 @@ public class CadastroServico extends javax.swing.JFrame implements Observador{
             }
         });
 
-        jLabelNome2.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
+        jLabelNome2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelNome2.setForeground(new java.awt.Color(34, 34, 34));
         jLabelNome2.setText("Nome Serviço");
 
         jFormattedTextFieldPreco1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
@@ -163,109 +170,98 @@ public class CadastroServico extends javax.swing.JFrame implements Observador{
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(34, 34, 34));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Cadastro Serviço");
+
         javax.swing.GroupLayout jPanelCadastroServicoLayout = new javax.swing.GroupLayout(jPanelCadastroServico);
         jPanelCadastroServico.setLayout(jPanelCadastroServicoLayout);
         jPanelCadastroServicoLayout.setHorizontalGroup(
             jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadastroServicoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(225, 225, 225))
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
+                .addGap(48, 48, 48)
                 .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
-                        .addGap(65, 65, 65)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadastroServicoLayout.createSequentialGroup()
                         .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldNomeServico, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 737, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabelBotao))
-                            .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jFormattedTextFieldTempoGasto, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabelTempoGasto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))))
+                                .addComponent(jTextFieldNomeServico)
+                                .addGap(62, 62, 62))
+                            .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
+                                .addComponent(jFormattedTextFieldTempoGasto)
+                                .addGap(222, 222, 222))
+                            .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
+                                .addComponent(jLabelNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jFormattedTextFieldPreco1))
+                        .addGap(160, 160, 160))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadastroServicoLayout.createSequentialGroup()
+                        .addComponent(jLabelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+                        .addGap(173, 173, 173))
                     .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
-                        .addGap(359, 359, 359)
-                        .addComponent(jLabelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabelTempoGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
-                        .addGap(240, 240, 240)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(86, 86, 86)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(92, Short.MAX_VALUE))
-            .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
-                    .addGap(75, 75, 75)
-                    .addComponent(jLabelNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(694, Short.MAX_VALUE)))
-            .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadastroServicoLayout.createSequentialGroup()
-                    .addContainerGap(555, Short.MAX_VALUE)
-                    .addComponent(jFormattedTextFieldPreco1, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(94, 94, 94)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelBotao)
+                                .addContainerGap(253, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCadastroServicoLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(56, 56, 56))))))
         );
         jPanelCadastroServicoLayout.setVerticalGroup(
             jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabelPreco)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jTextFieldNomeServico, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabelTempoGasto)
-                .addGap(18, 18, 18)
-                .addComponent(jFormattedTextFieldTempoGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(jLabelBotao, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabelProdutos)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
-            .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
-                    .addGap(35, 35, 35)
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNome2)
-                    .addContainerGap(495, Short.MAX_VALUE)))
-            .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
-                    .addGap(91, 91, 91)
+                    .addComponent(jLabelPreco))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jFormattedTextFieldPreco1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(425, Short.MAX_VALUE)))
+                    .addComponent(jTextFieldNomeServico, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(jLabelTempoGasto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jFormattedTextFieldTempoGasto, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
+                .addComponent(jLabelProdutos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelCadastroServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelCadastroServicoLayout.createSequentialGroup()
+                        .addGap(48, 48, 48)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelBotao, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jPanelCadastroServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(303, 303, 303)
-                        .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanelCadastroServico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jPanelCadastroServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanelCadastroServico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldNomeServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeServicoActionPerformed
@@ -289,17 +285,29 @@ public class CadastroServico extends javax.swing.JFrame implements Observador{
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         boolean sucesso;
-        DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime horario = LocalTime.parse(jFormattedTextFieldTempoGasto.getText(), formatterHora);
         
+
         ServicoController sv = new ServicoController(); //instanciar o controlador, que recebe um novo controlador
-        
-      sucesso = sv.cadastrarServico(
-        jTextFieldNomeServico.getText(),
-        jFormattedTextFieldPreco1.getText(),
-        horario,
-        recuperaProdutosComprados()
-        );
+        try {
+            
+            DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime horario = LocalTime.parse(jFormattedTextFieldTempoGasto.getText(), formatterHora);
+            sucesso = sv.cadastrarServico(
+                    jTextFieldNomeServico.getText(),
+                    jFormattedTextFieldPreco1.getText(),
+                    horario,
+                    recuperaProdutosComprados()
+            );
+
+            if (sucesso) {
+                JOptionPane.showMessageDialog(null, "Serviço cadastrado com sucesso!");
+                limparCampos();
+            } else {
+                JOptionPane.showMessageDialog(null, "Verifique os campos preenhcidos.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CadastroServico.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
     private ArrayList<Produto> recuperaProdutosComprados() {
 
@@ -318,23 +326,29 @@ public class CadastroServico extends javax.swing.JFrame implements Observador{
                 } else {
                     produtoAtual.setId_produto(Integer.parseInt(jTableMostraProdutos.getValueAt(i, j).toString()));
                 }
-                produtos.add(produtoAtual);
+            }
+            produtos.add(produtoAtual);
         }
-
-        
-
-    }
         return produtos;
     }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        int opc = JOptionPane.showConfirmDialog(null,"Realmente deseja sair?", "Cadastro Servico", JOptionPane.YES_NO_OPTION);
+        int opc = JOptionPane.showConfirmDialog(null, "Realmente deseja sair?", "Cadastro Servico", JOptionPane.YES_NO_OPTION);
 
-        if(opc == 0){
+        if (opc == 0) {
             this.dispose();
         }
     }//GEN-LAST:event_jButton4ActionPerformed
-
+    
+    private void limparCampos(){
+        jTextFieldNomeServico.setText("");
+        jFormattedTextFieldTempoGasto.setText("");
+        jFormattedTextFieldPreco1.setText("");
+        
+        DefaultTableModel model = (DefaultTableModel) jTableMostraProdutos.getModel();
+        model.setRowCount(0);
+        jTableMostraProdutos.setModel(model);
+    }
     /**
      * @param args the command line arguments
      */
@@ -390,10 +404,12 @@ public class CadastroServico extends javax.swing.JFrame implements Observador{
     @Override
     public void update(Object obj) {
     }
+
     //pega a tebala da outra tela e recebe nessa
     @Override
     public void update(DefaultTableModel model) {
-       jTableMostraProdutos.setModel(model);
+        jTableMostraProdutos.setModel(model);
+
     }
 
     @Override

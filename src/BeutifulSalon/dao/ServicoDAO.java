@@ -184,7 +184,7 @@ public class ServicoDAO {
 
     public void cadastrarServico(Servico servico) throws SQLException {
         String cadastraServico = "INSERT INTO SERVICO (NOME, PRECO, TEMPOGASTO) VALUES (?, ?, ?)";
-        String cadastraProdutosServicos = "INSERT INTO SERVICO_PRODUTO (ID_PRODUTO, ID_SERVICO) VALUES (? ,(SELECT ID_SERVICO FROM SERVICO ORDER BY ID_SERVICO DESC LIMIT 1))";
+        String cadastraProdutosServicos = "INSERT INTO PRODUTO_SERVICO (ID_PRODUTO, RENDIMENTO, ID_SERVICO) VALUES (? ,?, (SELECT ID_SERVICO FROM SERVICO ORDER BY ID_SERVICO DESC LIMIT 1))";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -197,7 +197,7 @@ public class ServicoDAO {
             pStatement = connection.prepareStatement(cadastraServico);
             pStatement.setString(1, servico.getNome());
             pStatement.setLong(2, servico.getPreco());
-            pStatement.setDate(3, new Date(servico.getTempoGasto().toNanoOfDay()));
+            pStatement.setTime(3,java.sql.Time.valueOf(servico.getTempoGasto()));
 
             int firstInsert = pStatement.executeUpdate();
 
@@ -206,14 +206,15 @@ public class ServicoDAO {
 
                     ArrayList<Produto> produtos = servico.getProdutos();
 
-                    for (Produto it : produtos) {
+                    for (Produto p : produtos) {
                         pStatement = connection.prepareStatement(cadastraProdutosServicos);
-                        pStatement.setLong(1, it.getId_produto());
+                        pStatement.setLong(1, p.getId_produto());
+                        pStatement.setInt(2, p.getRendimento());
                         pStatement.executeUpdate();
                     }
 
                 } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Erro registrar itemCompra" + e);
+                    JOptionPane.showMessageDialog(null, "Erro registrar Produto_Servico" + e);
                     connection.rollback();
                 }
             }

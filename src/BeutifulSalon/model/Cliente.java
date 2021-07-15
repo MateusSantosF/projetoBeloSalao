@@ -4,6 +4,7 @@ package BeutifulSalon.model;
 import BeutifulSalon.dao.ExceptionDAO;
 import java.util.Date;
 import BeutifulSalon.dao.clienteDAO;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +17,8 @@ public class Cliente {
     private String NOME; 
     private String SOBRENOME;
     private String EMAIL;
-    private Date DATANASC; 
+    private LocalDate DATANASC; 
+    private LocalDate DATAREG; //Data que o cliente foi registrado no sistema
     private String CEP; 
     private String BAIRRO;
     private String RUA; 
@@ -24,15 +26,15 @@ public class Cliente {
     private String NUMERO;
     private String TELEFONE; 
     private String CELULAR; 
-    private Date DATAREG; //Data que o cliente foi registrado no sistema
+   
     
     //construtor padrão
     public Cliente(){}
     
     //Construtor não padrão
-    public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, Date DATANASC, 
+    public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, LocalDate DATANASC, 
             String CEP, String BAIRRO, String RUA, String CIDADE,String NUMERO,
-            String TELEFONE, String CELULAR, Date DATAREG) {
+            String TELEFONE, String CELULAR, LocalDate DATAREG) {
         this.CPF = CPF;
         this.NOME = NOME;
         this.SOBRENOME = SOBRENOME;
@@ -48,8 +50,8 @@ public class Cliente {
         this.DATAREG = DATAREG;
     }
     
-      public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, Date DATANASC, 
-            String CEP, String BAIRRO, String RUA, String CIDADE,String NUMERO,
+      public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, LocalDate DATANASC, 
+            String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR) {
         this.CPF = CPF;
         this.NOME = NOME;
@@ -73,11 +75,11 @@ public class Cliente {
         this.CPF = CPF;
     }
 
-    public Date getDATAREG() {
+    public LocalDate getDATAREG() {
         return DATAREG;
     }
 
-    public void setDATAREG(Date DATAREG) {
+    public void setDATAREG(LocalDate DATAREG) {
         this.DATAREG = DATAREG;
     }
     
@@ -123,11 +125,11 @@ public class Cliente {
         this.EMAIL = EMAIL;
     }
 
-    public Date getDATANASC() {
+    public LocalDate getDATANASC() {
         return DATANASC;
     }
 
-    public void setDATANASC(Date DATANASC) {
+    public void setDATANASC(LocalDate DATANASC) {
         this.DATANASC = DATANASC;
     }
 
@@ -205,10 +207,15 @@ public class Cliente {
        
     }
     //Listar todos os clientes do sistema
-    public ArrayList<Cliente> listarClientes(){
+    public ArrayList<Cliente> listarClientes() throws ExceptionDAO{
         return new clienteDAO().listarClientes();
     }
+    //Busca cliente por CPF
     
+    public Cliente buscarCliente(String cpf) throws ExceptionDAO{
+        return new clienteDAO().buscarCliente(cpf);
+    }
+        
     //Excluir cliente
     public void excluirCliente(String cpf) throws ExceptionDAO{
         new clienteDAO().deletarCliente(cpf);

@@ -15,7 +15,6 @@ import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.ItemCompra;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.view.modais.modalInputMonetarios;
-import BeutifulSalon.view.modais.modalServicos;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,16 +43,6 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         buttonGroupCompraProduto = new javax.swing.ButtonGroup();
         jTabbedPane = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
-        jPanelServico = new javax.swing.JPanel();
-        jTextFieldNome1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabelAddCliente1 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jTextFieldCPF1 = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTableServicos1 = new javax.swing.JTable();
-        jLabelAddServico = new javax.swing.JLabel();
         jPanelProduto = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldNome2 = new javax.swing.JTextField();
@@ -79,6 +68,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(243, 244, 245));
+        setResizable(false);
 
         jTabbedPane.setTabPlacement(javax.swing.JTabbedPane.LEFT);
 
@@ -86,7 +76,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1010, Short.MAX_VALUE)
+            .addGap(0, 888, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,96 +84,6 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         );
 
         jTabbedPane.addTab("Orçamento", jPanel3);
-
-        jTextFieldNome1.setEditable(false);
-
-        jLabel1.setText("Nome do Cliente");
-
-        jLabelAddCliente1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
-        jLabelAddCliente1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabelAddCliente1MousePressed(evt);
-            }
-        });
-
-        jLabel11.setText("CPF");
-
-        jTextFieldCPF1.setEditable(false);
-
-        jLabel12.setText("Serviços realizados");
-
-        jTableServicos1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null}
-            },
-            new String [] {
-                "Nome", "Valor", "id"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTableServicos1.setPreferredSize(new java.awt.Dimension(301, 80));
-        jScrollPane2.setViewportView(jTableServicos1);
-
-        jLabelAddServico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
-        jLabelAddServico.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabelAddServicoMousePressed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelServicoLayout = new javax.swing.GroupLayout(jPanelServico);
-        jPanelServico.setLayout(jPanelServicoLayout);
-        jPanelServicoLayout.setHorizontalGroup(
-            jPanelServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelServicoLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(jPanelServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelServicoLayout.createSequentialGroup()
-                        .addGroup(jPanelServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelAddCliente1))
-                    .addComponent(jLabel12)
-                    .addGroup(jPanelServicoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelAddServico))
-                    .addComponent(jTextFieldCPF1, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addContainerGap(583, Short.MAX_VALUE))
-        );
-        jPanelServicoLayout.setVerticalGroup(
-            jPanelServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelServicoLayout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addGroup(jPanelServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanelServicoLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabelAddCliente1))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextFieldCPF1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelAddServico))
-                .addGap(56, 56, 56))
-        );
-
-        jTabbedPane.addTab("Serviço", jPanelServico);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Nome do Cliente");
@@ -334,8 +234,8 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)))
                 .addGap(67, 67, 67)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                .addGap(26, 26, 26)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -504,7 +404,6 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             modalMonetarario.registrarObservador(this);
             modalMonetarario.setVisible(true);
         }
-
     }//GEN-LAST:event_jCheckBoxDesconto2MousePressed
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
@@ -528,21 +427,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             modal.registrarObservador(this);
             modal.setVisible(true);
         }
-
     }//GEN-LAST:event_jLabelAddClienteMousePressed
-
-    private void jLabelAddCliente1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddCliente1MousePressed
-        modalCliente modal = new modalCliente();
-        modal.registrarObservador(this);
-        modal.setVisible(true);
-    }//GEN-LAST:event_jLabelAddCliente1MousePressed
-
-    private void jLabelAddServicoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddServicoMousePressed
-
-        modalServicos modal = new modalServicos();
-        modal.registrarObservador(this);
-        modal.setVisible(true);
-    }//GEN-LAST:event_jLabelAddServicoMousePressed
 
     void limparTodosCampos() {
         jTextFieldCPF2.setText("");
@@ -629,25 +514,14 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     @Override
     public void update(DefaultTableModel model) {
 
-        int tabSelecionada = jTabbedPane.getSelectedIndex();
-
-        if (tabSelecionada == 2) {
-            try {
-                jTableProdutosComprados.setModel(model);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao converter ModelTabela");
-            }
-            calculaTotalBruto();
-            calculaTotal();
-        } else if (tabSelecionada == 1) {
-
-            try {
-                jTableServicos1.setModel(model);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao converter ModelTabela");
-            }
-
+        try {
+            jTableProdutosComprados.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao converter ModelTabela");
         }
+        calculaTotalBruto();
+        calculaTotal();
+
     }
 
     @Override
@@ -661,18 +535,12 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     @Override
     public void update(Cliente cliente) {
 
-        int tabSelecionada = jTabbedPane.getSelectedIndex();
-
+        //int tabSelecionada = jTabbedPane.getSelectedIndex();
         //se for compra de produto
-        if (tabSelecionada == 2) {
-            Cliente clienteSelecionado = cliente;
-            jTextFieldNome2.setText(clienteSelecionado.getNOME());
-            jTextFieldCPF2.setText(clienteSelecionado.getCPF());
-        } else {
-            Cliente clienteSelecionado = cliente;
-            jTextFieldNome1.setText(clienteSelecionado.getNOME());
-            jTextFieldCPF1.setText(clienteSelecionado.getCPF());
-        }
+        // if (tabSelecionada == 2) {} 
+        Cliente clienteSelecionado = cliente;
+        jTextFieldNome2.setText(clienteSelecionado.getNOME());
+        jTextFieldCPF2.setText(clienteSelecionado.getCPF());
 
     }
 
@@ -721,9 +589,6 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     private javax.swing.ButtonGroup buttonGroupCompraProduto;
     private javax.swing.JButton jButtonFinalizarCompra;
     private javax.swing.JCheckBox jCheckBoxDesconto2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -732,24 +597,17 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAddCliente;
-    private javax.swing.JLabel jLabelAddCliente1;
-    private javax.swing.JLabel jLabelAddServico;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelProduto;
-    private javax.swing.JPanel jPanelServico;
     private javax.swing.JRadioButton jRadioButtonCabelereiro;
     private javax.swing.JRadioButton jRadioButtonCliente;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTable jTableProdutosComprados;
-    private javax.swing.JTable jTableServicos1;
-    private javax.swing.JTextField jTextFieldCPF1;
     private javax.swing.JTextField jTextFieldCPF2;
     private javax.swing.JTextField jTextFieldDesconto2;
-    private javax.swing.JTextField jTextFieldNome1;
     private javax.swing.JTextField jTextFieldNome2;
     private javax.swing.JTextField jTextFieldTotal2;
     private javax.swing.JTextField jTextFieldTotalBruto2;

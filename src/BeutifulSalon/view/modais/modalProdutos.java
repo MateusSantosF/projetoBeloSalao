@@ -7,6 +7,7 @@ package BeutifulSalon.view.modais;
 
 import BeutifulSalon.controller.ProdutoController;
 import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
@@ -22,13 +23,14 @@ import javax.swing.table.TableColumn;
  *
  * @author mateus
  */
-public class modalProdutos extends javax.swing.JFrame implements Observado {
+public class modalProdutos extends javax.swing.JFrame implements Observado, Observador {
 
     /**
      * Creates new form modalProdutos
      */
     ArrayList<Observador> observadores = new ArrayList<>();
     private boolean cabeleleiro;
+    private String valorDesconto;
     
     public modalProdutos() {
         initComponents();
@@ -232,6 +234,26 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
             try{
                 
                 int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade comprada: "));
+                
+                //Se for o cabeleleiro comprando
+                if(cabeleleiro){ 
+//                   modalInputMonetarios modalInput = new modalInputMonetarios("Insira o valor pago pelo produto:");
+//                   modalInput.registrarObservador(this);
+//                   modalInput.setVisible(true);
+//                   
+//                   Thread t =  new Thread(modalInput);
+//                   t.start();
+//                   
+//                   synchronized(t){
+//                       try {
+//                          t.wait();
+//                       } catch (InterruptedException e) {
+//                           JOptionPane.showMessageDialog(null, "erro" + e);
+//                       }
+//                   }
+                
+                }
+                
                 DefaultTableModel tabelaProdutosComprados = (DefaultTableModel) jTableProdutosComprados.getModel();
                
                 ProdutoController po = new ProdutoController();
@@ -242,7 +264,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
                 tabelaProdutosComprados.addRow(new Object[]{
                     produtoBuscado.getNome(),
                     produtoBuscado.getMarca(),
-                    Dinheiro.parseString(produtoBuscado.getPreco()),
+                    valorDesconto,
                     quantidade,
                     produtoBuscado.getId_produto()
                 });
@@ -256,7 +278,8 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
             JOptionPane.showMessageDialog(null, "Selecione um produto antes.");
         }
     }//GEN-LAST:event_jLabel1MousePressed
-
+    
+  
     private void jTextFieldNomeProdutoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNomeProdutoKeyPressed
     
         String nome = jTextFieldNomeProduto.getText(); // nome produto do TextField
@@ -333,11 +356,13 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new modalProdutos().setVisible(true);
+                modalInputMonetarios t = new modalInputMonetarios();
+                
             }
         });
     }
     
-    private void listarTodosProdutos() {
+    private  void listarTodosProdutos() {
         
         DefaultTableModel tabelaProdutoModel = (DefaultTableModel) jTableConsultaProdutos.getModel(); // tabela
         tabelaProdutoModel.setRowCount(0);
@@ -397,5 +422,22 @@ public class modalProdutos extends javax.swing.JFrame implements Observado {
             ob.update(produtosEscolhidos());
    
         });
+    }
+
+    @Override
+    public void update(Object obj) {
+    }
+
+    @Override
+    public void update(DefaultTableModel model) {
+    }
+
+    @Override
+    public void update(String valorDesconto) {    
+        this.valorDesconto = valorDesconto;
+    }
+
+    @Override
+    public void update(Cliente cliente) {
     }
 }

@@ -171,7 +171,7 @@
                   <Table columnCount="5" rowCount="4">
                     <Column editable="false" title="Nome" type="java.lang.String"/>
                     <Column editable="false" title="Marca" type="java.lang.String"/>
-                    <Column editable="false" title="Pre&#xe7;o" type="java.lang.String"/>
+                    <Column editable="false" title="Pre&#xe7;o de Venda" type="java.lang.String"/>
                     <Column editable="false" title="Data de Validade" type="java.lang.String"/>
                     <Column editable="false" title="id" type="java.lang.Object"/>
                   </Table>

@@ -3,6 +3,7 @@ package BeutifulSalon.model;
 
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.dao.produtoDAO;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 //import BeutifulSalon.dao.produtoDAO;
@@ -20,8 +21,8 @@ public class Produto {
     private String nome; 
     private String marca;
     private long preco; 
-    private Date dataReg; //Data que o produto foi registrado no sistema
-    private Date dataValidade; //Data de validade do produto 
+    private LocalDate dataReg; //Data que o produto foi registrado no sistema
+    private LocalDate dataValidade; //Data de validade do produto 
     private int rendimento;
 
     public int getRendimento() {
@@ -38,7 +39,7 @@ public class Produto {
    
     
     //Construtor não padrão
-    public Produto(String nome, String marca, long preco, Date dataValidade, Date dataReg) {
+    public Produto(String nome, String marca, long preco, LocalDate dataValidade, LocalDate dataReg) {
         this.nome = nome; 
         this.marca = marca;
         this.preco = preco; 
@@ -55,7 +56,7 @@ public class Produto {
     
     
     
-    public Produto(String nome, String marca, long preco, Date dataValidade, Date dataReg, long id_produto) {
+    public Produto(String nome, String marca, long preco, LocalDate dataValidade, LocalDate dataReg, long id_produto) {
         this.nome = nome; 
         this.marca = marca;
         this.preco = preco; 
@@ -64,7 +65,7 @@ public class Produto {
         this.id_produto = id_produto;
     }
 
-    public Produto(String nome, String marca, long preco, Date dataVal, long idProduto) {
+    public Produto(String nome, String marca, long preco, LocalDate dataVal, long idProduto) {
         this.nome = nome; 
         this.marca = marca;
         this.preco = preco; 
@@ -107,19 +108,19 @@ public class Produto {
         this.preco = preco;
     }
 
-    public Date getDataReg() {
+    public LocalDate getDataReg() {
         return dataReg;
     }
 
-    public void setDataReg(Date dataReg) {
+    public void setDataReg(LocalDate dataReg) {
         this.dataReg = dataReg;
     }
 
-    public Date getDataValidade() {
+    public LocalDate getDataValidade() {
         return dataValidade;
     }
 
-    public void setDataValidade(Date dataValidade) {
+    public void setDataValidade(LocalDate dataValidade) {
         this.dataValidade = dataValidade;
     }
     

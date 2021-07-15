@@ -19,13 +19,14 @@ import javax.swing.text.NumberFormatter;
  *
  * @author mateus
  */
-public class modalInputMonetarios extends javax.swing.JFrame implements Observado {
+public class modalInputMonetarios extends javax.swing.JFrame implements Observado, Runnable {
 
     /**
      * Creates new form modalInputMonetarios
      */
     
      ArrayList<Observador> observadores = new ArrayList<>();
+     private boolean clicou = false;
      
      
     public modalInputMonetarios() {
@@ -74,6 +75,7 @@ public class modalInputMonetarios extends javax.swing.JFrame implements Observad
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
+        jLabelTexto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelTexto.setText("jLabel1");
 
         jLabelBtnInserir.setBackground(new java.awt.Color(57, 201, 114));
@@ -101,20 +103,20 @@ public class modalInputMonetarios extends javax.swing.JFrame implements Observad
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelTexto)
-                    .addComponent(jFormattedTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFormattedTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelTexto, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(67, 67, 67)
+                .addGap(61, 61, 61)
                 .addComponent(jLabelTexto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jFormattedTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelBtnInserir, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -135,6 +137,7 @@ public class modalInputMonetarios extends javax.swing.JFrame implements Observad
     private void jLabelBtnInserirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBtnInserirMousePressed
     
        notificarObservadores();
+       clicou = true;
        dispose();
     }//GEN-LAST:event_jLabelBtnInserirMousePressed
 
@@ -201,5 +204,15 @@ public class modalInputMonetarios extends javax.swing.JFrame implements Observad
                 ob.update(valorMonetario());
      
         });
+    }
+
+    @Override
+    public void run() {
+             
+        synchronized(this){
+            
+        }
+  
+            
     }
 }

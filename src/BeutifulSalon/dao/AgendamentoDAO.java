@@ -11,8 +11,11 @@ import BeutifulSalon.model.Servico;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalTime;
+import java.sql.Time;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -24,7 +27,7 @@ public class AgendamentoDAO {
 
     public void cadastraAgendamento(Agendamento agendamento) throws SQLException, SQLException {
 
-        String insertAgendamento = "INSERT INTO AGENDAMENTO (DATA, HORARIO, CPF_CLIENTE) VALUES (?, ?, ?)";
+        String insertAgendamento = "INSERT INTO AGENDAMENTO (DATA, HORARIO, CPF_CLIENTE, REALIZADO) VALUES (?, ?, ?, ?)";
 
         String insertServicoAgendamento = "INSERT INTO AGENDAMENTO_SERVICO (ID_AGENDAMENTO, ID_SERVICO) "
                 + "VALUES ((SELECT ID_AGENDAMENTO FROM AGENDAMENTO ORDER BY ID_AGENDAMENTO DESC LIMIT 1), ?)";
@@ -38,9 +41,10 @@ public class AgendamentoDAO {
             connection.setAutoCommit(false);
 
             pStatement = connection.prepareStatement(insertAgendamento);
-            pStatement.setDate(1, new Date(agendamento.getData().getTime()));
-            pStatement.setDate(2, new Date(agendamento.getHorario().toNanoOfDay()));
+            pStatement.setDate(1, java.sql.Date.valueOf(agendamento.getData()));
+            pStatement.setTime(2, java.sql.Time.valueOf(agendamento.getHorario()));
             pStatement.setString(3, agendamento.getCpfCliente());
+            pStatement.setBoolean(4, false ); // ao cadastrar o orçamento, ele ainda não eh realizado por isso false.
 
             int firstInsert = pStatement.executeUpdate();
 
@@ -87,6 +91,62 @@ public class AgendamentoDAO {
             }
         }
 
+    }
+    
+    public ArrayList<Agendamento> listarAgendamentos(){
+        
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ArrayList<Agendamento> agendamentos = null;
+
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                
+                agendamentos = new ArrayList<>();
+                while(rs.next()){
+                    Agendamento ag = new Agendamento();
+                   
+                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setData(rs.getDate("DATA").toLocalDate());
+                    ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
+                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setRealizado(rs.getBoolean("REALIZADO"));
+                    agendamentos.add(ag);         
+                }
+            }
+           
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro agendamentoDAO" + e);
+        }finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        
+        return agendamentos;
     }
 
 }

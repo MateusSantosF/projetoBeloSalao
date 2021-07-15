@@ -8,6 +8,7 @@ package BeutifulSalon.view.Apresenta;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -302,7 +303,7 @@ public class ApresentaCliente extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Erro ao selecionar PKCliente");
                 }
 
-            } catch (Exception e) {
+            } catch (HeadlessException e) {
                 JOptionPane.showMessageDialog(null,"Erro ao retornar informações do cliente: " + e);
             }
         }else{

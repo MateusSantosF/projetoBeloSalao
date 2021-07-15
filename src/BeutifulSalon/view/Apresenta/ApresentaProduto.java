@@ -9,7 +9,8 @@ import BeutifulSalon.controller.ProdutoController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Produto;
-import java.text.SimpleDateFormat;
+import java.awt.HeadlessException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -78,7 +79,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Marca", "Preço", "Data de Validade", "id"
+                "Nome", "Marca", "Preço de Venda", "Data de Validade", "id"
             }
         ) {
             Class[] types = new Class [] {
@@ -265,7 +266,8 @@ public class ApresentaProduto extends javax.swing.JPanel {
         
         DefaultTableModel tabelaProdutoModel = (DefaultTableModel) jTableConsultaProdutos.getModel(); // tabela
         tabelaProdutoModel.setRowCount(0);
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+       
 
         ProdutoController pc = new ProdutoController();
 
@@ -282,7 +284,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
                     produto.getNome(),
                     produto.getMarca(),
                     Dinheiro.parseString(produto.getPreco()),
-                    format.format(produto.getDataValidade()),
+                    produto.getDataValidade().format(formatterData),
                     produto.getId_produto()
                 });
 
@@ -311,7 +313,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(null, "Erro ao selecionar PKProduto");
                 }
 
-            } catch (Exception e) {
+            } catch (HeadlessException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao retornar informações do produto\n" + e);
             }
         } else {
@@ -328,7 +330,8 @@ public class ApresentaProduto extends javax.swing.JPanel {
         DefaultTableModel tabelaProdutoModel = (DefaultTableModel) jTableConsultaProdutos.getModel(); // tabela
 
         tabelaProdutoModel.setRowCount(0);
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
 
         ProdutoController pc = new ProdutoController();
 
@@ -345,7 +348,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
                     produto.getNome(),
                     produto.getMarca(),
                     Dinheiro.parseString(produto.getPreco()),
-                    format.format(produto.getDataValidade()),
+                    produto.getDataValidade().format(formatterData),
                     produto.getId_produto()
                 });
 

@@ -41,14 +41,14 @@ public class clienteDAO {
             pStatement.setString(2, cliente.getNOME());
             pStatement.setString(3, cliente.getSOBRENOME());
             pStatement.setString(4, cliente.getEMAIL());
-            pStatement.setDate(5,  new Date(cliente.getDATANASC().getTime()));
+            pStatement.setDate(5,  java.sql.Date.valueOf(cliente.getDATANASC()));
             pStatement.setString(6, cliente.getCEP());
             pStatement.setString(7, cliente.getBAIRRO());
             pStatement.setString(8, cliente.getRUA());
             pStatement.setString(9, cliente.getCIDADE());
             pStatement.setString(10, cliente.getTELEFONE());
             pStatement.setString(11, cliente.getCELULAR());
-            pStatement.setDate(12, new Date(cliente.getDATAREG().getTime()));
+            pStatement.setDate(12, java.sql.Date.valueOf(cliente.getDATAREG()));
             pStatement.setString(13, cliente.getNUMERO());
             pStatement.execute(); 
             
@@ -244,7 +244,7 @@ public class clienteDAO {
                 cliente.setCPF(rs.getString("CPF"));
                 cliente.setEMAIL(rs.getString("EMAIL"));
                 cliente.setCELULAR(rs.getString("CELULAR"));
-                cliente.setDATANASC(rs.getDate("DATANASC"));
+                cliente.setDATANASC(rs.getDate("DATANASC").toLocalDate());
                 cliente.setCEP(rs.getString("CEP"));
                 cliente.setBAIRRO(rs.getString("BAIRRO"));
                 cliente.setRUA(rs.getString("RUA"));
@@ -278,7 +278,65 @@ public class clienteDAO {
        
         return null;
     }
+    
+     public Cliente buscarCliente(String cpf){
+        
+        
+        String sqlScript = "SELECT NOME,SOBRENOME,CPF, EMAIL, CELULAR, DATANASC, CEP, BAIRRO, RUA,NUMERO, CIDADE,CELULAR, TELEFONE FROM CLIENTE WHERE CPF = ?";
+        
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        ResultSet rs = null;
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sqlScript);
+            pStatement.setString(1, cpf);
+            rs = pStatement.executeQuery();
+            Cliente cliente = new Cliente(); 
+      
+            if(rs != null){                
+                while(rs.next()){
+                cliente.setNOME(rs.getString("NOME"));
+                cliente.setSOBRENOME(rs.getString("SOBRENOME"));
+                cliente.setCPF(rs.getString("CPF"));
+                cliente.setEMAIL(rs.getString("EMAIL"));
+                cliente.setCELULAR(rs.getString("CELULAR"));
+                cliente.setDATANASC(rs.getDate("DATANASC").toLocalDate());
+                cliente.setCEP(rs.getString("CEP"));
+                cliente.setBAIRRO(rs.getString("BAIRRO"));
+                cliente.setRUA(rs.getString("RUA"));
+                cliente.setNUMERO(rs.getString("NUMERO"));
+                cliente.setCIDADE(rs.getString("CIDADE"));
+                cliente.setCELULAR(rs.getString("CELULAR"));
+                cliente.setTELEFONE(rs.getString("TELEFONE")); 
+                }
+            }
+           
+            return cliente;
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Erro ClienteDAO " + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
 
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+           
+        }
+       
+        return null;
+    }
+     
     public void atualizarCliente(Cliente cliente) {
         
         
@@ -297,7 +355,7 @@ public class clienteDAO {
             pStatement.setString(2, cliente.getNOME());
             pStatement.setString(3, cliente.getSOBRENOME());
             pStatement.setString(4, cliente.getEMAIL());
-            pStatement.setDate(5, new Date(cliente.getDATANASC().getTime()));
+            pStatement.setDate(5, java.sql.Date.valueOf(cliente.getDATANASC()));
             pStatement.setString(6, cliente.getCEP());
             pStatement.setString(7, cliente.getBAIRRO());
             pStatement.setString(8, cliente.getRUA());
@@ -321,7 +379,7 @@ public class clienteDAO {
             
             try {
                 if(connection != null) connection.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
             }
            

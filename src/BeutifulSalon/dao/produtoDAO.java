@@ -28,8 +28,8 @@ public class produtoDAO {
             pStatement.setString(1, produto.getNome());
             pStatement.setString(2, produto.getMarca());
             pStatement.setLong(3, produto.getPreco());
-            pStatement.setDate(4, new Date (produto.getDataValidade().getTime()));
-            pStatement.setDate(5, new Date(produto.getDataReg().getTime()));
+            pStatement.setDate(4, java.sql.Date.valueOf(produto.getDataValidade()));
+            pStatement.setDate(5, java.sql.Date.valueOf(produto.getDataReg()));
             pStatement.execute();
             
         } catch(SQLException e){
@@ -74,8 +74,8 @@ public class produtoDAO {
                     produtoAtual.setNome(rs.getString("NOME"));
                     produtoAtual.setMarca(rs.getString("MARCA"));
                     produtoAtual.setPreco(rs.getLong("PRECO"));
-                    produtoAtual.setDataReg(rs.getDate("DATAREG"));
-                    produtoAtual.setDataValidade(rs.getDate("DATAVALIDADE"));
+                    produtoAtual.setDataReg(rs.getDate("DATAREG").toLocalDate());
+                    produtoAtual.setDataValidade(rs.getDate("DATAVALIDADE").toLocalDate());
                     produtoAtual.setId_produto(rs.getLong("IDPRODUTO"));
                     produtos.add(produtoAtual);
                 }
@@ -129,8 +129,8 @@ public class produtoDAO {
                     produtoAtual.setNome(rs.getString("NOME"));
                     produtoAtual.setMarca(rs.getString("MARCA"));
                     produtoAtual.setPreco(rs.getLong("PRECO"));
-                    produtoAtual.setDataReg(rs.getDate("DATAREG"));
-                    produtoAtual.setDataValidade(rs.getDate("DATAVALIDADE"));
+                    produtoAtual.setDataReg(rs.getDate("DATAREG").toLocalDate());
+                    produtoAtual.setDataValidade(rs.getDate("DATAVALIDADE").toLocalDate());
                     produtoAtual.setId_produto(rs.getLong("IDPRODUTO"));
                     produtos.add(produtoAtual);
                 }
@@ -223,7 +223,7 @@ public class produtoDAO {
                 produto.setMarca(rs.getString("MARCA"));
                 produto.setId_produto(rs.getLong("IDPRODUTO"));
                 produto.setPreco(rs.getLong("PRECO"));
-                produto.setDataValidade(rs.getDate("DATAVALIDADE"));
+                produto.setDataValidade(rs.getDate("DATAVALIDADE").toLocalDate());
                 }
             }
            
@@ -242,7 +242,7 @@ public class produtoDAO {
             
             try {
                 if(connection != null) connection.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
             }
            
@@ -269,7 +269,7 @@ public class produtoDAO {
             pStatement.setString(1, produto.getNome());
             pStatement.setString(2, produto.getMarca());
             pStatement.setLong(3, produto.getPreco());
-            pStatement.setDate(4, new Date(produto.getDataValidade().getTime()));
+            pStatement.setDate(4, java.sql.Date.valueOf(produto.getDataValidade()));
             pStatement.execute(); 
             
         } catch (SQLException e) {
@@ -285,7 +285,7 @@ public class produtoDAO {
             
             try {
                 if(connection != null) connection.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
             }
            

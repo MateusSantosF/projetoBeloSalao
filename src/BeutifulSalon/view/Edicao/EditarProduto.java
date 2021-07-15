@@ -8,6 +8,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,8 +30,8 @@ public class EditarProduto extends javax.swing.JFrame {
         
         initComponents();
         
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
-        String dateString = formatter.format(produto.getDataValidade().getTime());
+       DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String dateString = produto.getDataValidade().format(formatterData);
         
         jTextFieldNome.setText(produto.getNome());
         jTextFieldMarca.setText(produto.getMarca());
@@ -129,7 +130,7 @@ public class EditarProduto extends javax.swing.JFrame {
         jTextFieldPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel26.setText("*Preço Unitário ");
+        jLabel26.setText("*Preço de Venda ");
 
         jTextFieldDataValidade.setBackground(new java.awt.Color(255, 255, 255));
         try {

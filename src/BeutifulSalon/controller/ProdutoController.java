@@ -3,12 +3,9 @@ package BeutifulSalon.controller;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.view.Edicao.EditarProduto;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 //import java.sql.Date;
 
@@ -23,24 +20,21 @@ public class ProdutoController {
     public boolean cadastrarProduto(String nome, String marca, long preco, String dataValidade, String dataReg) throws ExceptionDAO{
         
         if (nome != null && nome.length() > 0 && marca != null && marca.length() > 0) {
-
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
+     
             //Convertendo datas de String para Date
-
-            try {
-                Date dataVal = format.parse(dataValidade);
-                Date dataRegistro = format.parse(dataReg);
-                Produto produto = new Produto(nome, marca, preco, dataVal, dataRegistro);
-                produto.cadastrarProduto(produto);
-
-            } catch (ParseException ex) {
-                Logger.getLogger(ProdutoController.class.getName()).log(Level.SEVERE, null, ex);
-                return false;
-            }
+            LocalDate dataVal = LocalDate.parse(dataValidade, formatterData);
+            LocalDate dataRegistro = LocalDate.parse(dataReg, formatterData);
+            
+            Produto produto = new Produto(nome, marca, preco, dataVal, dataRegistro);
+            produto.cadastrarProduto(produto);
 
         } else {
             return false;
         }
+        
+        
         return true;
     }
     
@@ -99,18 +93,12 @@ public class ProdutoController {
         if (nome != null && nome.length() > 0 && marca != null && marca.length() > 0 && preco > 0) {
             
             //Convertendo datas de String para Date
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+          
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
  
-            try {
-                Date dataVal = format.parse(dataValidade);
-                Produto produto = new Produto(nome, marca, preco, dataVal, idProduto);
-                
-                produto.atualizarProduto(produto);
-
-            } catch (ParseException ex ) {
-                Logger.getLogger(ProdutoController.class.getName()).log(Level.SEVERE, null, ex);
-                return false;
-            }
+            LocalDate dataVal = LocalDate.parse(dataValidade, formatterData);
+            Produto produto = new Produto(nome, marca, preco, dataVal, idProduto);
+            produto.atualizarProduto(produto);
 
         } else {
             return false;
