@@ -9,8 +9,10 @@ import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Produto;
+import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalProdutosUtilizados;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -30,6 +34,13 @@ public class CadastroServico extends javax.swing.JFrame implements Observador {
      */
     public CadastroServico() {
         initComponents();
+        
+           DecimalFormat decimal = new DecimalFormat("#,###,###.00");
+           NumberFormatter numFormatter = new NumberFormatter(decimal);
+           numFormatter.setFormat(decimal);
+           numFormatter.setAllowsInvalid(false);
+           DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
+           jFormattedTextFieldPreco1.setFormatterFactory(dfFactory);
     }
 
     /**
@@ -418,5 +429,9 @@ public class CadastroServico extends javax.swing.JFrame implements Observador {
 
     @Override
     public void update(Cliente cliente) {
+    }
+    
+    @Override
+    public void update(Servico servico) {
     }
 }

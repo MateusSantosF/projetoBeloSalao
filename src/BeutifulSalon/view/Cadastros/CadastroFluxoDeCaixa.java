@@ -14,6 +14,7 @@ import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.ItemCompra;
 import BeutifulSalon.model.Observador;
+import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalInputMonetarios;
 import java.awt.HeadlessException;
 import java.util.ArrayList;
@@ -583,6 +584,10 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                 new CadastroFluxoDeCaixa().setVisible(true);
             }
         });
+    }
+    
+    @Override
+    public void update(Servico servico) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

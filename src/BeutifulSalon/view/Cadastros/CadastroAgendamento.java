@@ -572,4 +572,8 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jTextFieldNome.setText(cliente.getNOME());
         jTextFieldCPF.setText(cliente.getCPF());
     }
+
+    @Override
+    public void update(Servico servico) {
+    }
 }

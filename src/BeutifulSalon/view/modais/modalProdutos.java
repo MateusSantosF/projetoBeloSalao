@@ -12,6 +12,7 @@ import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Produto;
+import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.Apresenta.ApresentaProduto;
 import BeutifulSalon.view.Cadastros.CadastroFluxoDeCaixa;
 import java.util.ArrayList;
@@ -439,5 +440,9 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
 
     @Override
     public void update(Cliente cliente) {
+    }
+
+    @Override
+    public void update(Servico servico) {
     }
 }

@@ -20,4 +20,6 @@ public interface Observador {
     public void update(String valorDesconto);
     
     public void update(Cliente cliente);
+    
+    public void update(Servico servico);
 }

@@ -40,12 +40,40 @@ public class OrcamentoController {
          
     }
      
+    public boolean cadastraOrcamentoServico(boolean previsto, String nomeServico, long Idservico, long jan, long fev, long mar, 
+            long abr, long mai, long jun, long jul, long ago, long set, long out, long nov, long dez, String ano){
+        
+        if(ano.length() > 0 && nomeServico.length() > 0 && Idservico > 0){
+            
+            try {
+                Orcamento orcamentoServico; 
+                orcamentoServico = new Orcamento(previsto, 
+                    nomeServico, Idservico, jan,fev,mar, abr,mai,jun,jul,ago,set,out,nov,dez,ano);
+                
+                orcamentoServico.cadastrarOrcamentoServico(orcamentoServico);
+                
+            
+            } catch (ExceptionDAO e) {
+                
+                JOptionPane.showMessageDialog(null, "Erro OrcController " + e);
+                return false;
+            }
+          
+            
+            
+        }else{
+            return false;
+        }
+        
+        return true;
+    }
+     
     public boolean excluirOrcamento(long id_orcamento){
         
         try {
             new Orcamento().excluirOrcamento(id_orcamento);
                  
-        } catch (Exception e) {
+        } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir orçamento " + e);
             return false;
         }
@@ -61,9 +89,19 @@ public class OrcamentoController {
         return new Orcamento().listarOrcamentos(ano);
     }
     
+    public ArrayList<Orcamento> listarOrcamentosServico() throws ExceptionDAO{
+        return new Orcamento().listarOrcamentosServico();
+    }
+    
+     public ArrayList<Orcamento> listarOrcamentosServico(String ano) throws ExceptionDAO{
+        return new Orcamento().listarOrcamentosServico(ano);
+    }
+    
     public long somarOrcamento(String mes, String ano) throws ExceptionDAO{
         return new Orcamento().somarOrcamento(mes, ano);
     }
+    
+   
 
     public boolean editarCliente(long id_orcamento) {
             try {
