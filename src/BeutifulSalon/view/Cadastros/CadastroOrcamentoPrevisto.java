@@ -990,7 +990,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
                                         .addComponent(jTextFieldAnoOrc))
                                     .addGap(60, 60, 60)
                                     .addComponent(jCheckBoxFixo1))))))
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
         jPanelServicosLayout.setVerticalGroup(
             jPanelServicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -44,9 +44,7 @@ public class Agendamento {
     public void setRealizado(Boolean realizado) {
         this.realizado = realizado;
     }
-
-    
-    
+      
     public long getId() {
         return id;
     }

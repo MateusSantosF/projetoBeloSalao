@@ -52,7 +52,7 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
         jTableProdutosSelecionados = new javax.swing.JTable();
         button1 = new java.awt.Button();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(243, 244, 245));
 

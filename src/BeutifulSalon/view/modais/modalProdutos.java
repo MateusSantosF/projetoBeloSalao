@@ -14,11 +14,9 @@ import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.Apresenta.ApresentaProduto;
-import BeutifulSalon.view.Cadastros.CadastroFluxoDeCaixa;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
 /**
  *
@@ -97,11 +95,6 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
             }
         });
         jScrollPane1.setViewportView(jTableProdutosComprados);
-        if (jTableProdutosComprados.getColumnModel().getColumnCount() > 0) {
-            jTableProdutosComprados.getColumnModel().getColumn(4).setMinWidth(1);
-            jTableProdutosComprados.getColumnModel().getColumn(4).setPreferredWidth(1);
-            jTableProdutosComprados.getColumnModel().getColumn(4).setMaxWidth(1);
-        }
 
         jTableConsultaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -223,7 +216,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
         notificarObservadores();
-        dispose();
+       this.dispose();
     }//GEN-LAST:event_jButton1MousePressed
 
     private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
@@ -265,7 +258,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
                 tabelaProdutosComprados.addRow(new Object[]{
                     produtoBuscado.getNome(),
                     produtoBuscado.getMarca(),
-                    valorDesconto,
+                    Dinheiro.parseString(produtoBuscado.getPreco()),
                     quantidade,
                     produtoBuscado.getId_produto()
                 });
