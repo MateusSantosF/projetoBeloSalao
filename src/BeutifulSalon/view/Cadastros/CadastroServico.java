@@ -5,42 +5,37 @@
  */
 package BeutifulSalon.view.Cadastros;
 
+import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Observador;
-import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalProdutosUtilizados;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
-
 /**
  *
  * @author Visitante
  */
 public class CadastroServico extends javax.swing.JFrame implements Observador {
-
     /**
      * Creates new form CadastroServico
      */
     public CadastroServico() {
         initComponents();
         
-           DecimalFormat decimal = new DecimalFormat("#,###,###.00");
-           NumberFormatter numFormatter = new NumberFormatter(decimal);
-           numFormatter.setFormat(decimal);
-           numFormatter.setAllowsInvalid(false);
-           DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
-           jFormattedTextFieldPreco1.setFormatterFactory(dfFactory);
+        DecimalFormat decimal = new DecimalFormat("#,###,###.00");
+        NumberFormatter numFormatter = new NumberFormatter(decimal);
+        numFormatter.setFormat(decimal);
+        numFormatter.setAllowsInvalid(false);
+        DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
+        jFormattedTextFieldPreco1.setFormatterFactory(dfFactory);
     }
 
     /**
@@ -297,17 +292,13 @@ public class CadastroServico extends javax.swing.JFrame implements Observador {
 
         boolean sucesso;
         
-
         ServicoController sv = new ServicoController(); //instanciar o controlador, que recebe um novo controlador
-        try {
-            
-            DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
-            LocalTime horario = LocalTime.parse(jFormattedTextFieldTempoGasto.getText(), formatterHora);
+        try {     
             sucesso = sv.cadastrarServico(
                     jTextFieldNomeServico.getText(),
                     jFormattedTextFieldPreco1.getText(),
-                    horario,
-                    recuperaProdutosComprados()
+                    jFormattedTextFieldTempoGasto.getText(),
+                    new RecuperaTabela().Produtos(jTableMostraProdutos)
             );
 
             if (sucesso) {
@@ -320,28 +311,6 @@ public class CadastroServico extends javax.swing.JFrame implements Observador {
             Logger.getLogger(CadastroServico.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
-    private ArrayList<Produto> recuperaProdutosComprados() {
-
-        ArrayList<Produto> produtos = new ArrayList<>();
-
-        for (int i = 0; i < jTableMostraProdutos.getRowCount(); i++) {
-            Produto produtoAtual = new Produto();
-            for (int j = 0; j < jTableMostraProdutos.getColumnCount(); j++) {
-
-                if (j == 0) {
-                    produtoAtual.setNome(jTableMostraProdutos.getValueAt(i, j).toString());
-                } else if (j == 1) {
-                    produtoAtual.setMarca(jTableMostraProdutos.getValueAt(i, j).toString());
-                } else if (j == 2) {
-                    produtoAtual.setRendimento(Integer.parseInt(jTableMostraProdutos.getValueAt(i, j).toString()));
-                } else {
-                    produtoAtual.setId_produto(Integer.parseInt(jTableMostraProdutos.getValueAt(i, j).toString()));
-                }
-            }
-            produtos.add(produtoAtual);
-        }
-        return produtos;
-    }
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int opc = JOptionPane.showConfirmDialog(null, "Realmente deseja sair?", "Cadastro Servico", JOptionPane.YES_NO_OPTION);
@@ -412,26 +381,26 @@ public class CadastroServico extends javax.swing.JFrame implements Observador {
     private javax.swing.JTextField jTextFieldNomeServico;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void update(Object obj) {
-    }
+   
+   
 
     //pega a tebala da outra tela e recebe nessa
     @Override
     public void update(DefaultTableModel model) {
         jTableMostraProdutos.setModel(model);
-
-    }
-
-    @Override
-    public void update(String valorDesconto) {
-    }
-
-    @Override
-    public void update(Cliente cliente) {
     }
     
     @Override
-    public void update(Servico servico) {
-    }
+    public void update(Object obj) { }
+    
+    @Override
+    public void update(String valorDesconto) {}
+    
+
+    @Override
+    public void update(Cliente cliente) {}  
+    
+    @Override
+    public void update(Servico servico) {}
+   
 }

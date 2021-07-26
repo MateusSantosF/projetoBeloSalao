@@ -57,7 +57,7 @@ public class ProdutoController {
             p.excluirProduto(idProdutoSelecionado);
           
         } catch (Exception e) {
-            JOptionPane.showInputDialog(null, "Erro Controller, excluir produto");
+            JOptionPane.showInputDialog(null, "Erro Controller, excluir produto" + e);
             return false;
         }
         

@@ -5,19 +5,15 @@
  */
 package BeutifulSalon.view.Apresenta;
 
+import BeutifulSalon.Ferramentas.ApresentaTabela;
 import BeutifulSalon.controller.OrcamentoController;
-import BeutifulSalon.dao.ExceptionDAO;
-import BeutifulSalon.model.Dinheiro;
-import BeutifulSalon.model.Orcamento;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 /**
@@ -31,10 +27,8 @@ public class ApresentaFinancas extends javax.swing.JPanel {
      */
     public ApresentaFinancas() {
         initComponents();
-        
         new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
-        listarTodosOrcamentos();
-       
+        listarOrcamentos();
     }
 
     /**
@@ -430,306 +424,93 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
 
         int indice = jTableConsultaOrcamento.getSelectedRow();
-        System.out.println(indice);
+        int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este orçamento?: "
+                + jTableConsultaOrcamento.getValueAt(indice, 0), "Excluir Orçamento", JOptionPane.YES_NO_OPTION);
 
-        int opc = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja excluir este orçamento?: " +
-            jTableConsultaOrcamento.getValueAt(indice, 0), "Excluir Orçamento", JOptionPane.YES_NO_OPTION);
-
-        if(opc == 0){
-            if( indice > -1){
+        if (opc == 0) {
+            if (indice > -1) {
                 try {
 
                     long id_orcamento = (long) jTableConsultaOrcamento.getValueAt(indice, 13); // Retorna ID_ORÇAMENTO
 
                     OrcamentoController oc = new OrcamentoController();
 
-                    if(oc.excluirOrcamento(id_orcamento)){
+                    if (oc.excluirOrcamento(id_orcamento)) {
                         JOptionPane.showMessageDialog(null, "Orçamento deletado com sucesso.");
-                        listarTodosOrcamentos();
+                        listarOrcamentos();
 
-                    }else{
+                    } else {
                         JOptionPane.showMessageDialog(null, "Não foi possível excluir o Orçamento. Selecione um índice válido na tabela");
                     }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null,"Erro ao excluir orçamento: " + e);
+                } catch (HeadlessException e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao excluir orçamento: " + e);
                 }
 
             }
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
- 
-    private void listarTodosOrcamentos(){
-        
-        DefaultTableModel tabelaOrcamentoModel = (DefaultTableModel) jTableConsultaOrcamento.getModel(); // tabela
-        tabelaOrcamentoModel.setRowCount(0);
-       
-        OrcamentoController oc = new OrcamentoController();
-        
-       
-        ArrayList<Orcamento> orcamentos = null;
-        
-        try {
-            orcamentos = oc.listarOrcamentos();
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-            
-            try {
-               orcamentos.forEach((Orcamento orcamento) -> {
-                 tabelaOrcamentoModel.addRow(new Object[] {
-                     
-                       orcamento.getNome(),
-                       Dinheiro.parseString(orcamento.getJan()), 
-                       Dinheiro.parseString(orcamento.getFev()),
-                       Dinheiro.parseString(orcamento.getMar()),
-                       Dinheiro.parseString(orcamento.getAbr()),
-                       Dinheiro.parseString(orcamento.getMai()), 
-                       Dinheiro.parseString(orcamento.getJun()),
-                       Dinheiro.parseString(orcamento.getJul()),
-                       Dinheiro.parseString(orcamento.getAgo()), 
-                       Dinheiro.parseString(orcamento.getSet()),
-                       Dinheiro.parseString(orcamento.getOut()),
-                       Dinheiro.parseString(orcamento.getNov()),
-                       Dinheiro.parseString(orcamento.getDez()),
-                       orcamento.getId_orcamento()
 
-                   });
-                   
-            
-               });     
-               
-           
-               
-            SimpleDateFormat df = new SimpleDateFormat("yyyy");
-            java.util.Date ano = new java.util.Date();
-               
-               tabelaOrcamentoModel.addRow(new Object[] {"TOTAL", 
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("JANEIRO",df.format(ano)))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("FEVEREIRO",df.format(ano)))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("MARCO",df.format(ano)))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("ABRIL",df.format(ano)))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("MAIO",df.format(ano)))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("JUNHO",df.format(ano)))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("JULHO",df.format(ano)))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("AGOSTO",df.format(ano)))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("SETEMBRO",df.format(ano)))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("OUTUBRO",df.format(ano)))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("NOVEMBRO",df.format(ano)))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("DEZEMBRO",df.format(ano)))),
-                      
-                                                        });
-                
-             
-         
-            jTableConsultaOrcamento.setModel(tabelaOrcamentoModel);
-            
-            jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount()-1));
-              
-               
-             
-            } catch (ExceptionDAO e) {
-                JOptionPane.showMessageDialog(null,"Erro ao listar Orçamentos" + e);
-            }
-    }
-    
     public class FormatacaoConteudo extends DefaultTableCellRenderer implements TableCellRenderer {
 
-        
         private Color color;
         private int row = -1;
-        
-        public FormatacaoConteudo(Color color, int row){
+
+        public FormatacaoConteudo(Color color, int row) {
             super();
             this.color = color;
             this.row = row;
-	}
-     
+        }
+
         @Override
-        public Component getTableCellRendererComponent(JTable table, 
-                                                        Object value, boolean isSelected, 
-                                                        boolean hasFocus, int row, int column) {
-            
+        public Component getTableCellRendererComponent(JTable table,
+                Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
             Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            
-            if( row != -1 && color != null){
-                if( row == this.row){
-                    c.setBackground( new Color( 0, 0, 0));
-                    c.setForeground(this.color );
-                }else{
-                   c.setBackground( new Color( 255, 255, 255)); 
-                   c.setForeground( new Color(0,0,0) ); 
-                } 
+
+            if (row != -1 && color != null) {
+                if (row == this.row) {
+                    c.setBackground(new Color(0, 0, 0));
+                    c.setForeground(this.color);
+                } else {
+                    c.setBackground(new Color(255, 255, 255));
+                    c.setForeground(new Color(0, 0, 0));
+                }
             }
-           
-      
+
             return c;
+        }
 
-        }
-    
     }
-    
- 
-    public void listarTodosOrcamentos(String ano){
-        
-        DefaultTableModel tabelaOrcamentoModel = (DefaultTableModel) jTableConsultaOrcamento.getModel(); // tabela
-        tabelaOrcamentoModel.setRowCount(0);
-       
-        OrcamentoController oc = new OrcamentoController();
-        
-       
-        ArrayList<Orcamento> orcamentos = null;
-        
-        try {
-            orcamentos = oc.listarOrcamentos(ano);
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaFinancas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-            
-            try {
-               orcamentos.forEach((Orcamento orcamento) -> {
-                 tabelaOrcamentoModel.addRow(new Object[] {
-                                                        orcamento.getNome(),
-                                                        Dinheiro.parseString(orcamento.getJan()),
-                                                        Dinheiro.parseString(orcamento.getFev()),
-                                                        Dinheiro.parseString(orcamento.getMar()),
-                                                        Dinheiro.parseString(orcamento.getAbr()),
-                                                        Dinheiro.parseString(orcamento.getMai()),
-                                                        Dinheiro.parseString(orcamento.getJun()),
-                                                        Dinheiro.parseString(orcamento.getJul()),
-                                                        Dinheiro.parseString(orcamento.getAgo()),
-                                                        Dinheiro.parseString(orcamento.getSet()),
-                                                        Dinheiro.parseString(orcamento.getOut()),
-                                                        Dinheiro.parseString(orcamento.getNov()),
-                                                        Dinheiro.parseString(orcamento.getDez()),
-                                                        orcamento.getId_orcamento(),
-                                                        
-                                                        });
-            
-               });
-               
-         
-               
-               tabelaOrcamentoModel.addRow(new Object[] {"TOTAL", 
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("JANEIRO", ano ))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("FEVEREIRO", ano))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("MARCO",ano))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("ABRIL",ano))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("MAIO", ano))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("JUNHO", ano))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("JULHO", ano))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("AGOSTO", ano))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("SETEMBRO", ano))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("OUTUBRO", ano))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("NOVEMBRO", ano))),
-                                                        Dinheiro.parseString(Dinheiro.parseBigDecimal(oc.somarOrcamento("DEZEMBRO", ano)))
-                         
-                                                        });
-               
-               jTableConsultaOrcamento.setModel(tabelaOrcamentoModel);
-               
-               //Pinta campo total
-               jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount()-1));
 
-                
-            } catch (ExceptionDAO e) {
-                JOptionPane.showMessageDialog(null,"Erro ao listar Orçamentos" + e);
-            }
+    public void listarOrcamentos() {
+        jTableConsultaOrcamento.setModel(new ApresentaTabela().Orcamentos(jTableConsultaOrcamento));
+        jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));
+    }
+
+    public void listaOrcamentos(String ano) {
+        jTableConsultaOrcamento.setModel(new ApresentaTabela().Orcamentos(jTableConsultaOrcamento, ano));
+        jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));
+
     }
     
-    public void listaOrcamentosServico(){
-        
-        DefaultTableModel modelo = (DefaultTableModel) jTableConsultaOrcamentoServico.getModel();
-        modelo.setRowCount(0);
-        ArrayList<Orcamento> orcamentos = null;
-        
-        OrcamentoController oc = new OrcamentoController();
-            
-        try {
-            orcamentos = oc.listarOrcamentosServico();
-            
-            orcamentos.forEach((Orcamento orcamento)-> { 
-                System.out.println("teste =" + orcamento.getNome());
-                modelo.addRow(new Object[]{
-                    orcamento.getNome(),
-                    orcamento.getJan(),
-                    orcamento.getFev(),
-                    orcamento.getMar(),
-                    orcamento.getAbr(),
-                    orcamento.getMai(),
-                    orcamento.getJun(),
-                    orcamento.getJul(),
-                    orcamento.getAgo(),
-                    orcamento.getSet(),
-                    orcamento.getOut(),
-                    orcamento.getNov(),
-                    orcamento.getDez(),
-                    orcamento.getId_orcamento(),
-                    orcamento.getId_servico()
-                });
-            });
-            
-            jTableConsultaOrcamentoServico.setModel(modelo);
-            
-        } catch (ExceptionDAO e) {
-           
-            JOptionPane.showMessageDialog(null,"Erro ao listar Orçamentos" + e);
-            
-        }
-        
-        
+    public void listarOrcamentoServico(String ano){
+        jTableConsultaOrcamentoServico.setModel(new ApresentaTabela().OrcamentosServico(jTableConsultaOrcamento, ano));
     }
-    
-    public void listaOrcamentosServico(String ano){
-        
-        DefaultTableModel modelo = (DefaultTableModel) jTableConsultaOrcamentoServico.getModel();
-        modelo.setRowCount(0);
-        ArrayList<Orcamento> orcamentos = null;
-        
-        OrcamentoController oc = new OrcamentoController();
-            
-        try {
-            orcamentos = oc.listarOrcamentosServico(ano);
-            
-            orcamentos.forEach((Orcamento orcamento)-> { 
-             
-                modelo.addRow(new Object[]{
-                    orcamento.getNome(),
-                    orcamento.getJan(),
-                    orcamento.getFev(),
-                    orcamento.getMar(),
-                    orcamento.getAbr(),
-                    orcamento.getMai(),
-                    orcamento.getJun(),
-                    orcamento.getJul(),
-                    orcamento.getAgo(),
-                    orcamento.getSet(),
-                    orcamento.getOut(),
-                    orcamento.getNov(),
-                    orcamento.getDez(),
-                    orcamento.getId_orcamento(),
-                    orcamento.getId_servico()
-                });
-            });
-            
-            jTableConsultaOrcamentoServico.setModel(modelo);
-            
-        } catch (ExceptionDAO e) {
-           
-            JOptionPane.showMessageDialog(null,"Erro ao listar Orçamentos" + e);
-            
-        }
-        
-        
+     public void listarOrcamentoServico(){
+        jTableConsultaOrcamentoServico.setModel(new ApresentaTabela().OrcamentosServico(jTableConsultaOrcamento));
     }
+
+   
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
 
         boolean resultado;
         int indice = jTableConsultaOrcamento.getSelectedRow();
 
-        if( indice > -1){
+        if (indice > -1) {
             try {
 
-                long  id_orcamento = (long) jTableConsultaOrcamento.getValueAt(indice, 13); // Retorna IDORCAMENTO
+                long id_orcamento = (long) jTableConsultaOrcamento.getValueAt(indice, 13); // Retorna IDORCAMENTO
                 OrcamentoController oc = new OrcamentoController();
                 resultado = oc.editarCliente(id_orcamento);
 
@@ -738,9 +519,9 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                 }
 
             } catch (HeadlessException e) {
-                JOptionPane.showMessageDialog(null,"Erro ao retornar informações do orçamento: " + e);
+                JOptionPane.showMessageDialog(null, "Erro ao retornar informações do orçamento: " + e);
             }
-        }else{
+        } else {
 
             JOptionPane.showMessageDialog(null, "Selecione um orçamento.");
         }
@@ -748,12 +529,12 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
     private void jLabelSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearchMousePressed
 
-        if(jTextFieldAno.getText().equals("")){
+        if (jTextFieldAno.getText().equals("")) {
             SimpleDateFormat df = new SimpleDateFormat("yyyy");
             java.util.Date ano = new java.util.Date();
-            listarTodosOrcamentos(df.format(ano).toString());
-        }else{
-            listarTodosOrcamentos(jTextFieldAno.getText());
+            listaOrcamentos(df.format(ano).toString());
+        } else {
+            listaOrcamentos(jTextFieldAno.getText());
         }
 
     }//GEN-LAST:event_jLabelSearchMousePressed
@@ -767,35 +548,35 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonEditar1ActionPerformed
 
     private void jLabelSearch1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearch1MousePressed
-        
-        if(jTextFieldAno1.getText().equals("")){
+
+        if (jTextFieldAno1.getText().equals("")) {
             SimpleDateFormat df = new SimpleDateFormat("yyyy");
             java.util.Date ano = new java.util.Date();
-            listaOrcamentosServico(df.format(ano).toString());
-   
-        }else{
-            listaOrcamentosServico(jTextFieldAno1.getText());
+            listarOrcamentoServico(df.format(ano).toString());
+
+        } else {
+            listarOrcamentoServico(jTextFieldAno1.getText());
         }
     }//GEN-LAST:event_jLabelSearch1MousePressed
 
     private void jTabbedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedStateChanged
-        
+
         int indice = jTabbed.getSelectedIndex();
-        
-        if(indice == 0){
-            listarTodosOrcamentos();
-        }else if( indice == 1){
-            listaOrcamentosServico();
+
+        if (indice == 0) {
+            listarOrcamentos();
+        } else if (indice == 1) {
+            jTableConsultaOrcamentoServico.setModel(new ApresentaTabela().OrcamentosServico(jTableConsultaOrcamento));
         }
-       
+
     }//GEN-LAST:event_jTabbedStateChanged
 
     private void jTabbedPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTabbedPropertyChange
-       
+
     }//GEN-LAST:event_jTabbedPropertyChange
 
     private void jTabbedFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedFocusGained
-        
+
     }//GEN-LAST:event_jTabbedFocusGained
 
 

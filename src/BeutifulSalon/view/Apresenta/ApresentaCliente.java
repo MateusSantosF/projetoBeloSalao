@@ -5,13 +5,10 @@
  */
 package BeutifulSalon.view.Apresenta;
 
+import BeutifulSalon.Ferramentas.ApresentaTabela;
 import BeutifulSalon.controller.ClienteController;
-import BeutifulSalon.dao.ExceptionDAO;
-import BeutifulSalon.model.Cliente;
 import java.awt.HeadlessException;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -24,8 +21,8 @@ public class ApresentaCliente extends javax.swing.JPanel {
      */
     public ApresentaCliente() {
         initComponents();
-        listarTodosClientes();
-          new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
+        listarClientes();
+        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
     }
 
     /**
@@ -37,9 +34,6 @@ public class ApresentaCliente extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        container = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableConsultaCliente = new javax.swing.JTable();
         jButtonDetalhes = new javax.swing.JButton();
@@ -48,27 +42,22 @@ public class ApresentaCliente extends javax.swing.JPanel {
         jTextFieldNomeCliente = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-
-        container.setBackground(new java.awt.Color(243, 244, 245));
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(34, 34, 34));
-        jLabel2.setText("Confira os clientes cadastrados em seu salão!");
-
-        jLabel1.setBackground(new java.awt.Color(34, 34, 34));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(34, 34, 34));
-        jLabel1.setText("Clientes");
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setBorder(null);
-        jScrollPane2.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setForeground(new java.awt.Color(34, 34, 34));
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jScrollPane2.setRequestFocusEnabled(false);
 
-        jTableConsultaCliente.setBackground(new java.awt.Color(255, 255, 255));
+        jTableConsultaCliente.setBackground(new java.awt.Color(243, 244, 245));
+        jTableConsultaCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTableConsultaCliente.setForeground(new java.awt.Color(34, 34, 34));
         jTableConsultaCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -81,7 +70,7 @@ public class ApresentaCliente extends javax.swing.JPanel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false
@@ -96,7 +85,10 @@ public class ApresentaCliente extends javax.swing.JPanel {
             }
         });
         jTableConsultaCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jTableConsultaCliente.setGridColor(new java.awt.Color(34, 34, 34));
+        jTableConsultaCliente.setGridColor(new java.awt.Color(243, 244, 245));
+        jTableConsultaCliente.setIntercellSpacing(new java.awt.Dimension(0, 0));
+        jTableConsultaCliente.setRowHeight(22);
+        jTableConsultaCliente.setSelectionForeground(new java.awt.Color(255, 255, 255));
         jTableConsultaCliente.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaCliente.setShowGrid(true);
         jScrollPane2.setViewportView(jTableConsultaCliente);
@@ -151,148 +143,104 @@ public class ApresentaCliente extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Busca por nome");
 
-        javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
-        container.setLayout(containerLayout);
-        containerLayout.setHorizontalGroup(
-            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(containerLayout.createSequentialGroup()
-                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(containerLayout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)))
-                    .addGroup(containerLayout.createSequentialGroup()
-                        .addGap(192, 192, 192)
-                        .addComponent(jButtonDetalhes, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                        .addGap(74, 74, 74)
-                        .addComponent(jButtonEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)
-                        .addGap(63, 63, 63)
-                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 148, Short.MAX_VALUE)))
-                .addGap(202, 202, 202))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jScrollPane2)
-                .addGap(63, 63, 63))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(containerLayout.createSequentialGroup()
-                        .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel4)))
-                .addGap(62, 62, 62))
+        jPanel1.setBackground(new java.awt.Color(35, 50, 66));
+
+        jLabel1.setBackground(new java.awt.Color(34, 34, 34));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Clientes");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Confira os clientes cadastrados em seu salão!");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        containerLayout.setVerticalGroup(
-            containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, containerLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(49, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addGap(52, 52, 52)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
-                .addGroup(containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60))
+                .addGap(33, 33, 33))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 981, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addGap(83, 83, 83)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(449, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addContainerGap()))
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(31, 31, 31)
+                    .addComponent(jScrollPane2)
+                    .addGap(38, 38, 38)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 752, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(482, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(container, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(356, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(23, 23, 23)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+    private void jLabel4ConsultarCliente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4ConsultarCliente
 
-        int indice = jTableConsultaCliente.getSelectedRow();
+        listarClientes(jTextFieldNomeCliente.getText());
+    }//GEN-LAST:event_jLabel4ConsultarCliente
 
-        int opc = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja excluir o cliente: " +
-            jTableConsultaCliente.getValueAt(indice, 0) + " " + jTableConsultaCliente.getValueAt(indice, 1), "Excluir Cliente", JOptionPane.YES_NO_OPTION);
-
-        if(opc == 0){
-            if( indice > -1){
-                try {
-
-                    String cpfClienteSelecionado = (String) jTableConsultaCliente.getValueAt(indice, 4); // Retorna CPF
-                    ClienteController cc = new ClienteController();
-
-                    if(cc.excluirCliente(cpfClienteSelecionado)){
-                        JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso.");
-                        listarTodosClientes();
-
-                    }else{
-                        JOptionPane.showMessageDialog(null, "Não foi possível excluir o cliente. Selecione um índice válido na tabela");
-                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null,"Erro ao excluir cliente: " + e);
-                }
-
-            }
-        }
-
-    }//GEN-LAST:event_jButtonExcluirActionPerformed
-     private void listarTodosClientes(){
-          
-        DefaultTableModel tabelaClienteModel = (DefaultTableModel) jTableConsultaCliente.getModel(); // tabela
-        tabelaClienteModel.setRowCount(0);
-       
-        ClienteController cc = new ClienteController();
-        
-       
-        ArrayList<Cliente> clientesConsultados = null;
-        try {
-            clientesConsultados = cc.listarClientes();
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-            
-            try {
-               clientesConsultados.forEach( (Cliente cliente) -> {
-                 tabelaClienteModel.addRow(new Object[] {cliente.getNOME(),
-                                                        cliente.getSOBRENOME(),
-                                                        cliente.getCELULAR(),
-                                                        cliente.getEMAIL(),
-                                                        cliente.getCPF()});
-            
-               });
-               
-               jTableConsultaCliente.setModel(tabelaClienteModel);
-                
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
-            }
-    }
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
 
         boolean resultado;
         int indice = jTableConsultaCliente.getSelectedRow();
 
-        if( indice > -1){
+        if (indice > -1) {
             try {
 
                 String cpfClienteSelecionado = (String) jTableConsultaCliente.getValueAt(indice, 4); // Retorna CPF
@@ -304,52 +252,52 @@ public class ApresentaCliente extends javax.swing.JPanel {
                 }
 
             } catch (HeadlessException e) {
-                JOptionPane.showMessageDialog(null,"Erro ao retornar informações do cliente: " + e);
+                JOptionPane.showMessageDialog(null, "Erro ao retornar informações do cliente: " + e);
             }
-        }else{
+        } else {
 
             JOptionPane.showMessageDialog(null, "Selecione um cliente.");
 
         }
-
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void jLabel4ConsultarCliente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4ConsultarCliente
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
 
-        String nome = jTextFieldNomeCliente.getText(); // nome do TextField
-        DefaultTableModel tabelaClienteModel = (DefaultTableModel) jTableConsultaCliente.getModel(); // tabela
-        tabelaClienteModel.setRowCount(0);
+        int indice = jTableConsultaCliente.getSelectedRow();
 
-        ClienteController cc = new ClienteController();
+        int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o cliente: "
+            + jTableConsultaCliente.getValueAt(indice, 0) + " " + jTableConsultaCliente.getValueAt(indice, 1), "Excluir Cliente", JOptionPane.YES_NO_OPTION);
 
-        ArrayList<Cliente> clientesConsultados = null;
-        try {
-            clientesConsultados = cc.listarClientes(nome);
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        if (opc == 0) {
+            if (indice > -1) {
+                try {
+
+                    String cpfClienteSelecionado = (String) jTableConsultaCliente.getValueAt(indice, 4); // Retorna CPF
+                    ClienteController cc = new ClienteController();
+
+                    if (cc.excluirCliente(cpfClienteSelecionado)) {
+                        JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso.");
+                        listarClientes();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Não foi possível excluir o cliente. Selecione um índice válido na tabela");
+                    }
+                } catch (HeadlessException e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e);
+                }
+
+            }
         }
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
 
-        try {
-            clientesConsultados.forEach( (Cliente cliente) -> {
-                tabelaClienteModel.addRow(new Object[] {cliente.getNOME(),
-                    cliente.getSOBRENOME(),
-                    cliente.getCELULAR(),
-                    cliente.getEMAIL(),
-                    cliente.getCPF()});
+    public void listarClientes() {
+        jTableConsultaCliente.setModel(new ApresentaTabela().Clientes(jTableConsultaCliente));
+    }
 
-        });
-
-        jTableConsultaCliente.setModel(tabelaClienteModel);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
-        }
-
-    }//GEN-LAST:event_jLabel4ConsultarCliente
-
+    public void listarClientes(String nome) {
+        jTableConsultaCliente.setModel(new ApresentaTabela().Clientes(jTableConsultaCliente, nome));
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel container;
     private javax.swing.JButton jButtonDetalhes;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonExcluir;
@@ -357,6 +305,7 @@ public class ApresentaCliente extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableConsultaCliente;
     private javax.swing.JTextField jTextFieldNomeCliente;

@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package BeutifulSalon.view.Cadastros;
 
+import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
@@ -14,17 +11,12 @@ import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalCliente;
 import BeutifulSalon.view.modais.modalInputMonetarios;
 import BeutifulSalon.view.modais.modalServicos;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -43,11 +35,11 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         DateTimeFormatter parserHora = DateTimeFormatter.ofPattern("HH:mm");
 
         try {
-
             String dataAtual = df.format(new Date());
             jTextFieldData.setText(dataAtual);
 
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao recuperar data atual " + e);
         }
 
     }
@@ -381,7 +373,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
             sucesso = ac.cadastraAgendamento(jTextFieldData.getText(),
                     jTextFieldHorario.getText(),
                     jTextFieldCPF.getText(),
-                    recuperaServicos());
+                    new RecuperaTabela().Servicos(jTableServicosSolicitados));
 
             if (sucesso) {
                 JOptionPane.showMessageDialog(null, "Agendamento Realizado com sucesso");
@@ -395,34 +387,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
     }//GEN-LAST:event_jButtonFinalizarCompraActionPerformed
 
-    private ArrayList<Servico> recuperaServicos() {
-
-        ArrayList<Servico> servicosSolicitados = new ArrayList<>();
-
-        for (int i = 0; i < jTableServicosSolicitados.getRowCount(); i++) {
-
-            Servico servicoAtual = new Servico();
-
-            for (int j = 0; j < jTableServicosSolicitados.getColumnCount(); j++) {
-
-                if (j == 0) {
-                    servicoAtual.setNome(jTableServicosSolicitados.getValueAt(i, j).toString());
-                } else if (j == 1) {
-
-                    System.out.println(jTableServicosSolicitados.getValueAt(i, j).toString());
-                    servicoAtual.setPreco(Dinheiro.parseCent(
-                            Dinheiro.retiraCaracteres(jTableServicosSolicitados.getValueAt(i, j).toString())));
-
-                } else {
-                    servicoAtual.setId(Long.parseLong(jTableServicosSolicitados.getValueAt(i, j).toString()));
-                }
-
-            }
-            servicosSolicitados.add(servicoAtual);
-        }
-
-        return servicosSolicitados;
-    }
+    
     
     private void limparCampos(){
         jTextFieldNome.setText("");
@@ -441,7 +406,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
     private void calculaTotalBruto() {
         long total = 0;
         try {
-            ArrayList<Servico> servicos = recuperaServicos();
+            ArrayList<Servico> servicos = new RecuperaTabela().Servicos(jTableServicosSolicitados);
 
             try {
                 for (Servico s : servicos) {

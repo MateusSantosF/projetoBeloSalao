@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.Cadastros;
 
+import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.view.modais.modalCliente;
 import BeutifulSalon.view.modais.modalProdutos;
@@ -376,7 +377,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             sucesso = cc.RegistraCompra(new Date(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
                     cpf,
-                    recuperaProdutosComprados());
+                    new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
 
             if (sucesso) {
                 JOptionPane.showMessageDialog(null, "Venda registrada com sucesso.");
@@ -446,36 +447,11 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
     }
 
-    private ArrayList<ItemCompra> recuperaProdutosComprados() {
-
-        ArrayList<ItemCompra> produtos = new ArrayList<>();
-
-        for (int i = 0; i < jTableProdutosComprados.getRowCount(); i++) {
-            ItemCompra produtoAtual = new ItemCompra();
-            for (int j = 0; j < jTableProdutosComprados.getColumnCount(); j++) {
-
-                if (j == 0) {
-                    produtoAtual.setNome(jTableProdutosComprados.getValueAt(i, j).toString());
-                } else if (j == 1) {
-                    produtoAtual.setMarca(jTableProdutosComprados.getValueAt(i, j).toString());
-                } else if (j == 2) {
-                    produtoAtual.setPreco(Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTableProdutosComprados.getValueAt(i, j).toString())));
-                } else if (j == 3) {
-                    produtoAtual.setQuantidade(Integer.parseInt(jTableProdutosComprados.getValueAt(i, j).toString()));
-                } else {
-                    produtoAtual.setId_produto(Long.parseLong(jTableProdutosComprados.getValueAt(i, j).toString()));
-                }
-            }
-            produtos.add(produtoAtual);
-        }
-
-        return produtos;
-
-    }
+   
 
     private void calculaTotalBruto() {
 
-        ArrayList<ItemCompra> produtos = recuperaProdutosComprados();
+        ArrayList<ItemCompra> produtos = new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados);
         long total = 0;
 
         try {

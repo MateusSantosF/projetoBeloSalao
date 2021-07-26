@@ -1,12 +1,8 @@
 package BeutifulSalon.view.Cadastros;
 
-import BeutifulSalon.model.Produto;
 import BeutifulSalon.controller.ProdutoController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Dinheiro;
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
@@ -198,12 +194,12 @@ public class CadastroProduto extends javax.swing.JFrame {
     //salvar produto
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-            boolean sucesso;
+        boolean sucesso;
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         ProdutoController produtoController = new ProdutoController(); //instanciar o controlador, que recebe um novo controador
+        
         try {
-
-            sucesso = produtoController.cadastrarProduto(
+          sucesso = produtoController.cadastrarProduto(
                     jTextFieldProduto.getText(),
                     jTextFieldMarca.getText(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jFormattedTextFieldPreco.getText())),

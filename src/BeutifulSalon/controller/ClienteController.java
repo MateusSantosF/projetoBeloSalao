@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.controller;
 
+import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.view.Edicao.EditarCliente;
@@ -23,7 +24,7 @@ public class ClienteController {
             String CEP, String BAIRRO, String RUA, String CIDADE,String NUMERO,
             String TELEFONE, String CELULAR, String DATAREG){
         
-        if( NOME  != null && NOME.length() > 0 && validarCPF(CPF) && EMAIL != null && EMAIL.length() > 0){
+        if( NOME  != null && NOME.length() > 0 && Valida.isCpf(CPF) && Valida.isEmail(EMAIL) && Valida.isData(DATANASC)){
            
             
             //Formatador
@@ -52,7 +53,7 @@ public class ClienteController {
             String TELEFONE, String CELULAR, String DATAREG){
         
         
-          if( NOME  != null && NOME.length() > 0 && validarCPF(CPF) && EMAIL != null && EMAIL.length() > 0){
+          if( NOME  != null && NOME.length() > 0 &&  Valida.isCpf(CPF) && Valida.isEmail(EMAIL) && Valida.isData(DATANASC)){
            
               //Formatador
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
@@ -74,9 +75,7 @@ public class ClienteController {
         }else{
              return false;
         }
-
-        
-        
+     
     }
     
     
@@ -92,7 +91,7 @@ public class ClienteController {
               
             }    
         }
-             return true;
+            return true;
     }
     
     
@@ -115,7 +114,7 @@ public class ClienteController {
             Cliente c = new Cliente();
             c.excluirCliente(cpf);
           
-        } catch (Exception e) {
+        } catch (ExceptionDAO e) {
             JOptionPane.showInputDialog(null, "Erro Controller, excluir cliente");
             return false;
         }

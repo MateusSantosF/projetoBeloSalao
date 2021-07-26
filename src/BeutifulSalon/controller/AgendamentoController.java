@@ -5,20 +5,16 @@
  */
 package BeutifulSalon.controller;
 
+import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Servico;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,7 +25,7 @@ public class AgendamentoController {
 
     public boolean cadastraAgendamento(String data, String horario, String cpfCliente, ArrayList<Servico> servicos) throws ExceptionDAO {
 
-        if (cpfCliente.length() > 0 && data.length() > 0 && horario.length() > 0) {
+        if ( Valida.isCpf(cpfCliente) && Valida.isHora(horario)) {
             
             //Formatadores
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");

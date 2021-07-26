@@ -5,12 +5,14 @@
  */
 package BeutifulSalon.controller;
 
+import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import java.sql.SQLException;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -32,13 +34,17 @@ public class ServicoController {
         return new Servico().buscarServico(idServicoBuscado);
     }
 
-    public boolean cadastrarServico(String nome, String preco, LocalTime tempoGasto, ArrayList<Produto> produto) throws SQLException {
+    public boolean cadastrarServico(String nome, String preco, String tempoGasto, ArrayList<Produto> produto) throws SQLException {
 
-        if (nome.length() > 0 && preco.length() > 0 && produto.isEmpty() == false) {
+        if (nome.length() > 0 && preco.length() > 0 && produto.isEmpty() == false && Valida.isHora(tempoGasto)) {
+            
+            DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime horario = LocalTime.parse(tempoGasto, formatterHora);
+            
             Servico servico = new Servico();
             servico.setNome(nome);
             servico.setPreco(Dinheiro.parseCent(Dinheiro.retiraCaracteres(preco)));
-            servico.setTempoGasto(tempoGasto);
+            servico.setTempoGasto(horario);
             servico.setProdutos(produto);
 
             try {

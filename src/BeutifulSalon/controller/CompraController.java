@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.controller;
 
+import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.ItemCompra;
@@ -22,7 +23,7 @@ public class CompraController {
     
      public boolean RegistraCompra(Date data, long valorDesconto, String cpfCliente, ArrayList<ItemCompra> itensCompra) throws ExceptionDAO {
          
-         if(cpfCliente.length() > 0 && cpfCliente.length() > 0){
+         if(Valida.isCpf(cpfCliente)){
           
              Compra compraAtual = new Compra();
              
