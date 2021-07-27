@@ -5,17 +5,14 @@
  */
 package BeutifulSalon.dao;
 
+import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.model.Agendamento;
-import BeutifulSalon.model.ItemCompra;
 import BeutifulSalon.model.Servico;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -148,5 +145,248 @@ public class AgendamentoDAO {
         
         return agendamentos;
     }
+    
+    public ArrayList<Agendamento> listarAgendamentosHoje(){
+        
+        ManipulaData datas = new ManipulaData();
+        
+        
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
+                + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.MeiaNoiteAmanha();
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ArrayList<Agendamento> agendamentos = null;
+
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                
+                agendamentos = new ArrayList<>();
+                while(rs.next()){
+                    Agendamento ag = new Agendamento();
+                   
+                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setData(rs.getDate("DATA").toLocalDate());
+                    ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
+                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setRealizado(rs.getBoolean("REALIZADO"));
+                    agendamentos.add(ag);         
+                }
+            }
+           
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro agendamentoDAO" + e);
+        }finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        
+        return agendamentos;
+    }
+    
+    public ArrayList<Agendamento> listarAgendamentosAmanha(){
+        
+        ManipulaData datas = new ManipulaData();
+        
+        
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
+                + " WHERE DATA BETWEEN " + datas.MeiaNoiteAmanha() + " AND " + datas.somaDia(LocalDateTime.now().plusDays(1), 1);
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ArrayList<Agendamento> agendamentos = null;
+
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                
+                agendamentos = new ArrayList<>();
+                while(rs.next()){
+                    Agendamento ag = new Agendamento();
+                   
+                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setData(rs.getDate("DATA").toLocalDate());
+                    ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
+                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setRealizado(rs.getBoolean("REALIZADO"));
+                    agendamentos.add(ag);         
+                }
+            }
+           
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro agendamentoDAO" + e);
+        }finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        
+        return agendamentos;
+    }
+    
+    public ArrayList<Agendamento> listarAgendamentosSemana(){
+        
+        ManipulaData datas = new ManipulaData();
+        
+        
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
+                + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.somaDia(LocalDateTime.now(), 5);
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ArrayList<Agendamento> agendamentos = null;
+
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                
+                agendamentos = new ArrayList<>();
+                while(rs.next()){
+                    Agendamento ag = new Agendamento();
+                   
+                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setData(rs.getDate("DATA").toLocalDate());
+                    ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
+                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setRealizado(rs.getBoolean("REALIZADO"));
+                    agendamentos.add(ag);         
+                }
+            }
+           
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro agendamentoDAO" + e);
+        }finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        
+        return agendamentos;
+    }
+    
+    
+    
+    
+     public ArrayList<Agendamento> listarAgendamentosNome(String nome){
+        
+        
+        
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE, CLIENTE.NOME FROM AGENDAMENTO"
+        + " INNER JOIN CLIENTE ON AGENDAMENTO.CPF_CLIENTE = CLIENTE.CPF AND CLIENTE.NOME LIKE'%" + nome +"%'";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ArrayList<Agendamento> agendamentos = null;
+
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                
+                agendamentos = new ArrayList<>();
+                while(rs.next()){
+                    Agendamento ag = new Agendamento();
+                   
+                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setData(rs.getDate("DATA").toLocalDate());
+                    ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
+                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setRealizado(rs.getBoolean("REALIZADO"));
+                    agendamentos.add(ag);         
+                }
+            }
+           
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro agendamentoDAO" + e);
+        }finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        
+        return agendamentos;
+    }
+
 
 }

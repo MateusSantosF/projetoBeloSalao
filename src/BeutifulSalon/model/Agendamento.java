@@ -95,6 +95,22 @@ public class Agendamento {
     public ArrayList<Agendamento> listarAgendamentos() throws ExceptionDAO {        
         return new AgendamentoDAO().listarAgendamentos();
     }
+
+    public ArrayList<Agendamento> listarAgendamentosHoje() {
+       return new AgendamentoDAO().listarAgendamentosHoje();
+    }
+
+    public ArrayList<Agendamento> listarAgendamentosAmanha() {
+        return new AgendamentoDAO().listarAgendamentosAmanha();
+    }
+
+    public ArrayList<Agendamento> listarAgendamentosSemana() {
+       return new AgendamentoDAO().listarAgendamentosSemana();
+    }
+
+    public ArrayList<Agendamento> listarAgendamentosNome(String nome) {
+        return new AgendamentoDAO().listarAgendamentosNome(nome);
+    }
     
     
 }

@@ -5,20 +5,26 @@
  */
 package BeutifulSalon.Ferramentas;
 
+import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.controller.ProdutoController;
+import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Produto;
+import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.Apresenta.ApresentaCliente;
 import BeutifulSalon.view.Apresenta.ApresentaFinancas;
 import BeutifulSalon.view.Apresenta.ApresentaProduto;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -109,6 +115,7 @@ public class ApresentaTabela {
 
         try {
             orcamentos.forEach((Orcamento orcamento) -> {
+
                 tabelaOrcamentoModel.addRow(new Object[]{
                     orcamento.getNome(),
                     Dinheiro.parseString(orcamento.getJan()),
@@ -157,29 +164,38 @@ public class ApresentaTabela {
         ArrayList<Orcamento> orcamentos = null;
 
         OrcamentoController oc = new OrcamentoController();
+        ServicoController sc = new ServicoController();
+        Servico servicoAtual = null;
 
         try {
             orcamentos = oc.listarOrcamentosServico();
 
-            orcamentos.forEach((Orcamento orcamento) -> {
+            for (Orcamento orcamento : orcamentos) {
+                try {
+                    servicoAtual = sc.buscarServico(orcamento.getId_servico());
+                } catch (ExceptionDAO ex) {
+                    Logger.getLogger(ApresentaTabela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                long preco = servicoAtual.getPreco();
                 modelo.addRow(new Object[]{
                     orcamento.getNome(),
-                    orcamento.getJan(),
-                    orcamento.getFev(),
-                    orcamento.getMar(),
-                    orcamento.getAbr(),
-                    orcamento.getMai(),
-                    orcamento.getJun(),
-                    orcamento.getJul(),
-                    orcamento.getAgo(),
-                    orcamento.getSet(),
-                    orcamento.getOut(),
-                    orcamento.getNov(),
-                    orcamento.getDez(),
+                    Dinheiro.parseString(orcamento.getJan() * preco),
+                    Dinheiro.parseString(orcamento.getFev() * preco),
+                    Dinheiro.parseString(orcamento.getMar() * preco),
+                    Dinheiro.parseString(orcamento.getAbr() * preco),
+                    Dinheiro.parseString(orcamento.getMai() * preco),
+                    Dinheiro.parseString(orcamento.getJun() * preco),
+                    Dinheiro.parseString(orcamento.getJul() * preco),
+                    Dinheiro.parseString(orcamento.getAgo() * preco),
+                    Dinheiro.parseString(orcamento.getSet() * preco),
+                    Dinheiro.parseString(orcamento.getOut() * preco),
+                    Dinheiro.parseString(orcamento.getNov() * preco),
+                    Dinheiro.parseString(orcamento.getDez() * preco),
                     orcamento.getId_orcamento(),
                     orcamento.getId_servico()
                 });
-            });
+            }
 
         } catch (ExceptionDAO e) {
 
@@ -196,30 +212,39 @@ public class ApresentaTabela {
         ArrayList<Orcamento> orcamentos = null;
 
         OrcamentoController oc = new OrcamentoController();
+        ServicoController sc = new ServicoController();
+        Servico servicoAtual = null;
 
         try {
             orcamentos = oc.listarOrcamentosServico(ano);
 
-            orcamentos.forEach((Orcamento orcamento) -> {
+            for (Orcamento orcamento : orcamentos) {
 
+                try {
+                    servicoAtual = sc.buscarServico(orcamento.getId_servico());
+                } catch (ExceptionDAO ex) {
+                    Logger.getLogger(ApresentaTabela.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                long preco = servicoAtual.getPreco();
                 modelo.addRow(new Object[]{
                     orcamento.getNome(),
-                    orcamento.getJan(),
-                    orcamento.getFev(),
-                    orcamento.getMar(),
-                    orcamento.getAbr(),
-                    orcamento.getMai(),
-                    orcamento.getJun(),
-                    orcamento.getJul(),
-                    orcamento.getAgo(),
-                    orcamento.getSet(),
-                    orcamento.getOut(),
-                    orcamento.getNov(),
-                    orcamento.getDez(),
+                    Dinheiro.parseString(orcamento.getJan() * preco),
+                    Dinheiro.parseString(orcamento.getFev() * preco),
+                    Dinheiro.parseString(orcamento.getMar() * preco),
+                    Dinheiro.parseString(orcamento.getAbr() * preco),
+                    Dinheiro.parseString(orcamento.getMai() * preco),
+                    Dinheiro.parseString(orcamento.getJun() * preco),
+                    Dinheiro.parseString(orcamento.getJul() * preco),
+                    Dinheiro.parseString(orcamento.getAgo() * preco),
+                    Dinheiro.parseString(orcamento.getSet() * preco),
+                    Dinheiro.parseString(orcamento.getOut() * preco),
+                    Dinheiro.parseString(orcamento.getNov() * preco),
+                    Dinheiro.parseString(orcamento.getDez() * preco),
                     orcamento.getId_orcamento(),
                     orcamento.getId_servico()
                 });
-            });
+            }
 
         } catch (ExceptionDAO e) {
 
@@ -287,8 +312,7 @@ public class ApresentaTabela {
                     produto.getMarca(),
                     Dinheiro.parseString(produto.getPreco()),
                     produto.getDataValidade().format(formatterData),
-                    produto.getId_produto(),
-                });
+                    produto.getId_produto(),});
 
             });
 
@@ -356,7 +380,70 @@ public class ApresentaTabela {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao listarClientes" + e);
         }
-        
+
         return tabelaClienteModel;
     }
+    
+    //AGENDAMENTOS
+     public DefaultTableModel Agendamentos(JTable tabela, int opc, String nome){
+        
+        DefaultTableModel model = (DefaultTableModel)tabela.getModel();
+        model.setRowCount(0);
+        
+        AgendamentoController ag = new AgendamentoController();
+        ClienteController cc = new ClienteController();
+        
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        DateTimeFormatter parserHora = DateTimeFormatter.ofPattern("HH:mm");
+       
+        ArrayList<Agendamento> agendamentos = null;
+        
+        try {
+            
+            switch(opc){
+                
+                case 0:
+                    agendamentos = ag.listarAgendamentosNome(nome);
+                    break;
+                case 1: 
+                    agendamentos = ag.listarAgedaAgendamentosHoje();
+                    break;
+                case 2:
+                    agendamentos = ag.listarAgendamentosAmanha();
+                    break;
+                case 3:
+                    agendamentos = ag.listarAgendamentosSemana();
+                    break;
+                case 4:
+                    agendamentos = ag.listarAgendamentos();
+                    break;
+            }
+                   
+            for( Agendamento g : agendamentos){
+                
+                Cliente cliente = new Cliente();
+                String realizado;
+                
+                if(g.getRealizado()){
+                    realizado = "Realizado";
+                }else{
+                    realizado = "Em andamento";
+                }
+                model.addRow( new Object[]{
+                   cliente.buscarCliente(g.getCpfCliente()).getNOME(),
+                   g.getData().format(formatterData),
+                   g.getHorario().format(parserHora),
+                   realizado,
+                   g.getId()
+                   
+                });
+            }
+    
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco " + e);
+        }          
+        return model;
+    }
+     
+     
 }

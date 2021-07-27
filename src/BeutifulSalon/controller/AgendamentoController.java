@@ -36,7 +36,6 @@ public class AgendamentoController {
             
             try {
                 h = LocalTime.parse(horario, formatterHora);
-                System.out.println(h);
                 dataAgendamento = LocalDate.parse(data, formatterData);
             } catch (DateTimeException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao convertar datas " + e);
@@ -46,10 +45,8 @@ public class AgendamentoController {
             Agendamento agendamento = new Agendamento();
             agendamento.setCpfCliente(cpfCliente);
             agendamento.setData(dataAgendamento);
-            agendamento.setHorario(h);    
-               
+            agendamento.setHorario(h);                   
             agendamento.setServicos(servicos);
-                
                 
             try {
                 agendamento.cadastraAgendamento(agendamento);
@@ -69,6 +66,22 @@ public class AgendamentoController {
     
     public ArrayList<Agendamento> listarAgendamentos() throws ExceptionDAO {
         return new Agendamento().listarAgendamentos();
+    }
+    
+    public ArrayList<Agendamento> listarAgedaAgendamentosHoje() throws ExceptionDAO{
+        return new Agendamento().listarAgendamentosHoje();
+    }
+
+    public ArrayList<Agendamento> listarAgendamentosAmanha() {
+        return new Agendamento().listarAgendamentosAmanha();
+    }
+    
+    public ArrayList<Agendamento> listarAgendamentosSemana() {
+        return new Agendamento().listarAgendamentosSemana();
+    }
+    
+    public ArrayList<Agendamento> listarAgendamentosNome(String nome) {
+        return new Agendamento().listarAgendamentosNome(nome);
     }
 
 }

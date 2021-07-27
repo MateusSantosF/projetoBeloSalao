@@ -267,7 +267,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false, false, false, false, false, false, false
@@ -289,6 +289,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         if (jTableConsultaOrcamentoServico.getColumnModel().getColumnCount() > 0) {
             jTableConsultaOrcamentoServico.getColumnModel().getColumn(0).setPreferredWidth(120);
             jTableConsultaOrcamentoServico.getColumnModel().getColumn(13).setMinWidth(1);
+            jTableConsultaOrcamentoServico.getColumnModel().getColumn(13).setPreferredWidth(1);
             jTableConsultaOrcamentoServico.getColumnModel().getColumn(13).setMaxWidth(1);
             jTableConsultaOrcamentoServico.getColumnModel().getColumn(14).setMinWidth(1);
             jTableConsultaOrcamentoServico.getColumnModel().getColumn(14).setPreferredWidth(1);
