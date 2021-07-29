@@ -5,6 +5,8 @@
  */
 package BeutifulSalon.model;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,4 +24,6 @@ public interface Observador {
     public void update(Cliente cliente);
     
     public void update(Servico servico);
+    
+    public void update(ArrayList<LocalTime> horarios);
 }

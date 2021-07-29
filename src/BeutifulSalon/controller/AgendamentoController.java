@@ -25,8 +25,8 @@ public class AgendamentoController {
 
     public boolean cadastraAgendamento(String data, String horario, String cpfCliente, ArrayList<Servico> servicos) throws ExceptionDAO {
 
-        if ( Valida.isCpf(cpfCliente) && Valida.isHora(horario)) {
-            
+        if ( Valida.isCpf(cpfCliente) && Valida.isHora(horario) && !servicos.isEmpty()) {
+                               
             //Formatadores
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
             DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
@@ -66,6 +66,9 @@ public class AgendamentoController {
     
     public ArrayList<Agendamento> listarAgendamentos() throws ExceptionDAO {
         return new Agendamento().listarAgendamentos();
+    }
+    public ArrayList<Agendamento> listarAgendamentos(LocalDate data) throws ExceptionDAO {
+        return new Agendamento().listarAgendamentos(data);
     }
     
     public ArrayList<Agendamento> listarAgedaAgendamentosHoje() throws ExceptionDAO{

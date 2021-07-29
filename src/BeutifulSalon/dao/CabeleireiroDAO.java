@@ -7,108 +7,233 @@ package BeutifulSalon.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import BeutifulSalon.model.Cliente;
-import BeutifulSalon.view.Edicao.EditarCliente;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import BeutifulSalon.model.Cabeleireiro;
+import java.time.LocalTime;
+import java.util.ArrayList;
 
 /**
  *
  * @author mateus
  */
 public class CabeleireiroDAO {
-    
-    public void cadastrarCabeleireiro(Cabeleireiro cabeleireiro){
-        String sqlScript = "INSERT INTO CABELEIREIRO (CPF ,EMAIL, NOME, SENHA) + VALUES(?,?,?,?)";
-    
+
+    public void cadastrarCabeleireiro(Cabeleireiro cabeleireiro) {
+        String sqlScript = "INSERT INTO CABELEIREIRO (CPF ,EMAIL, NOME"
+                + ", SEGUNDAE, TERCAE, QUARTAE, QUINTAE, SEXTAE, SABADOE, DOMINGOE,"
+                + "SEGUNDAS, TERCAS, QUARTAS, QUINTAS, SEXTAS,SABADOS,DOMINGOS) "
+                + "VALUES( ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ? , ? ,? ,? ,? ,?)";
+
         PreparedStatement pStatement = null;
         Connection connection = null;
-        
+
         try {
-            
+
             connection = new ConnectionMVC().getConnection();
-            
+
             pStatement = connection.prepareStatement(sqlScript);
             pStatement.setString(1, cabeleireiro.getCpf());
             pStatement.setString(2, cabeleireiro.getEmail());
             pStatement.setString(3, cabeleireiro.getNome());
-            pStatement.setString(4, cabeleireiro.getSenha());
-            pStatement.execute(); 
+            pStatement.setTime(4, java.sql.Time.valueOf(cabeleireiro.getSegundaE()));
+            pStatement.setTime(5, java.sql.Time.valueOf(cabeleireiro.getTercaE()));
+            pStatement.setTime(6, java.sql.Time.valueOf(cabeleireiro.getQuartaE()));
+            pStatement.setTime(7, java.sql.Time.valueOf(cabeleireiro.getQuintaE()));
+            pStatement.setTime(8, java.sql.Time.valueOf(cabeleireiro.getSextaE()));
+            pStatement.setTime(9, java.sql.Time.valueOf(cabeleireiro.getSabadoE()));
+            pStatement.setTime(10, java.sql.Time.valueOf(cabeleireiro.getDomingoE()));
             
+            pStatement.setTime(11, java.sql.Time.valueOf(cabeleireiro.getSegundaS()));
+            pStatement.setTime(12, java.sql.Time.valueOf(cabeleireiro.getTercaS()));
+            pStatement.setTime(13, java.sql.Time.valueOf(cabeleireiro.getQuartaS()));
+            pStatement.setTime(14, java.sql.Time.valueOf(cabeleireiro.getQuintaS()));
+            pStatement.setTime(15, java.sql.Time.valueOf(cabeleireiro.getSextaS()));
+            pStatement.setTime(16, java.sql.Time.valueOf(cabeleireiro.getSabadoS()));
+            pStatement.setTime(17, java.sql.Time.valueOf(cabeleireiro.getDomingoS()));
+
+            pStatement.execute();
+
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Erro ao cadastrar cabeleireiro." + e);
-        }finally{
-            
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar cabeleireiro." + e);
+        } finally {
+
             try {
-                if(pStatement != null) pStatement.close();
+                if (pStatement != null) {
+                    pStatement.close();
+                }
 
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
             }
-            
+
             try {
-                if(connection != null) connection.close();
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
             }
-           
+
         }
-        
+
     }
-    
-    public Cabeleireiro selecionaCabeleireiro(){
-             
+
+    public Cabeleireiro selecionaCabeleireiro() {
+
         String sqlScript = "SELECT * FROM CABELEIREIRO";
+
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        ResultSet rs = null;
+
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sqlScript);
+
+            rs = pStatement.executeQuery();
+            Cabeleireiro cabeleireiro = new Cabeleireiro();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    cabeleireiro.setNome(rs.getString("NOME"));
+                    cabeleireiro.setEmail(rs.getString("EMAIL"));
+                    cabeleireiro.setCpf(rs.getString("CPF"));
+                    cabeleireiro.setSegundaE(rs.getTime("SEGUNDAE").toLocalTime());
+                    cabeleireiro.setTercaE(rs.getTime("TERCAE").toLocalTime());
+                    cabeleireiro.setQuartaE(rs.getTime("QUARTAE").toLocalTime());
+                    cabeleireiro.setQuintaE(rs.getTime("QUINTAE").toLocalTime());
+                    cabeleireiro.setSextaE(rs.getTime("SEXTAE").toLocalTime());
+                    cabeleireiro.setSabadoE(rs.getTime("SABADOE").toLocalTime());
+                    cabeleireiro.setDomingoE(rs.getTime("DOMINGOE").toLocalTime());
+                    
+                    cabeleireiro.setSegundaS(rs.getTime("SEGUNDAS").toLocalTime());
+                    cabeleireiro.setTercaS(rs.getTime("TERCAS").toLocalTime());
+                    cabeleireiro.setQuartaS(rs.getTime("QUARTAS").toLocalTime());
+                    cabeleireiro.setQuintaS(rs.getTime("QUINTAS").toLocalTime());
+                    cabeleireiro.setSextaS(rs.getTime("SEXTAS").toLocalTime());
+                    cabeleireiro.setSabadoS(rs.getTime("SABADOS").toLocalTime());
+                    cabeleireiro.setDomingoS(rs.getTime("DOMINGOS").toLocalTime());
+
+                }
+            }
+
+            return cabeleireiro;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO " + e);
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+
+        }
+
+        return null;
+    }
+
+    public ArrayList<LocalTime> selecionaExpediente(int diaDaSemana) {
+        
+        String sqlScript = "";
+        String entrada = "";
+        String saida = "";
+        ArrayList<LocalTime> horario = new ArrayList<>();
+
+        switch(diaDaSemana){
+            case 1:
+                sqlScript = "SELECT SEGUNDAE,SEGUNDAS FROM CABELEIREIRO";
+                entrada = "SEGUNDAE";
+                saida = "SEGUNDAS";
+                break;
+            case 2:
+                sqlScript = "SELECT TERCAE,TERCAS FROM CABELEIREIRO";
+                entrada = "TERCAE";
+                saida = "TERCAS";
+                break;
+            case 3:
+                sqlScript = "SELECT QUARTAE,QUARTAS FROM CABELEIREIRO";
+                entrada = "QUARTAE";
+                saida = "QUARTAS";
+                break;
+            case 4:
+                sqlScript = "SELECT QUINTAE,QUINTAS FROM CABELEIREIRO";
+                entrada = "QUINTAE";
+                saida = "QUINTAS";
+                break;
+            case 5:
+                sqlScript = "SELECT SEXTAE,SEXTAS FROM CABELEIREIRO";
+                entrada = "SEXTAE";
+                saida = "SEXTAS";
+                break;
+            case 6:
+                sqlScript = "SELECT SABADOE,SABADOS FROM CABELEIREIRO";
+                entrada = "SABADOE";
+                saida = "SABADOS";
+                break;
+            case 7:
+                sqlScript = "SELECT DOMINGOE, DOMINGOS FROM CABELEIREIRO";
+                entrada = "DOMINGOE";
+                saida = "DOMINGOS";
+                break;
+                
+        }
         
         PreparedStatement pStatement = null;
         Connection connection = null;
         ResultSet rs = null;
-        
+
         try {
             connection = new ConnectionMVC().getConnection();
             pStatement = connection.prepareStatement(sqlScript);
-           
-            
             rs = pStatement.executeQuery();
-            Cabeleireiro cabeleireiro = new Cabeleireiro(); 
-      
-            if(rs != null){                
-                while(rs.next()){
-                cabeleireiro.setNome(rs.getString("NOME"));
-                cabeleireiro.setEmail(rs.getString("EMAIL"));
-                cabeleireiro.setCpf(rs.getString("CPF"));
-                cabeleireiro.setSenha(rs.getString("SENHA"));         
+
+            if (rs != null) {
+                while (rs.next()) {
+                    horario.add(rs.getTime(entrada).toLocalTime());
+                    horario.add(rs.getTime(saida).toLocalTime());
                 }
             }
            
-            return cabeleireiro;
-            
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null,"Erro CabeleireiroDAO " + e);
-        }finally{
-            
+            return horario;
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO " + e);
+        } finally {
+
             try {
-                if(pStatement != null) pStatement.close();
+                if (pStatement != null) {
+                    pStatement.close();
+                }
 
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
             }
-            
+
             try {
-                if(connection != null) connection.close();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
             }
-           
+
         }
-       
+                    
         return null;
     }
 
-    
 }

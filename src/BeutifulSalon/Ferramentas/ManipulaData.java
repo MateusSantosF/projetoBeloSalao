@@ -5,9 +5,15 @@
  */
 package BeutifulSalon.Ferramentas;
 
+import BeutifulSalon.controller.AgendamentoController;
+import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.model.Agendamento;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,6 +36,26 @@ public class ManipulaData {
         return meiaNoiteMs;
     }
     
+    public long meiaNoite(LocalDate dia){
+        
+        LocalTime meiaNoite = LocalTime.MIDNIGHT;
+        LocalDateTime diff = LocalDateTime.of(dia, meiaNoite);
+        
+        long meiaNoiteMs = diff.toLocalDate().toEpochDay() * 24 * 60 * 60 * 1000;
+        
+        return meiaNoiteMs;
+    }
+    
+    public long meiaNoiteAmanha(LocalDate dia){
+        
+        LocalTime meiaNoite = LocalTime.MIDNIGHT;
+        LocalDateTime diff = LocalDateTime.of(dia, meiaNoite);
+        LocalDateTime meiaNoiteAmannha = diff.plusDays(1);
+        long meiaNoiteMs = meiaNoiteAmannha.toLocalDate().toEpochDay() * 24 * 60 * 60 * 1000;
+        
+        return meiaNoiteMs;
+    }
+    
     public long MeiaNoiteAmanha(){
         
         LocalDate hoje = LocalDate.now();
@@ -49,5 +75,24 @@ public class ManipulaData {
         long somaMs = soma.toLocalDate().toEpochDay() * 24 * 60 * 60 * 1000;
         
         return somaMs;
+    }
+    
+    
+    public ArrayList<LocalTime> recuperaHorariosDisponiveis(){
+       
+        
+        ArrayList<LocalTime> horarios = new ArrayList<>(); 
+        try {
+          
+            
+            ArrayList<Agendamento> agendamentos = new AgendamentoController().listarAgendamentos();
+            
+            agendamentos.forEach(a -> a.getData().getDayOfWeek());
+     
+        } catch (ExceptionDAO ex) {
+            Logger.getLogger(ManipulaData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+          return horarios;
     }
 }

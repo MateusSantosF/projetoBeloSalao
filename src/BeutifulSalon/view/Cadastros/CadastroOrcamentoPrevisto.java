@@ -15,6 +15,8 @@ import BeutifulSalon.view.modais.modalServicos;
 import java.awt.HeadlessException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -1403,5 +1405,9 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
 
         jTextFieldIdServico.setText(id);
         jTextFieldNomeServico.setText(nome);
+    }
+
+    @Override
+    public void update(ArrayList<LocalTime> horarios) {
     }
 }

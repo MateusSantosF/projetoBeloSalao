@@ -13,6 +13,8 @@ import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalProdutosUtilizados;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -402,5 +404,9 @@ public class CadastroServico extends javax.swing.JFrame implements Observador {
     
     @Override
     public void update(Servico servico) {}
+
+    @Override
+    public void update(ArrayList<LocalTime> horarios) {
+    }
    
 }

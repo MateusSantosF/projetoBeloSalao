@@ -83,6 +83,9 @@ public class Servico {
     public Servico buscarServico(long idServicoBuscado) throws ExceptionDAO{
         return new ServicoDAO().buscarServico(idServicoBuscado);
     }
+    public ArrayList<Servico> buscarServicoPeloAgendamento(long idAgendamento) throws ExceptionDAO{
+        return new ServicoDAO().buscaServicoPeloAgendamento(idAgendamento);
+    }
     
     public void cadastrarServico(Servico servico) throws SQLException{
         new ServicoDAO().cadastrarServico(servico);

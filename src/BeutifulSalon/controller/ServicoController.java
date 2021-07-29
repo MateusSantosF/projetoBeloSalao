@@ -28,10 +28,14 @@ public class ServicoController {
     public ArrayList<Servico> listarServicos(String nome) throws ExceptionDAO {
         return new Servico().listarServicos(nome);
     }
-
+    
     public Servico buscarServico(long idServicoBuscado) throws ExceptionDAO {
 
         return new Servico().buscarServico(idServicoBuscado);
+    }
+    public ArrayList<Servico> buscarServicoPeloAgendamento(long idAgendamento) throws ExceptionDAO {
+
+        return new Servico().buscarServicoPeloAgendamento(idAgendamento);
     }
 
     public boolean cadastrarServico(String nome, String preco, String tempoGasto, ArrayList<Produto> produto) throws SQLException {

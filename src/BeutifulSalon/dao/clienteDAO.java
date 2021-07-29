@@ -199,7 +199,7 @@ public class clienteDAO {
             pStatement.setString(1, cpf);
             pStatement.executeUpdate();
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             
             JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e);
         }finally{

@@ -77,11 +77,12 @@ public class Valida {
                 if ((dig10 == digitos.charAt(9)) && (dig11 == digitos.charAt(10))) {
                     return true;
                 } else {
+                     JOptionPane.showMessageDialog(null, "Erro ao validar CPF");
                     return false;
                 }
 
             } catch (InputMismatchException e) {
-                JOptionPane.showMessageDialog(null, "Erro ao validar cpf " + e);
+                JOptionPane.showMessageDialog(null, "Erro ao validar CPF " + e);
                 return false;
             }
 
@@ -120,7 +121,6 @@ public class Valida {
             LocalTime d = LocalTime.parse(hora, formatador);
             return true;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao validar horário " + e);
             return false;
         }
         

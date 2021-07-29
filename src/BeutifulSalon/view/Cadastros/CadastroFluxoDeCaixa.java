@@ -18,6 +18,7 @@ import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalInputMonetarios;
 import java.awt.HeadlessException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -591,5 +592,9 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     private javax.swing.JTextField jTextFieldTotal2;
     private javax.swing.JTextField jTextFieldTotalBruto2;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(ArrayList<LocalTime> horarios) {
+    }
 
 }

@@ -246,6 +246,108 @@ public class ServicoDAO {
         }
 
     }
+     public Servico buscarServicoAgendamento(long id){
+        
+        String sql = "SELECT * FROM SERVICO WHERE ID_SERVICO = ?";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+      
+        
+        try{
+            
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setLong(1, id);         
+            rs = pStatement.executeQuery();
+            
+            Servico servicoBuscado = new Servico();
+   
+            if(rs != null){                
+                while(rs.next()){  
+             
+                servicoBuscado.setNome(rs.getString("NOME"));
+                servicoBuscado.setPreco(rs.getLong("PRECO"));
+                servicoBuscado.setId(rs.getLong("ID_SERVICO"));
+                servicoBuscado.setTempoGasto(rs.getTime("TEMPOGASTO").toLocalTime());
+  
+                }
+            }
+            
+            return servicoBuscado;
+       
+            
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) " + e);
+        }finally{
+              try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+
+        return null;
     }
+    public ArrayList<Servico> buscaServicoPeloAgendamento(long idAgendamento){
+        
+        String sql = "SELECT ID_SERVICO FROM AGENDAMENTO_SERVICO WHERE ID_AGENDAMENTO = ?";
+        ArrayList<Servico> servicos = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+      
+        
+        try{
+            
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setLong(1, idAgendamento);         
+            rs = pStatement.executeQuery();
+            
+        
+   
+            if(rs != null){                
+                while(rs.next()){  
+                
+                 Servico servicoBuscado = buscarServicoAgendamento(rs.getLong("ID_SERVICO"));
+                 servicos.add(servicoBuscado);
+                }
+            }
+            
+            return servicos;
+       
+            
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) " + e);
+        }finally{
+              try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+
+        return null;
+    }
+    
+    
+}
 
 

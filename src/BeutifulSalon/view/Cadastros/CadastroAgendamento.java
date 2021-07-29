@@ -12,6 +12,7 @@ import BeutifulSalon.view.modais.modalCliente;
 import BeutifulSalon.view.modais.modalInputMonetarios;
 import BeutifulSalon.view.modais.modalServicos;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -540,5 +541,9 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
     @Override
     public void update(Servico servico) {
+    }
+
+    @Override
+    public void update(ArrayList<LocalTime> horarios) {
     }
 }
