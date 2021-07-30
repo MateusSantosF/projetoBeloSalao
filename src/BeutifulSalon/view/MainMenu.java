@@ -12,6 +12,8 @@ import BeutifulSalon.view.Apresenta.ApresentaProduto;
 import BeutifulSalon.view.Apresenta.ApresentaCliente;
 import BeutifulSalon.model.GerenciadorJPanel;
 import BeutifulSalon.view.Apresenta.ApresentaAgendamentos;
+import java.net.URL;
+import javax.swing.ImageIcon;
 
 
 
@@ -30,6 +32,15 @@ public class MainMenu extends javax.swing.JFrame {
          
         new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
         new GerenciadorJPanel(painelPrincipal, new Dashboard());
+        
+        try {
+          URL iconURL = getClass().getResource("/imagens/icon-add.png") ;
+          ImageIcon icon = new ImageIcon(iconURL);
+          this.setIconImage(icon.getImage());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+       
     }
 
 

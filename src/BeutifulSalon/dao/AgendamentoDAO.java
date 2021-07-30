@@ -95,7 +95,7 @@ public class AgendamentoDAO {
     
     public ArrayList<Agendamento> listarAgendamentos(){
         
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO";
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO ORDER BY DATA ";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -155,7 +155,7 @@ public class AgendamentoDAO {
         
         
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
-                + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.MeiaNoiteAmanha();
+                + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.MeiaNoiteAmanha() + " ORDER BY HORARIO ";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -215,7 +215,7 @@ public class AgendamentoDAO {
         
         
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
-                + " WHERE DATA BETWEEN " + datas.MeiaNoiteAmanha() + " AND " + datas.somaDia(LocalDateTime.now().plusDays(1), 1);
+                + " WHERE DATA BETWEEN " + datas.MeiaNoiteAmanha() + " AND " + datas.somaDia(LocalDateTime.now().plusDays(1), 1)+" ORDER BY HORARIO";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -275,7 +275,7 @@ public class AgendamentoDAO {
         
         
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
-                + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.somaDia(LocalDateTime.now(), 5);
+                + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.somaDia(LocalDateTime.now(), 5) +" ORDER BY DATA";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -396,7 +396,7 @@ public class AgendamentoDAO {
         ManipulaData datas = new ManipulaData();
       
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
-                + " WHERE DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data);
+                + " WHERE DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data) +" ORDER BY HORARIO";
         
         Connection connection = null;
         PreparedStatement pStatement = null;

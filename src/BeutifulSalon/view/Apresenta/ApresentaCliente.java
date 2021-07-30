@@ -7,6 +7,7 @@ package BeutifulSalon.view.Apresenta;
 
 import BeutifulSalon.Ferramentas.ApresentaTabela;
 import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.model.AplicaLookAndFeel;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
@@ -20,7 +21,8 @@ public class ApresentaCliente extends javax.swing.JPanel {
     public ApresentaCliente() {
         initComponents();
         listarClientes();
-        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
+        AplicaLookAndFeel.pegaNimbus();
+
     }
 
     /**
@@ -219,12 +221,12 @@ public class ApresentaCliente extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldNomeCliente))))
+                            .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(488, 488, 488))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(356, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(362, 362, 362)
+                    .addComponent(jScrollPane2)
                     .addGap(23, 23, 23)))
         );
     }// </editor-fold>//GEN-END:initComponents

@@ -9,6 +9,7 @@ import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.dao.ExceptionDAO;
 import java.awt.HeadlessException;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -61,7 +62,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             jTextFieldBairro.setText(bairro);
             jTextFieldCidade.setText(cidade);
 
-        } catch (Exception e) {
+        } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Erro ao consultar CEP.");
         }
     }
