@@ -27,7 +27,7 @@ public class AgendamentoDAO {
 
     public void cadastraAgendamento(Agendamento agendamento) throws SQLException, SQLException {
 
-        String insertAgendamento = "INSERT INTO AGENDAMENTO (DATA, HORARIO, CPF_CLIENTE, REALIZADO) VALUES (?, ?, ?, ?)";
+        String insertAgendamento = "INSERT INTO AGENDAMENTO (DATA, HORARIO, CPF_CLIENTE, REALIZADO, TOTAL) VALUES (?, ?, ?, ?, ?)";
 
         String insertServicoAgendamento = "INSERT INTO AGENDAMENTO_SERVICO (ID_AGENDAMENTO, ID_SERVICO) "
                 + "VALUES ((SELECT ID_AGENDAMENTO FROM AGENDAMENTO ORDER BY ID_AGENDAMENTO DESC LIMIT 1), ?)";
@@ -45,7 +45,7 @@ public class AgendamentoDAO {
             pStatement.setTime(2, java.sql.Time.valueOf(agendamento.getHorario()));
             pStatement.setString(3, agendamento.getCpfCliente());
             pStatement.setBoolean(4, false ); // ao cadastrar o orçamento, ele ainda não eh realizado por isso false.
-
+            pStatement.setLong(5, agendamento.getTotal());
             int firstInsert = pStatement.executeUpdate();
 
             if (firstInsert > 0) {

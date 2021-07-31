@@ -20,11 +20,13 @@ import java.util.Date;
 public class Agendamento {
     
     long id;
+    long total;
     LocalDate data;
     LocalTime horario;
     String cpfCliente;
     Boolean realizado;
     ArrayList<Servico> servicos;
+    
 
     
     public Agendamento(){};
@@ -37,6 +39,15 @@ public class Agendamento {
         this.servicos = servicos;
     }
 
+    public long getTotal() {
+        return total;
+    }
+
+    public void setTotal(long total) {
+        this.total = total;
+    }
+
+    
     public Boolean getRealizado() {
         return realizado;
     }

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
 /**
@@ -460,11 +461,8 @@ public class OrcamentoDAO {
             connection = new ConnectionMVC().getConnection();
             pStatement = connection.prepareStatement(sql);
             
-            
-            SimpleDateFormat df = new SimpleDateFormat("yyyy");
-            java.util.Date ano = new java.util.Date();
-            
-            pStatement.setString(1, df.format(ano).toString());//RETORNA o ANO atual do SISTEMA
+        
+            pStatement.setString(1, String.valueOf(LocalDate.now().getYear()));//RETORNA o ANO atual do SISTEMA
             ResultSet rs = pStatement.executeQuery();
            
             
@@ -581,4 +579,54 @@ public class OrcamentoDAO {
         
         return orcamentos;
     }
+    
+    public long somaTotalGanhoServicoMensal(long inicio, long fim, long idServico){
+        
+        String sql = "SELECT SUM(SERVICO.PRECO) AS SOMA FROM ((AGENDAMENTO INNER JOIN AGENDAMENTO_SERVICO ON AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO "
+        +" AND AGENDAMENTO_SERVICO.ID_SERVICO = "+ idServico + ")" 
+        +" INNER JOIN SERVICO ON SERVICO.ID_SERVICO = "+ idServico +")" 
+        +" WHERE AGENDAMENTO.DATA BETWEEN "+ inicio + " AND " + fim;
+                
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+       
+        try{
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            long soma = 0;
+            
+            ResultSet rs = pStatement.executeQuery();
+                       
+            if(rs != null){
+                while(rs.next()){               
+                   soma += rs.getLong("SOMA");
+                    System.out.println("soma  = " + soma);
+                }
+                
+            }
+            
+            return soma;
+         
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ConnectionMVC: " + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+        
+        return 0;
+    }
 }
+

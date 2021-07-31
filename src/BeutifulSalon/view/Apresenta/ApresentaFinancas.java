@@ -41,6 +41,10 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private void initComponents() {
 
         jTabbed = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTableServicoComparado = new javax.swing.JTable();
         container = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -61,7 +65,6 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jLabelSearch1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTextFieldAno1 = new javax.swing.JFormattedTextField();
-        jPanel1 = new javax.swing.JPanel();
 
         jTabbed.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -78,6 +81,82 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                 jTabbedPropertyChange(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 980, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 726, Short.MAX_VALUE)
+        );
+
+        jTabbed.addTab("Lançamentos", jPanel1);
+
+        jScrollPane4.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane4.setBorder(null);
+        jScrollPane4.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane4.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane4.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane4.setAutoscrolls(true);
+        jScrollPane4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jScrollPane4.setPreferredSize(new java.awt.Dimension(1011, 80));
+
+        jTableServicoComparado.setBackground(new java.awt.Color(255, 255, 255));
+        jTableServicoComparado.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nome", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro", "id_orcamento"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableServicoComparado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTableServicoComparado.setGridColor(new java.awt.Color(34, 34, 34));
+        jTableServicoComparado.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jTableServicoComparado.setShowGrid(true);
+        jScrollPane4.setViewportView(jTableServicoComparado);
+        if (jTableServicoComparado.getColumnModel().getColumnCount() > 0) {
+            jTableServicoComparado.getColumnModel().getColumn(0).setPreferredWidth(120);
+            jTableServicoComparado.getColumnModel().getColumn(13).setMinWidth(1);
+            jTableServicoComparado.getColumnModel().getColumn(13).setMaxWidth(1);
+        }
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(131, 131, 131)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                .addGap(311, 311, 311))
+        );
+
+        jTabbed.addTab("Serviços Realizados", jPanel2);
 
         container.setBackground(new java.awt.Color(243, 244, 245));
 
@@ -232,7 +311,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                 .addGap(91, 91, 91))
         );
 
-        jTabbed.addTab("Despesas", container);
+        jTabbed.addTab("Despesas Previstas", container);
 
         container1.setBackground(new java.awt.Color(243, 244, 245));
 
@@ -391,20 +470,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                 .addGap(91, 91, 91))
         );
 
-        jTabbed.addTab("Serviços", container1);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 980, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 726, Short.MAX_VALUE)
-        );
-
-        jTabbed.addTab("Lançamentos", jPanel1);
+        jTabbed.addTab("Serviços Previstos", container1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -486,7 +552,11 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
     public void listarOrcamentos() {
         jTableConsultaOrcamento.setModel(new ApresentaTabela().Orcamentos(jTableConsultaOrcamento));
-        jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));
+        try {
+                    jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));
+
+        } catch (Exception e) {
+        }
     }
 
     public void listaOrcamentos(String ano) {
@@ -498,8 +568,13 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     public void listarOrcamentoServico(String ano){
         jTableConsultaOrcamentoServico.setModel(new ApresentaTabela().OrcamentosServico(jTableConsultaOrcamento, ano));
     }
-     public void listarOrcamentoServico(){
+    
+    public void listarOrcamentoServico(){
         jTableConsultaOrcamentoServico.setModel(new ApresentaTabela().OrcamentosServico(jTableConsultaOrcamento));
+    }
+    
+    public void listarOrcamentoServicoComparado(){
+        jTableServicoComparado.setModel(new ApresentaTabela().servicosComparados(jTableServicoComparado));
     }
 
    
@@ -553,7 +628,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         if (jTextFieldAno1.getText().equals("")) {
             SimpleDateFormat df = new SimpleDateFormat("yyyy");
             java.util.Date ano = new java.util.Date();
-            listarOrcamentoServico(df.format(ano).toString());
+            listarOrcamentoServico(df.format(ano));
 
         } else {
             listarOrcamentoServico(jTextFieldAno1.getText());
@@ -564,10 +639,12 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
         int indice = jTabbed.getSelectedIndex();
 
-        if (indice == 0) {
+        if (indice == 2) {
             listarOrcamentos();
-        } else if (indice == 1) {
+        } else if (indice == 3) {
             jTableConsultaOrcamentoServico.setModel(new ApresentaTabela().OrcamentosServico(jTableConsultaOrcamento));
+        }else if(indice == 1){
+            listarOrcamentoServicoComparado();
         }
 
     }//GEN-LAST:event_jTabbedStateChanged
@@ -597,11 +674,14 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelSearch;
     private javax.swing.JLabel jLabelSearch1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbed;
     private javax.swing.JTable jTableConsultaOrcamento;
     private javax.swing.JTable jTableConsultaOrcamentoServico;
+    private javax.swing.JTable jTableServicoComparado;
     private javax.swing.JFormattedTextField jTextFieldAno;
     private javax.swing.JFormattedTextField jTextFieldAno1;
     // End of variables declaration//GEN-END:variables

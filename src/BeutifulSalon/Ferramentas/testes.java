@@ -28,86 +28,23 @@ public class testes {
 
     public static void main(String[] args) {
 
-        ArrayList<LocalTime> horarios = new ArrayList<>(); // array de horarios disponivel ({inicio, tempoAtéPróximoAgendamento})
-        ArrayList<Agendamento> agendamentos = null; // agendamentos do dia
-        ArrayList<LocalTime> expedienteDoDia = null; // expediente do dia da semana referente a data    
-        LocalTime entrada;
-        LocalTime saida;
-        LocalDate dataAgendamento;
-        int diaDaSemana = 0; // 1 (segunda) -  7 (Domingo)
-
-        try {
-
-            AgendamentoController ag = new AgendamentoController();
-            CabeleireiroController cc = new CabeleireiroController();
-
-            //busca agendamentos do dia inserido na tela de agendamento
-            agendamentos = ag.listarAgendamentos(LocalDate.of(2021, Month.JULY, 18));
-
-            //recupera dia da semana
-            diaDaSemana = agendamentos.get(0).getData().getDayOfWeek().getValue();
-            System.out.println("Dia da semana: " + diaDaSemana);
-
-            //recupera horario de inicio e término do expediente
-            expedienteDoDia = cc.selecionaExpediente(diaDaSemana);
-
-            entrada = expedienteDoDia.get(0);
-            saida = expedienteDoDia.get(1);
-
-            System.out.println("entrada e saida " + entrada + " " + saida);
-
-            LocalTime horarioEntrada = null;
-            //itera pelos agendamentos
-            for (Agendamento a : agendamentos) {
-
-                //System.out.println("\n\nHorario de entrada" + horarioEntrada);
-                if(horarios.size() == 0){
-                    horarioEntrada = entrada;
-                }
-                System.out.println("Horario do Agendamento = " + a.getHorario());
-                Long tempoComparado = horarioEntrada.until(a.getHorario(), ChronoUnit.NANOS);
-
-                if (tempoComparado >= 0) {
-                    try {
-                        LocalTime saidaAtual = LocalTime.ofNanoOfDay(tempoComparado);
-                        System.out.println("Tempo até o proximo agedamento" + saidaAtual);
-                        horarios.add(saidaAtual);
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Erro ao verificar intervalo entre horas" + e);
-                    }
-                }
-
-                //guardo no array o tempComprado
-                int horas = 0;
-                int minutos = 0;
-
-                LocalTime agendamentoAtual = a.getHorario();
-                ArrayList<Servico> servicosAgendamentoAtual = a.getServicos();
-
-                //itera pelo serviços do agendamento
-                for (Servico s : servicosAgendamentoAtual) {
-                    horas += s.getTempoGasto().getHour();
-                    minutos += s.getTempoGasto().getMinute();
-                }
-
-                agendamentoAtual = agendamentoAtual.plusHours(horas).plusMinutes(minutos);
-                if(agendamentoAtual.isAfter(saida)){
-                   // break;
-                }
-                System.out.println("Horario agendamento somado " + agendamentoAtual);
-                horarioEntrada = agendamentoAtual;
-                horarios.add(horarioEntrada);
-            }
-                horarios.add(0, entrada);
-            
-        } catch (ExceptionDAO ex) {
-            Logger.getLogger(ManipulaData.class.getName()).log(Level.SEVERE, null, ex);
+        //pegar todos orçamento servico por ano
+        //pegar agendamentos por mes e verificar seus serviços 
+        //pegar a quantidade mensal de um serviço e multiplicar pelo preço
+        
+          
+        LocalDate data = LocalDate.ofYearDay(2021, 1);
+    
+        //int totalDias = data.getMonth().APRIL.length(data.isLeapYear());
+        
+        ArrayList<Month> meses = new ArrayList<>();
+        
+        for(int i = 1; i <= 12; i++){
+            meses.add(Month.of(i));
         }
         
-    
-        System.out.println("\n\n");
-        for (LocalTime t : horarios) {
-            System.out.println(t);
-        }
+        meses.forEach(c-> System.out.println(c));
+        
+
     }
 }

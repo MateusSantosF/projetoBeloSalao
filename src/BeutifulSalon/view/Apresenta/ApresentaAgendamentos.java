@@ -29,6 +29,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         
         new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
         listarAgendamentos(TODOS, null);
+    
     }
 
     /**

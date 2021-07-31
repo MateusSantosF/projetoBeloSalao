@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.Year;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -72,6 +73,43 @@ public class ManipulaData {
         return meiaNoiteAmanhaMs;
     }
 
+    public long inicioDoMes(LocalDate data, Month mes) {
+
+        LocalDate dataMes = LocalDate.of(data.getYear(), mes, 1);
+
+        long tempoEmMs = dataMes.toEpochDay() * 24 * 60 * 60 * 1000;
+
+        return tempoEmMs;
+    }
+
+    public ArrayList<Month> meses(LocalDate data) {
+
+        ArrayList<Month> meses = new ArrayList<>();
+
+        //primeiro dia do ano referente a data passada por parametro
+        LocalDate dataModificada = LocalDate.of(data.getYear(), 1, 1);
+
+        meses.add(dataModificada.getMonth());
+        for (int i = 2; i < 12; i++) {
+
+            //soma-se meses referente ao ano para evitar problemas com qtd de dias;
+            Month mesAtual = dataModificada.plusMonths(i).getMonth();
+            meses.add(mesAtual);
+        }
+
+        return meses;
+    }
+
+    public long fimDoMes(LocalDate data, Month mes) {
+
+        LocalDate dataMes = LocalDate.of(data.getYear(), mes, 1);
+        int maximoDias = dataMes.getMonth().length(dataMes.isLeapYear());
+        LocalDate ultimoDiaDoMes = LocalDate.of(dataMes.getYear(), mes, maximoDias);
+        long tempoEmMs = ultimoDiaDoMes.toEpochDay() * 24 * 60 * 60 * 1000;
+
+        return tempoEmMs;
+    }
+
     public long somaDia(LocalDateTime diaAtual, long qtdDias) {
 
         LocalDateTime soma = diaAtual.plusDays(qtdDias);
@@ -84,8 +122,9 @@ public class ManipulaData {
     public ArrayList<LocalTime> recuperaHorariosDisponiveis(LocalDate data) {
 
         ArrayList<LocalTime> horarios = new ArrayList<>(); // array de horarios disponivel ({inicio, tempoAtéPróximoAgendamento})
-        ArrayList<Agendamento> agendamentos = null; // agendamentos do dia
-        ArrayList<LocalTime> expedienteDoDia = null; // expediente do dia da semana referente a data    
+        ArrayList<Agendamento> agendamentos; // agendamentos do dia
+        ArrayList<LocalTime> expedienteDoDia; // expediente do dia da semana referente a data    
+
         LocalTime entrada;
         LocalTime saida;
         int diaDaSemana = 0; // 1 (segunda) -  7 (Domingo)
@@ -96,12 +135,9 @@ public class ManipulaData {
             CabeleireiroController cc = new CabeleireiroController();
 
             //busca agendamentos do dia inserido na tela de agendamento
-            
             agendamentos = ag.listarAgendamentos(data);
-            if(agendamentos.isEmpty()){
-                 System.out.println("teste");
+            if (agendamentos.isEmpty()) {
                 return null;
-               
             }
             //recupera dia da semana
             diaDaSemana = agendamentos.get(0).getData().getDayOfWeek().getValue();
@@ -118,14 +154,15 @@ public class ManipulaData {
             //itera pelos agendamentos
             for (Agendamento a : agendamentos) {
 
-                if (horarios.size() == 0) {
+                if (horarios.isEmpty()) {
                     horarioEntrada = entrada;
                 }
-
-                //System.out.println("Horario do Agendamento = " + a.getHorario());
+                System.out.println("Tempo de inicio " + horarioEntrada);
+                System.out.println("Próximo Agendamento = " + a.getHorario());
                 Long tempoComparado = null;
                 try {
                     tempoComparado = horarioEntrada.until(a.getHorario(), ChronoUnit.NANOS);
+                    //System.out.println("Tempo comparado " + tempoComparado);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -133,8 +170,11 @@ public class ManipulaData {
                 if (tempoComparado >= 0) {
                     try {
                         LocalTime saidaAtual = LocalTime.ofNanoOfDay(tempoComparado);
-                        //System.out.println("Tempo entre o agedamento" + saidaAtual);
+                        System.out.println("Tempo entre o proximo agendamento" + saidaAtual);
+                        //if(saidaAtual.getHour() != 0 || saidaAtual.getMinute() != 0){
                         horarios.add(saidaAtual);
+                        //}
+
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Erro ao verificar intervalo entre horas" + e);
                     }
@@ -155,12 +195,12 @@ public class ManipulaData {
                 //soma horas e minutos
                 agendamentoAtual = agendamentoAtual.plusHours(horas);
                 agendamentoAtual = agendamentoAtual.plusMinutes(minutos);
-                
+
                 //verifica se o tempo dos serviços do agendamento é maior que o fim do expediente
                 if (agendamentoAtual.isAfter(saida)) {
                     break;
                 }
-                //System.out.println("Horario agendamento somado " + agendamentoAtual);
+                System.out.println("Horario agendamento somado " + agendamentoAtual);
                 horarioEntrada = agendamentoAtual;
                 horarios.add(horarioEntrada);
             }
@@ -180,7 +220,7 @@ public class ManipulaData {
         if (horarios != null) {
             int i = 0;
             int tamanho = horarios.size();
- 
+
             for (i = 0; i < tamanho; i++) {
 
                 if (i % 2 != 0) {
@@ -189,7 +229,7 @@ public class ManipulaData {
                 }
 
             }
-        }else{
+        } else {
             horariosFormatados.add("Todos os horários estão \ndisponíveis.");
         }
 

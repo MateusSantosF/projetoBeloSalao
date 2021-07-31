@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class AgendamentoController {
 
-    public boolean cadastraAgendamento(String data, String horario, String cpfCliente, ArrayList<Servico> servicos) throws ExceptionDAO {
+    public boolean cadastraAgendamento(String data, String horario, String cpfCliente, ArrayList<Servico> servicos, long total) throws ExceptionDAO {
 
         if ( Valida.isCpf(cpfCliente) && Valida.isHora(horario) && !servicos.isEmpty()) {
                                
@@ -42,7 +42,9 @@ public class AgendamentoController {
                 return false;
             }
             //Passando parametros
+         
             Agendamento agendamento = new Agendamento();
+            agendamento.setTotal(total);
             agendamento.setCpfCliente(cpfCliente);
             agendamento.setData(dataAgendamento);
             agendamento.setHorario(h);                   

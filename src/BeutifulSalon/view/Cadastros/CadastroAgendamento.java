@@ -1,4 +1,3 @@
-
 package BeutifulSalon.view.Cadastros;
 
 import BeutifulSalon.Ferramentas.ManipulaData;
@@ -19,6 +18,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -41,7 +41,6 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
         try {
             String dataAtual = df.format(new Date());
-            jTextFieldData.setText(dataAtual);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao recuperar data atual " + e);
@@ -76,7 +75,6 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jTextFieldTotal = new javax.swing.JTextField();
         jCheckBoxDesconto = new javax.swing.JCheckBox();
         jSeparator1 = new javax.swing.JSeparator();
-        jTextFieldData = new javax.swing.JFormattedTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jTextFieldHorario = new javax.swing.JFormattedTextField();
@@ -85,6 +83,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jListHorarios = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -185,19 +184,6 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        try {
-            jTextFieldData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jTextFieldData.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextFieldData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextFieldData.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldDataKeyReleased(evt);
-            }
-        });
-
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel10.setText("Data");
 
@@ -249,6 +235,8 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
             }
         });
 
+        jDateChooser1.setDateFormatString("dd/MM/yyyy");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -270,46 +258,51 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelAddServicos)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addGap(63, 63, 63)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBoxDesconto)
-                    .addComponent(jLabel7)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel8)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(jLabel10)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(26, 26, 26)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jCheckBoxDesconto)
+                                    .addComponent(jLabel7)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel9)
+                                            .addComponent(jLabel8))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jTextFieldTotalBruto)
+                                                    .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                                                    .addComponent(jTextFieldTotal)))
+                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jLabel2)
+                                                .addGap(11, 11, 11))))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextFieldTotalBruto)
-                                    .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                                    .addComponent(jTextFieldTotal)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel2)
-                                .addGap(11, 11, 11))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel10)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel11)
+                                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
+                                            .addComponent(jTextFieldHorario))
+                                        .addGap(26, 26, 26)
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldData, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                            .addComponent(jTextFieldHorario)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(jLabel11)))
-                        .addGap(38, 38, 38)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(75, 75, 75)
                         .addComponent(jButtonFinalizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -354,11 +347,11 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                                 .addGap(23, 23, 23)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel2)
                                             .addComponent(jLabel10))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel11)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -366,11 +359,16 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel6)
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(21, 21, 21)
-                                .addComponent(jButtonFinalizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonFinalizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(9, 9, 9))
                             .addComponent(jSeparator1))))
                 .addContainerGap())
         );
+
+        Locale BRAZIL = new Locale("pt","BR");
+        jDateChooser1.setLocale(BRAZIL);
+        jDateChooser1.setDateFormatString("dd/MM/yyyy");
 
         pack();
         setLocationRelativeTo(null);
@@ -409,10 +407,18 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         AgendamentoController ac = new AgendamentoController();
 
         try {
-            sucesso = ac.cadastraAgendamento(jTextFieldData.getText(),
+            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+            String dataFormatada = "";
+            try {
+                dataFormatada = formater.format(jDateChooser1.getDate());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao converter data");
+            }
+
+            sucesso = ac.cadastraAgendamento(dataFormatada,
                     jTextFieldHorario.getText(),
                     jTextFieldCPF.getText(),
-                    new RecuperaTabela().Servicos(jTableServicosSolicitados));
+                    new RecuperaTabela().Servicos(jTableServicosSolicitados), calculaTotalFinal());
 
             if (sucesso) {
                 JOptionPane.showMessageDialog(null, "Agendamento Realizado com sucesso");
@@ -426,46 +432,47 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
     }//GEN-LAST:event_jButtonFinalizarCompraActionPerformed
 
-    private void jTextFieldDataKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDataKeyReleased
-        
-       
-    }//GEN-LAST:event_jTextFieldDataKeyReleased
-
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
-        if(Valida.isData(jTextFieldData.getText())){
+
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+        String dataFormatada = "";
+        try {
+            dataFormatada = formater.format(jDateChooser1.getDate());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao converter data");
+        }
+
+        if (Valida.isData(dataFormatada)) {
             ManipulaData manipulaData = new ManipulaData();
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
             LocalDate dataDigitada = null;
             try {
-                dataDigitada = LocalDate.parse(jTextFieldData.getText(), formatterData);
+                dataDigitada = LocalDate.parse(dataFormatada, formatterData);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Data inválida!" + e);
             }
             ArrayList<LocalTime> horariosLivres = manipulaData.recuperaHorariosDisponiveis(dataDigitada);
             DefaultListModel<String> model = new DefaultListModel();
-            
+
             ArrayList<String> horariosFormatados = manipulaData.formataHorariosDisponiveis(horariosLivres);
 
             horariosFormatados.forEach(t -> {
                 model.addElement(t);
             });
-            
+
             jListHorarios.setModel(model);
-            
+
         }
     }//GEN-LAST:event_jLabel6MousePressed
 
-    
-    
-    private void limparCampos(){
+    private void limparCampos() {
         jTextFieldNome.setText("");
         jTextFieldCPF.setText("");
         jTextFieldDesconto.setText("-R$ 0,00");
         jTextFieldTotalBruto.setText("R$ 0,00");
         jTextFieldTotal.setText("");
-        jTextFieldData.setText("");
         jTextFieldHorario.setText("");
-        
+
         DefaultTableModel modal = (DefaultTableModel) jTableServicosSolicitados.getModel();
         modal.setRowCount(0);
         jTableServicosSolicitados.setModel(modal);
@@ -478,7 +485,6 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
             try {
                 for (Servico s : servicos) {
-                    System.out.println(s.getPreco());
                     total += s.getPreco();
                 }
 
@@ -510,6 +516,28 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao calcular total " + e);
         }
+    }
+    
+    private long calculaTotalFinal() {
+
+        long valorTotal = 0;
+        try {
+
+            long valorDesconto = 0;
+
+            if (!jTextFieldDesconto.getText().equals("")) {
+                valorDesconto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText()));
+            }
+
+            long valorTotalBruto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldTotalBruto.getText()));
+            valorTotal = valorTotalBruto - valorDesconto;
+            jTextFieldTotal.setText(Dinheiro.parseString(valorTotal));
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao calcular total " + e);
+        }
+        
+        return valorTotal;
     }
 
     /**
@@ -550,6 +578,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonFinalizarCompra;
     private javax.swing.JCheckBox jCheckBoxDesconto;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -569,7 +598,6 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableServicosSolicitados;
     private javax.swing.JTextField jTextFieldCPF;
-    private javax.swing.JFormattedTextField jTextFieldData;
     private javax.swing.JTextField jTextFieldDesconto;
     private javax.swing.JFormattedTextField jTextFieldHorario;
     private javax.swing.JTextField jTextFieldNome;

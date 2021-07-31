@@ -101,6 +101,10 @@ public class OrcamentoController {
         return new Orcamento().somarOrcamento(mes, ano);
     }
     
+    public long somaTotalGanhoServicoMensal(long inicio, long fim, long idServico) throws ExceptionDAO{
+        return new Orcamento().somaTotalGanhoServicoMensal(inicio, fim, idServico);
+    }
+    
    
 
     public boolean editarCliente(long id_orcamento) {
