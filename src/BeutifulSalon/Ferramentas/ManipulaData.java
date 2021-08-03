@@ -157,8 +157,8 @@ public class ManipulaData {
                 if (horarios.isEmpty()) {
                     horarioEntrada = entrada;
                 }
-                System.out.println("Tempo de inicio " + horarioEntrada);
-                System.out.println("Próximo Agendamento = " + a.getHorario());
+                //System.out.println("Tempo de inicio " + horarioEntrada);
+                //System.out.println("Próximo Agendamento = " + a.getHorario());
                 Long tempoComparado = null;
                 try {
                     tempoComparado = horarioEntrada.until(a.getHorario(), ChronoUnit.NANOS);
@@ -170,11 +170,9 @@ public class ManipulaData {
                 if (tempoComparado >= 0) {
                     try {
                         LocalTime saidaAtual = LocalTime.ofNanoOfDay(tempoComparado);
-                        System.out.println("Tempo entre o proximo agendamento" + saidaAtual);
-                        //if(saidaAtual.getHour() != 0 || saidaAtual.getMinute() != 0){
+                        //System.out.println("Tempo entre o proximo agendamento" + saidaAtual);
                         horarios.add(saidaAtual);
-                        //}
-
+                   
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Erro ao verificar intervalo entre horas" + e);
                     }
@@ -200,7 +198,7 @@ public class ManipulaData {
                 if (agendamentoAtual.isAfter(saida)) {
                     break;
                 }
-                System.out.println("Horario agendamento somado " + agendamentoAtual);
+                //System.out.println("Horario agendamento somado " + agendamentoAtual);
                 horarioEntrada = agendamentoAtual;
                 horarios.add(horarioEntrada);
             }
@@ -230,7 +228,7 @@ public class ManipulaData {
 
             }
         } else {
-            horariosFormatados.add("Todos os horários estão \ndisponíveis.");
+            horariosFormatados.add("Não existem agendamentos neste dia.");
         }
 
         return horariosFormatados;

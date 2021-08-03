@@ -17,11 +17,12 @@ import java.util.ArrayList;
  */
 public class Servico {
     
-    long id;
-    String nome;
-    long preco;
-    ArrayList<Produto> produtos;
-    LocalTime tempoGasto;
+    private long id;
+    private String nome;
+    private long preco;
+    private ArrayList<Produto> produtos;
+    private LocalTime tempoGasto;
+    private long quantidadeMensal;
 
     public LocalTime getTempoGasto() {
         return tempoGasto;
@@ -70,6 +71,14 @@ public class Servico {
 
     public void setPreco(long preco) {
         this.preco = preco;
+    }
+
+    public long getQuantidadeMensal() {
+        return quantidadeMensal;
+    }
+
+    public void setQuantidadeMensal(long quantidadeMensal) {
+        this.quantidadeMensal = quantidadeMensal;
     }
     
     public ArrayList<Servico> listarServicos() throws ExceptionDAO{

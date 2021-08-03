@@ -6,7 +6,12 @@
 package BeutifulSalon.controller;
 
 import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.dao.OrcamentoServicoDAO;
 import BeutifulSalon.model.Orcamento;
+import BeutifulSalon.model.OrcamentoServico;
+import BeutifulSalon.model.Servico;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -46,8 +51,8 @@ public class OrcamentoController {
         if(ano.length() > 0 && nomeServico.length() > 0 && Idservico > 0){
             
             try {
-                Orcamento orcamentoServico; 
-                orcamentoServico = new Orcamento(previsto, 
+                OrcamentoServico orcamentoServico; 
+                orcamentoServico = new OrcamentoServico(previsto, 
                     nomeServico, Idservico, jan,fev,mar, abr,mai,jun,jul,ago,set,out,nov,dez,ano);
                 
                 orcamentoServico.cadastrarOrcamentoServico(orcamentoServico);
@@ -89,38 +94,11 @@ public class OrcamentoController {
         return new Orcamento().listarOrcamentos(ano);
     }
     
-    public ArrayList<Orcamento> listarOrcamentosServico() throws ExceptionDAO{
-        return new Orcamento().listarOrcamentosServico();
-    }
-    
-     public ArrayList<Orcamento> listarOrcamentosServico(String ano) throws ExceptionDAO{
-        return new Orcamento().listarOrcamentosServico(ano);
-    }
-    
     public long somarOrcamento(String mes, String ano) throws ExceptionDAO{
         return new Orcamento().somarOrcamento(mes, ano);
     }
     
-    public long somaTotalGanhoServicoMensal(long inicio, long fim, long idServico) throws ExceptionDAO{
-        return new Orcamento().somaTotalGanhoServicoMensal(inicio, fim, idServico);
-    }
-    
-   
-
-    public boolean editarCliente(long id_orcamento) {
-            try {
-             
-            new Orcamento().editarOrcamento(id_orcamento);
-            
-        } catch (ExceptionDAO e) {      
-            JOptionPane.showMessageDialog(null, "Erro ao criar objeto orçamento" + e);
-            return false;
-        }
-        
-        return true;
-    }
-    
-     public boolean AtualizarOrcamento(boolean previsto, String nome, long jan, long fev, long mar, 
+    public boolean AtualizarOrcamento(boolean previsto, String nome, long jan, long fev, long mar, 
             long abr, long mai, long jun, long jul, long ago, long set, long out, long nov, long dez, String ano, long id) {
          
         if( nome.length() > 0){
@@ -138,4 +116,42 @@ public class OrcamentoController {
         return true;
          
     }
+    
+     public boolean editarOrcamento(long id_orcamento) {
+            try {
+             
+            new Orcamento().editarOrcamento(id_orcamento);
+            
+        } catch (ExceptionDAO e) {      
+            JOptionPane.showMessageDialog(null, "Erro ao criar objeto orçamento" + e);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    // ORÇAMENTO SERVICO
+    
+    
+    public ArrayList<OrcamentoServico> listarOrcamentosServico() throws ExceptionDAO{
+        return new OrcamentoServico().listarOrcamentosServico();
+    }
+    
+     public ArrayList<OrcamentoServico> listarOrcamentosServico(String ano) throws ExceptionDAO{
+        return new OrcamentoServico().listarOrcamentosServico(ano);
+    }
+       
+    public long somaTotalGanhoServicoMensal(long inicio, long fim, long idServico) throws ExceptionDAO{
+        return new OrcamentoServico().somaTotalGanhoServicoMensal(inicio, fim, idServico);
+    }
+    public Servico listarOrcamentoServicorRealizado(LocalDate ano, Month mes, long idServico) {
+        return new OrcamentoServico().listarOrcamentoServicorRealizado(ano, mes, idServico);
+    }
+
+    
+   
+
+   
+    
+   
 }

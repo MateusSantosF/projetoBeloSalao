@@ -73,7 +73,7 @@ public class AgendamentoController {
         return new Agendamento().listarAgendamentos(data);
     }
     
-    public ArrayList<Agendamento> listarAgedaAgendamentosHoje() throws ExceptionDAO{
+    public ArrayList<Agendamento> listarAgendamentosHoje() throws ExceptionDAO{
         return new Agendamento().listarAgendamentosHoje();
     }
 

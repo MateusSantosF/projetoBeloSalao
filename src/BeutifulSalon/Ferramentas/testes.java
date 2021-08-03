@@ -45,6 +45,9 @@ public class testes {
         
         meses.forEach(c-> System.out.println(c));
         
+        LocalDate data2 =  LocalDate.ofEpochDay(1628823599);
+        
+        System.out.println(LocalDate.now().toEpochDay() * 24 * 60 * 60 * 1000);
 
     }
 }

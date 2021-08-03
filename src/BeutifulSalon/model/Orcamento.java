@@ -29,9 +29,9 @@ public class Orcamento {
     private long dez;
 
     public Orcamento() {
-    }
+    };
 
-    ;
+    
 
     public Orcamento(boolean previsto, String nome, long jan, long fev, long mar,
             long abr, long mai, long jun, long jul, long ago, long set, long out, long nov, long dez, String ano) {
@@ -232,10 +232,6 @@ public class Orcamento {
         new OrcamentoDAO().cadastrarOrcamento(orcamento);
     }
 
-    public void cadastrarOrcamentoServico(Orcamento orcamento) throws ExceptionDAO {
-        new OrcamentoDAO().cadastrarOrcamentoServico(orcamento);
-    }
-
     public ArrayList<Orcamento> listarOrcamentos() throws ExceptionDAO {
 
         return new OrcamentoDAO().listarOrcamento();
@@ -262,16 +258,6 @@ public class Orcamento {
         new OrcamentoDAO().atualizarOrcamento(orc);
     }
 
-    public ArrayList<Orcamento> listarOrcamentosServico() throws ExceptionDAO {
-        return new OrcamentoDAO().listarOrcamentoServico();
-    }
 
-    public ArrayList<Orcamento> listarOrcamentosServico(String ano) throws ExceptionDAO {
-        return new OrcamentoDAO().listarOrcamentoServico(ano);
-    }
-
-    public long somaTotalGanhoServicoMensal(long inicio, long fim, long idServico) throws ExceptionDAO {
-        return new OrcamentoDAO().somaTotalGanhoServicoMensal(inicio, fim, idServico);
-    }
 
 }

@@ -15,6 +15,7 @@ import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Orcamento;
+import BeutifulSalon.model.OrcamentoServico;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.Apresenta.ApresentaCliente;
@@ -163,7 +164,7 @@ public class ApresentaTabela {
 
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         modelo.setRowCount(0);
-        ArrayList<Orcamento> orcamentos = null;
+        ArrayList<OrcamentoServico> orcamentos = null;
 
         OrcamentoController oc = new OrcamentoController();
         ServicoController sc = new ServicoController();
@@ -174,7 +175,7 @@ public class ApresentaTabela {
             if (orcamentos == null) {
                 return modelo;
             }
-            for (Orcamento orcamento : orcamentos) {
+            for (OrcamentoServico orcamento : orcamentos) {
 
                 try {
                     servicoAtual = sc.buscarServico(orcamento.getId_servico());
@@ -209,12 +210,145 @@ public class ApresentaTabela {
         }
         return modelo;
     }
+    
+    public DefaultTableModel OrcamentoServicoRealizado(JTable tabela, String anoReferente){
+              
+        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        modelo.setRowCount(0);
+        ServicoController sc = new ServicoController();
+        OrcamentoController oc = new OrcamentoController();
+        ArrayList<Servico> servicos = null;
+        ArrayList<OrcamentoServico> orcamentos = new ArrayList<>();
+        ManipulaData manipulaData = new ManipulaData();
+        LocalDate ano = null;
+        try {
+            ano = LocalDate.ofYearDay(Integer.parseInt(anoReferente), 1);  
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao retornar ano" + e);
+        }
+ 
+        try {
+            servicos = sc.listarServicos();
+
+            for (Servico s : servicos) {
+
+                long janeiro = 0;
+                long fevereiro = 0;
+                long marco = 0;
+                long abril = 0;
+                long maio = 0;
+                long junho = 0;
+                long julho = 0;
+                long agosto = 0;
+                long setembro = 0;
+                long outubro = 0;
+                long novembro = 0;
+                long dezembro = 0;
+
+                for (Month m : manipulaData.meses(ano)) {
+
+                    switch (m) {
+                        case JANUARY:
+                            janeiro = oc.listarOrcamentoServicorRealizado(ano, Month.JANUARY, s.getId()).getQuantidadeMensal();
+                            janeiro *= s.getPreco();
+                            break;
+                        case FEBRUARY:
+                            fevereiro = oc.listarOrcamentoServicorRealizado(ano, Month.FEBRUARY, s.getId()).getQuantidadeMensal();
+                            fevereiro *= s.getPreco();
+                            break;
+                        case MARCH:
+                            marco = oc.listarOrcamentoServicorRealizado(ano, Month.MARCH, s.getId()).getQuantidadeMensal();
+                            marco *= s.getPreco();
+                            break;
+                        case APRIL:
+                            abril = oc.listarOrcamentoServicorRealizado(ano, Month.APRIL, s.getId()).getQuantidadeMensal();
+                            abril *= s.getPreco();
+                            
+                            break;
+                        case MAY:
+                            maio = oc.listarOrcamentoServicorRealizado(ano, Month.MAY, s.getId()).getQuantidadeMensal();
+                            maio *= s.getPreco();
+                        case JUNE:
+                            junho = oc.listarOrcamentoServicorRealizado(ano, Month.JUNE, s.getId()).getQuantidadeMensal();
+                            junho *= s.getPreco();
+
+                            break;
+                        case JULY:
+                            julho = oc.listarOrcamentoServicorRealizado(ano, Month.JULY, s.getId()).getQuantidadeMensal();
+                            julho *= s.getPreco();
+                            break;
+                        case AUGUST:
+                            agosto = oc.listarOrcamentoServicorRealizado(ano, Month.AUGUST, s.getId()).getQuantidadeMensal();
+                            agosto *= s.getPreco();
+                        case SEPTEMBER:
+                            setembro = oc.listarOrcamentoServicorRealizado(ano, Month.SEPTEMBER, s.getId()).getQuantidadeMensal();
+                            setembro *= s.getPreco();
+                            break;
+                        case OCTOBER:
+                            outubro = oc.listarOrcamentoServicorRealizado(ano, Month.OCTOBER, s.getId()).getQuantidadeMensal();
+                            outubro *= s.getPreco();
+                            break;
+                        case NOVEMBER:
+                            novembro = oc.listarOrcamentoServicorRealizado(ano, Month.NOVEMBER, s.getId()).getQuantidadeMensal();
+                            novembro *= s.getPreco();
+                            break;
+                        case DECEMBER:
+                            dezembro = oc.listarOrcamentoServicorRealizado(ano, Month.DECEMBER, s.getId()).getQuantidadeMensal();
+                            dezembro *= s.getPreco();
+                            break;
+                    }
+
+                }
+                OrcamentoServico orcamentoAtual = new OrcamentoServico();
+                orcamentoAtual.setNome(s.getNome());
+                orcamentoAtual.setJan(janeiro);
+                orcamentoAtual.setFev(fevereiro);
+                orcamentoAtual.setMar(marco);
+                orcamentoAtual.setAbr(abril);
+                orcamentoAtual.setMai(maio);
+                orcamentoAtual.setJun(junho);
+                orcamentoAtual.setJul(julho);
+                orcamentoAtual.setAgo(agosto);
+                orcamentoAtual.setSet(setembro);
+                orcamentoAtual.setOut(outubro);
+                orcamentoAtual.setNov(novembro);
+                orcamentoAtual.setDez(dezembro);
+
+                orcamentos.add(orcamentoAtual);
+            }
+            
+            orcamentos.forEach(orcamento -> {
+                modelo.addRow(new Object[] {
+                    orcamento.getNome(),
+                    Dinheiro.parseString(orcamento.getJan()),
+                    Dinheiro.parseString(orcamento.getFev()),
+                    Dinheiro.parseString(orcamento.getMar()),
+                    Dinheiro.parseString(orcamento.getAbr()),
+                    Dinheiro.parseString(orcamento.getMai()),
+                    Dinheiro.parseString(orcamento.getJun()),
+                    Dinheiro.parseString(orcamento.getJul()),
+                    Dinheiro.parseString(orcamento.getAgo()),
+                    Dinheiro.parseString(orcamento.getSet()),
+                    Dinheiro.parseString(orcamento.getOut()),
+                    Dinheiro.parseString(orcamento.getNov()),
+                    Dinheiro.parseString(orcamento.getDez()),
+                });
+            });
+            
+            
+
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        return modelo;
+    }
 
     public DefaultTableModel OrcamentosServico(JTable tabela, String ano) {
 
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         modelo.setRowCount(0);
-        ArrayList<Orcamento> orcamentos = null;
+        ArrayList<OrcamentoServico> orcamentos = null;
 
         OrcamentoController oc = new OrcamentoController();
         ServicoController sc = new ServicoController();
@@ -225,7 +359,7 @@ public class ApresentaTabela {
             if (orcamentos == null) {
                 return modelo;
             }
-            for (Orcamento orcamento : orcamentos) {
+            for (OrcamentoServico orcamento : orcamentos) {
 
                 try {
                     servicoAtual = sc.buscarServico(orcamento.getId_servico());
@@ -261,21 +395,26 @@ public class ApresentaTabela {
         return modelo;
     }
 
-    public DefaultTableModel servicosComparados(JTable tabela) {
+    public DefaultTableModel servicosComparados(JTable tabela, String anoReferente) {
 
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         modelo.setRowCount(0);
-        ArrayList<Orcamento> orcamentos = null;
+        ArrayList<OrcamentoServico> orcamentos = null;
 
         ManipulaData manipulaData = new ManipulaData();
         OrcamentoController oc = new OrcamentoController();
         ServicoController sc = new ServicoController();
         Servico servicoAtual = null;
-
+        LocalDate ano = null;
+        try {
+            ano = LocalDate.ofYearDay(Integer.parseInt(anoReferente), 1);  
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao retornar ano" + e);
+        }
         try {
 
-            orcamentos = oc.listarOrcamentosServico();
-            for (Orcamento orcamento : orcamentos) {
+            orcamentos = oc.listarOrcamentosServico(anoReferente);
+            for (OrcamentoServico orcamento : orcamentos) {
 
                 try {
                     servicoAtual = sc.buscarServico(orcamento.getId_servico());
@@ -295,14 +434,14 @@ public class ApresentaTabela {
                 double outubro = 0;
                 double novembro = 0;
                 double dezembro = 0;
-                for (Month m : manipulaData.meses(LocalDate.now())) {
+                for (Month m : manipulaData.meses(ano)) {
 
                     switch (m) {
                         case JANUARY:
                             Long valorPrevistoJan = orcamento.getJan() * servicoAtual.getPreco();
                             Long valorRealizadoJan = oc.somaTotalGanhoServicoMensal(
-                                    manipulaData.inicioDoMes(LocalDate.now(), Month.JANUARY),
-                                    manipulaData.fimDoMes(LocalDate.now(), Month.JANUARY),
+                                    manipulaData.inicioDoMes(ano, Month.JANUARY),
+                                    manipulaData.fimDoMes(ano, Month.JANUARY),
                                     orcamento.getId_servico());
 
                             double comparacaoJan = (valorRealizadoJan.doubleValue() / valorPrevistoJan.doubleValue()) * 100;
@@ -312,8 +451,8 @@ public class ApresentaTabela {
                         case FEBRUARY:
                             Long valorPrevistoFev = orcamento.getFev() * servicoAtual.getPreco();
                             Long valorRealizadoFev = oc.somaTotalGanhoServicoMensal(
-                                    manipulaData.inicioDoMes(LocalDate.now(), Month.FEBRUARY),
-                                    manipulaData.fimDoMes(LocalDate.now(), Month.FEBRUARY),
+                                    manipulaData.inicioDoMes(ano, Month.FEBRUARY),
+                                    manipulaData.fimDoMes(ano, Month.FEBRUARY),
                                     orcamento.getId_servico());
 
                             double comparacaoFev = (valorRealizadoFev.doubleValue() / valorPrevistoFev.doubleValue()) * 100;
@@ -322,8 +461,8 @@ public class ApresentaTabela {
                         case MARCH:
                             Long valorPrevistoMar = orcamento.getMar() * servicoAtual.getPreco();
                             Long valorRealizadoMar = oc.somaTotalGanhoServicoMensal(
-                                    manipulaData.inicioDoMes(LocalDate.now(), Month.MARCH),
-                                    manipulaData.fimDoMes(LocalDate.now(), Month.MARCH),
+                                    manipulaData.inicioDoMes(ano, Month.MARCH),
+                                    manipulaData.fimDoMes(ano, Month.MARCH),
                                     orcamento.getId_servico());
 
                             double comparacaoMar = (valorRealizadoMar.doubleValue() / valorPrevistoMar.doubleValue()) * 100;
@@ -332,8 +471,8 @@ public class ApresentaTabela {
                         case APRIL:
                             Long valorPrevistoAbr = orcamento.getAbr() * servicoAtual.getPreco();
                             Long valorRealizadoAbr = oc.somaTotalGanhoServicoMensal(
-                                    manipulaData.inicioDoMes(LocalDate.now(), Month.APRIL),
-                                    manipulaData.fimDoMes(LocalDate.now(), Month.APRIL),
+                                    manipulaData.inicioDoMes(ano, Month.APRIL),
+                                    manipulaData.fimDoMes(ano, Month.APRIL),
                                     orcamento.getId_servico());
 
                             double comparacaoAbr = (valorRealizadoAbr.doubleValue() / valorPrevistoAbr.doubleValue()) * 100;
@@ -342,8 +481,8 @@ public class ApresentaTabela {
                         case MAY:
                             Long valorPrevistoMai = orcamento.getMai() * servicoAtual.getPreco();
                             Long valorRealizadoMai = oc.somaTotalGanhoServicoMensal(
-                                    manipulaData.inicioDoMes(LocalDate.now(), Month.MAY),
-                                    manipulaData.fimDoMes(LocalDate.now(), Month.MAY),
+                                    manipulaData.inicioDoMes(ano, Month.MAY),
+                                    manipulaData.fimDoMes(ano, Month.MAY),
                                     orcamento.getId_servico());
 
                             double comparacaoMai = (valorRealizadoMai.doubleValue() / valorPrevistoMai.doubleValue()) * 100;
@@ -352,8 +491,8 @@ public class ApresentaTabela {
                         case JUNE:
                             Long valorPrevistoJun = orcamento.getJun() * servicoAtual.getPreco();
                             Long valorRealizadoJun = oc.somaTotalGanhoServicoMensal(
-                                    manipulaData.inicioDoMes(LocalDate.now(), Month.JUNE),
-                                    manipulaData.fimDoMes(LocalDate.now(), Month.JUNE),
+                                    manipulaData.inicioDoMes(ano, Month.JUNE),
+                                    manipulaData.fimDoMes(ano, Month.JUNE),
                                     orcamento.getId_servico());
 
                             double comparacaoJun = (valorRealizadoJun.doubleValue() / valorPrevistoJun.doubleValue()) * 100;
@@ -362,8 +501,8 @@ public class ApresentaTabela {
                         case JULY:
                             Long valorPrevistoJul = orcamento.getJul() * servicoAtual.getPreco();
                             Long valorRealizadoJul = oc.somaTotalGanhoServicoMensal(
-                                    manipulaData.inicioDoMes(LocalDate.now(), Month.JULY),
-                                    manipulaData.fimDoMes(LocalDate.now(), Month.JULY),
+                                    manipulaData.inicioDoMes(ano, Month.JULY),
+                                    manipulaData.fimDoMes(ano, Month.JULY),
                                     orcamento.getId_servico());
 
                             double comparacaoJul = (valorRealizadoJul.doubleValue() / valorPrevistoJul.doubleValue()) * 100;
@@ -372,8 +511,8 @@ public class ApresentaTabela {
                         case AUGUST:
                             Long valorPrevistoAgo = orcamento.getAgo() * servicoAtual.getPreco();
                             Long valorRealizadoAgo = oc.somaTotalGanhoServicoMensal(
-                                    manipulaData.inicioDoMes(LocalDate.now(), Month.AUGUST),
-                                    manipulaData.fimDoMes(LocalDate.now(), Month.AUGUST),
+                                    manipulaData.inicioDoMes(ano, Month.AUGUST),
+                                    manipulaData.fimDoMes(ano, Month.AUGUST),
                                     orcamento.getId_servico());
 
                             double comparacaoAgo = (valorRealizadoAgo.doubleValue() / valorPrevistoAgo.doubleValue()) * 100;
@@ -382,8 +521,8 @@ public class ApresentaTabela {
                         case SEPTEMBER:
                             Long valorPrevistoSet = orcamento.getSet() * servicoAtual.getPreco();
                             Long valorRealizadoSet = oc.somaTotalGanhoServicoMensal(
-                                    manipulaData.inicioDoMes(LocalDate.now(), Month.SEPTEMBER),
-                                    manipulaData.fimDoMes(LocalDate.now(), Month.SEPTEMBER),
+                                    manipulaData.inicioDoMes(ano, Month.SEPTEMBER),
+                                    manipulaData.fimDoMes(ano, Month.SEPTEMBER),
                                     orcamento.getId_servico());
 
                             double comparacaoSet = (valorRealizadoSet.doubleValue() / valorPrevistoSet.doubleValue()) * 100;
@@ -392,8 +531,8 @@ public class ApresentaTabela {
                         case OCTOBER:
                             Long valorPrevistoOut = orcamento.getOut() * servicoAtual.getPreco();
                             Long valorRealizadoOut = oc.somaTotalGanhoServicoMensal(
-                                    manipulaData.inicioDoMes(LocalDate.now(), Month.OCTOBER),
-                                    manipulaData.fimDoMes(LocalDate.now(), Month.OCTOBER),
+                                    manipulaData.inicioDoMes(ano, Month.OCTOBER),
+                                    manipulaData.fimDoMes(ano, Month.OCTOBER),
                                     orcamento.getId_servico());
 
                             double comparacaoOut = (valorRealizadoOut.doubleValue() / valorPrevistoOut.doubleValue()) * 100;
@@ -402,8 +541,8 @@ public class ApresentaTabela {
                         case NOVEMBER:
                             Long valorPrevistoNov = orcamento.getNov() * servicoAtual.getPreco();
                             Long valorRealizadoNov = oc.somaTotalGanhoServicoMensal(
-                                    manipulaData.inicioDoMes(LocalDate.now(), Month.NOVEMBER),
-                                    manipulaData.fimDoMes(LocalDate.now(), Month.NOVEMBER),
+                                    manipulaData.inicioDoMes(ano, Month.NOVEMBER),
+                                    manipulaData.fimDoMes(ano, Month.NOVEMBER),
                                     orcamento.getId_servico());
 
                             double comparacaoNov = (valorRealizadoNov.doubleValue() / valorPrevistoNov.doubleValue()) * 100;
@@ -412,8 +551,8 @@ public class ApresentaTabela {
                         case DECEMBER:
                             Long valorPrevistoDez = orcamento.getNov() * servicoAtual.getPreco();
                             Long valorRealizadoDez = oc.somaTotalGanhoServicoMensal(
-                                    manipulaData.inicioDoMes(LocalDate.now(), Month.DECEMBER),
-                                    manipulaData.fimDoMes(LocalDate.now(), Month.DECEMBER),
+                                    manipulaData.inicioDoMes(ano, Month.DECEMBER),
+                                    manipulaData.fimDoMes(ano, Month.DECEMBER),
                                     orcamento.getId_servico());
 
                             double comparacaoDez = (valorRealizadoDez.doubleValue() / valorPrevistoDez.doubleValue()) * 100;
@@ -601,7 +740,7 @@ public class ApresentaTabela {
                     agendamentos = ag.listarAgendamentosNome(nome);
                     break;
                 case 1:
-                    agendamentos = ag.listarAgedaAgendamentosHoje();
+                    agendamentos = ag.listarAgendamentosHoje();
                     break;
                 case 2:
                     agendamentos = ag.listarAgendamentosAmanha();
