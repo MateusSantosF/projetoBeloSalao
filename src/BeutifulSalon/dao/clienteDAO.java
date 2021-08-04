@@ -10,8 +10,6 @@ package BeutifulSalon.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import BeutifulSalon.model.Cliente;
-import BeutifulSalon.view.Edicao.EditarCliente;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
@@ -340,7 +338,7 @@ public class clienteDAO {
     public void atualizarCliente(Cliente cliente) {
         
         
-        String sqlScript = "UPDATE CLIENTE SET CPF = ? ,NOME = ? , SOBRENOME = ?, EMAIL = ? , DATANASC = ? , CEP = ? , BAIRRO = ? , RUA = ? , CIDADE = ? , TELEFONE = ?, CELULAR = ? ,NUMERO = ? WHERE CPF = ? ";
+        String sqlScript = "UPDATE CLIENTE SET CPF = ? ,NOME = ? , SOBRENOME = ?, EMAIL = ? , DATANASC = ? , CEP = ? , BAIRRO = ? , RUA = ? , CIDADE = ? , TELEFONE = ?, CELULAR = ? , NUMERO = ? WHERE CPF = ? ";
         
         PreparedStatement pStatement = null;
         Connection connection = null;

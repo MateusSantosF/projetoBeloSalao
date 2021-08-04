@@ -211,6 +211,9 @@ public class Cabeleireiro {
     public void cadastrarCabeleireiro(Cabeleireiro cabeleireiro) throws ExceptionDAO{
         new CabeleireiroDAO().cadastrarCabeleireiro(cabeleireiro);
     }
+    public void atualizarCabeleireiro(Cabeleireiro cabeleireiro) throws ExceptionDAO{
+        new CabeleireiroDAO().atualizarCabeleireiro(cabeleireiro);
+    }
     
     public Cabeleireiro selecionaCabeleireiro() throws ExceptionDAO{
         return new CabeleireiroDAO().selecionaCabeleireiro();
@@ -218,5 +221,9 @@ public class Cabeleireiro {
 
     public ArrayList<LocalTime> selecionaExpediente(int diaDaSemana) {
         return new CabeleireiroDAO().selecionaExpediente(diaDaSemana);
+    }
+
+    public int verificaRegistro() {
+        return new CabeleireiroDAO().verificaRegistro();
     }
 }

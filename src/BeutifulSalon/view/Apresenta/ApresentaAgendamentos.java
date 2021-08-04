@@ -18,11 +18,11 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
      * Creates new form ApresentaAgendamentos
      */
     
-    private static int NOME = 0;
-    private static int HOJE = 1;
-    private static int AMANHA = 2;
-    private static int SEMANA = 3;
-    private static int TODOS = 4;
+    private static final int NOME = 0;
+    private static final int HOJE = 1;
+    private static final int AMANHA = 2;
+    private static final int SEMANA = 3;
+    private static final int TODOS = 4;
     
     public ApresentaAgendamentos() {
         initComponents();

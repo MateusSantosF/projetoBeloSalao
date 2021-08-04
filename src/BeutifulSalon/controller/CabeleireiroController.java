@@ -38,9 +38,38 @@ public class CabeleireiroController {
         return true;
     }
     
+     public boolean atualizarCabeleireiro(String nome, String cpf, String email, ArrayList<LocalTime> expediente){
+        
+        if(nome.length() > 0 && Valida.isCpf(cpf) && Valida.isEmail(email) && !expediente.isEmpty() && expediente.size() == 14 ){
+             
+            try {
+                 Cabeleireiro cabeleireiro = new Cabeleireiro(cpf, nome, email, expediente);
+                 cabeleireiro.atualizarCabeleireiro(cabeleireiro);
+            } catch (ExceptionDAO e) {
+                
+                JOptionPane.showMessageDialog(null, "Controller" + e);
+                return false;
+            }
+            
+            return true;
+            
+        }else{
+            return false;
+        }
+        
+    
+    }
+    
+    
+    
     public Cabeleireiro selecionaCabeleireiro() throws ExceptionDAO{       
        return new Cabeleireiro().selecionaCabeleireiro();
     }
+    
+    public int verificaRegistro(){
+        return new Cabeleireiro().verificaRegistro();
+    }
+
     
     public ArrayList<LocalTime> selecionaExpediente(int diaDaSemana){
         return new Cabeleireiro().selecionaExpediente(diaDaSemana);
