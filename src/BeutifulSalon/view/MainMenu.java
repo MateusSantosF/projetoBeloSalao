@@ -335,14 +335,17 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jLabelClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelClientesMousePressed
         new GerenciadorJPanel(painelPrincipal, new ApresentaCliente());
+        this.setTitle("Clientes");
     }//GEN-LAST:event_jLabelClientesMousePressed
 
     private void jLabelProdutosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProdutosMousePressed
          new GerenciadorJPanel(painelPrincipal, new ApresentaProduto());
+         this.setTitle("Produtos");
     }//GEN-LAST:event_jLabelProdutosMousePressed
 
     private void jLabelFinancasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelFinancasMousePressed
         new GerenciadorJPanel(painelPrincipal, new ApresentaFinancas());
+        this.setTitle("Finanças");
     }//GEN-LAST:event_jLabelFinancasMousePressed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
@@ -357,10 +360,12 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void jLabelDashboardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDashboardMousePressed
        new GerenciadorJPanel(painelPrincipal, new Dashboard());
+       this.setTitle("Dashboard");
     }//GEN-LAST:event_jLabelDashboardMousePressed
 
     private void jLabelAgendamentoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAgendamentoMousePressed
        new GerenciadorJPanel(painelPrincipal, new ApresentaAgendamentos());
+       this.setTitle("Agendamentos");
     }//GEN-LAST:event_jLabelAgendamentoMousePressed
 
     private void jLabelConfiguracoesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelConfiguracoesMousePressed

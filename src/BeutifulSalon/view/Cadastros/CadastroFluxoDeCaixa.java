@@ -53,7 +53,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jTextFieldCPF2 = new javax.swing.JTextField();
         jLabelAddCliente = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabelAddProdutos = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableProdutosComprados = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
@@ -89,8 +89,12 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Nome do Cliente");
 
+        jTextFieldNome2.setEditable(false);
+
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("CPF");
+
+        jTextFieldCPF2.setEditable(false);
 
         jLabelAddCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
         jLabelAddCliente.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -102,10 +106,10 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Produtos Comprados");
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabelAddProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
+        jLabelAddProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel6MousePressed(evt);
+                jLabelAddProdutosMousePressed(evt);
             }
         });
 
@@ -195,18 +199,18 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jRadioButtonCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jRadioButtonCliente.setSelected(true);
         jRadioButtonCliente.setText("Cliente");
-        jRadioButtonCliente.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jRadioButtonClienteStateChanged(evt);
+        jRadioButtonCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonClienteActionPerformed(evt);
             }
         });
 
         buttonGroupCompraProduto.add(jRadioButtonCabelereiro);
         jRadioButtonCabelereiro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jRadioButtonCabelereiro.setText("Cabelereiro");
-        jRadioButtonCabelereiro.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                jRadioButtonCabelereiroStateChanged(evt);
+        jRadioButtonCabelereiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonCabelereiroActionPerformed(evt);
             }
         });
 
@@ -233,10 +237,10 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                                 .addComponent(jLabelAddCliente))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)))
+                        .addComponent(jLabelAddProdutos)))
                 .addGap(67, 67, 67)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
                 .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -245,9 +249,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                                 .addGroup(jPanelProdutoLayout.createSequentialGroup()
                                     .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel8)
-                                        .addGroup(jPanelProdutoLayout.createSequentialGroup()
-                                            .addGap(16, 16, 16)
-                                            .addComponent(jLabel9)))
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jTextFieldDesconto2)
@@ -312,7 +314,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
+                                    .addComponent(jLabelAddProdutos)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(58, 58, 58))
                     .addGroup(jPanelProdutoLayout.createSequentialGroup()
@@ -339,27 +341,6 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButtonCabelereiroStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButtonCabelereiroStateChanged
-
-        if (jRadioButtonCabelereiro.isSelected()) {
-            jTextFieldNome2.setEnabled(false);
-            jTextFieldCPF2.setEnabled(false);
-            jLabelAddCliente.setEnabled(false);
-            jTextFieldNome2.setText("");
-            jTextFieldCPF2.setText("");
-        }
-    }//GEN-LAST:event_jRadioButtonCabelereiroStateChanged
-
-    private void jRadioButtonClienteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButtonClienteStateChanged
-
-        if (jRadioButtonCliente.isSelected()) {
-            jTextFieldNome2.setEnabled(true);
-            jTextFieldCPF2.setEnabled(true);
-            jLabelAddCliente.setEnabled(true);
-
-        }
-    }//GEN-LAST:event_jRadioButtonClienteStateChanged
-
     private void jButtonFinalizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarCompraActionPerformed
         boolean sucesso;
 
@@ -381,7 +362,12 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                     new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
 
             if (sucesso) {
-                JOptionPane.showMessageDialog(null, "Venda registrada com sucesso.");
+                if(jRadioButtonCabelereiro.isSelected()){
+                    JOptionPane.showMessageDialog(null, "Compra registrada com sucesso.");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Venda registrada com sucesso.");
+                }
+                
                 limparTodosCampos();
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao registrar venda");
@@ -407,7 +393,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         }
     }//GEN-LAST:event_jCheckBoxDesconto2MousePressed
 
-    private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
+    private void jLabelAddProdutosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddProdutosMousePressed
 
         modalProdutos modal;
 
@@ -419,7 +405,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         }
         modal.registrarObservador(this);
         modal.setVisible(true);
-    }//GEN-LAST:event_jLabel6MousePressed
+    }//GEN-LAST:event_jLabelAddProdutosMousePressed
 
     private void jLabelAddClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddClienteMousePressed
 
@@ -429,6 +415,27 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             modal.setVisible(true);
         }
     }//GEN-LAST:event_jLabelAddClienteMousePressed
+
+    private void jRadioButtonClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonClienteActionPerformed
+        if (jRadioButtonCliente.isSelected()) {
+            jTextFieldNome2.setEnabled(true);
+            jTextFieldCPF2.setEnabled(true);
+            jLabelAddCliente.setEnabled(true);
+            jTextFieldNome2.setEditable(false);
+            jTextFieldCPF2.setEditable(false);
+            limparTodosCampos();
+
+        }
+    }//GEN-LAST:event_jRadioButtonClienteActionPerformed
+
+    private void jRadioButtonCabelereiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonCabelereiroActionPerformed
+           if (jRadioButtonCabelereiro.isSelected()) {
+            jTextFieldNome2.setEnabled(false);
+            jTextFieldCPF2.setEnabled(false);
+            jLabelAddCliente.setEnabled(false);
+            limparTodosCampos();
+        }
+    }//GEN-LAST:event_jRadioButtonCabelereiroActionPerformed
 
     void limparTodosCampos() {
         jTextFieldCPF2.setText("");
@@ -572,11 +579,11 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAddCliente;
+    private javax.swing.JLabel jLabelAddProdutos;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelProduto;
     private javax.swing.JRadioButton jRadioButtonCabelereiro;

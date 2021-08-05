@@ -20,7 +20,7 @@ public class OrcamentoServico {
     
     private boolean previsto; //previsto(true) | realizado(false)
     private long id_orcamento;
-    private long id_servico; // utilizado apenas para orçamento de serviços
+    private long id_servico; 
     private String nome;
     private String ano;
     private long jan;

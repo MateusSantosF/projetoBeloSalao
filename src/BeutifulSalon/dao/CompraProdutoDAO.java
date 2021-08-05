@@ -5,6 +5,8 @@
  */
 package BeutifulSalon.dao;
 
+import BeutifulSalon.controller.CabeleireiroController;
+import BeutifulSalon.controller.EstoqueController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Date;
@@ -13,6 +15,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.ItemCompra;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,6 +34,9 @@ public class CompraProdutoDAO {
 
         Connection connection = null;
         PreparedStatement pStatement = null;
+        EstoqueController estoque = new EstoqueController();
+        
+
 
         try {
 
@@ -48,7 +55,6 @@ public class CompraProdutoDAO {
                 try {
 
                     ArrayList<ItemCompra> itens = compra.getItensCompra();
-
                     for (ItemCompra it : itens) {
                         pStatement = connection.prepareStatement(insertItemCompra);
                         pStatement.setLong(1, it.getPreco());
@@ -56,6 +62,8 @@ public class CompraProdutoDAO {
                         pStatement.setLong(3, it.getPrecoTotal());
                         pStatement.setLong(4, it.getId_produto());
                         pStatement.executeUpdate();
+                       
+                        
                     }
 
                 } catch (SQLException e) {
@@ -65,6 +73,18 @@ public class CompraProdutoDAO {
             }
 
             connection.commit();
+            
+            try {
+               boolean sucesso = estoque.atualizaEstoque(compra);
+               
+               if(sucesso == false){
+                    JOptionPane.showMessageDialog(null, "Erro ao atualizar estoque");
+
+               }
+            } catch (ExceptionDAO ex) {
+                Logger.getLogger(CompraProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Erro ao atualizar estoque" + ex);
+            }
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro DAO" + e);

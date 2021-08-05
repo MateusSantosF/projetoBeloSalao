@@ -356,6 +356,9 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                 .addContainerGap())
         );
 
+        jDateChooser1.setLocale(new Locale("pt", "BR"));
+        jDateChooser1.setDateFormatString("dd/MM/yyyy");
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents

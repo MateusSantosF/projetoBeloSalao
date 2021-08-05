@@ -502,6 +502,9 @@
       <Properties>
         <Property name="dateFormatString" type="java.lang.String" value="dd/MM/yyyy"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jDateChooser1.setLocale(new Locale(&quot;pt&quot;, &quot;BR&quot;));&#xa;jDateChooser1.setDateFormatString(&quot;dd/MM/yyyy&quot;);"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

@@ -58,20 +58,20 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jTableConsultaProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTableConsultaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nome", "Marca", "Preço de Venda", "Data de Validade", "id"
+                "Nome", "Marca", "Preço de Venda", "id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -89,8 +89,8 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jTableConsultaProdutos.setShowGrid(true);
         jScrollPane2.setViewportView(jTableConsultaProdutos);
         if (jTableConsultaProdutos.getColumnModel().getColumnCount() > 0) {
-            jTableConsultaProdutos.getColumnModel().getColumn(4).setMinWidth(1);
-            jTableConsultaProdutos.getColumnModel().getColumn(4).setMaxWidth(1);
+            jTableConsultaProdutos.getColumnModel().getColumn(3).setMinWidth(1);
+            jTableConsultaProdutos.getColumnModel().getColumn(3).setMaxWidth(1);
         }
 
         jButtonDetalhes.setBackground(new java.awt.Color(36, 141, 248));
@@ -233,13 +233,14 @@ public class ApresentaProduto extends javax.swing.JPanel {
         int indice = jTableConsultaProdutos.getSelectedRow();
 
         int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o produto:\nNome: "
-                + jTableConsultaProdutos.getValueAt(indice, 0) + "\nMarca: " + jTableConsultaProdutos.getValueAt(indice, 1), "Excluir Produto", JOptionPane.YES_NO_OPTION);
+                + jTableConsultaProdutos.getValueAt(indice, 0) + "\nMarca: " + jTableConsultaProdutos.getValueAt(indice, 1)
+                +"\nExclui-lo significa apagar todos registros de vendas e compras dele.", "Excluir Produto", JOptionPane.YES_NO_OPTION);
 
         if (opc == 0) {
             if (indice > -1) {
                 try {
 
-                    long idProdutoSelecionado = (long) jTableConsultaProdutos.getValueAt(indice, 4); // Retorna CPF
+                    long idProdutoSelecionado = (long) jTableConsultaProdutos.getValueAt(indice, 3); // Retorna CPF
                     ProdutoController cc = new ProdutoController();
 
                     if (cc.excluirProduto(idProdutoSelecionado)) {
@@ -266,7 +267,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
         if (indice > -1) {
             try {
 
-                long idProduto = (long) jTableConsultaProdutos.getValueAt(indice, 4); // Retorna ID
+                long idProduto = (long) jTableConsultaProdutos.getValueAt(indice, 3); // Retorna ID
 
                 ProdutoController pc = new ProdutoController();
                 resultado = pc.editarProduto(idProduto);

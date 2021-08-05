@@ -5,6 +5,12 @@
  */
 package BeutifulSalon.view;
 
+import BeutifulSalon.controller.AgendamentoController;
+import BeutifulSalon.controller.CabeleireiroController;
+import BeutifulSalon.controller.EstoqueController;
+import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.model.Cabeleireiro;
+
 /**
  *
  * @author Mateus
@@ -16,6 +22,20 @@ public class Dashboard extends javax.swing.JPanel {
      */
     public Dashboard() {
         initComponents();
+        
+        CabeleireiroController cc = new CabeleireiroController();
+        AgendamentoController ag = new AgendamentoController();
+        EstoqueController ec = new EstoqueController();
+        
+        try {
+            Cabeleireiro cabeleireiro = cc.selecionaCabeleireiro();
+            int nAgendamentos = ag.listarAgendamentosHoje().size();
+            long nProdutosEstoque = ec.somaProdutosEstoque();
+            jLabelNomeCabeleireiro.setText("Olá, " + cabeleireiro.getNome());
+            jTextFieldAgendamentos.setText(String.valueOf(nAgendamentos));
+            jTextFieldQtdProdutosEstoque.setText(String.valueOf(nProdutosEstoque)+" un.");
+        } catch (ExceptionDAO e) {
+        }
     }
 
     /**
@@ -29,32 +49,63 @@ public class Dashboard extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldAgendamentos = new javax.swing.JTextField();
+        jLabelNomeCabeleireiro = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldQtdProdutosEstoque = new javax.swing.JTextField();
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Agendamentos de hoje");
 
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField1.setText("6");
+        jTextFieldAgendamentos.setEditable(false);
+        jTextFieldAgendamentos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jTextFieldAgendamentos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabelNomeCabeleireiro.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabelNomeCabeleireiro.setText("jLabel2");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setText("Qtd. Produtos em Estoque");
+
+        jTextFieldQtdProdutosEstoque.setEditable(false);
+        jTextFieldQtdProdutosEstoque.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldQtdProdutosEstoque.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
-                .addContainerGap(593, Short.MAX_VALUE))
+                .addGap(53, 53, 53)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(114, 114, 114)
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jTextFieldAgendamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(179, 179, 179)
+                                .addComponent(jTextFieldQtdProdutosEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelNomeCabeleireiro, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(47, 136, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(388, Short.MAX_VALUE))
+                .addGap(60, 60, 60)
+                .addComponent(jLabelNomeCabeleireiro, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextFieldAgendamentos, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                    .addComponent(jTextFieldQtdProdutosEstoque))
+                .addContainerGap(293, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -72,7 +123,10 @@ public class Dashboard extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelNomeCabeleireiro;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldAgendamentos;
+    private javax.swing.JTextField jTextFieldQtdProdutosEstoque;
     // End of variables declaration//GEN-END:variables
 }

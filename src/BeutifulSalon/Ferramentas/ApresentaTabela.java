@@ -592,8 +592,7 @@ public class ApresentaTabela {
 
         DefaultTableModel tabelaProdutoModel = (DefaultTableModel) tabela.getModel(); // tabela
         tabelaProdutoModel.setRowCount(0);
-        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-
+      
         ProdutoController pc = new ProdutoController();
 
         ArrayList<Produto> produtosListados = null;
@@ -609,7 +608,6 @@ public class ApresentaTabela {
                     produto.getNome(),
                     produto.getMarca(),
                     Dinheiro.parseString(produto.getPreco()),
-                    produto.getDataValidade().format(formatterData),
                     produto.getId_produto()
                 });
 
@@ -645,7 +643,6 @@ public class ApresentaTabela {
                     produto.getNome(),
                     produto.getMarca(),
                     Dinheiro.parseString(produto.getPreco()),
-                    produto.getDataValidade().format(formatterData),
                     produto.getId_produto(),});
 
             });

@@ -50,39 +50,30 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jLabel1" min="-2" pref="53" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jFTQuintaEntrada" alignment="0" pref="65" max="32767" attributes="0"/>
-                              <Component id="jFTSextaEntrada" alignment="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jFTSabadoEntrada" alignment="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jFTDomingoEntrada" alignment="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jFTSegundaEntrada" max="32767" attributes="0"/>
-                              <Component id="jFTTercaEntrada" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jFTQuartaEntrada" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jFTQuintaEntrada" alignment="0" pref="65" max="32767" attributes="0"/>
+                          <Component id="jFTSextaEntrada" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jFTSabadoEntrada" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jFTDomingoEntrada" alignment="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jFTSegundaEntrada" max="32767" attributes="0"/>
+                          <Component id="jFTTercaEntrada" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jFTQuartaEntrada" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jFTTercaSaida" min="-2" pref="62" max="-2" attributes="0"/>
-                          <Component id="jFTSegundaSaida" min="-2" pref="62" max="-2" attributes="0"/>
-                          <Component id="jFTQuartaSaida" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
-                          <Component id="jFTQuintaSaida" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
-                          <Component id="jFTSextaSaida" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
-                          <Component id="jFTSabadoSaida" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
-                          <Component id="jFTDomingoSaida" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                  </Group>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jFTTercaSaida" min="-2" pref="62" max="-2" attributes="0"/>
+                  <Component id="jFTSegundaSaida" min="-2" pref="62" max="-2" attributes="0"/>
+                  <Component id="jFTQuartaSaida" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
+                  <Component id="jFTQuintaSaida" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
+                  <Component id="jFTSextaSaida" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
+                  <Component id="jFTSabadoSaida" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
+                  <Component id="jFTDomingoSaida" alignment="0" min="-2" pref="62" max="-2" attributes="0"/>
+                  <Component id="jLabel2" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -164,11 +155,13 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Entrada"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
+        <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Sa&#xed;da"/>
       </Properties>
     </Component>

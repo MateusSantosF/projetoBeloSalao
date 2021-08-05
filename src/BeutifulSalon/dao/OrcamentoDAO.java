@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Year;
 import javax.swing.JOptionPane;
 
 /**
@@ -77,7 +78,7 @@ public class OrcamentoDAO {
     
     
     public ArrayList<Orcamento> listarOrcamento(){
-        String sql  = "SELECT  ID_ORCAMENTO, NOME,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
+        String sql  = "SELECT ID_ORCAMENTO, NOME,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
                 + "NOVEMBRO,DEZEMBRO FROM ORCAMENTO WHERE ANO = ?";
         
         Connection connection = null;
@@ -89,10 +90,10 @@ public class OrcamentoDAO {
             pStatement = connection.prepareStatement(sql);
             
             
-            SimpleDateFormat df = new SimpleDateFormat("yyyy");
-            java.util.Date ano = new java.util.Date();
+        
             
-            pStatement.setString(1, df.format(ano).toString());//RETORNA o ANO atual do SISTEMA
+            
+            pStatement.setString(1, Year.now().toString());//RETORNA o ANO atual do SISTEMA
             ResultSet rs = pStatement.executeQuery();
            
             

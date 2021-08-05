@@ -17,7 +17,7 @@ public class produtoDAO {
     
     
     public void cadastrarProduto(Produto produto){
-        String sql = "INSERT INTO produto(nome, marca, preco, dataValidade, datareg) values (?,?,?,?,?)";
+        String sql = "INSERT INTO produto(nome, marca, preco,datareg) values (?,?,?,?)";
         PreparedStatement pStatement = null;
         Connection connection = null;
         
@@ -28,8 +28,7 @@ public class produtoDAO {
             pStatement.setString(1, produto.getNome());
             pStatement.setString(2, produto.getMarca());
             pStatement.setLong(3, produto.getPreco());
-            pStatement.setDate(4, java.sql.Date.valueOf(produto.getDataValidade()));
-            pStatement.setDate(5, java.sql.Date.valueOf(produto.getDataReg()));
+            pStatement.setDate(4, java.sql.Date.valueOf(produto.getDataReg()));
             pStatement.execute();
             
         } catch(SQLException e){
@@ -53,7 +52,7 @@ public class produtoDAO {
 
     public ArrayList<Produto> listarProdutos() {
  
-     String sql  = "SELECT IDPRODUTO, NOME, MARCA, PRECO, DATAREG, DATAVALIDADE FROM PRODUTO ORDER BY DATAREG DESC";
+     String sql  = "SELECT IDPRODUTO, NOME, MARCA, PRECO, DATAREG FROM PRODUTO ORDER BY DATAREG DESC";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -75,7 +74,6 @@ public class produtoDAO {
                     produtoAtual.setMarca(rs.getString("MARCA"));
                     produtoAtual.setPreco(rs.getLong("PRECO"));
                     produtoAtual.setDataReg(rs.getDate("DATAREG").toLocalDate());
-                    produtoAtual.setDataValidade(rs.getDate("DATAVALIDADE").toLocalDate());
                     produtoAtual.setId_produto(rs.getLong("IDPRODUTO"));
                     produtos.add(produtoAtual);
                 }
@@ -106,7 +104,7 @@ public class produtoDAO {
     }
     public ArrayList<Produto> listarProdutos(String nome) throws ExceptionDAO{
         
-        String sql  = "SELECT IDPRODUTO, NOME, MARCA, PRECO, DATAREG, DATAVALIDADE FROM "
+        String sql  = "SELECT IDPRODUTO, NOME, MARCA, PRECO, DATAREG FROM "
                 + "PRODUTO WHERE NOME LIKE '%"+nome+"%' ORDER BY DATAREG DESC";
    
         Connection connection = null;
@@ -130,7 +128,6 @@ public class produtoDAO {
                     produtoAtual.setMarca(rs.getString("MARCA"));
                     produtoAtual.setPreco(rs.getLong("PRECO"));
                     produtoAtual.setDataReg(rs.getDate("DATAREG").toLocalDate());
-                    produtoAtual.setDataValidade(rs.getDate("DATAVALIDADE").toLocalDate());
                     produtoAtual.setId_produto(rs.getLong("IDPRODUTO"));
                     produtos.add(produtoAtual);
                 }
@@ -175,7 +172,7 @@ public class produtoDAO {
             pStatement.setLong(1, idProdutoSelecionado);
             pStatement.executeUpdate();
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             
             JOptionPane.showMessageDialog(null, "Erro ao excluir Produto: " + e);
         }finally{
@@ -200,7 +197,7 @@ public class produtoDAO {
     public Produto editarProduto(long id_produto){
         
         
-        String sql  = "SELECT IDPRODUTO,NOME, MARCA, PRECO, DATAREG, DATAVALIDADE FROM PRODUTO WHERE IDPRODUTO = ?"; 
+        String sql  = "SELECT IDPRODUTO,NOME, MARCA, PRECO, DATAREG FROM PRODUTO WHERE IDPRODUTO = ?"; 
                   
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -223,7 +220,6 @@ public class produtoDAO {
                 produto.setMarca(rs.getString("MARCA"));
                 produto.setId_produto(rs.getLong("IDPRODUTO"));
                 produto.setPreco(rs.getLong("PRECO"));
-                produto.setDataValidade(rs.getDate("DATAVALIDADE").toLocalDate());
                 }
             }
            
@@ -253,7 +249,7 @@ public class produtoDAO {
 
     public void atualizarProduto(Produto produto) {
         
-        String sqlScript = "UPDATE PRODUTO SET NOME = ? , MARCA = ?, PRECO = ? , DATAVALIDADE = ?"
+        String sqlScript = "UPDATE PRODUTO SET NOME = ? , MARCA = ?, PRECO = ?"
                 + " WHERE IDPRODUTO = ? ";
         
         PreparedStatement pStatement = null;
@@ -265,11 +261,10 @@ public class produtoDAO {
             
             pStatement = connection.prepareStatement(sqlScript);
             
-            pStatement.setLong(5, produto.getId_produto());
+            pStatement.setLong(4, produto.getId_produto());
             pStatement.setString(1, produto.getNome());
             pStatement.setString(2, produto.getMarca());
             pStatement.setLong(3, produto.getPreco());
-            pStatement.setDate(4, java.sql.Date.valueOf(produto.getDataValidade()));
             pStatement.execute(); 
             
         } catch (SQLException e) {

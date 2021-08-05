@@ -17,17 +17,16 @@ import javax.swing.JOptionPane;
 //CONTROL
 
 public class ProdutoController {
-    public boolean cadastrarProduto(String nome, String marca, long preco, String dataValidade, String dataReg) throws ExceptionDAO{
+    public boolean cadastrarProduto(String nome, String marca, long preco, String dataReg) throws ExceptionDAO{
         
         if (nome != null && nome.length() > 0 && marca != null && marca.length() > 0) {
             
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
      
             //Convertendo datas de String para Date
-            LocalDate dataVal = LocalDate.parse(dataValidade, formatterData);
             LocalDate dataRegistro = LocalDate.parse(dataReg, formatterData);
             
-            Produto produto = new Produto(nome, marca, preco, dataVal, dataRegistro);
+            Produto produto = new Produto(nome, marca, preco, dataRegistro);
             produto.cadastrarProduto(produto);
 
         } else {
@@ -88,7 +87,7 @@ public class ProdutoController {
         return true;
     }
 
-    public boolean AtualizarProduto(String nome, String marca, long preco, String dataValidade, long idProduto) throws ExceptionDAO {
+    public boolean AtualizarProduto(String nome, String marca, long preco, long idProduto) throws ExceptionDAO {
        
         if (nome != null && nome.length() > 0 && marca != null && marca.length() > 0 && preco > 0) {
             
@@ -96,8 +95,7 @@ public class ProdutoController {
           
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
  
-            LocalDate dataVal = LocalDate.parse(dataValidade, formatterData);
-            Produto produto = new Produto(nome, marca, preco, dataVal, idProduto);
+            Produto produto = new Produto(nome, marca, preco, idProduto);
             produto.atualizarProduto(produto);
 
         } else {

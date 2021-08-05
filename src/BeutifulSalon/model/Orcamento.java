@@ -12,7 +12,6 @@ public class Orcamento {
 
     private boolean previsto; //previsto(true) | realizado(false)
     private long id_orcamento;
-    private long id_servico; // utilizado apenas para orçamento de serviços
     private String nome;
     private String ano;
     private long jan;
@@ -72,40 +71,12 @@ public class Orcamento {
         this.id_orcamento = id_orcamento;
     }
 
-    public Orcamento(boolean previsto, String nomeServico, long id_servico, long jan, long fev, long mar,
-            long abr, long mai, long jun, long jul, long ago, long set, long out, long nov, long dez, String ano) {
-        this.previsto = previsto;
-        this.nome = nomeServico;
-        this.jan = jan;
-        this.fev = fev;
-        this.mar = mar;
-        this.abr = abr;
-        this.mai = mai;
-        this.jun = jun;
-        this.jul = jul;
-        this.ago = ago;
-        this.set = set;
-        this.out = out;
-        this.nov = nov;
-        this.dez = dez;
-        this.ano = ano;
-        this.id_servico = id_servico;
-    }
-
     public long getId_orcamento() {
         return id_orcamento;
     }
 
     public void setId_orcamento(long id_orcamento) {
         this.id_orcamento = id_orcamento;
-    }
-
-    public long getId_servico() {
-        return id_servico;
-    }
-
-    public void setId_servico(long id_servico) {
-        this.id_servico = id_servico;
     }
 
     public String getAno() {

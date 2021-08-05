@@ -29,13 +29,9 @@ public class EditarProduto extends javax.swing.JFrame {
        
         
         initComponents();
-        
-       DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String dateString = produto.getDataValidade().format(formatterData);
-        
+         
         jTextFieldNome.setText(produto.getNome());
         jTextFieldMarca.setText(produto.getMarca());
-        jTextFieldDataValidade.setText(dateString);
         jTextFieldPreco.setText(Dinheiro.parseString(produto.getPreco()));
         jTextFieldID.setText(Long.toString(produto.getId_produto()));
         
@@ -63,8 +59,6 @@ public class EditarProduto extends javax.swing.JFrame {
         jLabel19 = new javax.swing.JLabel();
         jTextFieldPreco = new javax.swing.JFormattedTextField();
         jLabel26 = new javax.swing.JLabel();
-        jTextFieldDataValidade = new javax.swing.JFormattedTextField();
-        jLabel27 = new javax.swing.JLabel();
         jTextFieldID = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
 
@@ -80,6 +74,7 @@ public class EditarProduto extends javax.swing.JFrame {
         jLabel17.setBackground(new java.awt.Color(34, 34, 34));
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(34, 34, 34));
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("Editar Produto");
 
         jPanel26.setBackground(new java.awt.Color(243, 244, 245));
@@ -132,18 +127,6 @@ public class EditarProduto extends javax.swing.JFrame {
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel26.setText("*Preço de Venda ");
 
-        jTextFieldDataValidade.setBackground(new java.awt.Color(255, 255, 255));
-        try {
-            jTextFieldDataValidade.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jTextFieldDataValidade.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextFieldDataValidade.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel27.setText("Data de Validade");
-
         jTextFieldID.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldID.setEnabled(false);
         jTextFieldID.setFocusable(false);
@@ -157,68 +140,56 @@ public class EditarProduto extends javax.swing.JFrame {
         JPCadastroClientes1Layout.setHorizontalGroup(
             JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
+                .addGap(74, 74, 74)
+                .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
                         .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                                .addGap(207, 207, 207)
-                                .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel26))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                                .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                                        .addComponent(jTextFieldDataValidade)
-                                        .addGap(4, 4, 4))
-                                    .addComponent(jLabel27))
-                                .addGap(233, 233, 233))
-                            .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(41, 41, 41)
-                                .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel18)
-                                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(32, 32, 32)
-                                .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel19))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(0, 0, 0))
+                            .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
+                        .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18)
+                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
+                        .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel19))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 43, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPCadastroClientes1Layout.createSequentialGroup()
+                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         JPCadastroClientes1Layout.setVerticalGroup(
             JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                .addGap(74, 74, 74)
+                .addGap(48, 48, 48)
                 .addComponent(jLabel17)
-                .addGap(30, 30, 30)
+                .addGap(56, 56, 56)
                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
-                    .addComponent(jLabel19)
                     .addComponent(jLabel20))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldID, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(18, 18, 18)
+                .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel26)
-                    .addComponent(jLabel27))
+                    .addComponent(jLabel19))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldDataValidade, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
+                    .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49)
                 .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         getContentPane().add(JPCadastroClientes1, java.awt.BorderLayout.CENTER);
@@ -239,7 +210,6 @@ public class EditarProduto extends javax.swing.JFrame {
                     jTextFieldNome.getText(),
                     jTextFieldMarca.getText(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldPreco.getText())),
-                    jTextFieldDataValidade.getText(),
                     Long.parseLong(jTextFieldID.getText())
             );
 
@@ -325,11 +295,9 @@ public class EditarProduto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel26;
-    private javax.swing.JFormattedTextField jTextFieldDataValidade;
     private javax.swing.JTextField jTextFieldID;
     private javax.swing.JTextField jTextFieldMarca;
     private javax.swing.JTextField jTextFieldNome;
@@ -340,6 +308,5 @@ public class EditarProduto extends javax.swing.JFrame {
                 jTextFieldNome.setText(""); 
                 jTextFieldMarca.setText(""); 
                 jTextFieldPreco.setText(""); 
-                jTextFieldDataValidade.setText("");
     }
 }

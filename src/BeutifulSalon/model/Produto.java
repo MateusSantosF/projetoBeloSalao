@@ -22,7 +22,6 @@ public class Produto {
     private String marca;
     private long preco; 
     private LocalDate dataReg; //Data que o produto foi registrado no sistema
-    private LocalDate dataValidade; //Data de validade do produto 
     private int rendimento;
 
     public int getRendimento() {
@@ -39,12 +38,11 @@ public class Produto {
    
     
     //Construtor não padrão
-    public Produto(String nome, String marca, long preco, LocalDate dataValidade, LocalDate dataReg) {
+    public Produto(String nome, String marca, long preco, LocalDate dataReg) {
         this.nome = nome; 
         this.marca = marca;
         this.preco = preco; 
         this.dataReg = dataReg;
-        this.dataValidade = dataValidade;
     }
     
     public Produto(String nome, String marca, long preco, long id_produto){
@@ -56,22 +54,14 @@ public class Produto {
     
     
     
-    public Produto(String nome, String marca, long preco, LocalDate dataValidade, LocalDate dataReg, long id_produto) {
+    public Produto(String nome, String marca, long preco, LocalDate dataReg, long id_produto) {
         this.nome = nome; 
         this.marca = marca;
         this.preco = preco; 
         this.dataReg = dataReg;
-        this.dataValidade = dataValidade;
         this.id_produto = id_produto;
     }
 
-    public Produto(String nome, String marca, long preco, LocalDate dataVal, long idProduto) {
-        this.nome = nome; 
-        this.marca = marca;
-        this.preco = preco; 
-        this.dataValidade = dataVal;
-        this.id_produto = idProduto;
-    }
     
     //Getters & setters gerados 
 
@@ -116,13 +106,6 @@ public class Produto {
         this.dataReg = dataReg;
     }
 
-    public LocalDate getDataValidade() {
-        return dataValidade;
-    }
-
-    public void setDataValidade(LocalDate dataValidade) {
-        this.dataValidade = dataValidade;
-    }
     
     //passar produto como parâmetro e mandar para DAo onde vai acessar o BD e salvar o produto
     

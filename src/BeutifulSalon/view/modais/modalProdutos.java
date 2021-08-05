@@ -30,7 +30,8 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
      */
     ArrayList<Observador> observadores = new ArrayList<>();
     private boolean cabeleleiro;
-    private String valorDesconto;
+    private String valorPagoPeloProduto = "";
+    
     
     public modalProdutos() {
         initComponents();
@@ -216,7 +217,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
-        notificarObservadores();
+       notificarObservadores();
        this.dispose();
     }//GEN-LAST:event_jButton1MousePressed
 
@@ -229,37 +230,35 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
             try{
                 
                 int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade comprada: "));
-                
+                System.out.println("Quantidade = " + quantidade);
+                long valorPago = 0;
                 //Se for o cabeleleiro comprando
                 if(cabeleleiro){ 
-//                   modalInputMonetarios modalInput = new modalInputMonetarios("Insira o valor pago pelo produto:");
-//                   modalInput.registrarObservador(this);
-//                   modalInput.setVisible(true);
-//                   
-//                   Thread t =  new Thread(modalInput);
-//                   t.start();
-//                   
-//                   synchronized(t){
-//                       try {
-//                          t.wait();
-//                       } catch (InterruptedException e) {
-//                           JOptionPane.showMessageDialog(null, "erro" + e);
-//                       }
-//                   }
-                
+
+                    DialogValorProduto modalValorProduto = new DialogValorProduto(this, true);
+                    modalValorProduto.setName("Valor do Produto");
+                    modalValorProduto.registrarObservador(this);
+                    modalValorProduto.setVisible(true);
                 }
                 
                 DefaultTableModel tabelaProdutosComprados = (DefaultTableModel) jTableProdutosComprados.getModel();
                
                 ProdutoController po = new ProdutoController();
+                
                 long idProdutoBuscado = (long ) jTableConsultaProdutos.getValueAt(indice, 3);
-
+                
                 produtoBuscado = po.buscarProduto(idProdutoBuscado);
+                
+                if(cabeleleiro){
+                    valorPago = Dinheiro.parseCent(Dinheiro.retiraCaracteres(valorPagoPeloProduto));
+                }else{
+                    valorPago = produtoBuscado.getPreco();
+                }
 
                 tabelaProdutosComprados.addRow(new Object[]{
                     produtoBuscado.getNome(),
                     produtoBuscado.getMarca(),
-                    Dinheiro.parseString(produtoBuscado.getPreco()),
+                    Dinheiro.parseString(valorPago),
                     quantidade,
                     produtoBuscado.getId_produto()
                 });
@@ -420,7 +419,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
     }
 
     @Override
-    public void update(Object obj) {
+    public void update(Object obj) {        
     }
 
     @Override
@@ -429,9 +428,11 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
 
     @Override
     public void update(String valorDesconto) {    
-        this.valorDesconto = valorDesconto;
+        
+        //NÃO É VALOR DESCONTO, E SIM O VALOR PAGO PELO PRODUTO PELO CABELEIREIRO
+        valorPagoPeloProduto = valorDesconto;
     }
-
+    
     @Override
     public void update(Cliente cliente) {
     }
