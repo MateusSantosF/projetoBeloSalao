@@ -78,7 +78,7 @@ public class RecuperaTabela {
 
     }
 
-    public ArrayList<Servico> Servicos(JTable tabela) {
+    public ArrayList<Servico> recuperaServicos(JTable tabela) {
 
         ArrayList<Servico> servicosSolicitados = new ArrayList<>();
 

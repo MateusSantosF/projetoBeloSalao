@@ -1,24 +1,28 @@
-package BeutifulSalon.view.Cadastros;
+package BeutifulSalon.view.Edicao;
 
+import BeutifulSalon.Ferramentas.ApresentaTabela;
+import BeutifulSalon.view.Cadastros.*;
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.controller.AgendamentoController;
+import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.dao.AgendamentoDAO;
 import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Servico;
-import BeutifulSalon.view.modais.modalCliente;
 import BeutifulSalon.view.modais.modalInputMonetarios;
 import BeutifulSalon.view.modais.modalServicos;
 import java.awt.HeadlessException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,13 +34,59 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author mateus
  */
-public class CadastroAgendamento extends javax.swing.JFrame implements Observador {
+public class EditarAgendamento extends javax.swing.JFrame implements Observador {
 
     /**
      * Creates new form CadastroAgendamento
      */
-    public CadastroAgendamento() {
+    
+    private Agendamento agendamento;
+    
+    public EditarAgendamento() {
         initComponents();
+    }
+
+    public EditarAgendamento(Agendamento ag) {
+
+        initComponents();
+        this.agendamento = ag;
+        ClienteController cc = new ClienteController();
+        Cliente clienteAgendamento = null;
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+
+        String dataFormatada = "";
+
+        try {
+            clienteAgendamento = cc.buscarCliente(ag.getCpfCliente());
+
+        } catch (ExceptionDAO e) {
+        }
+        jTextFieldNome.setText(clienteAgendamento.getNOME());
+        jTextFieldCPF.setText(clienteAgendamento.getCPF());
+        jTextFieldTotal.setText(Dinheiro.parseString(ag.getTotal()));
+        jTextFieldTotalBruto.setText(Dinheiro.parseString(ag.getTotal() - ag.getDesconto()));
+        jTextFieldDesconto.setText(Dinheiro.parseString(ag.getDesconto()));
+        jTextFieldHorario.setValue(ag.getHorario().toString());
+        
+        if(ag.getDesconto() > 0){
+            jCheckBoxDesconto.setSelected(true);
+        }
+        if(!ag.getRealizado()){
+            jCheckBoxClienteVeio.setSelected(true);  
+        }
+
+     
+     
+
+        try {
+            jDateChooser1.setDate(formater.parse(ag.getData().format(formatterData)));
+        } catch (ParseException ex) {
+            Logger.getLogger(EditarAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        jTableServicosSolicitados.setModel(new ApresentaTabela().apresentaServicosAgendamento(jTableServicosSolicitados, ag.getId()));
+
     }
 
     /**
@@ -50,7 +100,6 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
         jTextFieldNome = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jLabelAddCliente = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldCPF = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -69,12 +118,13 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jTextFieldHorario = new javax.swing.JFormattedTextField();
-        jButtonFinalizarCompra = new javax.swing.JButton();
+        jButtonFinalizarEdicao = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListHorarios = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jCheckBoxClienteVeio = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -83,14 +133,6 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(34, 34, 34));
         jLabel4.setText("Nome do Cliente");
-
-        jLabelAddCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
-        jLabelAddCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabelAddCliente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabelAddClienteMousePressed(evt);
-            }
-        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(34, 34, 34));
@@ -135,7 +177,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(34, 34, 34));
-        jLabel1.setText("Cadastro de Agendamento");
+        jLabel1.setText("Editar Agendamento");
 
         jTextFieldTotalBruto.setEditable(false);
         jTextFieldTotalBruto.setBackground(new java.awt.Color(255, 255, 255));
@@ -164,7 +206,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jTextFieldTotal.setForeground(new java.awt.Color(34, 34, 34));
 
         jCheckBoxDesconto.setBackground(new java.awt.Color(243, 244, 245));
-        jCheckBoxDesconto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jCheckBoxDesconto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jCheckBoxDesconto.setForeground(new java.awt.Color(34, 34, 34));
         jCheckBoxDesconto.setText("Desconto");
         jCheckBoxDesconto.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -189,24 +231,24 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jTextFieldHorario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldHorario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        jButtonFinalizarCompra.setBackground(new java.awt.Color(57, 201, 114));
-        jButtonFinalizarCompra.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonFinalizarCompra.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonFinalizarCompra.setText("Finalizar Agendamento");
-        jButtonFinalizarCompra.setBorder(null);
-        jButtonFinalizarCompra.setBorderPainted(false);
-        jButtonFinalizarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jButtonFinalizarCompra.setFocusPainted(false);
-        jButtonFinalizarCompra.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonFinalizarCompra.setPreferredSize(new java.awt.Dimension(150, 65));
-        jButtonFinalizarCompra.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonFinalizarEdicao.setBackground(new java.awt.Color(57, 201, 114));
+        jButtonFinalizarEdicao.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonFinalizarEdicao.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonFinalizarEdicao.setText("Concluir Edição");
+        jButtonFinalizarEdicao.setBorder(null);
+        jButtonFinalizarEdicao.setBorderPainted(false);
+        jButtonFinalizarEdicao.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonFinalizarEdicao.setFocusPainted(false);
+        jButtonFinalizarEdicao.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonFinalizarEdicao.setPreferredSize(new java.awt.Dimension(150, 65));
+        jButtonFinalizarEdicao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jButtonFinalizarCompraMousePressed(evt);
+                jButtonFinalizarEdicaoMousePressed(evt);
             }
         });
-        jButtonFinalizarCompra.addActionListener(new java.awt.event.ActionListener() {
+        jButtonFinalizarEdicao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonFinalizarCompraActionPerformed(evt);
+                jButtonFinalizarEdicaoActionPerformed(evt);
             }
         });
 
@@ -228,6 +270,14 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
         jDateChooser1.setDateFormatString("dd/MM/yyyy");
 
+        jCheckBoxClienteVeio.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jCheckBoxClienteVeio.setText("Cliente não compareceu");
+        jCheckBoxClienteVeio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxClienteVeioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -239,12 +289,8 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                     .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel3)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelAddCliente))
+                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -268,16 +314,18 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                                                 .addComponent(jLabel9)
                                                 .addComponent(jLabel8))
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(layout.createSequentialGroup()
-                                                    .addGap(88, 88, 88)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jTextFieldTotalBruto)
-                                                        .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                                                        .addComponent(jTextFieldTotal)))
                                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                     .addGap(79, 79, 79)
                                                     .addComponent(jLabel2)
-                                                    .addGap(11, 11, 11)))))
+                                                    .addGap(11, 11, 11))
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGap(88, 88, 88)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jCheckBoxClienteVeio)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                            .addComponent(jTextFieldTotalBruto)
+                                                            .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                                                            .addComponent(jTextFieldTotal)))))))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(104, 104, 104)
@@ -286,7 +334,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                                 .addComponent(jLabel6))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(75, 75, 75)
-                        .addComponent(jButtonFinalizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonFinalizarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -299,9 +347,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                         .addGap(28, 28, 28)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelAddCliente))
+                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -317,7 +363,9 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator1)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jCheckBoxDesconto)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jCheckBoxDesconto)
+                                    .addComponent(jCheckBoxClienteVeio))
                                 .addGap(43, 43, 43)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextFieldTotalBruto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -351,7 +399,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                                         .addComponent(jLabel6)
                                         .addGap(92, 92, 92)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButtonFinalizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonFinalizarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(9, 9, 9)))))
                 .addContainerGap())
         );
@@ -362,12 +410,6 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabelAddClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddClienteMousePressed
-        modalCliente modal = new modalCliente();
-        modal.registrarObservador(this);
-        modal.setVisible(true);
-    }//GEN-LAST:event_jLabelAddClienteMousePressed
 
     private void jLabelAddServicosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddServicosMousePressed
         modalServicos modal = new modalServicos();
@@ -385,49 +427,50 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         }
     }//GEN-LAST:event_jCheckBoxDescontoMousePressed
 
-    private void jButtonFinalizarCompraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonFinalizarCompraMousePressed
+    private void jButtonFinalizarEdicaoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonFinalizarEdicaoMousePressed
 
-    }//GEN-LAST:event_jButtonFinalizarCompraMousePressed
+    }//GEN-LAST:event_jButtonFinalizarEdicaoMousePressed
 
-    private void jButtonFinalizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarCompraActionPerformed
+    private void jButtonFinalizarEdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarEdicaoActionPerformed
 
         boolean sucesso;
 
         AgendamentoController ac = new AgendamentoController();
 
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+        String dataFormatada = "";
         try {
-            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
-            String dataFormatada = "";
-            try {
-                dataFormatada = formater.format(jDateChooser1.getDate());
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao converter data");
-            }
+            dataFormatada = formater.format(jDateChooser1.getDate());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao converter data");
+        }
 
-            sucesso = ac.cadastraAgendamento(dataFormatada,
+        //editar
+        try {
+            sucesso = ac.atualizarAgendamento(dataFormatada,
                     jTextFieldHorario.getText(),
                     jTextFieldCPF.getText(),
                     new RecuperaTabela().recuperaServicos(jTableServicosSolicitados),
-                    calculaTotalFinal(), 
+                    calculaTotalFinal(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText())),
-                    true);
-
-            if (sucesso) {
-                JOptionPane.showMessageDialog(null, "Agendamento Realizado com sucesso");
-                limparCampos();
-            } else {
-                JOptionPane.showMessageDialog(null, "Erro ao cadastrar Agendamento. Verifique os dados inseridos!");
-            }
-        } catch (ExceptionDAO ex) {
-            Logger.getLogger(CadastroAgendamento.class.getName()).log(Level.SEVERE, null, ex);
+                    !jCheckBoxClienteVeio.isSelected(),
+                    agendamento.getId());
+        } catch (ExceptionDAO e) {
         }
 
-    }//GEN-LAST:event_jButtonFinalizarCompraActionPerformed
+        if (true) {
+            JOptionPane.showMessageDialog(null, "Agendamento atualizado com sucesso");
+            limparCampos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar Agendamento. Verifique os dados inseridos!");
+        }
+
+
+    }//GEN-LAST:event_jButtonFinalizarEdicaoActionPerformed
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
-        
+
         //Método para listar horários disponíveis
-        
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
         String dataFormatada = "";
         try {
@@ -458,6 +501,10 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
         }
     }//GEN-LAST:event_jLabel6MousePressed
+
+    private void jCheckBoxClienteVeioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxClienteVeioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxClienteVeioActionPerformed
 
     private void limparCampos() {
         jTextFieldNome.setText("");
@@ -511,7 +558,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
             JOptionPane.showMessageDialog(null, "Erro ao calcular total " + e);
         }
     }
-    
+
     private long calculaTotalFinal() {
 
         long valorTotal = 0;
@@ -530,7 +577,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao calcular total " + e);
         }
-        
+
         return valorTotal;
     }
 
@@ -551,26 +598,28 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarAgendamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastroAgendamento().setVisible(true);
+                new EditarAgendamento().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonFinalizarCompra;
+    private javax.swing.JButton jButtonFinalizarEdicao;
+    private javax.swing.JCheckBox jCheckBoxClienteVeio;
     private javax.swing.JCheckBox jCheckBoxDesconto;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
@@ -584,7 +633,6 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelAddCliente;
     private javax.swing.JLabel jLabelAddServicos;
     private javax.swing.JList<String> jListHorarios;
     private javax.swing.JScrollPane jScrollPane1;

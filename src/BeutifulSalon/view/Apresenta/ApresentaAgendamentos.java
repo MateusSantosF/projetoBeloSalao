@@ -6,6 +6,12 @@
 package BeutifulSalon.view.Apresenta;
 
 import BeutifulSalon.Ferramentas.ApresentaTabela;
+import BeutifulSalon.controller.AgendamentoController;
+import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.model.Agendamento;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -23,6 +29,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
     private static final int AMANHA = 2;
     private static final int SEMANA = 3;
     private static final int TODOS = 4;
+    private static final int NAOREALIZADOS = 5;
     
     public ApresentaAgendamentos() {
         initComponents();
@@ -54,6 +61,9 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         jRadioButtonAmanha = new javax.swing.JRadioButton();
         jRadioButtonSemana = new javax.swing.JRadioButton();
         jRadioButtonTodos = new javax.swing.JRadioButton();
+        jButtonEditar = new javax.swing.JButton();
+        jButtonDetalhes = new javax.swing.JButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
 
         setForeground(new java.awt.Color(243, 244, 255));
 
@@ -77,7 +87,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addContainerGap(671, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,6 +178,41 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
             }
         });
 
+        jButtonEditar.setBackground(new java.awt.Color(57, 201, 114));
+        jButtonEditar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonEditar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonEditar.setText("Editar");
+        jButtonEditar.setBorder(null);
+        jButtonEditar.setBorderPainted(false);
+        jButtonEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonEditar.setFocusPainted(false);
+        jButtonEditar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonEditar.setPreferredSize(new java.awt.Dimension(150, 65));
+        jButtonEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButtonEditarMousePressed(evt);
+            }
+        });
+
+        jButtonDetalhes.setBackground(new java.awt.Color(36, 141, 248));
+        jButtonDetalhes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButtonDetalhes.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonDetalhes.setText("+Detalhes");
+        jButtonDetalhes.setBorder(null);
+        jButtonDetalhes.setBorderPainted(false);
+        jButtonDetalhes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonDetalhes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonDetalhes.setPreferredSize(new java.awt.Dimension(150, 65));
+
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jRadioButton1.setText("Não realizados");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -177,43 +222,62 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelBuscarCliente)
-                        .addGap(133, 133, 133)
-                        .addComponent(jRadioButtonHoje, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButtonAmanha)
-                        .addGap(18, 18, 18)
-                        .addComponent(jRadioButtonSemana)
-                        .addGap(18, 18, 18)
-                        .addComponent(jRadioButtonTodos)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
-                        .addGap(34, 34, 34))))
+                        .addGap(34, 34, 34))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(261, 261, 261)
+                                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelBuscarCliente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jRadioButtonHoje, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButtonAmanha)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(jButtonDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButtonSemana)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButtonTodos)))
+                        .addGap(260, 260, 260))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78)
-                .addComponent(jLabel3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonDetalhes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                            .addComponent(jButtonEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelBuscarCliente)
-                    .addComponent(jRadioButtonSemana)
-                    .addComponent(jRadioButtonTodos)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jRadioButtonSemana)
+                        .addComponent(jRadioButtonTodos)
+                        .addComponent(jRadioButton1))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jRadioButtonHoje, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jRadioButtonAmanha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(21, 21, 21)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -238,19 +302,44 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
     private void jLabelBuscarClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBuscarClienteMousePressed
         listarAgendamentos(NOME, jTextFieldNomeCliente.getText());
     }//GEN-LAST:event_jLabelBuscarClienteMousePressed
+
+    private void jButtonEditarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonEditarMousePressed
+       
+        int index = jTableAgendamentos.getSelectedRow();
+        AgendamentoController ag = new AgendamentoController();
+        boolean sucesso = false;
+        
+        if(index > -1){
+            long idAgendamento = (long) jTableAgendamentos.getValueAt(index, 4);
+            sucesso = ag.editarAgendamento(idAgendamento);
+            
+            if(!sucesso){
+              JOptionPane.showMessageDialog(null, "Erro ao selecionar PKAgendamento");   
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione um agendamento", "Agendamento inválido", ERROR);
+        }
+    }//GEN-LAST:event_jButtonEditarMousePressed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        listarAgendamentos(NAOREALIZADOS, null);
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
     
     private void listarAgendamentos(int opc, String nome){
-        jTableAgendamentos.setModel(new ApresentaTabela().Agendamentos(jTableAgendamentos, opc, nome));
+        jTableAgendamentos.setModel(new ApresentaTabela().apresentaAgendamentos(jTableAgendamentos, opc, nome));
     }
     
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButtonDetalhes;
+    private javax.swing.JButton jButtonEditar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelBuscarCliente;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButtonAmanha;
     private javax.swing.JRadioButton jRadioButtonHoje;
     private javax.swing.JRadioButton jRadioButtonSemana;

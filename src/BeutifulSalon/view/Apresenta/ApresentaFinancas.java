@@ -712,7 +712,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }
 
     public void listarOrcamentos() {
-        jTableConsultaOrcamento.setModel(new ApresentaTabela().Orcamentos(jTableConsultaOrcamento));
+        jTableConsultaOrcamento.setModel(new ApresentaTabela().apresentarOrcamentos(jTableConsultaOrcamento));
         try {
             jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));
 
@@ -721,7 +721,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }
 
     public void listaOrcamentos(String ano) {
-        jTableConsultaOrcamento.setModel(new ApresentaTabela().Orcamentos(jTableConsultaOrcamento, ano));
+        jTableConsultaOrcamento.setModel(new ApresentaTabela().apresentarOrcamentos(jTableConsultaOrcamento, ano));
         jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));
 
     }

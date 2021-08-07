@@ -291,11 +291,11 @@ public class ApresentaCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     public void listarClientes() {
-        jTableConsultaCliente.setModel(new ApresentaTabela().Clientes(jTableConsultaCliente));
+        jTableConsultaCliente.setModel(new ApresentaTabela().apresentaClientes(jTableConsultaCliente));
     }
 
     public void listarClientes(String nome) {
-        jTableConsultaCliente.setModel(new ApresentaTabela().Clientes(jTableConsultaCliente, nome));
+        jTableConsultaCliente.setModel(new ApresentaTabela().apresentaClientes(jTableConsultaCliente, nome));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

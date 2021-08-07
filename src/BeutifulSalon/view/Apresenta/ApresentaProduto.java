@@ -22,7 +22,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
     public ApresentaProduto() {
         initComponents();
         new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
-        jTableConsultaProdutos.setModel(new ApresentaTabela().Produtos(jTableConsultaProdutos));
+        jTableConsultaProdutos.setModel(new ApresentaTabela().apresentaProdutos(jTableConsultaProdutos));
     }
 
     /**
@@ -245,7 +245,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
 
                     if (cc.excluirProduto(idProdutoSelecionado)) {
                         JOptionPane.showMessageDialog(null, "Produto deletado com sucesso.");
-                        jTableConsultaProdutos.setModel(new ApresentaTabela().Produtos(jTableConsultaProdutos));
+                        jTableConsultaProdutos.setModel(new ApresentaTabela().apresentaProdutos(jTableConsultaProdutos));
 
                     } else {
                         JOptionPane.showMessageDialog(null, "Não foi possível excluir o produto. Selecione um índice válido na tabela");
@@ -288,7 +288,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jLabel4ConsultarCliente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4ConsultarCliente
-        jTableConsultaProdutos.setModel(new ApresentaTabela().Produtos(jTableConsultaProdutos, jTextFieldNomeProduto.getText()));
+        jTableConsultaProdutos.setModel(new ApresentaTabela().apresentaProdutos(jTableConsultaProdutos, jTextFieldNomeProduto.getText()));
     }//GEN-LAST:event_jLabel4ConsultarCliente
 
 

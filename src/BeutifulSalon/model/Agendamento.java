@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -21,6 +20,7 @@ public class Agendamento {
     
     long id;
     long total;
+    long desconto;
     LocalDate data;
     LocalTime horario;
     String cpfCliente;
@@ -39,6 +39,14 @@ public class Agendamento {
         this.servicos = servicos;
     }
 
+    public long getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(long desconto) {
+        this.desconto = desconto;
+    }
+    
     public long getTotal() {
         return total;
     }
@@ -102,9 +110,17 @@ public class Agendamento {
     public void cadastraAgendamento(Agendamento agendamento) throws ExceptionDAO, SQLException{
         new AgendamentoDAO().cadastraAgendamento(agendamento);
     }
+    
+    public void atualizarAgendamento(Agendamento agendamento) throws ExceptionDAO, SQLException{
+        new AgendamentoDAO().atualizarAgendamento(agendamento);
+    }
 
     public ArrayList<Agendamento> listarAgendamentos() throws ExceptionDAO {        
         return new AgendamentoDAO().listarAgendamentos();
+    }
+    
+    public Agendamento listarAgendamento(long idAgendamento) throws ExceptionDAO{
+        return new AgendamentoDAO().listarAgendamento(idAgendamento);
     }
     
     public ArrayList<Agendamento> listarAgendamentos(LocalDate data) throws ExceptionDAO {        
@@ -125,6 +141,14 @@ public class Agendamento {
 
     public ArrayList<Agendamento> listarAgendamentosNome(String nome) {
         return new AgendamentoDAO().listarAgendamentosNome(nome);
+    }
+
+    public ArrayList<Servico> listarServicosAgendamento(long idAgendamento) throws ExceptionDAO{
+        return new AgendamentoDAO().listaServicosAgendamento(idAgendamento);
+    }
+
+    public ArrayList<Agendamento> listarAgendamentosNaoRealizados() {
+        return new AgendamentoDAO().listarAgendamentosNaoRealizados();
     }
     
     

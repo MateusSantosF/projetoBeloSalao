@@ -21,6 +21,7 @@ import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.Apresenta.ApresentaCliente;
 import BeutifulSalon.view.Apresenta.ApresentaFinancas;
 import BeutifulSalon.view.Apresenta.ApresentaProduto;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
@@ -40,7 +41,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ApresentaTabela {
 
-    public DefaultTableModel Orcamentos(JTable tabela) {
+    public DefaultTableModel apresentarOrcamentos(JTable tabela) {
 
         DefaultTableModel tabelaOrcamentoModel = (DefaultTableModel) tabela.getModel(); // tabela
         tabelaOrcamentoModel.setRowCount(0);
@@ -101,7 +102,7 @@ public class ApresentaTabela {
         return tabelaOrcamentoModel;
     }
 
-    public DefaultTableModel Orcamentos(JTable tabela, String ano) {
+    public DefaultTableModel apresentarOrcamentos(JTable tabela, String ano) {
 
         DefaultTableModel tabelaOrcamentoModel = (DefaultTableModel) tabela.getModel(); // tabela
         tabelaOrcamentoModel.setRowCount(0);
@@ -159,7 +160,33 @@ public class ApresentaTabela {
 
         return tabelaOrcamentoModel;
     }
-
+    
+    public DefaultTableModel apresentaServicosAgendamento(JTable tabela, long idAgendamento){
+        
+        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        modelo.setRowCount(0);
+        AgendamentoController ag = new AgendamentoController();
+        ArrayList<Servico> servicos = null;
+        
+        try {
+            servicos = ag.listarServicosAgendamento(idAgendamento);
+            
+            if(servicos == null)return modelo;
+            
+            for(Servico s: servicos){
+                modelo.addRow(new Object[]{
+                    s.getNome(),
+                    Dinheiro.parseString(s.getPreco()),
+                    s.getId()
+                });
+            }
+            
+        } catch (ExceptionDAO e) {     
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        return modelo;
+    }
     public DefaultTableModel OrcamentosServico(JTable tabela) {
 
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
@@ -588,7 +615,7 @@ public class ApresentaTabela {
         return modelo;
     }
 
-    public DefaultTableModel Produtos(JTable tabela) {
+    public DefaultTableModel apresentaProdutos(JTable tabela) {
 
         DefaultTableModel tabelaProdutoModel = (DefaultTableModel) tabela.getModel(); // tabela
         tabelaProdutoModel.setRowCount(0);
@@ -620,7 +647,7 @@ public class ApresentaTabela {
         return tabelaProdutoModel;
     }
 
-    public DefaultTableModel Produtos(JTable tabela, String nome) {
+    public DefaultTableModel apresentaProdutos(JTable tabela, String nome) {
 
         DefaultTableModel tabelaProdutoModel = (DefaultTableModel) tabela.getModel(); // tabela
 
@@ -654,7 +681,7 @@ public class ApresentaTabela {
     }
 
     //CLIENTES
-    public DefaultTableModel Clientes(JTable tabela) {
+    public DefaultTableModel apresentaClientes(JTable tabela) {
 
         DefaultTableModel tabelaClienteModel = (DefaultTableModel) tabela.getModel(); // tabela
         tabelaClienteModel.setRowCount(0);
@@ -684,7 +711,7 @@ public class ApresentaTabela {
         return tabelaClienteModel;
     }
 
-    public DefaultTableModel Clientes(JTable tabela, String nome) {
+    public DefaultTableModel apresentaClientes(JTable tabela, String nome) {
 
         DefaultTableModel tabelaClienteModel = (DefaultTableModel) tabela.getModel(); // tabela
         tabelaClienteModel.setRowCount(0);
@@ -716,7 +743,7 @@ public class ApresentaTabela {
     }
 
     //AGENDAMENTOS
-    public DefaultTableModel Agendamentos(JTable tabela, int opc, String nome) {
+    public DefaultTableModel apresentaAgendamentos(JTable tabela, int opc, String nome) {
 
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
         model.setRowCount(0);
@@ -748,6 +775,9 @@ public class ApresentaTabela {
                 case 4:
                     agendamentos = ag.listarAgendamentos();
                     break;
+                case 5:
+                    agendamentos = ag.listarAgendamentosNaoRealizados();
+                    break;
             }
 
             for (Agendamento g : agendamentos) {
@@ -758,7 +788,7 @@ public class ApresentaTabela {
                 if (g.getRealizado()) {
                     realizado = "Realizado";
                 } else {
-                    realizado = "Em andamento";
+                    realizado = "Não Realizado";
                 }
                 model.addRow(new Object[]{
                     cliente.buscarCliente(g.getCpfCliente()).getNOME(),
