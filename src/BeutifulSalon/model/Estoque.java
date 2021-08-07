@@ -69,6 +69,10 @@ public class Estoque {
     public long somaProdutosEstoque() throws ExceptionDAO{
         return new EstoqueDAO().somaProdutosEstoque();
     }
+
+    public long quantidadeProduto(long idProduto) {
+        return new EstoqueDAO().quantidadeProduto(idProduto);
+    }
     
     
 

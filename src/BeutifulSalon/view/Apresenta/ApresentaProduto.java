@@ -58,20 +58,20 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jTableConsultaProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTableConsultaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Marca", "Preço de Venda", "id"
+                "Nome", "Marca", "Preço de Venda", "Quantidade Estoque", "id"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -89,8 +89,8 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jTableConsultaProdutos.setShowGrid(true);
         jScrollPane2.setViewportView(jTableConsultaProdutos);
         if (jTableConsultaProdutos.getColumnModel().getColumnCount() > 0) {
-            jTableConsultaProdutos.getColumnModel().getColumn(3).setMinWidth(1);
-            jTableConsultaProdutos.getColumnModel().getColumn(3).setMaxWidth(1);
+            jTableConsultaProdutos.getColumnModel().getColumn(4).setMinWidth(1);
+            jTableConsultaProdutos.getColumnModel().getColumn(4).setMaxWidth(1);
         }
 
         jButtonDetalhes.setBackground(new java.awt.Color(36, 141, 248));

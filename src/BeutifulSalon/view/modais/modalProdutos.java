@@ -230,7 +230,6 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
             try{
                 
                 int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade comprada: "));
-                System.out.println("Quantidade = " + quantidade);
                 long valorPago = 0;
                 //Se for o cabeleleiro comprando
                 if(cabeleleiro){ 

@@ -103,7 +103,7 @@ public class CabeleireiroDAO {
             return nRegistro;
             
         }  catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO " + e);
+            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO teste1 " + e);
         } finally {
 
             try {
@@ -170,7 +170,7 @@ public class CabeleireiroDAO {
             return cabeleireiro;
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO " + e);
+            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO teste2 " + e);
         } finally {
 
             try {
@@ -259,7 +259,7 @@ public class CabeleireiroDAO {
            
             return horario;
         }catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO " + e);
+            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO teste3 " + e);
         } finally {
 
             try {
@@ -322,7 +322,7 @@ public class CabeleireiroDAO {
             pStatement.execute();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro atualizar dados do cliente" + e);
+            JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);
         } finally {
 
             try {

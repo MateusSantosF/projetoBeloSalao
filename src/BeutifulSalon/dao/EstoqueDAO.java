@@ -20,7 +20,7 @@ public class EstoqueDAO {
 
     public void atualizaEstoque(Estoque estoque){
         
-      String sql = "SELECT count(*) AS QTD FROM ESTOQUE WHERE ID_PRODUTO = ?";
+      String sql = "SELECT count(1) AS QTD FROM ESTOQUE WHERE ID_PRODUTO = ?";
       
       String sql2 = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE + ?, VALOR_UNITARIO = ? WHERE ID_PRODUTO  = ?";
       
@@ -57,12 +57,12 @@ public class EstoqueDAO {
                 ps.setLong(2, estoque.getQuantidade());
                 ps.setLong(3, estoque.getValorUnitario());
                 
-                ps.executeQuery();
+                ps.execute();
             }
             
             
         }  catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO " + e);
+            JOptionPane.showMessageDialog(null, "Erro EstoqueDAO" + e);
         } finally {
 
             try {
@@ -99,6 +99,55 @@ public class EstoqueDAO {
             connection = new ConnectionMVC().getConnection();
            
             ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                    nProdutos += rs.getLong("QTD");
+                }
+            }
+  
+            return nProdutos;
+            
+        }  catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO " + e);
+        } finally {
+
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+
+        }
+        return nProdutos;
+    }
+    
+    public long quantidadeProduto(long idProduto){
+        
+        String sql = "SELECT SUM(QUANTIDADE) as QTD FROM ESTOQUE WHERE ID_PRODUTO = ? ";
+
+      
+        Connection connection = null;
+        PreparedStatement ps = null;
+        long nProdutos = 0;
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+           
+            ps = connection.prepareStatement(sql);
+            ps.setLong(1, idProduto);
             ResultSet rs = ps.executeQuery();
             
             if(rs != null){

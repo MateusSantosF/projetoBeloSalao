@@ -5,7 +5,6 @@
  */
 package BeutifulSalon.dao;
 
-import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.controller.EstoqueController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,8 +34,6 @@ public class CompraProdutoDAO {
         Connection connection = null;
         PreparedStatement pStatement = null;
         EstoqueController estoque = new EstoqueController();
-        
-
 
         try {
 
@@ -73,7 +70,7 @@ public class CompraProdutoDAO {
             }
 
             connection.commit();
-            
+ 
             try {
                boolean sucesso = estoque.atualizaEstoque(compra);
                

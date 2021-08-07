@@ -7,6 +7,7 @@ package BeutifulSalon.Ferramentas;
 
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.controller.EstoqueController;
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.controller.ProdutoController;
 import BeutifulSalon.controller.ServicoController;
@@ -621,7 +622,8 @@ public class ApresentaTabela {
         tabelaProdutoModel.setRowCount(0);
       
         ProdutoController pc = new ProdutoController();
-
+        EstoqueController ec = new EstoqueController();
+        
         ArrayList<Produto> produtosListados = null;
         try {
             produtosListados = pc.listarProdutos();
@@ -630,17 +632,21 @@ public class ApresentaTabela {
         }
 
         try {
-            produtosListados.forEach((Produto produto) -> {
+           for(Produto produto: produtosListados){
+                
+                long quantidade = ec.quantidadeProduto(produto.getId_produto());
+                System.out.println("Quantidade = " + quantidade);
                 tabelaProdutoModel.addRow(new Object[]{
                     produto.getNome(),
                     produto.getMarca(),
                     Dinheiro.parseString(produto.getPreco()),
-                    produto.getId_produto()
+                    quantidade,
+                    produto.getId_produto()                  
                 });
 
-            });
+            }
 
-        } catch (Exception e) {
+        } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, "Erro ao listarProdutos" + e);
         }
 
@@ -656,7 +662,8 @@ public class ApresentaTabela {
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
 
         ProdutoController pc = new ProdutoController();
-
+        EstoqueController ec = new EstoqueController();
+        
         ArrayList<Produto> produtosListados = null;
         try {
             produtosListados = pc.listarProdutos(nome);
@@ -665,16 +672,20 @@ public class ApresentaTabela {
         }
 
         try {
-            produtosListados.forEach((Produto produto) -> {
+            for(Produto produto: produtosListados){
+                
+                long quantidade = ec.quantidadeProduto(produto.getId_produto());
                 tabelaProdutoModel.addRow(new Object[]{
                     produto.getNome(),
                     produto.getMarca(),
                     Dinheiro.parseString(produto.getPreco()),
-                    produto.getId_produto(),});
+                    quantidade,
+                    produto.getId_produto()                  
+                });
 
-            });
+            }
 
-        } catch (Exception e) {
+        } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, "Erro ao listarProdutos" + e);
         }
         return tabelaProdutoModel;

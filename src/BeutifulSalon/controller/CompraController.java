@@ -24,7 +24,7 @@ public class CompraController {
      public boolean RegistraCompra(Date data, long valorDesconto, String cpfCliente, ArrayList<ItemCompra> itensCompra) throws ExceptionDAO {
          
          if(Valida.isCpf(cpfCliente)){
-          
+             
              Compra compraAtual = new Compra();
              
              compraAtual.setCpfCliente(cpfCliente);
@@ -33,7 +33,7 @@ public class CompraController {
              compraAtual.setItensCompra(itensCompra);
              
              try {
-                compraAtual.cadastraCompra(compraAtual);  
+                compraAtual.cadastraCompra(compraAtual); 
              } catch (SQLException e) {
                  
                 JOptionPane.showMessageDialog(null, "Erro ao criar objeto Compra " + e);
