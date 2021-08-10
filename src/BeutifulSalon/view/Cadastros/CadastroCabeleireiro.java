@@ -10,6 +10,7 @@ import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cabeleireiro;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Observador;
+import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalExpediente;
 import java.awt.HeadlessException;
@@ -366,5 +367,9 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     @Override
     public void update(ArrayList<LocalTime> horarios) {
         expediente = horarios;
+    }
+    @Override
+    public void update(Orcamento orcamento) {
+    
     }
 }

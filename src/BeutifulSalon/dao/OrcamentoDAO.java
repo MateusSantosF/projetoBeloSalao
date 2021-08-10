@@ -278,6 +278,64 @@ public class OrcamentoDAO {
             
         }
     }
+    
+    public Orcamento buscarOrcamento(long id_orcamento){
+        String sql = "SELECT ID_ORCAMENTO, NOME,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
+                + "NOVEMBRO,DEZEMBRO FROM ORCAMENTO WHERE ID_ORCAMENTO = ?";
+        
+        Connection connection = null;
+        PreparedStatement ps = null;
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            ps = connection.prepareStatement(sql);
+            
+            ps.setLong(1, id_orcamento);
+            
+            ResultSet rs = ps.executeQuery();
+            Orcamento orcamentoAtual = new Orcamento();
+            if(rs != null){
+                while(rs.next()){
+                    orcamentoAtual.setId_orcamento(rs.getLong("ID_ORCAMENTO"));
+                    orcamentoAtual.setNome(rs.getString("NOME"));
+                    orcamentoAtual.setJan(rs.getLong("JANEIRO"));
+                    orcamentoAtual.setFev(rs.getLong("FEVEREIRO"));
+                    orcamentoAtual.setMar(rs.getLong("MARCO"));
+                    orcamentoAtual.setAbr(rs.getLong("ABRIL"));
+                    orcamentoAtual.setMai(rs.getLong("MAIO"));
+                    orcamentoAtual.setJun(rs.getLong("JUNHO"));
+                    orcamentoAtual.setJul(rs.getLong("JULHO"));
+                    orcamentoAtual.setAgo(rs.getLong("AGOSTO"));
+                    orcamentoAtual.setSet(rs.getLong("SETEMBRO"));
+                    orcamentoAtual.setOut(rs.getLong("OUTUBRO"));
+                    orcamentoAtual.setNov(rs.getLong("NOVEMBRO"));
+                    orcamentoAtual.setDez(rs.getLong("DEZEMBRO")); 
+                }
+            }
+      
+            return orcamentoAtual;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }finally{
+            
+            try {
+                if(ps != null) ps.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+         
+            
+        }
+        
+        return null;
+    }
 
     public void editarOrcamento(long id_orcamento) {
         

@@ -8,6 +8,7 @@ import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observador;
+import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalCliente;
 import BeutifulSalon.view.modais.modalInputMonetarios;
@@ -638,5 +639,9 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
     @Override
     public void update(ArrayList<LocalTime> horarios) {
+    }
+
+    @Override
+    public void update(Orcamento orcamento) {
     }
 }

@@ -11,6 +11,7 @@ import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
+import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.Apresenta.ApresentaProduto;
@@ -442,5 +443,9 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
 
     @Override
     public void update(ArrayList<LocalTime> horarios) {
+    }
+    
+    @Override
+    public void update(Orcamento orcamento) {
     }
 }

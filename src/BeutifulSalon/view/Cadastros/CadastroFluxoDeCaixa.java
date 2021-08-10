@@ -15,8 +15,10 @@ import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.ItemCompra;
 import BeutifulSalon.model.Observador;
+import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalInputMonetarios;
+import BeutifulSalon.view.modais.modalOrcamentoPrevisto;
 import java.awt.HeadlessException;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -45,7 +47,6 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
         buttonGroupCompraProduto = new javax.swing.ButtonGroup();
         jTabbedPane = new javax.swing.JTabbedPane();
-        jPanel3 = new javax.swing.JPanel();
         jPanelProduto = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldNome2 = new javax.swing.JTextField();
@@ -68,23 +69,27 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jButtonFinalizarCompra = new javax.swing.JButton();
         jRadioButtonCliente = new javax.swing.JRadioButton();
         jRadioButtonCabelereiro = new javax.swing.JRadioButton();
+        jPanelDespesa = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldNomeDespesa = new javax.swing.JTextField();
+        jTextFieldIdDespesa = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabelBuscarDespesa = new javax.swing.JLabel();
+        jDateChooserVencimento = new com.toedter.calendar.JDateChooser();
+        jLabel10 = new javax.swing.JLabel();
+        jDateChooserPagamento = new com.toedter.calendar.JDateChooser();
+        jLabel11 = new javax.swing.JLabel();
+        jFormattedTextFieldValorPago = new javax.swing.JFormattedTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jDateChooserDataLancamento = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(243, 244, 245));
         setResizable(false);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1006, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 568, Short.MAX_VALUE)
-        );
-
-        jTabbedPane.addTab("Orçamento", jPanel3);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Nome do Cliente");
@@ -238,9 +243,9 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelAddProdutos)))
-                .addGap(67, 67, 67)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
+                .addGap(114, 114, 114)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -324,6 +329,129 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
         jTabbedPane.addTab("Compra Produto", jPanelProduto);
 
+        jLabel1.setText("Despesa");
+
+        jLabel2.setText("ID");
+
+        jLabelBuscarDespesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
+        jLabelBuscarDespesa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabelBuscarDespesaMousePressed(evt);
+            }
+        });
+
+        jLabel10.setText("Data de Vencimento");
+
+        jLabel11.setText("Data de Pagamento");
+
+        jFormattedTextFieldValorPago.setText("jFormattedTextField1");
+
+        jLabel12.setText("Valor Pago");
+
+        jCheckBox1.setText("Despesa foi paga?");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Boleto", "Crédito", "Débito", "Dinheiro" }));
+
+        jLabel13.setText("Forma de pagamento");
+
+        jLabel14.setText("Data de Lançamento");
+
+        javax.swing.GroupLayout jPanelDespesaLayout = new javax.swing.GroupLayout(jPanelDespesa);
+        jPanelDespesa.setLayout(jPanelDespesaLayout);
+        jPanelDespesaLayout.setHorizontalGroup(
+            jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                        .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jDateChooserPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDespesaLayout.createSequentialGroup()
+                        .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                                .addComponent(jDateChooserDataLancamento, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                                .addGap(273, 273, 273)))
+                        .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel13))
+                        .addGap(237, 237, 237))
+                    .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                        .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                                .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldIdDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                                        .addComponent(jTextFieldNomeDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabelBuscarDespesa)
+                                        .addGap(262, 262, 262)
+                                        .addComponent(jCheckBox1))))
+                            .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                                .addComponent(jDateChooserVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(273, 273, 273)
+                                .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel12)
+                                    .addComponent(jFormattedTextFieldValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel10))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanelDespesaLayout.setVerticalGroup(
+            jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                .addGap(70, 70, 70)
+                .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                        .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                                .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextFieldIdDespesa, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                                    .addComponent(jLabelBuscarDespesa)
+                                    .addComponent(jTextFieldNomeDespesa))
+                                .addGap(45, 45, 45)
+                                .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel13)))
+                            .addComponent(jCheckBox1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDateChooserDataLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(15, 15, 15)
+                .addComponent(jLabel10)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelDespesaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                        .addComponent(jDateChooserVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jDateChooserPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelDespesaLayout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jFormattedTextFieldValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(179, Short.MAX_VALUE))
+        );
+
+        jTabbedPane.addTab("Orçamento", jPanelDespesa);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -362,12 +490,12 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                     new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
 
             if (sucesso) {
-                if(jRadioButtonCabelereiro.isSelected()){
+                if (jRadioButtonCabelereiro.isSelected()) {
                     JOptionPane.showMessageDialog(null, "Compra registrada com sucesso.");
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "Venda registrada com sucesso.");
                 }
-                
+
                 limparTodosCampos();
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao registrar venda");
@@ -429,13 +557,24 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     }//GEN-LAST:event_jRadioButtonClienteActionPerformed
 
     private void jRadioButtonCabelereiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonCabelereiroActionPerformed
-           if (jRadioButtonCabelereiro.isSelected()) {
+        if (jRadioButtonCabelereiro.isSelected()) {
             jTextFieldNome2.setEnabled(false);
             jTextFieldCPF2.setEnabled(false);
             jLabelAddCliente.setEnabled(false);
             limparTodosCampos();
         }
     }//GEN-LAST:event_jRadioButtonCabelereiroActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jLabelBuscarDespesaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBuscarDespesaMousePressed
+
+        modalOrcamentoPrevisto modalOrcamentoPrevisto = new modalOrcamentoPrevisto();
+        modalOrcamentoPrevisto.registrarObservador(this);
+        modalOrcamentoPrevisto.setVisible(true);
+    }//GEN-LAST:event_jLabelBuscarDespesaMousePressed
 
     void limparTodosCampos() {
         jTextFieldCPF2.setText("");
@@ -454,8 +593,6 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         }
 
     }
-
-   
 
     private void calculaTotalBruto() {
 
@@ -567,15 +704,36 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             }
         });
     }
-    
+
     @Override
     public void update(Servico servico) {
+    }
+
+    @Override
+    public void update(Orcamento orcamento) {
+        if (orcamento != null) {
+            jTextFieldIdDespesa.setText(String.valueOf(orcamento.getId_orcamento()));
+            jTextFieldNomeDespesa.setText(orcamento.getNome());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroupCompraProduto;
     private javax.swing.JButton jButtonFinalizarCompra;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBoxDesconto2;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private com.toedter.calendar.JDateChooser jDateChooserDataLancamento;
+    private com.toedter.calendar.JDateChooser jDateChooserPagamento;
+    private com.toedter.calendar.JDateChooser jDateChooserVencimento;
+    private javax.swing.JFormattedTextField jFormattedTextFieldValorPago;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -584,7 +742,8 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAddCliente;
     private javax.swing.JLabel jLabelAddProdutos;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel jLabelBuscarDespesa;
+    private javax.swing.JPanel jPanelDespesa;
     private javax.swing.JPanel jPanelProduto;
     private javax.swing.JRadioButton jRadioButtonCabelereiro;
     private javax.swing.JRadioButton jRadioButtonCliente;
@@ -595,7 +754,9 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     private javax.swing.JTable jTableProdutosComprados;
     private javax.swing.JTextField jTextFieldCPF2;
     private javax.swing.JTextField jTextFieldDesconto2;
+    private javax.swing.JTextField jTextFieldIdDespesa;
     private javax.swing.JTextField jTextFieldNome2;
+    private javax.swing.JTextField jTextFieldNomeDespesa;
     private javax.swing.JTextField jTextFieldTotal2;
     private javax.swing.JTextField jTextFieldTotalBruto2;
     // End of variables declaration//GEN-END:variables

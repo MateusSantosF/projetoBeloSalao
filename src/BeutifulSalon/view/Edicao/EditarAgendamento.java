@@ -13,6 +13,7 @@ import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observador;
+import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalInputMonetarios;
 import BeutifulSalon.view.modais.modalServicos;
@@ -684,5 +685,9 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
 
     @Override
     public void update(ArrayList<LocalTime> horarios) {
+    }
+    
+    @Override
+    public void update(Orcamento orcamento) {
     }
 }

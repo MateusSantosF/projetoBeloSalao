@@ -147,6 +147,10 @@ public class OrcamentoController {
     public Servico listarOrcamentoServicorRealizado(LocalDate ano, Month mes, long idServico) {
         return new OrcamentoServico().listarOrcamentoServicorRealizado(ano, mes, idServico);
     }
+    
+    public Orcamento buscarOrcamento(long idOrcamento){
+        return new Orcamento().buscarOrcamento(idOrcamento);
+    }
 
     
    

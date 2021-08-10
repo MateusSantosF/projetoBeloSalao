@@ -172,7 +172,7 @@ public class ManipulaData {
                         LocalTime saidaAtual = LocalTime.ofNanoOfDay(tempoComparado);
                         //System.out.println("Tempo entre o proximo agendamento" + saidaAtual);
                         horarios.add(saidaAtual);
-                   
+
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Erro ao verificar intervalo entre horas" + e);
                     }
@@ -196,6 +196,7 @@ public class ManipulaData {
 
                 //verifica se o tempo dos serviços do agendamento é maior que o fim do expediente
                 if (agendamentoAtual.isAfter(saida)) {
+
                     break;
                 }
                 //System.out.println("Horario agendamento somado " + agendamentoAtual);
@@ -222,8 +223,13 @@ public class ManipulaData {
             for (i = 0; i < tamanho; i++) {
 
                 if (i % 2 != 0) {
-                    String formatado = horarios.get(i - 1).toString() + "h às " + horarios.get(i - 1).plusHours(horarios.get(i).getHour()).plusMinutes(horarios.get(i).getMinute()) + "h";
-                    horariosFormatados.add(formatado);
+                    String entrada = horarios.get(i - 1).toString();
+                    String saida = horarios.get(i - 1).plusHours(horarios.get(i).getHour()).plusMinutes(horarios.get(i).getMinute()).toString();
+
+                    if (!entrada.equals(saida)) {
+                        String formatado = entrada + "h às " + saida + "h";
+                        horariosFormatados.add(formatado);
+                    }
                 }
 
             }

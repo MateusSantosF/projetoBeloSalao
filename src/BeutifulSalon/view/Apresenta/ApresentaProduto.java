@@ -267,7 +267,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
         if (indice > -1) {
             try {
 
-                long idProduto = (long) jTableConsultaProdutos.getValueAt(indice, 3); // Retorna ID
+                long idProduto = (long) jTableConsultaProdutos.getValueAt(indice, 4); // Retorna ID
 
                 ProdutoController pc = new ProdutoController();
                 resultado = pc.editarProduto(idProduto);

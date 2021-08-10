@@ -9,6 +9,7 @@ import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observador;
+import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalServicoUnico;
 import BeutifulSalon.view.modais.modalServicos;
@@ -168,7 +169,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel5.setForeground(new java.awt.Color(34, 34, 34));
         jLabel5.setText("Janeiro");
 
-        jTextFieldJan.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldJan.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldJan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldJan.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -187,7 +187,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel6.setForeground(new java.awt.Color(34, 34, 34));
         jLabel6.setText("Fevereiro");
 
-        jTextFieldFev.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldFev.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldFev.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -230,7 +229,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
 
         jPanel11.setBackground(new java.awt.Color(243, 244, 245));
 
-        jTextFieldMarc.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldMarc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldMarc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -238,7 +236,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel15.setForeground(new java.awt.Color(34, 34, 34));
         jLabel15.setText("Março");
 
-        jTextFieldAbr.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldAbr.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldAbr.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -289,7 +286,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel17.setForeground(new java.awt.Color(34, 34, 34));
         jLabel17.setText("Maio");
 
-        jTextFieldMaio.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldMaio.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldMaio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldMaio.setPreferredSize(new java.awt.Dimension(120, 36));
@@ -298,7 +294,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel18.setForeground(new java.awt.Color(34, 34, 34));
         jLabel18.setText("Junho");
 
-        jTextFieldJun.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldJun.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldJun.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldJun.setPreferredSize(new java.awt.Dimension(120, 36));
@@ -346,7 +341,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel2.setForeground(new java.awt.Color(34, 34, 34));
         jLabel2.setText("Nome da despesa");
 
-        JTextFieldNomeDespesa.setBackground(new java.awt.Color(255, 255, 255));
         JTextFieldNomeDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         JTextFieldNomeDespesa.setText("Ex: Conta de água");
         JTextFieldNomeDespesa.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -390,7 +384,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
 
         jPanel13.setBackground(new java.awt.Color(243, 244, 245));
 
-        jTextFieldJul.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldJul.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldJul.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldJul.setPreferredSize(new java.awt.Dimension(120, 36));
@@ -403,7 +396,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel20.setForeground(new java.awt.Color(34, 34, 34));
         jLabel20.setText("Agosto");
 
-        jTextFieldAgo.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldAgo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldAgo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldAgo.setPreferredSize(new java.awt.Dimension(120, 36));
@@ -440,7 +432,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
 
         jPanel14.setBackground(new java.awt.Color(243, 244, 245));
 
-        jTextFieldSet.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldSet.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldSet.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldSet.setPreferredSize(new java.awt.Dimension(120, 36));
@@ -453,7 +444,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel22.setForeground(new java.awt.Color(34, 34, 34));
         jLabel22.setText("Outubro");
 
-        jTextFieldOut.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldOut.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldOut.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldOut.setPreferredSize(new java.awt.Dimension(120, 36));
@@ -491,7 +481,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
 
         jPanel15.setBackground(new java.awt.Color(243, 244, 245));
 
-        jTextFieldNov.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldNov.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldNov.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldNov.setPreferredSize(new java.awt.Dimension(120, 36));
@@ -500,7 +489,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel23.setForeground(new java.awt.Color(34, 34, 34));
         jLabel23.setText("Novembro");
 
-        jTextFieldDez.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldDez.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldDez.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldDez.setPreferredSize(new java.awt.Dimension(120, 36));
@@ -552,7 +540,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
             }
         });
 
-        jTextFieldAno.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldAno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y"))));
         jTextFieldAno.setToolTipText("Exercicio(AAAA)");
 
@@ -651,7 +638,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
 
         jTextFieldIdServico.setEditable(false);
         jTextFieldIdServico.setBackground(new java.awt.Color(231, 231, 231));
-        jTextFieldIdServico.setForeground(new java.awt.Color(0, 0, 0));
         jTextFieldIdServico.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jTextFieldNomeServico.setEditable(false);
@@ -934,7 +920,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel32.setForeground(new java.awt.Color(34, 34, 34));
         jLabel32.setText("Exercício (AAAA)");
 
-        jTextFieldAnoOrc.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldAnoOrc.setForeground(new java.awt.Color(34, 34, 34));
         try {
             jTextFieldAnoOrc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
@@ -992,7 +977,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
                                         .addComponent(jTextFieldAnoOrc))
                                     .addGap(60, 60, 60)
                                     .addComponent(jCheckBoxFixo1))))))
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap(226, Short.MAX_VALUE))
         );
         jPanelServicosLayout.setVerticalGroup(
             jPanelServicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1409,5 +1394,10 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
 
     @Override
     public void update(ArrayList<LocalTime> horarios) {
+    }
+    
+     @Override
+    public void update(Orcamento orcamento) {
+    
     }
 }

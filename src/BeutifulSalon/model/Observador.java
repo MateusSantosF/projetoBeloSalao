@@ -17,6 +17,8 @@ public interface Observador {
     
     public void update(Object obj);
     
+    public void update(Orcamento orcamento);
+    
     public void update(DefaultTableModel model);
     
     public void update(String valorDesconto);

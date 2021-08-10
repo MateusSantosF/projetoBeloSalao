@@ -9,6 +9,7 @@ import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Observador;
+import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalProdutosUtilizados;
 import java.sql.SQLException;
@@ -407,6 +408,11 @@ public class CadastroServico extends javax.swing.JFrame implements Observador {
 
     @Override
     public void update(ArrayList<LocalTime> horarios) {
+    }
+    
+     @Override
+    public void update(Orcamento orcamento) {
+    
     }
    
 }

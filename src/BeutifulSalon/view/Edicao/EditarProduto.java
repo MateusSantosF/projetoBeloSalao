@@ -109,25 +109,22 @@ public class EditarProduto extends javax.swing.JFrame {
         });
         jPanel26.add(jButtonCancelar);
 
-        jTextFieldNome.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setText("*Nome Produto");
 
-        jTextFieldMarca.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldMarca.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel19.setText("Marca");
 
-        jTextFieldPreco.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel26.setText("*Preço de Venda ");
 
-        jTextFieldID.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldID.setEnabled(false);
         jTextFieldID.setFocusable(false);
         jTextFieldID.setPreferredSize(new java.awt.Dimension(1, 1));

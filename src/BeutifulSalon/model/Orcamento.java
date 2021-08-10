@@ -228,6 +228,10 @@ public class Orcamento {
     public void AtualizarOrcamento(Orcamento orc) {
         new OrcamentoDAO().atualizarOrcamento(orc);
     }
+    
+    public Orcamento buscarOrcamento(long idOrcamento){
+        return new OrcamentoDAO().buscarOrcamento(idOrcamento);
+    }
 
 
 
