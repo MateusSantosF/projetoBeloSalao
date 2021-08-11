@@ -76,16 +76,14 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         if(!ag.getRealizado()){
             jCheckBoxClienteVeio.setSelected(true);  
         }
-
-     
-     
+ 
 
         try {
             jDateChooser1.setDate(formater.parse(ag.getData().format(formatterData)));
         } catch (ParseException ex) {
             Logger.getLogger(EditarAgendamento.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+        System.out.println("ID = > " + ag.getId());
         jTableServicosSolicitados.setModel(new ApresentaTabela().apresentaServicosAgendamento(jTableServicosSolicitados, ag.getId()));
 
     }
@@ -426,7 +424,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
 
     private void jButtonFinalizarEdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarEdicaoActionPerformed
 
-        boolean sucesso;
+        boolean sucesso = false;
 
         AgendamentoController ac = new AgendamentoController();
 
@@ -437,7 +435,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao converter data");
         }
-
+        
         //editar
         try {
             sucesso = ac.atualizarAgendamento(dataFormatada,
@@ -449,9 +447,10 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
                     !jCheckBoxClienteVeio.isSelected(),
                     agendamento.getId());
         } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
         }
 
-        if (true) {
+        if (sucesso) {
             JOptionPane.showMessageDialog(null, "Agendamento atualizado com sucesso");
             limparCampos();
         } else {

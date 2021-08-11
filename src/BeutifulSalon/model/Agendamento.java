@@ -126,6 +126,9 @@ public class Agendamento {
     public ArrayList<Agendamento> listarAgendamentos(LocalDate data) throws ExceptionDAO {        
         return new AgendamentoDAO().listarAgendamentos(data);
     }
+    public ArrayList<Agendamento> listarAgendamentosRealizados(LocalDate data) {
+        return new AgendamentoDAO().listarAgendamentosRealizados(data);
+    }
 
     public ArrayList<Agendamento> listarAgendamentosHoje() {
        return new AgendamentoDAO().listarAgendamentosHoje();

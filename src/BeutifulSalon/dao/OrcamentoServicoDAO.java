@@ -213,7 +213,7 @@ public class OrcamentoServicoDAO {
         String sql = "SELECT SUM(SERVICO.PRECO) AS SOMA FROM ((AGENDAMENTO INNER JOIN AGENDAMENTO_SERVICO ON AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO "
         +" AND AGENDAMENTO_SERVICO.ID_SERVICO = "+ idServico + ")" 
         +" INNER JOIN SERVICO ON SERVICO.ID_SERVICO = "+ idServico +")" 
-        +" WHERE AGENDAMENTO.DATA BETWEEN "+ inicio + " AND " + fim;
+        +" WHERE AGENDAMENTO.REALIZADO = TRUE AND AGENDAMENTO.DATA BETWEEN "+ inicio + " AND " + fim;
                 
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -264,7 +264,7 @@ public class OrcamentoServicoDAO {
                 " ON AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO" +
                 " INNER JOIN SERVICO " +
                 " ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO" +
-                " WHERE AGENDAMENTO.DATA BETWEEN ? AND ? AND SERVICO.ID_SERVICO = ?";
+                " WHERE AGENDAMENTO.REALIZADO = TRUE AND AGENDAMENTO.DATA BETWEEN ? AND ? AND SERVICO.ID_SERVICO = ?";
               
         Connection connection = null;
         PreparedStatement pStatement = null;

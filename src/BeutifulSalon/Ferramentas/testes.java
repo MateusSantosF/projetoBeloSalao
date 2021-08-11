@@ -14,6 +14,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -31,23 +32,11 @@ public class testes {
         //pegar todos orçamento servico por ano
         //pegar agendamentos por mes e verificar seus serviços 
         //pegar a quantidade mensal de um serviço e multiplicar pelo preço
-        
-          
-        LocalDate data = LocalDate.ofYearDay(2021, 1);
-    
-        //int totalDias = data.getMonth().APRIL.length(data.isLeapYear());
-        
-        ArrayList<Month> meses = new ArrayList<>();
-        
-        for(int i = 1; i <= 12; i++){
-            meses.add(Month.of(i));
-        }
-        
-        meses.forEach(c-> System.out.println(c));
-        
-        LocalDate data2 =  LocalDate.ofEpochDay(1628823599);
-        
-        System.out.println(LocalDate.now().toEpochDay() * 24 * 60 * 60 * 1000);
+         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
+         LocalDate data = LocalDate.parse("16 de ago. de 2021", formatterData);
+         
+         System.out.println(data);
+      
 
     }
 }

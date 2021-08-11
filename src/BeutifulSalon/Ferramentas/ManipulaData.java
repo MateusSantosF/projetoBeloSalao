@@ -81,6 +81,16 @@ public class ManipulaData {
 
         return tempoEmMs;
     }
+    
+    public long fimDoMes(LocalDate data, Month mes) {
+
+        LocalDate dataMes = LocalDate.of(data.getYear(), mes, 1);
+        int maximoDias = dataMes.getMonth().length(dataMes.isLeapYear());
+        LocalDate ultimoDiaDoMes = LocalDate.of(dataMes.getYear(), mes, maximoDias);
+        long tempoEmMs = ultimoDiaDoMes.toEpochDay() * 24 * 60 * 60 * 1000;
+
+        return tempoEmMs;
+    }
 
     public ArrayList<Month> meses(LocalDate data) {
 
@@ -100,15 +110,7 @@ public class ManipulaData {
         return meses;
     }
 
-    public long fimDoMes(LocalDate data, Month mes) {
-
-        LocalDate dataMes = LocalDate.of(data.getYear(), mes, 1);
-        int maximoDias = dataMes.getMonth().length(dataMes.isLeapYear());
-        LocalDate ultimoDiaDoMes = LocalDate.of(dataMes.getYear(), mes, maximoDias);
-        long tempoEmMs = ultimoDiaDoMes.toEpochDay() * 24 * 60 * 60 * 1000;
-
-        return tempoEmMs;
-    }
+    
 
     public long somaDia(LocalDateTime diaAtual, long qtdDias) {
 
@@ -135,7 +137,7 @@ public class ManipulaData {
             CabeleireiroController cc = new CabeleireiroController();
 
             //busca agendamentos do dia inserido na tela de agendamento
-            agendamentos = ag.listarAgendamentos(data);
+            agendamentos = ag.listarAgendamentosRealizados(data);
             if (agendamentos.isEmpty()) {
                 return null;
             }

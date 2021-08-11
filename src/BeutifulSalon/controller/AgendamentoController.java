@@ -6,6 +6,7 @@
 package BeutifulSalon.controller;
 
 import BeutifulSalon.Ferramentas.Valida;
+import BeutifulSalon.dao.AgendamentoDAO;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Servico;
@@ -78,7 +79,7 @@ public class AgendamentoController {
             //Horario
             LocalTime h = null;
             LocalDate dataAgendamento = null;
-            
+  
             try {
                 h = LocalTime.parse(horario, formatterHora);
                 dataAgendamento = LocalDate.parse(data, formatterData);
@@ -143,6 +144,10 @@ public class AgendamentoController {
     }
     public ArrayList<Agendamento> listarAgendamentos(LocalDate data) throws ExceptionDAO {
         return new Agendamento().listarAgendamentos(data);
+    }
+    
+     public ArrayList<Agendamento> listarAgendamentosRealizados(LocalDate data) throws ExceptionDAO{
+        return new AgendamentoDAO().listarAgendamentosRealizados(data);
     }
     
     public ArrayList<Agendamento> listarAgendamentosHoje() throws ExceptionDAO{

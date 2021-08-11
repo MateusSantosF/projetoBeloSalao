@@ -74,6 +74,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Primeiro Nome");
@@ -81,10 +82,8 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("CPF");
 
-        jTextFieldNome.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jTextFieldEmail.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,7 +91,6 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
             }
         });
 
-        jFormattedTextFieldCPF.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextFieldCPF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         try {
             jFormattedTextFieldCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));

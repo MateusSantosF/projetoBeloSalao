@@ -103,17 +103,17 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         jTableAgendamentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTableAgendamentos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Cliente", "Data", "Horario", "Status", "ID"
+                "Cliente", "Data", "Horario", "Término Estimado", "Status", "ID"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -125,9 +125,9 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         jTableAgendamentos.setRowHeight(22);
         jScrollPane1.setViewportView(jTableAgendamentos);
         if (jTableAgendamentos.getColumnModel().getColumnCount() > 0) {
-            jTableAgendamentos.getColumnModel().getColumn(4).setMinWidth(1);
-            jTableAgendamentos.getColumnModel().getColumn(4).setPreferredWidth(1);
-            jTableAgendamentos.getColumnModel().getColumn(4).setMaxWidth(1);
+            jTableAgendamentos.getColumnModel().getColumn(5).setMinWidth(1);
+            jTableAgendamentos.getColumnModel().getColumn(5).setPreferredWidth(1);
+            jTableAgendamentos.getColumnModel().getColumn(5).setMaxWidth(1);
         }
 
         jLabel3.setText("Busca por cliente");
@@ -308,14 +308,14 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         boolean sucesso = false;
         
         if(index > -1){
-            long idAgendamento = (long) jTableAgendamentos.getValueAt(index, 4);
+            long idAgendamento = (long) jTableAgendamentos.getValueAt(index, 5);
             sucesso = ag.editarAgendamento(idAgendamento);
             
             if(!sucesso){
               JOptionPane.showMessageDialog(null, "Erro ao selecionar PKAgendamento");   
             }
         }else{
-            JOptionPane.showMessageDialog(null, "Selecione um agendamento", "Agendamento inválido", ERROR);
+            JOptionPane.showMessageDialog(null, "Selecione um agendamento");
         }
     }//GEN-LAST:event_jButtonEditarMousePressed
 

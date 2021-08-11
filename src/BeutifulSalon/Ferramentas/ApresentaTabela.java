@@ -7,6 +7,7 @@ package BeutifulSalon.Ferramentas;
 
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.controller.DespesaController;
 import BeutifulSalon.controller.EstoqueController;
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.controller.ProdutoController;
@@ -14,6 +15,7 @@ import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Cliente;
+import BeutifulSalon.model.Despesa;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.OrcamentoServico;
@@ -24,6 +26,7 @@ import BeutifulSalon.view.Apresenta.ApresentaFinancas;
 import BeutifulSalon.view.Apresenta.ApresentaProduto;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -172,6 +175,7 @@ public class ApresentaTabela {
             if(servicos == null)return modelo;
             
             for(Servico s: servicos){
+      
                 modelo.addRow(new Object[]{
                     s.getNome(),
                     Dinheiro.parseString(s.getPreco()),
@@ -757,6 +761,7 @@ public class ApresentaTabela {
         model.setRowCount(0);
 
         AgendamentoController ag = new AgendamentoController();
+        ServicoController sc = new ServicoController();
         ClienteController cc = new ClienteController();
 
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
@@ -789,7 +794,22 @@ public class ApresentaTabela {
             }
 
             for (Agendamento g : agendamentos) {
-
+                
+                ArrayList<Servico> servicosAgendamento = sc.buscarServicoPeloAgendamento(g.getId());      
+                LocalTime inicioAgendamento = g.getHorario();
+                
+                LocalTime fimAgendamento = inicioAgendamento;
+                
+                int horas = 0;
+                int minutos = 0;
+                
+                for (Servico s : servicosAgendamento) {
+                    horas += s.getTempoGasto().getHour();
+                    minutos += s.getTempoGasto().getMinute();
+                }
+                fimAgendamento = fimAgendamento.plusHours(horas);
+                fimAgendamento = fimAgendamento.plusMinutes(minutos);
+                
                 Cliente cliente = new Cliente();
                 String realizado;
 
@@ -802,9 +822,9 @@ public class ApresentaTabela {
                     cliente.buscarCliente(g.getCpfCliente()).getNOME(),
                     g.getData().format(formatterData),
                     g.getHorario().format(parserHora),
+                    fimAgendamento.format(parserHora),
                     realizado,
                     g.getId()
-
                 });
             }
 
@@ -812,6 +832,49 @@ public class ApresentaTabela {
             JOptionPane.showMessageDialog(null, "Erro ao conectar com o banco " + e);
         }
         return model;
+    }
+    
+    public DefaultTableModel apresentaDespesas(JTable tabela){
+        
+        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        DespesaController dc = new DespesaController();
+        OrcamentoController oc = new OrcamentoController();
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        ArrayList<Despesa> despesas;
+        
+        try {
+            modelo.setRowCount(0);
+            despesas = dc.listarDespesas();
+            
+            if(despesas == null)return modelo;
+            
+            for(Despesa d: despesas){
+                
+                Orcamento orcamentoAtual = oc.buscarOrcamento(d.getIdOrcamento());
+                
+                String lancamento =  d.getLancameto().format(formatterData);
+                String vencimento = d.getVencimento().format(formatterData);
+                
+                String pagamento = (d.getPagamento() == null) ? "Não Pago" : d.getPagamento().format(formatterData);
+                String formaPagamento = (d.getFormaPagamento() == null) ? "--" : d.getFormaPagamento();
+                String status = d.isStatus() ? "Pagamento Realizado" : "Pendente";
+                String valorPago = Dinheiro.parseString(d.getValorPago());
+                
+                modelo.addRow(new Object[]{
+                    orcamentoAtual.getNome(),
+                    lancamento,
+                    vencimento,
+                    pagamento,
+                    formaPagamento,
+                    valorPago,
+                    status
+                });
+            }
+            
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return modelo;
     }
 
 }

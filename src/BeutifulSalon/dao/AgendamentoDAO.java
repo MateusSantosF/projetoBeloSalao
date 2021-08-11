@@ -548,6 +548,73 @@ public class AgendamentoDAO {
         
         return agendamentos;
     }
+    
+    public ArrayList<Agendamento> listarAgendamentosRealizados(LocalDate data) {
+        
+        ManipulaData datas = new ManipulaData();
+      
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
+                + " WHERE REALIZADO = TRUE AND DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data) +" ORDER BY HORARIO";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ArrayList<Agendamento> agendamentos = null;
+
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                
+                agendamentos = new ArrayList<>();
+                while(rs.next()){
+                    Agendamento ag = new Agendamento();
+                    ServicoController sc = new ServicoController();
+                                    
+                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setData(rs.getDate("DATA").toLocalDate());
+                    ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
+                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setRealizado(rs.getBoolean("REALIZADO"));
+                    
+                    try {
+                       ag.setServicos(sc.buscarServicoPeloAgendamento(rs.getLong("ID_AGENDAMENTO")));
+                    } catch (ExceptionDAO e) {
+                        JOptionPane.showMessageDialog(null, e);
+                    }
+         
+                    agendamentos.add(ag);         
+                }
+            }
+           
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro agendamentoDAO" + e);
+        }finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        
+        return agendamentos;
+    }
 
     public void atualizarAgendamento(Agendamento agendamento) throws SQLException {
         
@@ -558,6 +625,7 @@ public class AgendamentoDAO {
         String insertServicoAgendamento = "INSERT INTO AGENDAMENTO_SERVICO (ID_AGENDAMENTO, ID_SERVICO) "
                 + "VALUES ((SELECT ID_AGENDAMENTO FROM AGENDAMENTO ORDER BY ID_AGENDAMENTO DESC LIMIT 1), ?)";
 
+        System.out.println("ID => " + agendamento.getId());
         Connection connection = null;
         PreparedStatement pStatement = null;
 

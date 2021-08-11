@@ -412,7 +412,6 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             jTextFieldNome2.setEditable(false);
             jTextFieldCPF2.setEditable(false);
             limparTodosCampos();
-
         }
     }//GEN-LAST:event_jRadioButtonClienteActionPerformed
 

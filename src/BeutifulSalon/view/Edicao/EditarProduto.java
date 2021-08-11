@@ -125,6 +125,7 @@ public class EditarProduto extends javax.swing.JFrame {
         jLabel26.setText("*Preço de Venda ");
 
         jTextFieldID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldID.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextFieldID.setEnabled(false);
         jTextFieldID.setFocusable(false);
         jTextFieldID.setPreferredSize(new java.awt.Dimension(1, 1));
