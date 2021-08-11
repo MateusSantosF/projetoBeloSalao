@@ -409,7 +409,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                     jTextFieldHorario.getText(),
                     jTextFieldCPF.getText(),
                     new RecuperaTabela().recuperaServicos(jTableServicosSolicitados),
-                    calculaTotalFinal(), 
+                    calculaTotalFinal(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText())),
                     true);
 
@@ -426,38 +426,44 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
     }//GEN-LAST:event_jButtonFinalizarCompraActionPerformed
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
-        
+
         //Método para listar horários disponíveis
-        
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
-        String dataFormatada = "";
+        String dataFormatada = "0";
         try {
-            dataFormatada = formater.format(jDateChooser1.getDate());
-        } catch (Exception e) {
+            if (jDateChooser1.getDate() != null) {
+                dataFormatada = formater.format(jDateChooser1.getDate());
+
+                if (Valida.isData(dataFormatada)) {
+                    ManipulaData manipulaData = new ManipulaData();
+                    DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
+                    LocalDate dataDigitada = null;
+                    try {
+                        dataDigitada = LocalDate.parse(dataFormatada, formatterData);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Data inválida!" + e);
+                    }
+                    ArrayList<LocalTime> horariosLivres = manipulaData.recuperaHorariosDisponiveis(dataDigitada);
+                    DefaultListModel<String> model = new DefaultListModel();
+
+                    ArrayList<String> horariosFormatados = manipulaData.formataHorariosDisponiveis(horariosLivres);
+
+                    horariosFormatados.forEach(t -> {
+                        model.addElement(t);
+                    });
+
+                    jListHorarios.setModel(model);
+
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecione uma data antes.");
+            }
+
+        } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Erro ao converter data");
         }
 
-        if (Valida.isData(dataFormatada)) {
-            ManipulaData manipulaData = new ManipulaData();
-            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
-            LocalDate dataDigitada = null;
-            try {
-                dataDigitada = LocalDate.parse(dataFormatada, formatterData);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Data inválida!" + e);
-            }
-            ArrayList<LocalTime> horariosLivres = manipulaData.recuperaHorariosDisponiveis(dataDigitada);
-            DefaultListModel<String> model = new DefaultListModel();
 
-            ArrayList<String> horariosFormatados = manipulaData.formataHorariosDisponiveis(horariosLivres);
-
-            horariosFormatados.forEach(t -> {
-                model.addElement(t);
-            });
-
-            jListHorarios.setModel(model);
-
-        }
     }//GEN-LAST:event_jLabel6MousePressed
 
     private void limparCampos() {
@@ -512,7 +518,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
             JOptionPane.showMessageDialog(null, "Erro ao calcular total " + e);
         }
     }
-    
+
     private long calculaTotalFinal() {
 
         long valorTotal = 0;
@@ -531,7 +537,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao calcular total " + e);
         }
-        
+
         return valorTotal;
     }
 

@@ -189,22 +189,28 @@ public class ManipulaData {
                     horas += s.getTempoGasto().getHour();
                     minutos += s.getTempoGasto().getMinute();
                 }
-
+ 
                 //soma horas e minutos
+           
                 agendamentoAtual = agendamentoAtual.plusHours(horas);
                 agendamentoAtual = agendamentoAtual.plusMinutes(minutos);
-
+              
                 //verifica se o tempo dos serviços do agendamento é maior que o fim do expediente
                 if (agendamentoAtual.isAfter(saida)) {
-
+      
                     break;
                 }
                 //System.out.println("Horario agendamento somado " + agendamentoAtual);
                 horarioEntrada = agendamentoAtual;
                 horarios.add(horarioEntrada);
             }
+            if(!horarioEntrada.isAfter(saida)){
+                LocalTime ultimoHorario =  saida.minusHours(horarios.get(horarios.size() - 1).getHour()).minusMinutes(horarios.get(horarios.size() - 1).getMinute());
+                horarios.add(ultimoHorario);
+            }
 
             horarios.add(0, entrada);
+            
 
         } catch (ExceptionDAO ex) {
             Logger.getLogger(ManipulaData.class.getName()).log(Level.SEVERE, null, ex);

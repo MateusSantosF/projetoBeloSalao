@@ -8,6 +8,7 @@ package BeutifulSalon.view.modais;
 import BeutifulSalon.view.Cadastros.CadastroAgendamento;
 import BeutifulSalon.view.Cadastros.CadastroProduto;
 import BeutifulSalon.view.Cadastros.CadastroCliente;
+import BeutifulSalon.view.Cadastros.CadastroDespesa;
 import BeutifulSalon.view.Cadastros.CadastroFluxoDeCaixa;
 import BeutifulSalon.view.Cadastros.CadastroOrcamentoPrevisto;
 import BeutifulSalon.view.Cadastros.CadastroServico;
@@ -60,7 +61,7 @@ public class NovoRegistro extends javax.swing.JFrame {
         jComboBoxTipoRegistro.setBackground(new java.awt.Color(255, 255, 255));
         jComboBoxTipoRegistro.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jComboBoxTipoRegistro.setForeground(new java.awt.Color(34, 34, 34));
-        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente", "Fluxo de Caixa", "Serviço", "Agendamento" }));
+        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente", "Venda", "Serviço", "Agendamento", "Despesa" }));
         jComboBoxTipoRegistro.setBorder(null);
         jComboBoxTipoRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jComboBoxTipoRegistro.addActionListener(new java.awt.event.ActionListener() {
@@ -150,6 +151,10 @@ public class NovoRegistro extends javax.swing.JFrame {
                 break;
             case 5:
                 new CadastroAgendamento().setVisible(true);
+                dispose();
+                break;
+            case 6:
+                new CadastroDespesa().setVisible(true);
                 dispose();
                 break;
 
