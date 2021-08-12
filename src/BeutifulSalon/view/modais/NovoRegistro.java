@@ -61,7 +61,7 @@ public class NovoRegistro extends javax.swing.JFrame {
         jComboBoxTipoRegistro.setBackground(new java.awt.Color(255, 255, 255));
         jComboBoxTipoRegistro.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jComboBoxTipoRegistro.setForeground(new java.awt.Color(34, 34, 34));
-        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente", "Venda", "Serviço", "Agendamento", "Despesa" }));
+        jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente", "Venda | Compra", "Serviço", "Agendamento", "Despesa" }));
         jComboBoxTipoRegistro.setBorder(null);
         jComboBoxTipoRegistro.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jComboBoxTipoRegistro.addActionListener(new java.awt.event.ActionListener() {

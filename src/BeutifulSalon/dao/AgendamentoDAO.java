@@ -618,7 +618,7 @@ public class AgendamentoDAO {
 
     public void atualizarAgendamento(Agendamento agendamento) throws SQLException {
         
-         String insertAgendamento = "UPDATE AGENDAMENTO SET DATA = ?, HORARIO = ? , CPF_CLIENTE = ? ,"
+        String insertAgendamento = "UPDATE AGENDAMENTO SET DATA = ?, HORARIO = ? , CPF_CLIENTE = ? ,"
                  + " REALIZADO = ? , DESCONTO = ? , TOTAL = ?  WHERE ID_AGENDAMENTO = ?";
          
         String deletaServicoAgendamentoAntigo = "DELETE FROM AGENDAMENTO_SERVICO WHERE ID_AGENDAMENTO = ?";

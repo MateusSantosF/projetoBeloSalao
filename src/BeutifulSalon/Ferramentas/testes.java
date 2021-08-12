@@ -14,9 +14,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -35,7 +37,7 @@ public class testes {
          DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
          LocalDate data = LocalDate.parse("16 de ago. de 2021", formatterData);
          
-         System.out.println(data);
+
       
 
     }

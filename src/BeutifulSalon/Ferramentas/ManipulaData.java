@@ -17,6 +17,7 @@ import java.time.Month;
 import java.time.Year;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -59,6 +60,10 @@ public class ManipulaData {
         long meiaNoiteMs = meiaNoiteAmannha.toLocalDate().toEpochDay() * 24 * 60 * 60 * 1000;
 
         return meiaNoiteMs;
+    }
+    
+    public Date localDateToDate(LocalDate data){
+        return java.sql.Date.valueOf(data);
     }
 
     public long MeiaNoiteAmanha() {

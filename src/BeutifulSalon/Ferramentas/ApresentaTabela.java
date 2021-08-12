@@ -834,7 +834,7 @@ public class ApresentaTabela {
         return model;
     }
     
-    public DefaultTableModel apresentaDespesas(JTable tabela){
+    public DefaultTableModel apresentaDespesas(JTable tabela, String ano){
         
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         DespesaController dc = new DespesaController();
@@ -844,10 +844,109 @@ public class ApresentaTabela {
         
         try {
             modelo.setRowCount(0);
-            despesas = dc.listarDespesas();
             
-            if(despesas == null)return modelo;
+            if(ano == null){
+                despesas = dc.listarDespesas();
+            }else{
+                despesas = dc.listarDespesas(ano);
+            }
             
+            
+            if(despesas == null){
+    
+                return modelo;
+            }
+            
+            for(Despesa d: despesas){
+                
+                Orcamento orcamentoAtual = oc.buscarOrcamento(d.getIdOrcamento());
+                
+                String lancamento =  d.getLancameto().format(formatterData);
+                String vencimento = d.getVencimento().format(formatterData);
+                
+                String pagamento = (d.getPagamento() == null) ? "Não Pago" : d.getPagamento().format(formatterData);
+                String formaPagamento = (d.getFormaPagamento() == null) ? "--" : d.getFormaPagamento();
+                String status = d.isStatus() ? "Pagamento Realizado" : "Pendente";
+                String valorPago = Dinheiro.parseString(d.getValorPago());
+                
+                modelo.addRow(new Object[]{
+                    orcamentoAtual.getNome(),
+                    lancamento,
+                    vencimento,
+                    pagamento,
+                    formaPagamento,
+                    valorPago,
+                    status,
+                    d.getIdDespesa()
+                });
+            }
+            
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return modelo;
+    }
+    
+    public DefaultTableModel apresentaDespesasVencimento(JTable tabela, int mes){
+        
+        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        DespesaController dc = new DespesaController();
+        OrcamentoController oc = new OrcamentoController();
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        ArrayList<Despesa> despesas;
+        
+        try {
+            modelo.setRowCount(0);
+            
+             despesas = dc.listarDespesasVencimento(mes);
+                      
+            if(despesas == null){ return modelo; }
+           
+            for(Despesa d: despesas){
+                
+                Orcamento orcamentoAtual = oc.buscarOrcamento(d.getIdOrcamento());
+                
+                String lancamento =  d.getLancameto().format(formatterData);
+                String vencimento = d.getVencimento().format(formatterData);
+                
+                String pagamento = (d.getPagamento() == null) ? "Não Pago" : d.getPagamento().format(formatterData);
+                String formaPagamento = (d.getFormaPagamento() == null) ? "--" : d.getFormaPagamento();
+                String status = d.isStatus() ? "Pagamento Realizado" : "Pendente";
+                String valorPago = Dinheiro.parseString(d.getValorPago());
+                
+                modelo.addRow(new Object[]{
+                    orcamentoAtual.getNome(),
+                    lancamento,
+                    vencimento,
+                    pagamento,
+                    formaPagamento,
+                    valorPago,
+                    status,
+                    d.getIdDespesa()
+                });
+            }
+            
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return modelo;
+    }
+    
+    public DefaultTableModel apresentaDespesasLancamento(JTable tabela, int mes){
+        
+        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        DespesaController dc = new DespesaController();
+        OrcamentoController oc = new OrcamentoController();
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        ArrayList<Despesa> despesas;
+        
+        try {
+            modelo.setRowCount(0);
+            
+             despesas = dc.listarDespesasLancamento(mes);
+                      
+            if(despesas == null){ return modelo; }
+           
             for(Despesa d: despesas){
                 
                 Orcamento orcamentoAtual = oc.buscarOrcamento(d.getIdOrcamento());

@@ -124,6 +124,8 @@ public class Despesa {
         this.idOrcamento = idOrcamento;
     }
     
+    
+    
     public void cadastrarDespesa(Despesa despesa) throws ExceptionDAO{
         new DespesaDAO().cadastrarDespesa(despesa);
     }
@@ -133,6 +135,26 @@ public class Despesa {
     }
     
     public ArrayList<Despesa> listarDespesas() throws ExceptionDAO{
-        return  new DespesaDAO().listarDespesasAnoAtual();
+        return  new DespesaDAO().listarDespesas();
+    }
+    
+    public ArrayList<Despesa> listarDespesas(String ano) throws ExceptionDAO{
+        return  new DespesaDAO().listarDespesas(ano);
+    }
+
+    public ArrayList<Despesa> listarDespesasVencimento(long inicioMes, long fimMes) {
+        return new DespesaDAO().listarDespesasVencimento(inicioMes, fimMes);
+    }
+    
+    public ArrayList<Despesa> listarDespesasLancamento(long inicioMes, long fimMes) {
+        return new DespesaDAO().listarDespesasLancamento(inicioMes, fimMes);
+    }
+
+    public Despesa listarDespesa(long idDespesa) {
+        return new DespesaDAO().listarDespesa(idDespesa);
+    }
+
+    public void atualizarDespesa(Despesa despesa) throws ExceptionDAO{
+       new DespesaDAO().atualizarDespesa(despesa);
     }
 }

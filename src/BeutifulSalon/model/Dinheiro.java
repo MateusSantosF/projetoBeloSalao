@@ -34,6 +34,10 @@ public class Dinheiro {
         return VALOR.multiply(new BigDecimal(100)).longValue();
     }
     
+    public static long parseDecimal(long VALOR){
+        return new BigDecimal(VALOR).divide(new BigDecimal(100)).longValue();
+    }
+    
     public static BigDecimal parseBigDecimal(Long VALOR){
         
         return new BigDecimal(VALOR).divide(new BigDecimal(100));
