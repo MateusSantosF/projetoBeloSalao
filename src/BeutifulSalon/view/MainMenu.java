@@ -36,7 +36,7 @@ public class MainMenu extends javax.swing.JFrame {
         new GerenciadorJPanel(painelPrincipal, new Dashboard());
         
         try {
-          URL iconURL = getClass().getResource("/imagens/icon-add.png") ;
+          URL iconURL = getClass().getResource("/imagens/icon-barraMenu.jpeg") ;
           ImageIcon icon = new ImageIcon(iconURL);
           this.setIconImage(icon.getImage());
         } catch (Exception e) {

@@ -208,6 +208,10 @@ public class DespesaController {
         return new Despesa().listarDespesa(idDespesa);
     }
     
+    public Despesa buscarDespesaPaga(LocalDate ano, Month mes, long idOrcamento) throws ExceptionDAO{
+        return new Despesa().buscarDespesaPaga(ano,mes,idOrcamento);
+    }
+    
     public boolean editarDespesa(long idDespesa) throws ExceptionDAO{
         
         try {

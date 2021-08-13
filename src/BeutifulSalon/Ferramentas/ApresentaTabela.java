@@ -240,6 +240,141 @@ public class ApresentaTabela {
         return modelo;
     }
     
+    public DefaultTableModel OrcamentoDespesaComparado(JTable tabela, String anoReferente) {
+
+        DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
+        modelo.setRowCount(0);
+        ManipulaData manipulaData = new ManipulaData();
+        OrcamentoController oc = new OrcamentoController();
+        DespesaController dc = new DespesaController();
+        ArrayList<Orcamento> orcamentos = null;
+
+        LocalDate ano = null;
+        try {
+            ano = LocalDate.ofYearDay(Integer.parseInt(anoReferente), 1);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Erro ao retornar ano" + e);
+        }
+
+        try {
+            orcamentos = oc.listarOrcamentos(anoReferente);
+            
+            if(orcamentos == null) return modelo;
+            
+            for (Orcamento o : orcamentos) {
+                double janeiro = 0;
+                double fevereiro = 0;
+                double marco = 0;
+                double abril = 0;
+                double maio = 0;
+                double junho = 0;
+                double julho = 0;
+                double agosto = 0;
+                double setembro = 0;
+                double outubro = 0;
+                double novembro = 0;
+                double dezembro = 0;
+
+                for (Month m : manipulaData.meses(ano)) {
+                    switch (m) {
+                        case JANUARY:
+                            Long realizadoJan = dc.buscarDespesaPaga(ano, m.JANUARY, o.getId_orcamento()).getValorPago();
+                            Long previstoJan = o.getJan();
+
+                            janeiro = (realizadoJan.doubleValue() / previstoJan.doubleValue()) * 100;
+                         
+                            break;
+                        case FEBRUARY:
+                            Long realizadoFev = dc.buscarDespesaPaga(ano, m.FEBRUARY, o.getId_orcamento()).getValorPago();
+                            Long previstoFev = o.getFev();
+
+                            fevereiro = (realizadoFev.doubleValue() / previstoFev.doubleValue()) * 100;
+                            
+                            break;
+                        case MARCH:
+                            Long realizadoMar = dc.buscarDespesaPaga(ano, m.MARCH, o.getId_orcamento()).getValorPago();
+                            Long previstoMar = o.getMar();
+
+                             marco = (realizadoMar.doubleValue() / previstoMar.doubleValue()) * 100;
+   
+                            break;
+                        case APRIL:
+                            Long realizadoAbr = dc.buscarDespesaPaga(ano, m.APRIL, o.getId_orcamento()).getValorPago();
+                            Long previstoAbr = o.getAbr();
+
+                            abril = (realizadoAbr.doubleValue() / previstoAbr.doubleValue()) * 100;
+                     
+                            break;
+                        case MAY:
+                            
+                            Long realizadoMai = dc.buscarDespesaPaga(ano, m.MAY, o.getId_orcamento()).getValorPago();
+                            Long previstoMai = o.getMai();
+                            maio  = (realizadoMai.doubleValue() / previstoMai.doubleValue()) * 100;
+                          
+                            break;
+                        case JUNE:
+                            Long realizadoJun = dc.buscarDespesaPaga(ano, m.JUNE, o.getId_orcamento()).getValorPago();
+                            Long previstoJun = o.getJun();
+                            junho = (realizadoJun.doubleValue() / previstoJun.doubleValue()) * 100;
+ 
+                            break;
+                        case JULY:
+                            Long realizadoJul = dc.buscarDespesaPaga(ano, m.JULY, o.getId_orcamento()).getValorPago();
+                            Long previstoJul = o.getJul();
+                            julho = (realizadoJul.doubleValue() / previstoJul.doubleValue()) * 100;
+                            
+                            break;
+                        case AUGUST:
+                            Long realizadoAgo = dc.buscarDespesaPaga(ano, m.AUGUST, o.getId_orcamento()).getValorPago();
+                            Long previstoAgo = o.getAgo();
+                            agosto = (realizadoAgo.doubleValue() / previstoAgo.doubleValue()) * 100;
+         
+                            break;
+                        case SEPTEMBER:
+                            Long realizadoSet = dc.buscarDespesaPaga(ano, m.SEPTEMBER, o.getId_orcamento()).getValorPago();
+                            Long previstoSet = o.getSet();
+                            setembro = (realizadoSet.doubleValue() / previstoSet.doubleValue()) * 100;
+                            break;
+                        case OCTOBER:
+                            Long realizadoOut = dc.buscarDespesaPaga(ano, m.OCTOBER, o.getId_orcamento()).getValorPago();
+                            Long previstoOut = o.getOut();
+                            setembro = (realizadoOut.doubleValue() / previstoOut.doubleValue()) * 100;
+                            break;
+                        case NOVEMBER:
+                            Long realizadoNov = dc.buscarDespesaPaga(ano, m.NOVEMBER, o.getId_orcamento()).getValorPago();
+                            Long previstoNov = o.getNov();
+                            novembro = (realizadoNov.doubleValue() / previstoNov.doubleValue()) * 100;
+                            break;
+                        case DECEMBER:
+                            Long realizadoDez = dc.buscarDespesaPaga(ano, m.DECEMBER, o.getId_orcamento()).getValorPago();
+                            Long previstoDez = o.getDez();
+                            novembro = (realizadoDez.doubleValue() / previstoDez.doubleValue()) * 100;
+                            break;
+                    }
+                }
+                 modelo.addRow(new Object[]{
+                    o.getNome(),
+                    String.format("%.2f", janeiro) + "%",
+                    String.format("%.2f", fevereiro) + "%",
+                    String.format("%.2f", marco) + "%",
+                    String.format("%.2f", abril) + "%",
+                    String.format("%.2f", maio) + "%",
+                    String.format("%.2f", junho) + "%",
+                    String.format("%.2f", julho) + "%",
+                    String.format("%.2f", agosto) + "%",
+                    String.format("%.2f", setembro) + "%",
+                    String.format("%.2f", outubro) + "%",
+                    String.format("%.2f", novembro) + "%",
+                    String.format("%.2f", dezembro) + "%"
+                });
+            }
+
+        } catch (ExceptionDAO e) {
+        }
+
+        return modelo;
+    }
+    
     public DefaultTableModel OrcamentoServicoRealizado(JTable tabela, String anoReferente){
               
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();

@@ -84,20 +84,22 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(61, 61, 61)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(84, 84, 84))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(636, 636, 636))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addComponent(jLabel1)
                 .addGap(27, 27, 27)
                 .addComponent(jLabel2)
-                .addGap(36, 36, 36))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jTableAgendamentos.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
@@ -153,6 +155,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
             }
         });
 
+        jRadioButtonHoje.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButtonHoje);
         jRadioButtonHoje.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jRadioButtonHoje.setText("Hoje");
@@ -162,6 +165,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
             }
         });
 
+        jRadioButtonAmanha.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButtonAmanha);
         jRadioButtonAmanha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jRadioButtonAmanha.setText("Amanhã");
@@ -171,6 +175,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
             }
         });
 
+        jRadioButtonSemana.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButtonSemana);
         jRadioButtonSemana.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jRadioButtonSemana.setText("1 semana");
@@ -180,6 +185,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
             }
         });
 
+        jRadioButtonTodos.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButtonTodos);
         jRadioButtonTodos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jRadioButtonTodos.setSelected(true);
@@ -190,6 +196,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
             }
         });
 
+        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jRadioButton1.setText("Não realizados");
@@ -250,8 +257,8 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
                                 .addComponent(jRadioButton1)
                                 .addGap(18, 18, 18)
                                 .addComponent(jRadioButtonTodos))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 8, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1))
+                        .addGap(8, 8, 8)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(278, 278, 278)
@@ -277,12 +284,12 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
                     .addComponent(jLabelBuscarCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
     }// </editor-fold>//GEN-END:initComponents
 

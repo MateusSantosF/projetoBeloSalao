@@ -623,7 +623,7 @@ public class AgendamentoDAO {
          
         String deletaServicoAgendamentoAntigo = "DELETE FROM AGENDAMENTO_SERVICO WHERE ID_AGENDAMENTO = ?";
         String insertServicoAgendamento = "INSERT INTO AGENDAMENTO_SERVICO (ID_AGENDAMENTO, ID_SERVICO) "
-                + "VALUES ((SELECT ID_AGENDAMENTO FROM AGENDAMENTO ORDER BY ID_AGENDAMENTO DESC LIMIT 1), ?)";
+                + "VALUES (?, ?)";
 
         System.out.println("ID => " + agendamento.getId());
         Connection connection = null;
@@ -656,7 +656,8 @@ public class AgendamentoDAO {
 
                     for (Servico s : servicos) {
                         pStatement = connection.prepareStatement(insertServicoAgendamento);
-                        pStatement.setLong(1, s.getId());
+                        pStatement.setLong(1, agendamento.getId());
+                        pStatement.setLong(2, s.getId());
                         pStatement.executeUpdate();
                     }
 

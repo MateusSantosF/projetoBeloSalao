@@ -102,7 +102,13 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTableComparativoDespesas = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
+        jTextFieldAno5 = new javax.swing.JFormattedTextField();
+        jLabelSearch4 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableLancamentos = new javax.swing.JTable();
@@ -139,6 +145,9 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        jTabbed.setBackground(new java.awt.Color(255, 255, 255));
         jTabbed.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jTabbedStateChanged(evt);
@@ -154,6 +163,8 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                 jTabbedPropertyChange(evt);
             }
         });
+
+        ServicosRealizados.setBackground(new java.awt.Color(255, 255, 255));
 
         jScrollPane5.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane5.setBorder(null);
@@ -246,8 +257,8 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(116, 116, 116)
-                .addComponent(jLabel8)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(655, 655, 655))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,7 +276,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             .addGroup(ServicosRealizadosLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(ServicosRealizadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(ServicosRealizadosLayout.createSequentialGroup()
                         .addGroup(ServicosRealizadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
@@ -292,6 +303,8 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         );
 
         jTabbed.addTab("Serviços Realizados", ServicosRealizados);
+
+        ComparativoServico.setBackground(new java.awt.Color(255, 255, 255));
 
         jScrollPane4.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane4.setBorder(null);
@@ -373,7 +386,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("Comparativo Realizado x Previsto");
+        jLabel7.setText("Comparativo de Serviços Realizados");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -381,7 +394,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(159, 159, 159)
-                .addComponent(jLabel7)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 668, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
@@ -399,7 +412,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ComparativoServicoLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(ComparativoServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1065, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1109, Short.MAX_VALUE)
                     .addGroup(ComparativoServicoLayout.createSequentialGroup()
                         .addGroup(ComparativoServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
@@ -428,7 +441,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
         jTabbed.addTab("Comparativo Serviços", ComparativoServico);
 
-        DespesaPrevista.setBackground(new java.awt.Color(243, 244, 245));
+        DespesaPrevista.setBackground(new java.awt.Color(255, 255, 255));
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setBorder(null);
@@ -550,20 +563,22 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(117, 117, 117)
+                .addGap(111, 111, 111)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(334, 334, 334)))
+                .addGap(516, 516, 516))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(36, 36, 36)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addContainerGap(93, Short.MAX_VALUE))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout DespesaPrevistaLayout = new javax.swing.GroupLayout(DespesaPrevista);
@@ -572,9 +587,9 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             DespesaPrevistaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(DespesaPrevistaLayout.createSequentialGroup()
                 .addGap(255, 255, 255)
-                .addComponent(jButtonEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                .addComponent(jButtonEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(121, 121, 121)
-                .addComponent(jButtonExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                .addComponent(jButtonExcluir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(262, 262, 262))
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DespesaPrevistaLayout.createSequentialGroup()
@@ -612,7 +627,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
         jTabbed.addTab("Despesas Previstas", DespesaPrevista);
 
-        ServicoPrevisto.setBackground(new java.awt.Color(243, 244, 245));
+        ServicoPrevisto.setBackground(new java.awt.Color(255, 255, 255));
 
         jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane3.setBorder(null);
@@ -739,20 +754,22 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(108, 108, 108)
+                .addGap(102, 102, 102)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(472, 472, 472)))
+                .addGap(387, 387, 387))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(31, 31, 31)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout ServicoPrevistoLayout = new javax.swing.GroupLayout(ServicoPrevisto);
@@ -761,12 +778,12 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             ServicoPrevistoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ServicoPrevistoLayout.createSequentialGroup()
                 .addGap(275, 275, 275)
-                .addComponent(jButtonEditar1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                .addComponent(jButtonEditar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(81, 81, 81)
-                .addComponent(jButtonExcluir1, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                .addComponent(jButtonExcluir1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(282, 282, 282))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ServicoPrevistoLayout.createSequentialGroup()
-                .addContainerGap(912, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(ServicoPrevistoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addGroup(ServicoPrevistoLayout.createSequentialGroup()
@@ -801,23 +818,142 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
         jTabbed.addTab("Serviços Previstos", ServicoPrevisto);
 
-        jLabel12.setText("Por favor, não apaguem essa aba. Vou deixá-lá aqui para fazer minha parte e evitar conflitos de merge com o git.");
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jScrollPane6.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane6.setBorder(null);
+        jScrollPane6.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane6.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane6.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane6.setAutoscrolls(true);
+        jScrollPane6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jScrollPane6.setPreferredSize(new java.awt.Dimension(1011, 80));
+
+        jTableComparativoDespesas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Nome", "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro", "id_orcamento"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTableComparativoDespesas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTableComparativoDespesas.setGridColor(new java.awt.Color(34, 34, 34));
+        jTableComparativoDespesas.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        jTableComparativoDespesas.setShowGrid(true);
+        jScrollPane6.setViewportView(jTableComparativoDespesas);
+        if (jTableComparativoDespesas.getColumnModel().getColumnCount() > 0) {
+            jTableComparativoDespesas.getColumnModel().getColumn(0).setPreferredWidth(120);
+            jTableComparativoDespesas.getColumnModel().getColumn(13).setMinWidth(1);
+            jTableComparativoDespesas.getColumnModel().getColumn(13).setMaxWidth(1);
+        }
+
+        jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel12.setText("Busca por Ano");
+
+        jTextFieldAno5.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y"))));
+
+        jLabelSearch4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconLupa.png"))); // NOI18N
+        jLabelSearch4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabelSearch4MousePressed(evt);
+            }
+        });
+
+        jPanel9.setBackground(new java.awt.Color(48, 63, 79));
+
+        jLabel17.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel17.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Comparativo de Despesas");
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(103, 103, 103)
+                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(516, 516, 516))
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jLabel17)
+                .addContainerGap(72, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 739, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(288, Short.MAX_VALUE))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jTextFieldAno5, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelSearch4)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 1109, Short.MAX_VALUE)
+                        .addGap(22, 22, 22))))
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(83, 83, 83)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(381, Short.MAX_VALUE))
+                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldAno5, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelSearch4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                .addGap(46, 46, 46))
         );
 
         jTabbed.addTab("Comparativo Despesas", jPanel2);
@@ -924,23 +1060,24 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Confira todos os Lançamentos Realizados");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(jLabel11)
-                .addContainerGap(263, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 1147, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(39, 39, 39)
                 .addComponent(jLabel11)
-                .addContainerGap(134, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -985,11 +1122,12 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                             .addComponent(jLabel14)
                             .addComponent(jLabel13))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBoxLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldAno4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscaPorAno4))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBuscaPorAno4)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jComboBoxLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBoxVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldAno4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(37, Short.MAX_VALUE))
@@ -1195,6 +1333,8 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                 listarOrcamentoServico();
                 break;
             case 4:
+             jTableComparativoDespesas.setModel(new ApresentaTabela().OrcamentoDespesaComparado(jTableComparativoDespesas, ano));
+
                 break;
             case 5:
                 listarDespesas();
@@ -1284,6 +1424,22 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButtonEditar2ActionPerformed
 
+    private void jLabelSearch4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearch4MousePressed
+        
+        if (jTextFieldAno5.getText().equals("")) {
+            String ano = "";
+            try {
+                ano = String.valueOf(LocalDate.now().getYear());
+            } catch (Exception e) {
+
+            }
+            jTableComparativoDespesas.setModel(new ApresentaTabela().OrcamentoDespesaComparado(jTableComparativoDespesas, ano));
+
+        } else {
+           jTableComparativoDespesas.setModel(new ApresentaTabela().OrcamentoDespesaComparado(jTableComparativoDespesas, jTextFieldAno5.getText()));
+        }
+    }//GEN-LAST:event_jLabelSearch4MousePressed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ComparativoServico;
@@ -1305,6 +1461,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1317,6 +1474,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private javax.swing.JLabel jLabelSearch1;
     private javax.swing.JLabel jLabelSearch2;
     private javax.swing.JLabel jLabelSearch3;
+    private javax.swing.JLabel jLabelSearch4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -1326,12 +1484,15 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JTabbedPane jTabbed;
+    private javax.swing.JTable jTableComparativoDespesas;
     private javax.swing.JTable jTableConsultaOrcamento;
     private javax.swing.JTable jTableConsultaOrcamentoServico;
     private javax.swing.JTable jTableConsultaServicoRealizado;
@@ -1342,5 +1503,6 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private javax.swing.JFormattedTextField jTextFieldAno2;
     private javax.swing.JFormattedTextField jTextFieldAno3;
     private javax.swing.JFormattedTextField jTextFieldAno4;
+    private javax.swing.JFormattedTextField jTextFieldAno5;
     // End of variables declaration//GEN-END:variables
 }
