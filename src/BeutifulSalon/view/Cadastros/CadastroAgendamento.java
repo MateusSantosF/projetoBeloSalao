@@ -444,7 +444,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                         JOptionPane.showMessageDialog(null, "Data inválida!" + e);
                     }
                     ArrayList<LocalTime> horariosLivres = manipulaData.recuperaHorariosDisponiveis(dataDigitada);
-                    DefaultListModel<String> model = new DefaultListModel();
+                    DefaultListModel<String> model = new DefaultListModel<String>();
 
                     ArrayList<String> horariosFormatados = manipulaData.formataHorariosDisponiveis(horariosLivres);
 
