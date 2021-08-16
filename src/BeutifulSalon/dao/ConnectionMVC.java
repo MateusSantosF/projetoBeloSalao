@@ -29,19 +29,20 @@ public class ConnectionMVC {
 
         try {
             // recupera path de onde o .jar foi executado para indicar caminho do banco
-            //String path = ConnectionMVC.class.getProtectionDomain().getCodeSource().getLocation().getPath();
-            //String decodedPath = URLDecoder.decode(path, "UTF-8");
-            //String caminhoBanco = decodedPath.replace("BeutifulSalon.jar", "BancoDeDados/beutifulsalondb.db");
-            //conn = DriverManager.getConnection("jdbc:sqlite:" + caminhoBanco);
+            String path = ConnectionMVC.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+           String decodedPath = URLDecoder.decode(path, "UTF-8");
+            String caminhoBanco = decodedPath.replace("BeutifulSalon.jar", "BancoDeDados/beutifulsalondb.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:" + caminhoBanco);
+            
             //UTILIZAR ENQUANTO NO NETBEANS
-            conn = DriverManager.getConnection("jdbc:sqlite:src/BancoDeDados/beutifulsalondb.db");
+            //conn = DriverManager.getConnection("jdbc:sqlite:src/BancoDeDados/beutifulsalondb.db");
 
-           } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "erro: " + e);
-           }
-        //} catch (UnsupportedEncodingException ex) {
-            //Logger.getLogger(ConnectionMVC.class.getName()).log(Level.SEVERE, null, ex);
-        //}
+            //} catch (SQLException e) {
+            //JOptionPane.showMessageDialog(null, "erro: " + e);
+            //}
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(ConnectionMVC.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return conn;
     }
 

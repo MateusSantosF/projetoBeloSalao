@@ -31,9 +31,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
     }
 
-    public void buscarCep(String cep) {
+    public void buscarCep(String cepDigitado) {
         String json;
-
+        String cep = cepDigitado.replace("-","");
         try {
             URL url = new URL("http://viacep.com.br/ws/" + cep + "/json");
             URLConnection urlConnection = url.openConnection();
@@ -103,10 +103,10 @@ public class CadastroCliente extends javax.swing.JFrame {
         jTextFieldTelefone = new javax.swing.JFormattedTextField();
         jPanelCep1 = new javax.swing.JPanel();
         jPanel21 = new javax.swing.JPanel();
-        jTextFieldCep = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         jTextFieldRua = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
+        jFormattedTextFieldCep = new javax.swing.JFormattedTextField();
         jPanel22 = new javax.swing.JPanel();
         jTextFieldCidade = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
@@ -152,10 +152,11 @@ public class CadastroCliente extends javax.swing.JFrame {
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                    .addComponent(jLabel18))
-                .addGap(22, 22, 22))
+                .addComponent(jLabel18)
+                .addContainerGap(233, Short.MAX_VALUE))
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextFieldNome))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,16 +185,18 @@ public class CadastroCliente extends javax.swing.JFrame {
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(25, 25, 25)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19)
-                    .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
-                .addGap(50, 50, 50))
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(18, Short.MAX_VALUE)
                 .addComponent(jLabel19)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -260,10 +263,11 @@ public class CadastroCliente extends javax.swing.JFrame {
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
-                    .addComponent(jLabel21))
-                .addContainerGap())
+                .addComponent(jLabel21)
+                .addContainerGap(238, Short.MAX_VALUE))
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextFieldEmail))
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,6 +356,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jTextFieldTelefone.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldTelefone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
@@ -384,24 +389,6 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jPanel21.setBackground(new java.awt.Color(243, 244, 245));
 
-        jTextFieldCep.setBackground(new java.awt.Color(255, 255, 255));
-        jTextFieldCep.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jTextFieldCep.setToolTipText("Informe o CEP");
-        jTextFieldCep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
-        jTextFieldCep.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                aguardeCamposCEP(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                limparCamposPerdeuFoco(evt);
-            }
-        });
-        jTextFieldCep.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldCepKeyReleased(evt);
-            }
-        });
-
         jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel25.setText("CEP");
 
@@ -413,34 +400,52 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel26.setText("Rua");
 
+        jFormattedTextFieldCep.setBackground(new java.awt.Color(255, 255, 255));
+        jFormattedTextFieldCep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        try {
+            jFormattedTextFieldCep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextFieldCep.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFormattedTextFieldCep.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jFormattedTextFieldCep.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jFormattedTextFieldCepKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel21Layout = new javax.swing.GroupLayout(jPanel21);
         jPanel21.setLayout(jPanel21Layout);
         jPanel21Layout.setHorizontalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel21Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldCep, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                    .addComponent(jLabel25))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel25))
+                    .addGroup(jPanel21Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jFormattedTextFieldCep, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)))
+                .addGap(16, 16, 16)
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel21Layout.createSequentialGroup()
                         .addComponent(jLabel26)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 118, Short.MAX_VALUE))
                     .addComponent(jTextFieldRua, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel21Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel25)
                     .addComponent(jLabel26))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldCep, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldRua, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldRua, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                    .addComponent(jFormattedTextFieldCep))
                 .addContainerGap())
         );
 
@@ -470,22 +475,22 @@ public class CadastroCliente extends javax.swing.JFrame {
             .addGroup(jPanel22Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel27)
-                    .addComponent(jTextFieldBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jTextFieldBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(jLabel27))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel28))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(jLabel28)
+                    .addComponent(jTextFieldCidade, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                .addGap(21, 21, 21))
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel22Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel28)
-                    .addComponent(jLabel27))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel27)
+                    .addComponent(jLabel28))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -514,18 +519,18 @@ public class CadastroCliente extends javax.swing.JFrame {
         jPanel24Layout.setHorizontalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel24Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(22, 22, 22)
                 .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel29)
-                    .addComponent(jTextFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(142, Short.MAX_VALUE))
+                    .addComponent(jTextFieldNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE))
+                .addGap(126, 126, 126))
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel24Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addComponent(jLabel29)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -599,7 +604,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelCep1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53)
-                .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
                 .addGap(58, 58, 58))
         );
 
@@ -622,7 +627,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                     jTextFieldSobrenome.getText(),
                     jTextFieldEmail.getText().toLowerCase(),
                     jFormattedTextFieldDataNasc.getText(),
-                    jTextFieldCep.getText(),
+                    jFormattedTextFieldCPF.getText(),
                     jTextFieldBairro.getText(),
                     jTextFieldRua.getText(),
                     jTextFieldCidade.getText().toUpperCase(),
@@ -643,25 +648,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCadastrar
 
-    private void jTextFieldCepKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCepKeyReleased
-        jTextFieldRua.setText("aguarde...");
-        jTextFieldBairro.setText("aguarde...");
-        jTextFieldCidade.setText("...");
-
-        if (jTextFieldCep.getText().length() == 8) {
-            buscarCep(jTextFieldCep.getText());
-        }
-    }//GEN-LAST:event_jTextFieldCepKeyReleased
-
     private void jTextFieldNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNumeroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNumeroActionPerformed
-
-    private void aguardeCamposCEP(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_aguardeCamposCEP
-        jTextFieldRua.setText("aguarde...");
-        jTextFieldBairro.setText("aguarde...");
-        jTextFieldCidade.setText("...");
-    }//GEN-LAST:event_aguardeCamposCEP
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
 
@@ -670,23 +659,22 @@ public class CadastroCliente extends javax.swing.JFrame {
         if (opc == 0) {
             this.dispose();
         }
-
-
     }//GEN-LAST:event_jButtonCancelarActionPerformed
-
-    private void limparCamposPerdeuFoco(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_limparCamposPerdeuFoco
-
-        //Limpa os campos caso o JTextFieldCep perca o foco e o texto seja menor que 8, ou seja, cep inválido
-        if (jTextFieldCep.getText().length() < 8) {
-            jTextFieldBairro.setText("");
-            jTextFieldRua.setText("");
-            jTextFieldCidade.setText("");
-        }
-    }//GEN-LAST:event_limparCamposPerdeuFoco
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
+
+    private void jFormattedTextFieldCepKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCepKeyReleased
+       
+        jTextFieldBairro.setText("Aguarde...");
+        jTextFieldRua.setText("Aguarde...");
+        jTextFieldCidade.setText("...");
+       
+        if(jFormattedTextFieldCep.getText().matches("[0-9]{5}-[0-9]{3}")){
+            buscarCep(jFormattedTextFieldCep.getText());
+        }
+    }//GEN-LAST:event_jFormattedTextFieldCepKeyReleased
 
     public void limparTelaCadastroCliente() {
         jFormattedTextFieldCPF.setText("");
@@ -694,7 +682,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jTextFieldSobrenome.setText("");
         jTextFieldEmail.setText("");
         jFormattedTextFieldDataNasc.setText("");
-        jTextFieldCep.setText("");
+        jFormattedTextFieldCep.setText("");
         jTextFieldBairro.setText("");
         jTextFieldRua.setText("");
         jTextFieldCidade.setText("");
@@ -747,6 +735,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCadastrar;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JFormattedTextField jFormattedTextFieldCPF;
+    private javax.swing.JFormattedTextField jFormattedTextFieldCep;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataNasc;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -777,7 +766,6 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelEmail1;
     private javax.swing.JTextField jTextFieldBairro;
     private javax.swing.JFormattedTextField jTextFieldCelular;
-    private javax.swing.JTextField jTextFieldCep;
     private javax.swing.JTextField jTextFieldCidade;
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldNome;

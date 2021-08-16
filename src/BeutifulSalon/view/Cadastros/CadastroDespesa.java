@@ -322,15 +322,8 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
     }//GEN-LAST:event_jToggleButtonMousePressed
 
-    public void teste() {
-
-    }
-
-    public void teste2() {
-
-    }
     private void jToggleButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButtonStateChanged
-
+ 
         if (jToggleButton.isSelected()) {
             jToggleButton.setText("Pagamento Realizado");
             jTextAreaAnotacao.setEnabled(true);

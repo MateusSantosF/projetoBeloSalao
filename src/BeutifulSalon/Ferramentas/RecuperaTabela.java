@@ -22,7 +22,7 @@ public class RecuperaTabela {
     public ArrayList<Produto> Produtos(JTable tabela) {
 
         ArrayList<Produto> produtos = new ArrayList<>();
-
+        if(tabela.getRowCount() < 1)return produtos;
         try {
             for (int i = 0; i < tabela.getRowCount(); i++) {
                 Produto produtoAtual = new Produto();

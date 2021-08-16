@@ -38,9 +38,9 @@ public class ServicoController {
         return new Servico().buscarServicoPeloAgendamento(idAgendamento);
     }
 
-    public boolean cadastrarServico(String nome, String preco, String tempoGasto, ArrayList<Produto> produto) throws SQLException {
+    public boolean cadastrarServico(String nome, String preco, String tempoGasto, ArrayList<Produto> produtos) throws SQLException {
 
-        if (nome.length() > 0 && preco.length() > 0 && produto.isEmpty() == false && Valida.isHora(tempoGasto)) {
+        if (nome.length() > 0 && preco.length() > 0 && Valida.isHora(tempoGasto)) {
             
             DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
             LocalTime horario = LocalTime.parse(tempoGasto, formatterHora);
@@ -49,7 +49,7 @@ public class ServicoController {
             servico.setNome(nome);
             servico.setPreco(Dinheiro.parseCent(Dinheiro.retiraCaracteres(preco)));
             servico.setTempoGasto(horario);
-            servico.setProdutos(produto);
+            servico.setProdutos(produtos);
 
             try {
                 servico.cadastrarServico(servico);

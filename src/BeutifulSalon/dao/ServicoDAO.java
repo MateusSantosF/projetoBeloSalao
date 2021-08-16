@@ -205,13 +205,16 @@ public class ServicoDAO {
                 try {
 
                     ArrayList<Produto> produtos = servico.getProdutos();
-
-                    for (Produto p : produtos) {
+                    
+                    if(!produtos.isEmpty()){
+                      for (Produto p : produtos) {
                         pStatement = connection.prepareStatement(cadastraProdutosServicos);
                         pStatement.setLong(1, p.getId_produto());
                         pStatement.setInt(2, p.getRendimento());
                         pStatement.executeUpdate();
+                       }  
                     }
+                    
 
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(null, "Erro registrar Produto_Servico" + e);

@@ -244,7 +244,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
             if (indice > -1) {
                 try {
 
-                    long idProdutoSelecionado = (long) jTableConsultaProdutos.getValueAt(indice, 3); // Retorna CPF
+                    long idProdutoSelecionado = (long) jTableConsultaProdutos.getValueAt(indice, 4); // Retorna CPF
                     ProdutoController cc = new ProdutoController();
 
                     if (cc.excluirProduto(idProdutoSelecionado)) {

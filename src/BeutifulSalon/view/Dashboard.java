@@ -31,7 +31,12 @@ public class Dashboard extends javax.swing.JPanel {
             Cabeleireiro cabeleireiro = cc.selecionaCabeleireiro();
             int nAgendamentos = ag.listarAgendamentosHoje().size();
             long nProdutosEstoque = ec.somaProdutosEstoque();
-            jLabelNomeCabeleireiro.setText("Olá, " + cabeleireiro.getNome());
+            if(cabeleireiro.getNome() != null){
+                jLabelNomeCabeleireiro.setText("Olá, " + cabeleireiro.getNome());
+            }else{
+                jLabelNomeCabeleireiro.setText("Olá, Cabeleireiro");
+            }
+            
             jTextFieldAgendamentos.setText(String.valueOf(nAgendamentos));
             jTextFieldQtdProdutosEstoque.setText(String.valueOf(nProdutosEstoque)+" un.");
         } catch (ExceptionDAO e) {
@@ -101,9 +106,9 @@ public class Dashboard extends javax.swing.JPanel {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jLabelNomeCabeleireiro, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addComponent(jLabelNomeCabeleireiro, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/logo_salões.jpg"))); // NOI18N

@@ -432,6 +432,7 @@ public class ApresentaTabela {
                         case MAY:
                             maio = oc.listarOrcamentoServicorRealizado(ano, Month.MAY, s.getId()).getQuantidadeMensal();
                             maio *= s.getPreco();
+                            break;
                         case JUNE:
                             junho = oc.listarOrcamentoServicorRealizado(ano, Month.JUNE, s.getId()).getQuantidadeMensal();
                             junho *= s.getPreco();
@@ -444,6 +445,7 @@ public class ApresentaTabela {
                         case AUGUST:
                             agosto = oc.listarOrcamentoServicorRealizado(ano, Month.AUGUST, s.getId()).getQuantidadeMensal();
                             agosto *= s.getPreco();
+                            break;
                         case SEPTEMBER:
                             setembro = oc.listarOrcamentoServicorRealizado(ano, Month.SEPTEMBER, s.getId()).getQuantidadeMensal();
                             setembro *= s.getPreco();
@@ -771,7 +773,6 @@ public class ApresentaTabela {
            for(Produto produto: produtosListados){
                 
                 long quantidade = ec.quantidadeProduto(produto.getId_produto());
-                System.out.println("Quantidade = " + quantidade);
                 tabelaProdutoModel.addRow(new Object[]{
                     produto.getNome(),
                     produto.getMarca(),
