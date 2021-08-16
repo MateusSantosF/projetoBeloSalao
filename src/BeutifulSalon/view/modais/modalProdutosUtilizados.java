@@ -20,13 +20,13 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Melissa
  */
-public class modalProdutosUtilizados extends javax.swing.JFrame implements Observado{
+public class modalProdutosUtilizados extends javax.swing.JFrame implements Observado {
 
     /**
      * Creates new form modalProdutosUtilizados
      */
     ArrayList<Observador> observadores = new ArrayList<>();
-    
+
     public modalProdutosUtilizados() {
         initComponents();
         listarProdutos();
@@ -229,14 +229,11 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
         int i = jTablePesquisaProdutos.getSelectedRow();
         Produto produtoBuscado = null;
 
-        if(i > -1){
-            try{
+        if (i > -1) {
                 DefaultTableModel tabelaProdutosComprados = (DefaultTableModel) jTableProdutosSelecionados.getModel();
                 int rendimento = Integer.parseInt(JOptionPane.showInputDialog("Digite quantas utilizações o produto rende: "));
                 long idProdutoBuscado = (long) jTablePesquisaProdutos.getValueAt(i, 2);
-                
-          
-                
+
                 //acessa o banco 
                 ProdutoController po = new ProdutoController();
                 produtoBuscado = po.buscarProduto(idProdutoBuscado);
@@ -249,42 +246,36 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
                 });
                 //em cima modificou, e aqui embaixo inseriu de volta na tabela
                 jTableProdutosSelecionados.setModel(tabelaProdutosComprados);
-                
-            }catch (ExceptionDAO e){
-                JOptionPane.showMessageDialog(null, e);
-            }
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione um produto antes");
         }
     }//GEN-LAST:event_jLabel2MousePressed
 
     private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
-      notificarObservadores();
+        notificarObservadores();
         dispose();
     }//GEN-LAST:event_button1ActionPerformed
 
     private void jTextFieldBuscaPorNomeCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldBuscaPorNomeCaretUpdate
         // TODO add your handling code here:
-        if(jTextFieldBuscaPorNome.getText().equals("")){
+        if (jTextFieldBuscaPorNome.getText().equals("")) {
             listarProdutos();
         }
     }//GEN-LAST:event_jTextFieldBuscaPorNomeCaretUpdate
 
     private void jTextFieldBuscaPorNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldBuscaPorNomeKeyPressed
-       String nome = jTextFieldBuscaPorNome.getText(); // nome produto do TextField
+        String nome = jTextFieldBuscaPorNome.getText(); // nome produto do TextField
         DefaultTableModel tabelaProdutoModel = (DefaultTableModel) jTablePesquisaProdutos.getModel(); // tabela
-        
+
         //reseta a qtdd de linahs da tabela
         tabelaProdutoModel.setRowCount(0);
 
         ProdutoController pc = new ProdutoController();
 
         ArrayList<Produto> produtosListados = null;
-        try {
-            produtosListados = pc.listarProdutos(nome);
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+
+        produtosListados = pc.listarProdutos(nome);
 
         try {
             produtosListados.forEach((Produto produto) -> {
@@ -351,18 +342,13 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
     private javax.swing.JTextField jTextFieldBuscaPorNome;
     // End of variables declaration//GEN-END:variables
 
-    private void listarProdutos(){
-        DefaultTableModel tabelaEsq = (DefaultTableModel) jTablePesquisaProdutos.getModel(); 
+    private void listarProdutos() {
+        DefaultTableModel tabelaEsq = (DefaultTableModel) jTablePesquisaProdutos.getModel();
         tabelaEsq.setRowCount(0);
-        
+
         ProdutoController pc = new ProdutoController();
         ArrayList<Produto> arr = null;
-        
-        try {
-            arr = pc.listarProdutos();
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        arr = pc.listarProdutos();
 
         try {
             arr.forEach((Produto produto) -> {
@@ -381,12 +367,11 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
         }
     }
 
-    
     //método para retornar tabela
-    public DefaultTableModel retornaTabela(){
+    public DefaultTableModel retornaTabela() {
         return (DefaultTableModel) jTableProdutosSelecionados.getModel();
     }
-    
+
     @Override
     public void registrarObservador(Observador observador) {
         observadores.add(observador);
@@ -399,8 +384,8 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
 
     @Override
     public void notificarObservadores() {
-       observadores.forEach((Observador ob) ->{
-           ob.update(retornaTabela());
-       });
+        observadores.forEach((Observador ob) -> {
+            ob.update(retornaTabela());
+        });
     }
 }

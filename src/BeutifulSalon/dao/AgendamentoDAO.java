@@ -240,7 +240,7 @@ public class AgendamentoDAO {
           return servicos;  
     }
     
-    public ArrayList<Agendamento> listarAgendamentosHoje(){
+    public ArrayList<Agendamento> listarAgendamentosHoje() throws ExceptionDAO{
         
         ManipulaData datas = new ManipulaData();
         
@@ -300,7 +300,7 @@ public class AgendamentoDAO {
         return agendamentos;
     }
     
-    public ArrayList<Agendamento> listarAgendamentosAmanha(){
+    public ArrayList<Agendamento> listarAgendamentosAmanha()  throws ExceptionDAO{
         
         ManipulaData datas = new ManipulaData();
         
@@ -361,7 +361,7 @@ public class AgendamentoDAO {
         return agendamentos;
     }
     
-    public ArrayList<Agendamento> listarAgendamentosSemana(){
+    public ArrayList<Agendamento> listarAgendamentosSemana() throws ExceptionDAO{
         
         ManipulaData datas = new ManipulaData();
         
@@ -512,11 +512,9 @@ public class AgendamentoDAO {
                     ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
                     ag.setRealizado(rs.getBoolean("REALIZADO"));
                     
-                    try {
+    
                        ag.setServicos(sc.buscarServicoPeloAgendamento(rs.getLong("ID_AGENDAMENTO")));
-                    } catch (ExceptionDAO e) {
-                        JOptionPane.showMessageDialog(null, e);
-                    }
+       
          
                     agendamentos.add(ag);         
                 }
@@ -579,11 +577,9 @@ public class AgendamentoDAO {
                     ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
                     ag.setRealizado(rs.getBoolean("REALIZADO"));
                     
-                    try {
+
                        ag.setServicos(sc.buscarServicoPeloAgendamento(rs.getLong("ID_AGENDAMENTO")));
-                    } catch (ExceptionDAO e) {
-                        JOptionPane.showMessageDialog(null, e);
-                    }
+              
          
                     agendamentos.add(ag);         
                 }

@@ -58,11 +58,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
 
         String dataFormatada = "";
 
-        try {
             clienteAgendamento = cc.buscarCliente(ag.getCpfCliente());
 
-        } catch (ExceptionDAO e) {
-        }
         jTextFieldNome.setText(clienteAgendamento.getNOME());
         jTextFieldCPF.setText(clienteAgendamento.getCPF());
         jTextFieldTotal.setText(Dinheiro.parseString(ag.getTotal()));

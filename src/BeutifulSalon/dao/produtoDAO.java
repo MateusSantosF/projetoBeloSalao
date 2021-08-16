@@ -159,7 +159,7 @@ public class produtoDAO {
     
     
 
-    public void deletarProduto(long idProdutoSelecionado) {
+    public void deletarProduto(long idProdutoSelecionado) throws ExceptionDAO {
         
         String sql  = "DELETE FROM PRODUTO WHERE IDPRODUTO = ?";
         Connection connection = null;

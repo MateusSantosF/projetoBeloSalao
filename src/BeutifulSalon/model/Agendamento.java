@@ -130,19 +130,19 @@ public class Agendamento {
         return new AgendamentoDAO().listarAgendamentosRealizados(data);
     }
 
-    public ArrayList<Agendamento> listarAgendamentosHoje() {
+    public ArrayList<Agendamento> listarAgendamentosHoje() throws ExceptionDAO {
        return new AgendamentoDAO().listarAgendamentosHoje();
     }
 
-    public ArrayList<Agendamento> listarAgendamentosAmanha() {
+    public ArrayList<Agendamento> listarAgendamentosAmanha() throws ExceptionDAO {
         return new AgendamentoDAO().listarAgendamentosAmanha();
     }
 
-    public ArrayList<Agendamento> listarAgendamentosSemana() {
+    public ArrayList<Agendamento> listarAgendamentosSemana() throws ExceptionDAO {
        return new AgendamentoDAO().listarAgendamentosSemana();
     }
 
-    public ArrayList<Agendamento> listarAgendamentosNome(String nome) {
+    public ArrayList<Agendamento> listarAgendamentosNome(String nome) throws ExceptionDAO {
         return new AgendamentoDAO().listarAgendamentosNome(nome);
     }
 
@@ -150,7 +150,7 @@ public class Agendamento {
         return new AgendamentoDAO().listaServicosAgendamento(idAgendamento);
     }
 
-    public ArrayList<Agendamento> listarAgendamentosNaoRealizados() {
+    public ArrayList<Agendamento> listarAgendamentosNaoRealizados() throws ExceptionDAO {
         return new AgendamentoDAO().listarAgendamentosNaoRealizados();
     }
     

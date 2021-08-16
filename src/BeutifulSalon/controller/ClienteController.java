@@ -104,8 +104,12 @@ public class ClienteController {
         return new Cliente().listarClientes();
     }
     
-    public Cliente buscarCliente(String cpf) throws ExceptionDAO{
-        return new Cliente().buscarCliente(cpf);
+    public Cliente buscarCliente(String cpf){
+        try {
+             return new Cliente().buscarCliente(cpf);
+        } catch (ExceptionDAO e) {
+        }
+        return null;
     }
     
     public boolean excluirCliente(String cpf){

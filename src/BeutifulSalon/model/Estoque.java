@@ -70,7 +70,7 @@ public class Estoque {
         return new EstoqueDAO().somaProdutosEstoque();
     }
 
-    public long quantidadeProduto(long idProduto) {
+    public long quantidadeProduto(long idProduto) throws ExceptionDAO {
         return new EstoqueDAO().quantidadeProduto(idProduto);
     }
     

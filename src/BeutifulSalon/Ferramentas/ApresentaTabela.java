@@ -763,13 +763,9 @@ public class ApresentaTabela {
         EstoqueController ec = new EstoqueController();
         
         ArrayList<Produto> produtosListados = null;
-        try {
             produtosListados = pc.listarProdutos();
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        try {
+    
+        
            for(Produto produto: produtosListados){
                 
                 long quantidade = ec.quantidadeProduto(produto.getId_produto());
@@ -782,10 +778,6 @@ public class ApresentaTabela {
                 });
 
             }
-
-        } catch (ExceptionDAO e) {
-            JOptionPane.showMessageDialog(null, "Erro ao listarProdutos" + e);
-        }
 
         return tabelaProdutoModel;
     }
@@ -802,13 +794,9 @@ public class ApresentaTabela {
         EstoqueController ec = new EstoqueController();
         
         ArrayList<Produto> produtosListados = null;
-        try {
+  
             produtosListados = pc.listarProdutos(nome);
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        try {
+    
             for(Produto produto: produtosListados){
                 
                 long quantidade = ec.quantidadeProduto(produto.getId_produto());
@@ -821,10 +809,6 @@ public class ApresentaTabela {
                 });
 
             }
-
-        } catch (ExceptionDAO e) {
-            JOptionPane.showMessageDialog(null, "Erro ao listarProdutos" + e);
-        }
         return tabelaProdutoModel;
     }
 

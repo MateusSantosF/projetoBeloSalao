@@ -5,9 +5,9 @@
  */
 package BeutifulSalon.view.Apresenta;
 
-import BeutifulSalon.Ferramentas.ApresentaTabela;
-import BeutifulSalon.controller.ProdutoController;
-import java.awt.HeadlessException;
+import BeutifulSalon.Tabelas.CentralizaElementosTabela;
+import BeutifulSalon.Tabelas.ProdutoTableModel;
+import BeutifulSalon.model.AplicaLookAndFeel;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,13 +16,15 @@ import javax.swing.JOptionPane;
  */
 public class ApresentaProduto extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ApreProduto
-     */
+    private ProdutoTableModel produtoTableModel = new ProdutoTableModel();
+
     public ApresentaProduto() {
         initComponents();
-        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
-        jTableConsultaProdutos.setModel(new ApresentaTabela().apresentaProdutos(jTableConsultaProdutos));
+        AplicaLookAndFeel.pegaNimbus();
+        produtoTableModel.getTodosProdutos();
+        CentralizaElementosTabela render = new CentralizaElementosTabela();
+        jTableConsultaProdutos.setDefaultRenderer(Object.class, render);
+        jTableConsultaProdutos.setModel(produtoTableModel);
     }
 
     /**
@@ -40,7 +42,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jButtonExcluir = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
         jTextFieldNomeProduto = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        jLabelBtnBuscarProdutos = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -58,42 +60,12 @@ public class ApresentaProduto extends javax.swing.JPanel {
 
         jTableConsultaProdutos.setBackground(new java.awt.Color(243, 244, 245));
         jTableConsultaProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTableConsultaProdutos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Nome", "Marca", "Preço de Venda", "Quantidade Estoque", "id"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
         jTableConsultaProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableConsultaProdutos.setGridColor(new java.awt.Color(243, 244, 245));
         jTableConsultaProdutos.setRowHeight(22);
         jTableConsultaProdutos.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaProdutos.setShowGrid(true);
         jScrollPane2.setViewportView(jTableConsultaProdutos);
-        if (jTableConsultaProdutos.getColumnModel().getColumnCount() > 0) {
-            jTableConsultaProdutos.getColumnModel().getColumn(4).setMinWidth(1);
-            jTableConsultaProdutos.getColumnModel().getColumn(4).setMaxWidth(1);
-        }
 
         jButtonDetalhes.setBackground(new java.awt.Color(36, 141, 248));
         jButtonDetalhes.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -137,10 +109,10 @@ public class ApresentaProduto extends javax.swing.JPanel {
 
         jTextFieldNomeProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconLupa.png"))); // NOI18N
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabelBtnBuscarProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconLupa.png"))); // NOI18N
+        jLabelBtnBuscarProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel4ConsultarCliente(evt);
+                jLabelBtnBuscarProdutosConsultarCliente(evt);
             }
         });
 
@@ -192,7 +164,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
+                        .addComponent(jLabelBtnBuscarProdutos)
                         .addGap(91, 91, 91)
                         .addComponent(jButtonDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -217,13 +189,13 @@ public class ApresentaProduto extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelBtnBuscarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jButtonDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(464, Short.MAX_VALUE))
+                .addContainerGap(475, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(335, 335, 335)
@@ -238,26 +210,19 @@ public class ApresentaProduto extends javax.swing.JPanel {
 
         int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o produto:\nNome: "
                 + jTableConsultaProdutos.getValueAt(indice, 0) + "\nMarca: " + jTableConsultaProdutos.getValueAt(indice, 1)
-                +"\nExclui-lo significa apagar todos registros de vendas e compras dele.", "Excluir Produto", JOptionPane.YES_NO_OPTION);
+                + "\nExclui-lo significa apagar todos registros de vendas e compras dele.", "Excluir Produto", JOptionPane.YES_NO_OPTION);
 
         if (opc == 0) {
             if (indice > -1) {
-                try {
+                boolean sucesso = produtoTableModel.removeProduto(indice);
 
-                    long idProdutoSelecionado = (long) jTableConsultaProdutos.getValueAt(indice, 4); // Retorna CPF
-                    ProdutoController cc = new ProdutoController();
-
-                    if (cc.excluirProduto(idProdutoSelecionado)) {
-                        JOptionPane.showMessageDialog(null, "Produto deletado com sucesso.");
-                        jTableConsultaProdutos.setModel(new ApresentaTabela().apresentaProdutos(jTableConsultaProdutos));
-
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Não foi possível excluir o produto. Selecione um índice válido na tabela");
-                    }
-                } catch (HeadlessException e) {
-                    JOptionPane.showMessageDialog(null, "Erro ao excluir produto: " + e);
+                if (sucesso) {
+                    JOptionPane.showMessageDialog(null,"Produto excluido com sucesso");
+                    produtoTableModel.getTodosProdutos();
+                    jTableConsultaProdutos.setModel(produtoTableModel);
                 }
-
+            }else{
+                JOptionPane.showMessageDialog(null, "Selecione um produto antes.");
             }
         }
 
@@ -265,35 +230,31 @@ public class ApresentaProduto extends javax.swing.JPanel {
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
 
-        boolean resultado;
+     
         int indice = jTableConsultaProdutos.getSelectedRow();
 
         if (indice > -1) {
-            try {
-
-                long idProduto = (long) jTableConsultaProdutos.getValueAt(indice, 4); // Retorna ID
-
-                ProdutoController pc = new ProdutoController();
-                resultado = pc.editarProduto(idProduto);
-
-                if (!resultado) {
-                    JOptionPane.showMessageDialog(null, "Erro ao selecionar PKProduto");
-                }
-
-            } catch (HeadlessException e) {
-                JOptionPane.showMessageDialog(null, "Erro ao retornar informações do produto\n" + e);
-            }
+               boolean sucesso = produtoTableModel.editProduto(indice);
+               
+               if(sucesso == false){
+                   JOptionPane.showMessageDialog(null, "Erro ao editar produto");
+               }
         } else {
-
-            JOptionPane.showMessageDialog(null, "Selecione um cliente.");
-
+            JOptionPane.showMessageDialog(null, "Selecione um produto.");
         }
-
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
-    private void jLabel4ConsultarCliente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4ConsultarCliente
-        jTableConsultaProdutos.setModel(new ApresentaTabela().apresentaProdutos(jTableConsultaProdutos, jTextFieldNomeProduto.getText()));
-    }//GEN-LAST:event_jLabel4ConsultarCliente
+    private void jLabelBtnBuscarProdutosConsultarCliente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBtnBuscarProdutosConsultarCliente
+
+        if (jTextFieldNomeProduto.getText().equals("")) {
+            produtoTableModel.getTodosProdutos();
+            jTableConsultaProdutos.setModel(produtoTableModel);
+        } else {
+            produtoTableModel.getProdutosPeloNome(jTextFieldNomeProduto.getText());
+            jTableConsultaProdutos.setModel(produtoTableModel);
+        }
+
+    }//GEN-LAST:event_jLabelBtnBuscarProdutosConsultarCliente
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -303,7 +264,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelBtnBuscarProdutos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableConsultaProdutos;

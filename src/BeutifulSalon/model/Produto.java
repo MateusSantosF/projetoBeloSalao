@@ -1,26 +1,20 @@
 package BeutifulSalon.model;
 
-
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.dao.produtoDAO;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-//import BeutifulSalon.dao.produtoDAO;
 
 /**
  *
  * @author Melissa
  */
-
-//MODEL
-
 public class Produto {
-    
+
     private long id_produto;
-    private String nome; 
+    private String nome;
     private String marca;
-    private long preco; 
+    private long preco;
     private LocalDate dataReg; //Data que o produto foi registrado no sistema
     private int rendimento;
 
@@ -31,40 +25,35 @@ public class Produto {
     public void setRendimento(int rendimento) {
         this.rendimento = rendimento;
     }
-    
-    //construtor padrão
-    public Produto(){}
 
-   
-    
+    //construtor padrão
+    public Produto() {
+    }
+
     //Construtor não padrão
     public Produto(String nome, String marca, long preco, LocalDate dataReg) {
-        this.nome = nome; 
+        this.nome = nome;
         this.marca = marca;
-        this.preco = preco; 
+        this.preco = preco;
         this.dataReg = dataReg;
     }
-    
-    public Produto(String nome, String marca, long preco, long id_produto){
+
+    public Produto(String nome, String marca, long preco, long id_produto) {
         this.nome = nome;
         this.marca = marca;
         this.preco = preco;
         this.id_produto = id_produto;
     }
-    
-    
-    
+
     public Produto(String nome, String marca, long preco, LocalDate dataReg, long id_produto) {
-        this.nome = nome; 
+        this.nome = nome;
         this.marca = marca;
-        this.preco = preco; 
+        this.preco = preco;
         this.dataReg = dataReg;
         this.id_produto = id_produto;
     }
 
-    
     //Getters & setters gerados 
-
     public long getId_produto() {
         return id_produto;
     }
@@ -72,8 +61,7 @@ public class Produto {
     public void setId_produto(long id_produto) {
         this.id_produto = id_produto;
     }
-   
-   
+
     public String getNome() {
         return nome;
     }
@@ -85,7 +73,7 @@ public class Produto {
     public String getMarca() {
         return marca;
     }
-   
+
     public void setMarca(String marca) {
         this.marca = marca;
     }
@@ -106,35 +94,31 @@ public class Produto {
         this.dataReg = dataReg;
     }
 
-    
-    //passar produto como parâmetro e mandar para DAo onde vai acessar o BD e salvar o produto
-    
-    public void cadastrarProduto(Produto produto) throws ExceptionDAO{
+    public void cadastrarProduto(Produto produto) throws ExceptionDAO {
         new produtoDAO().cadastrarProduto(produto);
     }
 
- 
-    public ArrayList<Produto> listarProdutos() throws ExceptionDAO{
-          return new produtoDAO().listarProdutos();
-    }
-    
-    public ArrayList<Produto> listarProdutos(String nome) throws ExceptionDAO{
-          return new produtoDAO().listarProdutos(nome);
+    public ArrayList<Produto> listarProdutos() throws ExceptionDAO {
+        return new produtoDAO().listarProdutos();
     }
 
-    public void excluirProduto(long idProdutoSelecionado) {
-        new produtoDAO().deletarProduto(idProdutoSelecionado);   
+    public ArrayList<Produto> listarProdutos(String nome) throws ExceptionDAO {
+        return new produtoDAO().listarProdutos(nome);
     }
 
-    public Produto editarProduto(long id_produto) {
+    public void excluirProduto(long idProdutoSelecionado) throws ExceptionDAO {
+        new produtoDAO().deletarProduto(idProdutoSelecionado);
+    }
+
+    public Produto editarProduto(long id_produto) throws ExceptionDAO {
         return new produtoDAO().editarProduto(id_produto);
     }
 
-    public void atualizarProduto(Produto produto) throws ExceptionDAO{
-       new produtoDAO().atualizarProduto(produto);
+    public void atualizarProduto(Produto produto) throws ExceptionDAO {
+        new produtoDAO().atualizarProduto(produto);
     }
-    
-    public Produto buscarProduto(long id) throws ExceptionDAO{
+
+    public Produto buscarProduto(long id) throws ExceptionDAO {
         return new produtoDAO().buscarProduto(id);
     }
 }

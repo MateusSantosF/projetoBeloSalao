@@ -6,9 +6,12 @@
 package BeutifulSalon.view.Apresenta;
 
 import BeutifulSalon.Ferramentas.ApresentaTabela;
+import BeutifulSalon.Tabelas.AgendamentoTableModel;
+import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Agendamento;
+import BeutifulSalon.model.AplicaLookAndFeel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -24,19 +27,17 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
      * Creates new form ApresentaAgendamentos
      */
     
-    private static final int NOME = 0;
-    private static final int HOJE = 1;
-    private static final int AMANHA = 2;
-    private static final int SEMANA = 3;
-    private static final int TODOS = 4;
-    private static final int NAOREALIZADOS = 5;
+    private final AgendamentoTableModel modelo = new AgendamentoTableModel();
     
     public ApresentaAgendamentos() {
         initComponents();
         
-        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
-        listarAgendamentos(TODOS, null);
-    
+        AplicaLookAndFeel.pegaNimbus();
+        CentralizaElementosTabela render = new CentralizaElementosTabela();
+        modelo.getTodosAgendamentos();
+        jTableAgendamentos.setDefaultRenderer(Object.class, render);
+        jTableAgendamentos.setModel(modelo);
+       
     }
 
     /**
@@ -236,11 +237,17 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(278, 278, 278)
+                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(153, 153, 153)
+                .addComponent(jButtonDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(183, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -256,16 +263,10 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(jRadioButton1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jRadioButtonTodos))
-                            .addComponent(jScrollPane1))
-                        .addGap(8, 8, 8)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(278, 278, 278)
-                .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(153, 153, 153)
-                .addComponent(jButtonDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jRadioButtonTodos)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,8 +285,8 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
                     .addComponent(jLabelBuscarCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -295,23 +296,34 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
 
     private void jRadioButtonHojeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonHojeActionPerformed
         
-        listarAgendamentos(HOJE, null);
+        modelo.getAgendamentosHoje();
+        jTableAgendamentos.setModel(modelo);
     }//GEN-LAST:event_jRadioButtonHojeActionPerformed
 
     private void jRadioButtonAmanhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonAmanhaActionPerformed
-        listarAgendamentos(AMANHA, null);
+        modelo.getAgendamentosAmanha();
+        jTableAgendamentos.setModel(modelo);
     }//GEN-LAST:event_jRadioButtonAmanhaActionPerformed
 
     private void jRadioButtonSemanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSemanaActionPerformed
-        listarAgendamentos(SEMANA, null);
+        modelo.getAgendamentosSemana();
+        jTableAgendamentos.setModel(modelo);
     }//GEN-LAST:event_jRadioButtonSemanaActionPerformed
 
     private void jRadioButtonTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonTodosActionPerformed
-        listarAgendamentos(TODOS, null);
+        
+        modelo.getTodosAgendamentos();
+        jTableAgendamentos.setModel(modelo);
     }//GEN-LAST:event_jRadioButtonTodosActionPerformed
 
     private void jLabelBuscarClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBuscarClienteMousePressed
-        listarAgendamentos(NOME, jTextFieldNomeCliente.getText());
+        
+        if(jTextFieldNomeCliente.getText().equals("")){
+            modelo.getTodosAgendamentos();
+        }else{
+            modelo.getAgendamentosPorNomeCliente(jTextFieldNomeCliente.getText());
+        } 
+        jTableAgendamentos.setModel(modelo);
     }//GEN-LAST:event_jLabelBuscarClienteMousePressed
 
     private void jButtonEditarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonEditarMousePressed
@@ -321,7 +333,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         boolean sucesso = false;
         
         if(index > -1){
-            long idAgendamento = (long) jTableAgendamentos.getValueAt(index, 5);
+            long idAgendamento = modelo.getAgendamento(index).getId();
             sucesso = ag.editarAgendamento(idAgendamento);
             
             if(!sucesso){
@@ -333,12 +345,10 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonEditarMousePressed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        listarAgendamentos(NAOREALIZADOS, null);
+        modelo.getAgendamentosNaoRealizados();
+        jTableAgendamentos.setModel(modelo);
     }//GEN-LAST:event_jRadioButton1ActionPerformed
     
-    private void listarAgendamentos(int opc, String nome){
-        jTableAgendamentos.setModel(new ApresentaTabela().apresentaAgendamentos(jTableAgendamentos, opc, nome));
-    }
     
  
     // Variables declaration - do not modify//GEN-BEGIN:variables

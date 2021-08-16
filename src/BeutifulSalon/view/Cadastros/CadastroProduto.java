@@ -191,8 +191,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         boolean sucesso;
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         ProdutoController produtoController = new ProdutoController(); //instanciar o controlador, que recebe um novo controador
-        
-        try {
+
           sucesso = produtoController.cadastrarProduto(
                     jTextFieldProduto.getText(),
                     jTextFieldMarca.getText(),
@@ -206,9 +205,7 @@ public class CadastroProduto extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Os campos não foram preenchidos corretamente!");
             }
-        } catch (ExceptionDAO ex) {
-            Logger.getLogger(CadastroProduto.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
           
     }//GEN-LAST:event_jButton3ActionPerformed
 

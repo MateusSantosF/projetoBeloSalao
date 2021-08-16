@@ -5,11 +5,6 @@ import BeutifulSalon.controller.ProdutoController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Dinheiro;
 import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -18,25 +13,24 @@ import javax.swing.JOptionPane;
  *
  * @author Melissa
  */
-
 //VIEW
 public class EditarProduto extends javax.swing.JFrame {
-    
+
     public EditarProduto() {
         initComponents();
     }
-     public EditarProduto(Produto produto) {
-       
-        
+
+    public EditarProduto(Produto produto) {
+
         initComponents();
-         
+
         jTextFieldNome.setText(produto.getNome());
         jTextFieldMarca.setText(produto.getMarca());
         jTextFieldPreco.setText(Dinheiro.parseString(produto.getPreco()));
         jTextFieldID.setText(Long.toString(produto.getId_produto()));
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -220,16 +214,13 @@ public class EditarProduto extends javax.swing.JFrame {
             }
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Erro: " + e);
-        } catch (ExceptionDAO ex) {
-            Logger.getLogger(EditarProduto.class.getName()).log(Level.SEVERE, null, ex);
-        }
-          
+        } 
+
     }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-        int opc = JOptionPane.showConfirmDialog(null,"Realmente deseja sair?", "Editar Produto", JOptionPane.YES_NO_OPTION);
-         
-        if(opc == 0){
+        int opc = JOptionPane.showConfirmDialog(null, "Realmente deseja sair?", "Editar Produto", JOptionPane.YES_NO_OPTION);
+        if (opc == 0) {
             this.dispose();
         }
     }//GEN-LAST:event_jButtonCancelarActionPerformed
@@ -303,8 +294,8 @@ public class EditarProduto extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     public void limparTelaCadastroProduto() {
-                jTextFieldNome.setText(""); 
-                jTextFieldMarca.setText(""); 
-                jTextFieldPreco.setText(""); 
+        jTextFieldNome.setText("");
+        jTextFieldMarca.setText("");
+        jTextFieldPreco.setText("");
     }
 }

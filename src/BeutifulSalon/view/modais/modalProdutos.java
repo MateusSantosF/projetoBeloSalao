@@ -14,7 +14,6 @@ import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
-import BeutifulSalon.view.Apresenta.ApresentaProduto;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -32,29 +31,28 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
     ArrayList<Observador> observadores = new ArrayList<>();
     private boolean cabeleleiro;
     private String valorPagoPeloProduto = "";
-    
-    
+
     public modalProdutos() {
         initComponents();
         listarTodosProdutos();
-        
+
         //Limpa linhas da tabela de produtos comprados
         DefaultTableModel model = (DefaultTableModel) jTableProdutosComprados.getModel();
         model.setRowCount(0);
         jTableProdutosComprados.setModel(model);
     }
-    
-    public modalProdutos(boolean cabeleleiro){
-        
+
+    public modalProdutos(boolean cabeleleiro) {
+
         initComponents();
         this.cabeleleiro = cabeleleiro;
         listarTodosProdutos();
-        
+
         //Limpa linhas da tabela de produtos comprados
         DefaultTableModel model = (DefaultTableModel) jTableProdutosComprados.getModel();
         model.setRowCount(0);
         jTableProdutosComprados.setModel(model);
-    
+
     }
 
     /**
@@ -218,40 +216,40 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MousePressed
-       notificarObservadores();
-       this.dispose();
+        notificarObservadores();
+        this.dispose();
     }//GEN-LAST:event_jButton1MousePressed
 
     private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
-        
+
         int indice = jTableConsultaProdutos.getSelectedRow();
         Produto produtoBuscado = null;
-        
-        if(indice > -1){
-            try{
-                
+
+        if (indice > -1) {
+    
+
                 int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade comprada: "));
                 long valorPago = 0;
                 //Se for o cabeleleiro comprando
-                if(cabeleleiro){ 
+                if (cabeleleiro) {
 
                     DialogValorProduto modalValorProduto = new DialogValorProduto(this, true);
                     modalValorProduto.setName("Valor do Produto");
                     modalValorProduto.registrarObservador(this);
                     modalValorProduto.setVisible(true);
                 }
-                
+
                 DefaultTableModel tabelaProdutosComprados = (DefaultTableModel) jTableProdutosComprados.getModel();
-               
+
                 ProdutoController po = new ProdutoController();
-                
-                long idProdutoBuscado = (long ) jTableConsultaProdutos.getValueAt(indice, 3);
-                
+
+                long idProdutoBuscado = (long) jTableConsultaProdutos.getValueAt(indice, 3);
+
                 produtoBuscado = po.buscarProduto(idProdutoBuscado);
-                
-                if(cabeleleiro){
+
+                if (cabeleleiro) {
                     valorPago = Dinheiro.parseCent(Dinheiro.retiraCaracteres(valorPagoPeloProduto));
-                }else{
+                } else {
                     valorPago = produtoBuscado.getPreco();
                 }
 
@@ -264,18 +262,16 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
                 });
 
                 jTableProdutosComprados.setModel(tabelaProdutosComprados);
-            }catch (ExceptionDAO e){
-                JOptionPane.showMessageDialog(null, e);
-            }
-           
-        }else{
+  
+
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione um produto antes.");
         }
     }//GEN-LAST:event_jLabel1MousePressed
-    
-  
+
+
     private void jTextFieldNomeProdutoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNomeProdutoKeyPressed
-    
+
         String nome = jTextFieldNomeProduto.getText(); // nome produto do TextField
         DefaultTableModel tabelaProdutoModel = (DefaultTableModel) jTableConsultaProdutos.getModel(); // tabela
 
@@ -284,11 +280,9 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
         ProdutoController pc = new ProdutoController();
 
         ArrayList<Produto> produtosListados = null;
-        try {
+      
             produtosListados = pc.listarProdutos(nome);
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+     
 
         try {
             produtosListados.forEach((Produto produto) -> {
@@ -309,16 +303,17 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
     }//GEN-LAST:event_jTextFieldNomeProdutoKeyPressed
 
     private void jTextFieldNomeProdutoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldNomeProdutoCaretUpdate
-        
-        if(jTextFieldNomeProduto.getText().equals("")){
+
+        if (jTextFieldNomeProduto.getText().equals("")) {
             listarTodosProdutos();
         }
     }//GEN-LAST:event_jTextFieldNomeProdutoCaretUpdate
-    
-    private DefaultTableModel produtosEscolhidos(){
-        
+
+    private DefaultTableModel produtosEscolhidos() {
+
         return (DefaultTableModel) jTableProdutosComprados.getModel();
     }
+
     /**
      * @param args the command line arguments
      */
@@ -351,24 +346,20 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
             public void run() {
                 new modalProdutos().setVisible(true);
                 modalInputMonetarios t = new modalInputMonetarios();
-                
+
             }
         });
     }
-    
-    private  void listarTodosProdutos() {
-        
+
+    private void listarTodosProdutos() {
+
         DefaultTableModel tabelaProdutoModel = (DefaultTableModel) jTableConsultaProdutos.getModel(); // tabela
         tabelaProdutoModel.setRowCount(0);
-   
+
         ProdutoController pc = new ProdutoController();
         ArrayList<Produto> produtosListados = null;
-        
-        try {
-            produtosListados = pc.listarProdutos();
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+
+        produtosListados = pc.listarProdutos();
 
         try {
             produtosListados.forEach((Produto produto) -> {
@@ -412,14 +403,14 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
     @Override
     public void notificarObservadores() {
 
-        observadores.forEach((Observador ob)->{
+        observadores.forEach((Observador ob) -> {
             ob.update(produtosEscolhidos());
-   
+
         });
     }
 
     @Override
-    public void update(Object obj) {        
+    public void update(Object obj) {
     }
 
     @Override
@@ -427,12 +418,12 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
     }
 
     @Override
-    public void update(String valorDesconto) {    
-        
+    public void update(String valorDesconto) {
+
         //NÃO É VALOR DESCONTO, E SIM O VALOR PAGO PELO PRODUTO PELO CABELEIREIRO
         valorPagoPeloProduto = valorDesconto;
     }
-    
+
     @Override
     public void update(Cliente cliente) {
     }
@@ -444,7 +435,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
     @Override
     public void update(ArrayList<LocalTime> horarios) {
     }
-    
+
     @Override
     public void update(Orcamento orcamento) {
     }

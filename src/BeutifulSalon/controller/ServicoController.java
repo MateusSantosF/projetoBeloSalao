@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -28,23 +29,29 @@ public class ServicoController {
     public ArrayList<Servico> listarServicos(String nome) throws ExceptionDAO {
         return new Servico().listarServicos(nome);
     }
-    
+
     public Servico buscarServico(long idServicoBuscado) throws ExceptionDAO {
 
         return new Servico().buscarServico(idServicoBuscado);
     }
-    public ArrayList<Servico> buscarServicoPeloAgendamento(long idAgendamento) throws ExceptionDAO {
 
-        return new Servico().buscarServicoPeloAgendamento(idAgendamento);
+    public ArrayList<Servico> buscarServicoPeloAgendamento(long idAgendamento) {
+
+        try {
+            return new Servico().buscarServicoPeloAgendamento(idAgendamento);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return null;
     }
 
     public boolean cadastrarServico(String nome, String preco, String tempoGasto, ArrayList<Produto> produtos) throws SQLException {
 
         if (nome.length() > 0 && preco.length() > 0 && Valida.isHora(tempoGasto)) {
-            
+
             DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
             LocalTime horario = LocalTime.parse(tempoGasto, formatterHora);
-            
+
             Servico servico = new Servico();
             servico.setNome(nome);
             servico.setPreco(Dinheiro.parseCent(Dinheiro.retiraCaracteres(preco)));
