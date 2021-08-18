@@ -209,8 +209,7 @@ public class OrcamentoDAO {
     }
     
     public long somarOrcamento(String mes, String ano){
-        String sql  = "SELECT SUM("+ mes +") FROM ORCAMENTO WHERE ANO = ?";
-       
+        String sql  = "SELECT SUM("+ mes +") FROM ORCAMENTO WHERE ANO = ?";     
         Connection connection = null;
         PreparedStatement pStatement = null;
         long somatoria = 0;

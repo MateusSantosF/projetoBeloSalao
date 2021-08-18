@@ -12,6 +12,7 @@ import BeutifulSalon.view.Edicao.EditarCliente;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -95,19 +96,29 @@ public class ClienteController {
     }
     
     
-    public ArrayList<Cliente> listarClientes(String nome) throws ExceptionDAO{
-        
-        return new Cliente().listarClientes(nome);
+    public List<Cliente> listarClientes(String nome){
+        try {
+            return new Cliente().listarClientes(nome);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+      return null;
     }
     
-    public ArrayList<Cliente> listarClientes() throws ExceptionDAO{
-        return new Cliente().listarClientes();
+    public List<Cliente> listarClientes(){
+        try {
+            return new Cliente().listarClientes();
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+      return null;
     }
     
     public Cliente buscarCliente(String cpf){
         try {
-             return new Cliente().buscarCliente(cpf);
+            return new Cliente().buscarCliente(cpf);
         } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
         }
         return null;
     }
@@ -147,6 +158,16 @@ public class ClienteController {
         }
         
         return true;
+    }
+    
+    public LocalDate ultimaVisita(String cpf){
+        
+        try {
+            return new Cliente().ultimaVisita(cpf);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscar ultima visita do cliente " + e);
+        }
+        return null;
     }
     
     

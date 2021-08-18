@@ -10,6 +10,7 @@ import BeutifulSalon.dao.ServicoDAO;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -81,7 +82,7 @@ public class Servico {
         this.quantidadeMensal = quantidadeMensal;
     }
     
-    public ArrayList<Servico> listarServicos() throws ExceptionDAO{
+    public List<Servico> listarServicos() throws ExceptionDAO{
         return new ServicoDAO().listarServicos();
     }
     

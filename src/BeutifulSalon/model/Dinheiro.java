@@ -45,6 +45,9 @@ public class Dinheiro {
     
     public static String parseString(Long VALOR){
         
+        if(VALOR == 0){
+            return "R$ 0,00";
+        }
         BigDecimal ValorConvertido = parseBigDecimal(VALOR);
         DecimalFormat df = new DecimalFormat("R$ ,#,###.00");
        

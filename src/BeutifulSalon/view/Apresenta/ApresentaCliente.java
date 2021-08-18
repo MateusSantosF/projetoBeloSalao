@@ -5,7 +5,7 @@
  */
 package BeutifulSalon.view.Apresenta;
 
-import BeutifulSalon.Ferramentas.ApresentaTabela;
+import BeutifulSalon.Tabelas.ClienteTableModel;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.AplicaLookAndFeel;
 import java.awt.HeadlessException;
@@ -17,10 +17,12 @@ import javax.swing.JOptionPane;
  */
 public class ApresentaCliente extends javax.swing.JPanel {
 
-  
+    private final ClienteTableModel modelo = new ClienteTableModel();
+
     public ApresentaCliente() {
         initComponents();
-        listarClientes();
+        modelo.getTodosClientes();
+        jTableConsultaCliente.setModel(modelo);
         AplicaLookAndFeel.pegaNimbus();
 
     }
@@ -244,7 +246,14 @@ public class ApresentaCliente extends javax.swing.JPanel {
 
     private void jLabel4ConsultarCliente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4ConsultarCliente
 
-        listarClientes(jTextFieldNomeCliente.getText());
+
+        if (jTextFieldNomeCliente.getText().equals("")) {
+            modelo.getTodosClientes();
+            jTableConsultaCliente.setModel(modelo);
+        } else {
+            modelo.getClientePorNome(jTextFieldNomeCliente.getText());
+            jTableConsultaCliente.setModel(modelo);
+        }
     }//GEN-LAST:event_jLabel4ConsultarCliente
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
@@ -255,7 +264,7 @@ public class ApresentaCliente extends javax.swing.JPanel {
         if (indice > -1) {
             try {
 
-                String cpfClienteSelecionado = (String) jTableConsultaCliente.getValueAt(indice, 4); // Retorna CPF
+                String cpfClienteSelecionado = modelo.getCliente(indice).getCPF(); // Retorna CPF
                 ClienteController cc = new ClienteController();
                 resultado = cc.editarCliente(cpfClienteSelecionado);
 
@@ -267,9 +276,7 @@ public class ApresentaCliente extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Erro ao retornar informações do cliente: " + e);
             }
         } else {
-
             JOptionPane.showMessageDialog(null, "Selecione um cliente.");
-
         }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
@@ -278,36 +285,27 @@ public class ApresentaCliente extends javax.swing.JPanel {
         int indice = jTableConsultaCliente.getSelectedRow();
 
         int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o cliente: "
-            + jTableConsultaCliente.getValueAt(indice, 0) + " " + jTableConsultaCliente.getValueAt(indice, 1), "Excluir Cliente", JOptionPane.YES_NO_OPTION);
+                + jTableConsultaCliente.getValueAt(indice, 0) + " " + jTableConsultaCliente.getValueAt(indice, 1), "Excluir Cliente", JOptionPane.YES_NO_OPTION);
 
         if (opc == 0) {
             if (indice > -1) {
                 try {
-
-                    String cpfClienteSelecionado = (String) jTableConsultaCliente.getValueAt(indice, 4); // Retorna CPF
+                    String cpfClienteSelecionado = modelo.getCliente(indice).getCPF(); // Retorna CPF
                     ClienteController cc = new ClienteController();
 
                     if (cc.excluirCliente(cpfClienteSelecionado)) {
                         JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso.");
-                        listarClientes();
+                        modelo.getTodosClientes();
+                        jTableConsultaCliente.setModel(modelo);
                     } else {
                         JOptionPane.showMessageDialog(null, "Não foi possível excluir o cliente. Selecione um índice válido na tabela");
                     }
                 } catch (HeadlessException e) {
                     JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e);
                 }
-
             }
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
-
-    public void listarClientes() {
-        jTableConsultaCliente.setModel(new ApresentaTabela().apresentaClientes(jTableConsultaCliente));
-    }
-
-    public void listarClientes(String nome) {
-        jTableConsultaCliente.setModel(new ApresentaTabela().apresentaClientes(jTableConsultaCliente, nome));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDetalhes;

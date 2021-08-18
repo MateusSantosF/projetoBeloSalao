@@ -145,7 +145,12 @@ public class OrcamentoController {
         return new OrcamentoServico().somaTotalGanhoServicoMensal(inicio, fim, idServico);
     }
     public Servico listarOrcamentoServicorRealizado(LocalDate ano, Month mes, long idServico) {
-        return new OrcamentoServico().listarOrcamentoServicorRealizado(ano, mes, idServico);
+        try {
+            return new OrcamentoServico().listarOrcamentoServicorRealizado(ano, mes, idServico);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, "Erro ao lsitar orçamento do servico" + e);
+        }
+        return null;
     }
     
     public Orcamento buscarOrcamento(long idOrcamento){

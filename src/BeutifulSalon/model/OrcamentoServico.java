@@ -257,7 +257,7 @@ public class OrcamentoServico {
     public long somaTotalGanhoServicoMensal(long inicio, long fim, long idServico) throws ExceptionDAO {
         return new OrcamentoServicoDAO().somaTotalGanhoServicoMensal(inicio, fim, idServico);
     }
-    public Servico listarOrcamentoServicorRealizado(LocalDate ano, Month mes, long idServico) {
+    public Servico listarOrcamentoServicorRealizado(LocalDate ano, Month mes, long idServico) throws ExceptionDAO {
         return new OrcamentoServicoDAO().listarOrcamentoServicorRealizado(ano, mes, idServico);
     }
    

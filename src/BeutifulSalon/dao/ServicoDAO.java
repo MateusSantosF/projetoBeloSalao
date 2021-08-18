@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,13 +24,13 @@ import javax.swing.JOptionPane;
  */
 public class ServicoDAO {
 
-    public ArrayList<Servico> listarServicos() {
+    public List<Servico> listarServicos() throws ExceptionDAO {
 
         String sql = "SELECT ID_SERVICO, NOME, PRECO FROM SERVICO ORDER BY NOME DESC";
 
         Connection connection = null;
         PreparedStatement pStatement = null;
-        ArrayList<Servico> servicos = null;
+        List<Servico> servicos = null;
 
         try {
             connection = new ConnectionMVC().getConnection();

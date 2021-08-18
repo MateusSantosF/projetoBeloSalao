@@ -89,6 +89,10 @@ public class AgendamentoTableModel extends AbstractTableModel {
         
         return null;
     }
+    public void removeRow(int rowIndex) {
+        dados.remove(rowIndex);
+        this.fireTableRowsDeleted(rowIndex, rowIndex);
+    }
     
     public void addRow(Agendamento agendamento) {
         dados.add(agendamento);

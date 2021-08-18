@@ -136,7 +136,6 @@ public class ManipulaData {
         LocalTime saida;
         int diaDaSemana = 0; // 1 (segunda) -  7 (Domingo)
 
-        try {
 
             AgendamentoController ag = new AgendamentoController();
             CabeleireiroController cc = new CabeleireiroController();
@@ -218,10 +217,6 @@ public class ManipulaData {
 
             horarios.add(0, entrada);
             
-
-        } catch (ExceptionDAO ex) {
-            Logger.getLogger(ManipulaData.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return horarios;
     }
 

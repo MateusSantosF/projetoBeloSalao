@@ -6,12 +6,9 @@
 package BeutifulSalon.view.modais;
 
 import BeutifulSalon.controller.ClienteController;
-import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
-import BeutifulSalon.view.Apresenta.ApresentaCliente;
-import BeutifulSalon.view.Cadastros.CadastroFluxoDeCaixa;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -191,12 +188,10 @@ public class modalCliente extends javax.swing.JFrame implements Observado {
 
         ClienteController cc = new ClienteController();
 
-        ArrayList<Cliente> clientesConsultados = null;
-        try {
+        List<Cliente> clientesConsultados = null;
+  
             clientesConsultados = cc.listarClientes(nome);
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+   
 
         try {
             clientesConsultados.forEach( (Cliente cliente) -> {
@@ -228,12 +223,10 @@ public class modalCliente extends javax.swing.JFrame implements Observado {
         ClienteController cc = new ClienteController();
         
        
-        ArrayList<Cliente> clientesConsultados = null;
-        try {
+        List<Cliente> clientesConsultados = null;
+    
             clientesConsultados = cc.listarClientes();
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+
             
             try {
                clientesConsultados.forEach( (Cliente cliente) -> {

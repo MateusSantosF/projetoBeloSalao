@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,8 +23,14 @@ import javax.swing.JOptionPane;
  */
 public class ServicoController {
 
-    public ArrayList<Servico> listarServicos() throws ExceptionDAO {
-        return new Servico().listarServicos();
+    public List<Servico> listarServicos(){
+        
+        try {
+            return new Servico().listarServicos();
+        } catch (ExceptionDAO e) {
+           JOptionPane.showMessageDialog(null, "Erro ao listar Serviços realizados" + e); 
+        }
+        return null;
     }
 
     public ArrayList<Servico> listarServicos(String nome) throws ExceptionDAO {

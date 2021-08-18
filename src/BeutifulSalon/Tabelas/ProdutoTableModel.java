@@ -19,9 +19,14 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ProdutoTableModel extends AbstractTableModel {
 
-    private final List<Produto> dados = new ArrayList<>();
+    private final List<Produto> dados;
     private final String[] columns = {"Nome", "Marca", "Preço de Venda", "Quantidade em Estoque"};
 
+    public ProdutoTableModel() {
+        this.dados = new ArrayList<>();
+    }
+    
+    
     @Override
     public int getRowCount() {
         return dados.size();

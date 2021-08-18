@@ -12,6 +12,7 @@ import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Servico;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,23 +20,22 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author mateus
  */
-public class modalServicos extends javax.swing.JFrame implements Observado{
+public class modalServicos extends javax.swing.JFrame implements Observado {
 
     /**
      * Creates new form modalServicos
      */
-    
     ArrayList<Observador> observadores = new ArrayList<>();
-    
-    
+
     public modalServicos() {
         initComponents();
         listarServicos();
-        
+
         DefaultTableModel model = (DefaultTableModel) jTableServicosRealizados.getModel();
         model.setRowCount(0);
         jTableServicosRealizados.setModel(model);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -181,21 +181,20 @@ public class modalServicos extends javax.swing.JFrame implements Observado{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabelSelecionarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSelecionarMousePressed
-        
+
         int indice = jTableConsultaServicos.getSelectedRow();
         Servico produtoBuscado = null;
-        
-        if(indice > -1){
-            try{
-                
-               DefaultTableModel tabelaServicosRealizados = (DefaultTableModel) jTableServicosRealizados.getModel();
-                
-               ServicoController svc = new ServicoController();
-                
-               long idServicoBuscado = (long ) jTableConsultaServicos.getValueAt(indice, 2);
+
+        if (indice > -1) {
+            try {
+
+                DefaultTableModel tabelaServicosRealizados = (DefaultTableModel) jTableServicosRealizados.getModel();
+
+                ServicoController svc = new ServicoController();
+
+                long idServicoBuscado = (long) jTableConsultaServicos.getValueAt(indice, 2);
 
                 produtoBuscado = svc.buscarServico(idServicoBuscado);
-           
 
                 tabelaServicosRealizados.addRow(new Object[]{
                     produtoBuscado.getNome(),
@@ -204,99 +203,94 @@ public class modalServicos extends javax.swing.JFrame implements Observado{
                 });
 
                 jTableServicosRealizados.setModel(tabelaServicosRealizados);
-            }catch (ExceptionDAO e){
+            } catch (ExceptionDAO e) {
                 JOptionPane.showMessageDialog(null, e);
             }
-           
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione um serviço antes.");
         }
-    
+
     }//GEN-LAST:event_jLabelSelecionarMousePressed
 
     private void jTextFieldNomeServicoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldNomeServicoCaretUpdate
-        if(jTextFieldNomeServico.getText().equals("")){
+        if (jTextFieldNomeServico.getText().equals("")) {
             listarServicos();
         }
-      
+
     }//GEN-LAST:event_jTextFieldNomeServicoCaretUpdate
 
     private void jTextFieldNomeServicoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNomeServicoKeyPressed
-        
+
         String nome = jTextFieldNomeServico.getText();
         DefaultTableModel model = (DefaultTableModel) jTableConsultaServicos.getModel();
         model.setRowCount(0);
-        
+
         ServicoController sc = new ServicoController();
-        
-         
+
         ArrayList<Servico> servicos = null;
-        
-        try {       
+
+        try {
             servicos = sc.listarServicos(nome);
         } catch (ExceptionDAO ex) {
             java.util.logging.Logger.getLogger(modalServicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+
         try {
-            servicos.forEach((Servico s) ->  {            
-                    model.addRow(new Object[]{ 
-                        s.getNome(),
-                        Dinheiro.parseString(s.getPreco()),
-                        s.getId()
-                    });
+            servicos.forEach((Servico s) -> {
+                model.addRow(new Object[]{
+                    s.getNome(),
+                    Dinheiro.parseString(s.getPreco()),
+                    s.getId()
+                });
             });
-            
+
             jTableConsultaServicos.setModel(model);
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(null, "Erro ao listar servicos");
         }
-       
+
     }//GEN-LAST:event_jTextFieldNomeServicoKeyPressed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
+
         notificarObservadores();
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-    
-    private void listarServicos(){
-        
+
+    private void listarServicos() {
+
         DefaultTableModel model = (DefaultTableModel) jTableConsultaServicos.getModel();
         model.setRowCount(0);
-        
+
         ServicoController sc = new ServicoController();
-        
-        ArrayList<Servico> servicos = null;
-        
-        try {       
-            servicos = sc.listarServicos();
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(modalServicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        
+
+        List<Servico> servicos = null;
+
+        servicos = sc.listarServicos();
+
         try {
-            servicos.forEach((Servico s) ->  {            
-                    model.addRow(new Object[]{ 
-                        s.getNome(),
-                        Dinheiro.parseString(s.getPreco()),
-                        s.getId()
-                    });
+            servicos.forEach((Servico s) -> {
+                model.addRow(new Object[]{
+                    s.getNome(),
+                    Dinheiro.parseString(s.getPreco()),
+                    s.getId()
+                });
             });
-            
+
             jTableConsultaServicos.setModel(model);
         } catch (Exception e) {
-            
+
             JOptionPane.showMessageDialog(null, "Erro ao listar servicos");
         }
-        
+
     }
 
-    
-    private DefaultTableModel servisoSelecionados(){
+    private DefaultTableModel servisoSelecionados() {
         return (DefaultTableModel) jTableServicosRealizados.getModel();
     }
+
     /**
      * @param args the command line arguments
      */
@@ -344,10 +338,10 @@ public class modalServicos extends javax.swing.JFrame implements Observado{
 
     @Override
     public void notificarObservadores() {
-        observadores.forEach((Observador obs)-> {              
+        observadores.forEach((Observador obs) -> {
             obs.update(servisoSelecionados());
         });
-      
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -30,6 +30,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -161,34 +162,37 @@ public class ApresentaTabela {
 
         return tabelaOrcamentoModel;
     }
-    
-    public DefaultTableModel apresentaServicosAgendamento(JTable tabela, long idAgendamento){
-        
+
+    public DefaultTableModel apresentaServicosAgendamento(JTable tabela, long idAgendamento) {
+
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         modelo.setRowCount(0);
         AgendamentoController ag = new AgendamentoController();
         ArrayList<Servico> servicos = null;
-        
+
         try {
             servicos = ag.listarServicosAgendamento(idAgendamento);
-            
-            if(servicos == null)return modelo;
-            
-            for(Servico s: servicos){
-      
+
+            if (servicos == null) {
+                return modelo;
+            }
+
+            for (Servico s : servicos) {
+
                 modelo.addRow(new Object[]{
                     s.getNome(),
                     Dinheiro.parseString(s.getPreco()),
                     s.getId()
                 });
             }
-            
-        } catch (ExceptionDAO e) {     
+
+        } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, e);
         }
-        
+
         return modelo;
     }
+
     public DefaultTableModel OrcamentosServico(JTable tabela) {
 
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
@@ -239,7 +243,7 @@ public class ApresentaTabela {
         }
         return modelo;
     }
-    
+
     public DefaultTableModel OrcamentoDespesaComparado(JTable tabela, String anoReferente) {
 
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
@@ -258,9 +262,11 @@ public class ApresentaTabela {
 
         try {
             orcamentos = oc.listarOrcamentos(anoReferente);
-            
-            if(orcamentos == null) return modelo;
-            
+
+            if (orcamentos == null) {
+                return modelo;
+            }
+
             for (Orcamento o : orcamentos) {
                 double janeiro = 0;
                 double fevereiro = 0;
@@ -282,53 +288,53 @@ public class ApresentaTabela {
                             Long previstoJan = o.getJan();
 
                             janeiro = (realizadoJan.doubleValue() / previstoJan.doubleValue()) * 100;
-                         
+
                             break;
                         case FEBRUARY:
                             Long realizadoFev = dc.buscarDespesaPaga(ano, m.FEBRUARY, o.getId_orcamento()).getValorPago();
                             Long previstoFev = o.getFev();
 
                             fevereiro = (realizadoFev.doubleValue() / previstoFev.doubleValue()) * 100;
-                            
+
                             break;
                         case MARCH:
                             Long realizadoMar = dc.buscarDespesaPaga(ano, m.MARCH, o.getId_orcamento()).getValorPago();
                             Long previstoMar = o.getMar();
 
-                             marco = (realizadoMar.doubleValue() / previstoMar.doubleValue()) * 100;
-   
+                            marco = (realizadoMar.doubleValue() / previstoMar.doubleValue()) * 100;
+
                             break;
                         case APRIL:
                             Long realizadoAbr = dc.buscarDespesaPaga(ano, m.APRIL, o.getId_orcamento()).getValorPago();
                             Long previstoAbr = o.getAbr();
 
                             abril = (realizadoAbr.doubleValue() / previstoAbr.doubleValue()) * 100;
-                     
+
                             break;
                         case MAY:
-                            
+
                             Long realizadoMai = dc.buscarDespesaPaga(ano, m.MAY, o.getId_orcamento()).getValorPago();
                             Long previstoMai = o.getMai();
-                            maio  = (realizadoMai.doubleValue() / previstoMai.doubleValue()) * 100;
-                          
+                            maio = (realizadoMai.doubleValue() / previstoMai.doubleValue()) * 100;
+
                             break;
                         case JUNE:
                             Long realizadoJun = dc.buscarDespesaPaga(ano, m.JUNE, o.getId_orcamento()).getValorPago();
                             Long previstoJun = o.getJun();
                             junho = (realizadoJun.doubleValue() / previstoJun.doubleValue()) * 100;
- 
+
                             break;
                         case JULY:
                             Long realizadoJul = dc.buscarDespesaPaga(ano, m.JULY, o.getId_orcamento()).getValorPago();
                             Long previstoJul = o.getJul();
                             julho = (realizadoJul.doubleValue() / previstoJul.doubleValue()) * 100;
-                            
+
                             break;
                         case AUGUST:
                             Long realizadoAgo = dc.buscarDespesaPaga(ano, m.AUGUST, o.getId_orcamento()).getValorPago();
                             Long previstoAgo = o.getAgo();
                             agosto = (realizadoAgo.doubleValue() / previstoAgo.doubleValue()) * 100;
-         
+
                             break;
                         case SEPTEMBER:
                             Long realizadoSet = dc.buscarDespesaPaga(ano, m.SEPTEMBER, o.getId_orcamento()).getValorPago();
@@ -352,7 +358,7 @@ public class ApresentaTabela {
                             break;
                     }
                 }
-                 modelo.addRow(new Object[]{
+                modelo.addRow(new Object[]{
                     o.getNome(),
                     String.format("%.2f", janeiro) + "%",
                     String.format("%.2f", fevereiro) + "%",
@@ -374,24 +380,26 @@ public class ApresentaTabela {
 
         return modelo;
     }
-    
-    public DefaultTableModel OrcamentoServicoRealizado(JTable tabela, String anoReferente){
-              
+
+    public DefaultTableModel OrcamentoServicoRealizado(JTable tabela, String anoReferente) {
+
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         modelo.setRowCount(0);
         ServicoController sc = new ServicoController();
         OrcamentoController oc = new OrcamentoController();
-        ArrayList<Servico> servicos = null;
+        List<Servico> servicos = null;
         ArrayList<OrcamentoServico> orcamentos = new ArrayList<>();
         ManipulaData manipulaData = new ManipulaData();
         LocalDate ano = null;
         try {
-            ano = LocalDate.ofYearDay(Integer.parseInt(anoReferente), 1);  
+            ano = LocalDate.ofYearDay(Integer.parseInt(anoReferente), 1);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Erro ao retornar ano" + e);
+        }finally{
+            ano = LocalDate.now();
         }
- 
-        try {
+
+
             servicos = sc.listarServicos();
 
             for (Servico s : servicos) {
@@ -427,7 +435,7 @@ public class ApresentaTabela {
                         case APRIL:
                             abril = oc.listarOrcamentoServicorRealizado(ano, Month.APRIL, s.getId()).getQuantidadeMensal();
                             abril *= s.getPreco();
-                            
+
                             break;
                         case MAY:
                             maio = oc.listarOrcamentoServicorRealizado(ano, Month.MAY, s.getId()).getQuantidadeMensal();
@@ -482,9 +490,9 @@ public class ApresentaTabela {
 
                 orcamentos.add(orcamentoAtual);
             }
-            
+
             orcamentos.forEach(orcamento -> {
-                modelo.addRow(new Object[] {
+                modelo.addRow(new Object[]{
                     orcamento.getNome(),
                     Dinheiro.parseString(orcamento.getJan()),
                     Dinheiro.parseString(orcamento.getFev()),
@@ -497,16 +505,11 @@ public class ApresentaTabela {
                     Dinheiro.parseString(orcamento.getSet()),
                     Dinheiro.parseString(orcamento.getOut()),
                     Dinheiro.parseString(orcamento.getNov()),
-                    Dinheiro.parseString(orcamento.getDez()),
-                });
+                    Dinheiro.parseString(orcamento.getDez()),});
             });
-            
-            
 
-        } catch (ExceptionDAO e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
-        
+ 
+
         return modelo;
     }
 
@@ -573,7 +576,7 @@ public class ApresentaTabela {
         Servico servicoAtual = null;
         LocalDate ano = null;
         try {
-            ano = LocalDate.ofYearDay(Integer.parseInt(anoReferente), 1);  
+            ano = LocalDate.ofYearDay(Integer.parseInt(anoReferente), 1);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Erro ao retornar ano" + e);
         }
@@ -758,26 +761,25 @@ public class ApresentaTabela {
 
         DefaultTableModel tabelaProdutoModel = (DefaultTableModel) tabela.getModel(); // tabela
         tabelaProdutoModel.setRowCount(0);
-      
+
         ProdutoController pc = new ProdutoController();
         EstoqueController ec = new EstoqueController();
-        
-        ArrayList<Produto> produtosListados = null;
-            produtosListados = pc.listarProdutos();
-    
-        
-           for(Produto produto: produtosListados){
-                
-                long quantidade = ec.quantidadeProduto(produto.getId_produto());
-                tabelaProdutoModel.addRow(new Object[]{
-                    produto.getNome(),
-                    produto.getMarca(),
-                    Dinheiro.parseString(produto.getPreco()),
-                    quantidade,
-                    produto.getId_produto()                  
-                });
 
-            }
+        ArrayList<Produto> produtosListados = null;
+        produtosListados = pc.listarProdutos();
+
+        for (Produto produto : produtosListados) {
+
+            long quantidade = ec.quantidadeProduto(produto.getId_produto());
+            tabelaProdutoModel.addRow(new Object[]{
+                produto.getNome(),
+                produto.getMarca(),
+                Dinheiro.parseString(produto.getPreco()),
+                quantidade,
+                produto.getId_produto()
+            });
+
+        }
 
         return tabelaProdutoModel;
     }
@@ -792,23 +794,23 @@ public class ApresentaTabela {
 
         ProdutoController pc = new ProdutoController();
         EstoqueController ec = new EstoqueController();
-        
-        ArrayList<Produto> produtosListados = null;
-  
-            produtosListados = pc.listarProdutos(nome);
-    
-            for(Produto produto: produtosListados){
-                
-                long quantidade = ec.quantidadeProduto(produto.getId_produto());
-                tabelaProdutoModel.addRow(new Object[]{
-                    produto.getNome(),
-                    produto.getMarca(),
-                    Dinheiro.parseString(produto.getPreco()),
-                    quantidade,
-                    produto.getId_produto()                  
-                });
 
-            }
+        ArrayList<Produto> produtosListados = null;
+
+        produtosListados = pc.listarProdutos(nome);
+
+        for (Produto produto : produtosListados) {
+
+            long quantidade = ec.quantidadeProduto(produto.getId_produto());
+            tabelaProdutoModel.addRow(new Object[]{
+                produto.getNome(),
+                produto.getMarca(),
+                Dinheiro.parseString(produto.getPreco()),
+                quantidade,
+                produto.getId_produto()
+            });
+
+        }
         return tabelaProdutoModel;
     }
 
@@ -819,12 +821,8 @@ public class ApresentaTabela {
         tabelaClienteModel.setRowCount(0);
         ClienteController cc = new ClienteController();
 
-        ArrayList<Cliente> clientesConsultados = null;
-        try {
-            clientesConsultados = cc.listarClientes();
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        List<Cliente> clientesConsultados = null;
+        clientesConsultados = cc.listarClientes();
 
         try {
             clientesConsultados.forEach((Cliente cliente) -> {
@@ -850,12 +848,9 @@ public class ApresentaTabela {
 
         ClienteController cc = new ClienteController();
 
-        ArrayList<Cliente> clientesConsultados = null;
-        try {
-            clientesConsultados = cc.listarClientes(nome);
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(ApresentaCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        List<Cliente> clientesConsultados = null;
+
+        clientesConsultados = cc.listarClientes(nome);
 
         try {
             clientesConsultados.forEach((Cliente cliente) -> {
@@ -914,22 +909,22 @@ public class ApresentaTabela {
             }
 
             for (Agendamento g : agendamentos) {
-                
-                ArrayList<Servico> servicosAgendamento = sc.buscarServicoPeloAgendamento(g.getId());      
+
+                ArrayList<Servico> servicosAgendamento = sc.buscarServicoPeloAgendamento(g.getId());
                 LocalTime inicioAgendamento = g.getHorario();
-                
+
                 LocalTime fimAgendamento = inicioAgendamento;
-                
+
                 int horas = 0;
                 int minutos = 0;
-                
+
                 for (Servico s : servicosAgendamento) {
                     horas += s.getTempoGasto().getHour();
                     minutos += s.getTempoGasto().getMinute();
                 }
                 fimAgendamento = fimAgendamento.plusHours(horas);
                 fimAgendamento = fimAgendamento.plusMinutes(minutos);
-                
+
                 Cliente cliente = new Cliente();
                 String realizado;
 
@@ -953,42 +948,41 @@ public class ApresentaTabela {
         }
         return model;
     }
-    
-    public DefaultTableModel apresentaDespesas(JTable tabela, String ano){
-        
+
+    public DefaultTableModel apresentaDespesas(JTable tabela, String ano) {
+
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         DespesaController dc = new DespesaController();
         OrcamentoController oc = new OrcamentoController();
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         ArrayList<Despesa> despesas;
-        
+
         try {
             modelo.setRowCount(0);
-            
-            if(ano == null){
+
+            if (ano == null) {
                 despesas = dc.listarDespesas();
-            }else{
+            } else {
                 despesas = dc.listarDespesas(ano);
             }
-            
-            
-            if(despesas == null){
-    
+
+            if (despesas == null) {
+
                 return modelo;
             }
-            
-            for(Despesa d: despesas){
-                
+
+            for (Despesa d : despesas) {
+
                 Orcamento orcamentoAtual = oc.buscarOrcamento(d.getIdOrcamento());
-                
-                String lancamento =  d.getLancameto().format(formatterData);
+
+                String lancamento = d.getLancameto().format(formatterData);
                 String vencimento = d.getVencimento().format(formatterData);
-                
+
                 String pagamento = (d.getPagamento() == null) ? "Não Pago" : d.getPagamento().format(formatterData);
                 String formaPagamento = (d.getFormaPagamento() == null) ? "--" : d.getFormaPagamento();
                 String status = d.isStatus() ? "Pagamento Realizado" : "Pendente";
                 String valorPago = Dinheiro.parseString(d.getValorPago());
-                
+
                 modelo.addRow(new Object[]{
                     orcamentoAtual.getNome(),
                     lancamento,
@@ -1000,40 +994,42 @@ public class ApresentaTabela {
                     d.getIdDespesa()
                 });
             }
-            
+
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, e);
         }
         return modelo;
     }
-    
-    public DefaultTableModel apresentaDespesasVencimento(JTable tabela, int mes){
-        
+
+    public DefaultTableModel apresentaDespesasVencimento(JTable tabela, int mes) {
+
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         DespesaController dc = new DespesaController();
         OrcamentoController oc = new OrcamentoController();
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         ArrayList<Despesa> despesas;
-        
+
         try {
             modelo.setRowCount(0);
-            
-             despesas = dc.listarDespesasVencimento(mes);
-                      
-            if(despesas == null){ return modelo; }
-           
-            for(Despesa d: despesas){
-                
+
+            despesas = dc.listarDespesasVencimento(mes);
+
+            if (despesas == null) {
+                return modelo;
+            }
+
+            for (Despesa d : despesas) {
+
                 Orcamento orcamentoAtual = oc.buscarOrcamento(d.getIdOrcamento());
-                
-                String lancamento =  d.getLancameto().format(formatterData);
+
+                String lancamento = d.getLancameto().format(formatterData);
                 String vencimento = d.getVencimento().format(formatterData);
-                
+
                 String pagamento = (d.getPagamento() == null) ? "Não Pago" : d.getPagamento().format(formatterData);
                 String formaPagamento = (d.getFormaPagamento() == null) ? "--" : d.getFormaPagamento();
                 String status = d.isStatus() ? "Pagamento Realizado" : "Pendente";
                 String valorPago = Dinheiro.parseString(d.getValorPago());
-                
+
                 modelo.addRow(new Object[]{
                     orcamentoAtual.getNome(),
                     lancamento,
@@ -1045,40 +1041,42 @@ public class ApresentaTabela {
                     d.getIdDespesa()
                 });
             }
-            
+
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, e);
         }
         return modelo;
     }
-    
-    public DefaultTableModel apresentaDespesasLancamento(JTable tabela, int mes){
-        
+
+    public DefaultTableModel apresentaDespesasLancamento(JTable tabela, int mes) {
+
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         DespesaController dc = new DespesaController();
         OrcamentoController oc = new OrcamentoController();
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         ArrayList<Despesa> despesas;
-        
+
         try {
             modelo.setRowCount(0);
-            
-             despesas = dc.listarDespesasLancamento(mes);
-                      
-            if(despesas == null){ return modelo; }
-           
-            for(Despesa d: despesas){
-                
+
+            despesas = dc.listarDespesasLancamento(mes);
+
+            if (despesas == null) {
+                return modelo;
+            }
+
+            for (Despesa d : despesas) {
+
                 Orcamento orcamentoAtual = oc.buscarOrcamento(d.getIdOrcamento());
-                
-                String lancamento =  d.getLancameto().format(formatterData);
+
+                String lancamento = d.getLancameto().format(formatterData);
                 String vencimento = d.getVencimento().format(formatterData);
-                
+
                 String pagamento = (d.getPagamento() == null) ? "Não Pago" : d.getPagamento().format(formatterData);
                 String formaPagamento = (d.getFormaPagamento() == null) ? "--" : d.getFormaPagamento();
                 String status = d.isStatus() ? "Pagamento Realizado" : "Pendente";
                 String valorPago = Dinheiro.parseString(d.getValorPago());
-                
+
                 modelo.addRow(new Object[]{
                     orcamentoAtual.getNome(),
                     lancamento,
@@ -1089,7 +1087,7 @@ public class ApresentaTabela {
                     status
                 });
             }
-            
+
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, e);
         }

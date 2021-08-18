@@ -6,6 +6,7 @@ import java.util.Date;
 import BeutifulSalon.dao.clienteDAO;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -190,9 +191,8 @@ public class Cliente {
     
     
     //Cadastrar clientes
-    public void cadastrarCliente(Cliente cliente) throws Exception{
+    public void cadastrarCliente(Cliente cliente) throws ExceptionDAO{
         new clienteDAO().cadastrarCliente(cliente);
-
     }
     
     //Atualizar Clientes
@@ -201,13 +201,13 @@ public class Cliente {
     }
     
     //Listar cliente pelo nome
-    public ArrayList<Cliente> listarClientes(String nome) throws ExceptionDAO{
+    public List<Cliente> listarClientes(String nome) throws ExceptionDAO{
         
         return new clienteDAO().listarClientes(nome);
        
     }
     //Listar todos os clientes do sistema
-    public ArrayList<Cliente> listarClientes() throws ExceptionDAO{
+    public List<Cliente> listarClientes() throws ExceptionDAO{
         return new clienteDAO().listarClientes();
     }
     //Busca cliente por CPF
@@ -223,6 +223,10 @@ public class Cliente {
     
     public Cliente editarCliente(String cpf) throws ExceptionDAO{
         return new clienteDAO().editarCliente(cpf);
+    }
+    
+    public LocalDate ultimaVisita(String cpf) throws ExceptionDAO{
+        return new clienteDAO().ultimaVisita(cpf);
     }
     
 }

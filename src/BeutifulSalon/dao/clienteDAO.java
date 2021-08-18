@@ -13,13 +13,16 @@ import BeutifulSalon.model.Cliente;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 
 public class clienteDAO {
     
-    public void cadastrarCliente(Cliente cliente) throws Exception{
+    public void cadastrarCliente(Cliente cliente) throws ExceptionDAO{
         
         
         String sqlScript = "INSERT INTO CLIENTE (CPF ,NOME, SOBRENOME, EMAIL, DATANASC, CEP, BAIRRO, RUA, CIDADE, TELEFONE, CELULAR, DATAREG, NUMERO)"
@@ -68,19 +71,17 @@ public class clienteDAO {
             }
            
         }
-        
-        
-        
+       
     }
     
-    public ArrayList<Cliente> listarClientes(String nome) throws ExceptionDAO{
+    public List<Cliente> listarClientes(String nome) throws ExceptionDAO{
         
         
         String sql  = "SELECT NOME,SOBRENOME,CELULAR,EMAIL,CPF FROM CLIENTE WHERE NOME LIKE '%" + nome + "%' ORDER BY DATAREG DESC";
         Connection connection = null;
         PreparedStatement pStatement = null;
         
-        ArrayList<Cliente> clientes =  null;
+        List<Cliente> clientes =  null;
             
         try {
             connection = new ConnectionMVC().getConnection();
@@ -90,7 +91,7 @@ public class clienteDAO {
             ResultSet rs = pStatement.executeQuery();
             
             if(rs != null){
-                clientes = new ArrayList<Cliente>();
+                clientes = new ArrayList<>();
                 
                 while(rs.next()){
                     Cliente clienteAtual = new Cliente();
@@ -122,20 +123,18 @@ public class clienteDAO {
             }
             
         }
-                
-        
+                    
         return clientes;
-        
-                
+                   
     }
     
-    public ArrayList<Cliente> listarClientes(){
+    public List<Cliente> listarClientes() throws ExceptionDAO{
         
         String sql  = "SELECT CPF, NOME, SOBRENOME, CELULAR, EMAIL FROM CLIENTE ORDER BY DATAREG DESC";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
-        ArrayList<Cliente> clientes =  null;
+        List<Cliente> clientes =  null;
         
         try{
             connection = new ConnectionMVC().getConnection();
@@ -268,7 +267,7 @@ public class clienteDAO {
             
             try {
                 if(connection != null) connection.close();
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
             }
            
@@ -384,6 +383,50 @@ public class clienteDAO {
         }
         
     }
-    
+     
+    public LocalDate ultimaVisita(String cpf) throws ExceptionDAO{
+        
+        String sql = "SELECT MAX(DATA) AS ULTIMAVISITA FROM AGENDAMENTO WHERE CPF_CLIENTE = ? AND REALIZADO = TRUE ";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);          
+            pStatement.setString(1, cpf);
+            
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                  java.sql.Date data = rs.getDate("ULTIMAVISITA");
+                  if(data != null){
+                      return data.toLocalDate();
+                  }else{
+                      return null;
+                  }
+                }            
+            }
+         
+        } catch (SQLException e) { 
+            JOptionPane.showMessageDialog(null,"Erro buscar ultima visita do cliente"  + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }    
+        }
+        
+        return null;
+    }
     
 }
