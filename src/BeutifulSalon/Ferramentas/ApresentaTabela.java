@@ -202,19 +202,14 @@ public class ApresentaTabela {
         OrcamentoController oc = new OrcamentoController();
         ServicoController sc = new ServicoController();
         Servico servicoAtual = null;
-
-        try {
             orcamentos = oc.listarOrcamentosServico();
             if (orcamentos == null) {
                 return modelo;
             }
             for (OrcamentoServico orcamento : orcamentos) {
 
-                try {
                     servicoAtual = sc.buscarServico(orcamento.getId_servico());
-                } catch (ExceptionDAO ex) {
-                    Logger.getLogger(ApresentaTabela.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
 
                 long preco = servicoAtual.getPreco();
                 modelo.addRow(new Object[]{
@@ -236,11 +231,7 @@ public class ApresentaTabela {
                 });
             }
 
-        } catch (ExceptionDAO e) {
-
-            JOptionPane.showMessageDialog(null, "Erro ao listar Orçamentos" + e);
-
-        }
+ 
         return modelo;
     }
 
@@ -523,19 +514,14 @@ public class ApresentaTabela {
         ServicoController sc = new ServicoController();
         Servico servicoAtual = null;
 
-        try {
             orcamentos = oc.listarOrcamentosServico(ano);
             if (orcamentos == null) {
                 return modelo;
             }
             for (OrcamentoServico orcamento : orcamentos) {
 
-                try {
                     servicoAtual = sc.buscarServico(orcamento.getId_servico());
-                } catch (ExceptionDAO ex) {
-                    Logger.getLogger(ApresentaTabela.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
+             
                 long preco = servicoAtual.getPreco();
                 modelo.addRow(new Object[]{
                     orcamento.getNome(),
@@ -556,11 +542,6 @@ public class ApresentaTabela {
                 });
             }
 
-        } catch (ExceptionDAO e) {
-
-            JOptionPane.showMessageDialog(null, "Erro ao listar Orçamentos" + e);
-
-        }
         return modelo;
     }
 
@@ -568,7 +549,7 @@ public class ApresentaTabela {
 
         DefaultTableModel modelo = (DefaultTableModel) tabela.getModel();
         modelo.setRowCount(0);
-        ArrayList<OrcamentoServico> orcamentos = null;
+        List<OrcamentoServico> orcamentos = null;
 
         ManipulaData manipulaData = new ManipulaData();
         OrcamentoController oc = new OrcamentoController();
@@ -585,11 +566,7 @@ public class ApresentaTabela {
             orcamentos = oc.listarOrcamentosServico(anoReferente);
             for (OrcamentoServico orcamento : orcamentos) {
 
-                try {
                     servicoAtual = sc.buscarServico(orcamento.getId_servico());
-                } catch (ExceptionDAO ex) {
-                    Logger.getLogger(ApresentaTabela.class.getName()).log(Level.SEVERE, null, ex);
-                }
 
                 double janeiro = 0;
                 double fevereiro = 0;
@@ -955,7 +932,7 @@ public class ApresentaTabela {
         DespesaController dc = new DespesaController();
         OrcamentoController oc = new OrcamentoController();
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-        ArrayList<Despesa> despesas;
+        List<Despesa> despesas;
 
         try {
             modelo.setRowCount(0);
@@ -1009,7 +986,7 @@ public class ApresentaTabela {
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         ArrayList<Despesa> despesas;
 
-        try {
+
             modelo.setRowCount(0);
 
             despesas = dc.listarDespesasVencimento(mes);
@@ -1041,10 +1018,6 @@ public class ApresentaTabela {
                     d.getIdDespesa()
                 });
             }
-
-        } catch (ExceptionDAO e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
         return modelo;
     }
 
@@ -1055,8 +1028,6 @@ public class ApresentaTabela {
         OrcamentoController oc = new OrcamentoController();
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         ArrayList<Despesa> despesas;
-
-        try {
             modelo.setRowCount(0);
 
             despesas = dc.listarDespesasLancamento(mes);
@@ -1087,10 +1058,6 @@ public class ApresentaTabela {
                     status
                 });
             }
-
-        } catch (ExceptionDAO e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
         return modelo;
     }
 

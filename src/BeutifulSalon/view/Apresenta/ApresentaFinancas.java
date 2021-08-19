@@ -6,6 +6,11 @@
 package BeutifulSalon.view.Apresenta;
 
 import BeutifulSalon.Ferramentas.ApresentaTabela;
+import BeutifulSalon.Tabelas.CentralizaElementosTabela;
+import BeutifulSalon.Tabelas.DespesaComparadaTableModel;
+import BeutifulSalon.Tabelas.LancamentoTableModel;
+import BeutifulSalon.Tabelas.ServicoComparadoTableModel;
+import BeutifulSalon.Tabelas.ServicoPrevistoTableModel;
 import BeutifulSalon.Tabelas.ServicoRealizadoTableModel;
 import BeutifulSalon.controller.DespesaController;
 import BeutifulSalon.controller.OrcamentoController;
@@ -33,7 +38,11 @@ public class ApresentaFinancas extends javax.swing.JPanel {
      * Creates new form ApreFinancas
      */
     private final ServicoRealizadoTableModel modeloServicoRealizado = new ServicoRealizadoTableModel();
-
+    private final LancamentoTableModel modeloLancamento = new LancamentoTableModel();
+    private final ServicoComparadoTableModel modeloServicoComparado = new ServicoComparadoTableModel();
+    private final DespesaComparadaTableModel modeloDespesaComparada = new DespesaComparadaTableModel();
+    private final ServicoPrevistoTableModel modeloServicoPrevisto = new ServicoPrevistoTableModel();
+    
     public ApresentaFinancas() {
         initComponents();
         AplicaLookAndFeel.pegaNimbus();
@@ -43,26 +52,27 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jComboBoxVencimento.setSelectedIndex(mesAtual);
         jComboBoxLancamento.setSelectedIndex(mesAtual);
         listarOrcamentoServicoRealizado(ano);
-
+        
     }
+    
     public class FormatacaoConteudo extends DefaultTableCellRenderer implements TableCellRenderer {
-
+        
         private Color color;
         private int row = -1;
-
+        
         public FormatacaoConteudo(Color color, int row) {
             super();
             this.color = color;
             this.row = row;
         }
-
+        
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value, boolean isSelected,
                 boolean hasFocus, int row, int column) {
-
+            
             Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
+            
             if (row != -1 && color != null) {
                 if (row == this.row) {
                     c.setBackground(new Color(0, 0, 0));
@@ -70,11 +80,12 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                     this.setHorizontalAlignment(CENTER);
                 }
             }
-
+            
             return c;
         }
-
+        
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -271,7 +282,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(116, 116, 116)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
                 .addGap(655, 655, 655))
         );
         jPanel3Layout.setVerticalGroup(
@@ -290,16 +301,13 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             .addGroup(ServicosRealizadosLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(ServicosRealizadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel9)
                     .addGroup(ServicosRealizadosLayout.createSequentialGroup()
-                        .addGroup(ServicosRealizadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addGroup(ServicosRealizadosLayout.createSequentialGroup()
-                                .addComponent(jTextFieldAno2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(buscaPorAnoServicoRealizado)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jTextFieldAno2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buscaPorAnoServicoRealizado))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         ServicosRealizadosLayout.setVerticalGroup(
             ServicosRealizadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,6 +395,11 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jLabel15.setText("Lançamento em:");
 
         jComboBoxVencimento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
+        jComboBoxVencimento.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxVencimentoItemStateChanged(evt);
+            }
+        });
         jComboBoxVencimento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxVencimentoActionPerformed(evt);
@@ -394,6 +407,11 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
 
         jComboBoxLancamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
+        jComboBoxLancamento.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxLancamentoItemStateChanged(evt);
+            }
+        });
         jComboBoxLancamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxLancamentoActionPerformed(evt);
@@ -429,7 +447,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 1147, Short.MAX_VALUE)
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -447,27 +465,26 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jButtonEditar2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxLancamento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(75, 75, 75)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBoxVencimento, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(47, 47, 47)
+                .addGap(402, 402, 402)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextFieldAno4, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscaPorAno4)))
-                .addGap(18, 18, 18))
+                    .addComponent(jComboBoxLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
+                .addGap(42, 42, 42)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jComboBoxVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
+                .addGap(41, 41, 41)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextFieldAno4)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBuscaPorAno4)
+                .addGap(138, 138, 138))
             .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addGap(53, 53, 53))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -482,15 +499,14 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                             .addComponent(jLabel14)
                             .addComponent(jLabel13))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBuscaPorAno4)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jComboBoxLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jComboBoxVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldAno4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBoxLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldAno4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnBuscaPorAno4, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(7, 7, 7)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jTabbed.addTab("Lançamentos", jPanel1);
@@ -603,7 +619,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ComparativoServicoLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(ComparativoServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1109, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1096, Short.MAX_VALUE)
                     .addGroup(ComparativoServicoLayout.createSequentialGroup()
                         .addGroup(ComparativoServicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
@@ -751,7 +767,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                                 .addComponent(jLabelSearch4)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 1109, Short.MAX_VALUE)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 1096, Short.MAX_VALUE)
                         .addGap(22, 22, 22))))
             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -927,19 +943,20 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                 .addGap(81, 81, 81)
                 .addComponent(jButtonExcluir1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(282, 282, 282))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ServicoPrevistoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(ServicoPrevistoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addGroup(ServicoPrevistoLayout.createSequentialGroup()
-                        .addComponent(jTextFieldAno1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelSearch1)))
-                .addGap(48, 48, 48))
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(ServicoPrevistoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGroup(ServicoPrevistoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(ServicoPrevistoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1126, Short.MAX_VALUE))
+                    .addGroup(ServicoPrevistoLayout.createSequentialGroup()
+                        .addGap(865, 865, 865)
+                        .addGroup(ServicoPrevistoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(ServicoPrevistoLayout.createSequentialGroup()
+                                .addComponent(jTextFieldAno1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelSearch1)))))
                 .addContainerGap())
         );
         ServicoPrevistoLayout.setVerticalGroup(
@@ -953,8 +970,8 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                     .addComponent(jTextFieldAno1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelSearch1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
                 .addGroup(ServicoPrevistoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButtonExcluir1, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
                     .addComponent(jButtonEditar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
@@ -1164,106 +1181,88 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-
+        
         int indice = jTableConsultaOrcamento.getSelectedRow();
         int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este orçamento?: "
                 + jTableConsultaOrcamento.getValueAt(indice, 0), "Excluir Orçamento", JOptionPane.YES_NO_OPTION);
-
+        
         if (opc == 0) {
             if (indice > -1) {
                 try {
-
+                    
                     long id_orcamento = (long) jTableConsultaOrcamento.getValueAt(indice, 13); // Retorna ID_ORÇAMENTO
 
                     OrcamentoController oc = new OrcamentoController();
-
+                    
                     if (oc.excluirOrcamento(id_orcamento)) {
                         JOptionPane.showMessageDialog(null, "Orçamento deletado com sucesso.");
                         listarOrcamentos();
-
+                        
                     } else {
                         JOptionPane.showMessageDialog(null, "Não foi possível excluir o Orçamento. Selecione um índice válido na tabela");
                     }
                 } catch (HeadlessException e) {
                     JOptionPane.showMessageDialog(null, "Erro ao excluir orçamento: " + e);
                 }
-
+                
             }
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
-
     
-
     public void listarOrcamentos() {
         jTableConsultaOrcamento.setModel(new ApresentaTabela().apresentarOrcamentos(jTableConsultaOrcamento));
         try {
             jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));
-
+            
         } catch (Exception e) {
         }
     }
-
+    
     public void listaOrcamentos(String ano) {
         jTableConsultaOrcamento.setModel(new ApresentaTabela().apresentarOrcamentos(jTableConsultaOrcamento, ano));
         jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));
-
+        
     }
-
-    public void listarOrcamentoServico(String ano) {
-        jTableConsultaOrcamentoServico.setModel(new ApresentaTabela().OrcamentosServico(jTableConsultaOrcamento, ano));
-    }
-
-    public void listarOrcamentoServico() {
-        jTableConsultaOrcamentoServico.setModel(new ApresentaTabela().OrcamentosServico(jTableConsultaOrcamento));
-    }
-
+  
     public void listarOrcamentoServicoComparado(String ano) {
         jTableServicoComparado.setModel(new ApresentaTabela().servicosComparados(jTableServicoComparado, ano));
     }
-
+    
     private void listarOrcamentoServicoRealizado(String ano) {
         modeloServicoRealizado.getTodosServicosRealizados(ano);
         jTableConsultaServicoRealizado.setModel(modeloServicoRealizado);
         jTableConsultaServicoRealizado.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaServicoRealizado.getRowCount() - 1));
-
+        
     }
-
-    public void listarDespesas() {
-        jTableLancamentos.setModel(new ApresentaTabela().apresentaDespesas(jTableLancamentos, null));
-    }
-
-    public void listarDespesas(String ano) {
-        jTableLancamentos.setModel(new ApresentaTabela().apresentaDespesas(jTableLancamentos, ano));
-    }
-
+    
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-
+        
         boolean resultado;
         int indice = jTableConsultaOrcamento.getSelectedRow();
-
+        
         if (indice > -1) {
             try {
-
+                
                 long id_orcamento = (long) jTableConsultaOrcamento.getValueAt(indice, 13); // Retorna IDORCAMENTO
                 OrcamentoController oc = new OrcamentoController();
                 resultado = oc.editarOrcamento(id_orcamento);
-
+                
                 if (!resultado) {
                     JOptionPane.showMessageDialog(null, "Erro ao selecionar PKOrçamento");
                 }
-
+                
             } catch (HeadlessException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao retornar informações do orçamento: " + e);
             }
         } else {
-
+            
             JOptionPane.showMessageDialog(null, "Selecione um orçamento.");
         }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jLabelSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearchMousePressed
-
+        
         if (jTextFieldAno.getText().equals("")) {
             SimpleDateFormat df = new SimpleDateFormat("yyyy");
             java.util.Date ano = new java.util.Date();
@@ -1283,29 +1282,50 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonEditar1ActionPerformed
 
     private void jLabelSearch1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearch1MousePressed
-
+        
         if (jTextFieldAno1.getText().equals("")) {
-            SimpleDateFormat df = new SimpleDateFormat("yyyy");
-            java.util.Date ano = new java.util.Date();
-            listarOrcamentoServico(df.format(ano));
+            String ano = String.valueOf(LocalDate.now().getYear());
+            modeloServicoPrevisto.getServicoPrevisto(ano);
+            jTableConsultaOrcamentoServico.setModel(modeloServicoPrevisto);
+            jTableConsultaOrcamentoServico.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamentoServico.getRowCount() - 1));
 
+            
         } else {
-            listarOrcamentoServico(jTextFieldAno1.getText());
+            modeloServicoPrevisto.getServicoPrevisto(jTextFieldAno1.getText());
+            jTableConsultaOrcamentoServico.setModel(modeloServicoPrevisto);
+            jTableConsultaOrcamentoServico.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamentoServico.getRowCount() - 1));
+
         }
     }//GEN-LAST:event_jLabelSearch1MousePressed
 
     private void jTabbedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedStateChanged
-
+        
         int indice = jTabbed.getSelectedIndex();
-        String ano = String.valueOf(LocalDate.now().getYear()); 
+        String ano = String.valueOf(LocalDate.now().getYear());
         switch (indice) {
+            
+            case 0 ->
+                listarOrcamentoServicoRealizado(ano);
+            case 1 -> {
+                modeloLancamento.getDespesasAnual(ano);
+                jTableLancamentos.setModel(modeloLancamento);
+            }
+            case 2 -> {
+                modeloServicoComparado.getOrcamentoComparadoPorAno(ano);
+                jTableServicoComparado.setModel(modeloServicoComparado);
+            }
+            case 3 -> {
+                modeloDespesaComparada.getDespesaComparadaPorAno(ano);
+                jTableComparativoDespesas.setModel(modeloDespesaComparada);
+            }
+            case 4 ->{
+               modeloServicoPrevisto.getServicoPrevisto(ano);
+               jTableConsultaOrcamentoServico.setModel(modeloServicoPrevisto);
+               jTableConsultaOrcamentoServico.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamentoServico.getRowCount() - 1));
 
-            case 0 -> listarOrcamentoServicoRealizado(ano);
-            case 1 -> listarDespesas();
-            case 2 -> listarOrcamentoServicoComparado(ano);
-            case 3 -> jTableComparativoDespesas.setModel(new ApresentaTabela().OrcamentoDespesaComparado(jTableComparativoDespesas, ano));
-            case 4 -> listarOrcamentoServico();
-            case 5 -> listarOrcamentos();
+            }          
+            case 5 ->
+                listarOrcamentos();
             default -> {
             }
         }
@@ -1315,60 +1335,61 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private void buscaPorAnoServicoRealizadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buscaPorAnoServicoRealizadoMousePressed
         if (jTextFieldAno2.getText().equals("")) {
             String ano = String.valueOf(LocalDate.now().getYear());
-            listarOrcamentoServicoRealizado(ano);
+            modeloServicoRealizado.getTodosServicosRealizados(ano);
+            jTableConsultaOrcamentoServico.setModel(modeloServicoRealizado);
         } else {
-            listarOrcamentoServicoRealizado(jTextFieldAno2.getText());
+            modeloServicoRealizado.getTodosServicosRealizados(jTextFieldAno2.getText());
+            jTableConsultaOrcamentoServico.setModel(modeloServicoRealizado);
         }
     }//GEN-LAST:event_buscaPorAnoServicoRealizadoMousePressed
 
     private void jLabelSearch3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearch3MousePressed
         if (jTextFieldAno3.getText().equals("")) {
-            String ano = "";
-            try {
-                ano = String.valueOf(LocalDate.now().getYear());
-            } catch (Exception e) {
-
-            }
-            listarOrcamentoServicoComparado(ano);
-
+            
+            String ano = String.valueOf(LocalDate.now().getYear());
+            modeloServicoComparado.getOrcamentoComparadoPorAno(ano);
+            jTableServicoComparado.setModel(modeloServicoComparado);
+            
         } else {
-            listarOrcamentoServicoComparado(jTextFieldAno3.getText());
+            modeloServicoComparado.getOrcamentoComparadoPorAno(jTextFieldAno3.getText());
+            jTableServicoComparado.setModel(modeloServicoComparado);
         }
     }//GEN-LAST:event_jLabelSearch3MousePressed
 
     private void btnBuscaPorAno4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscaPorAno4MousePressed
-
+        
         if (jTextFieldAno4.getText().equals("")) {
-            listarDespesas();
+            modeloLancamento.getDespesasAnual(String.valueOf(LocalDate.now().getYear()));
+            jTableLancamentos.setModel(modeloLancamento);
+            
         } else {
-            listarDespesas(jTextFieldAno4.getText());
+            modeloLancamento.getDespesasAnual(jTextFieldAno4.getText());
+            jTableLancamentos.setModel(modeloLancamento);
         }
     }//GEN-LAST:event_btnBuscaPorAno4MousePressed
 
     private void jComboBoxVencimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxVencimentoActionPerformed
-
-        jTableLancamentos.setModel(new ApresentaTabela().apresentaDespesasVencimento(jTableLancamentos, jComboBoxVencimento.getSelectedIndex() + 1));
+        
+        modeloLancamento.getDespesasPorVencimento(jComboBoxVencimento.getSelectedIndex() + 1);
+        jTableLancamentos.setModel(modeloLancamento);
     }//GEN-LAST:event_jComboBoxVencimentoActionPerformed
 
     private void jComboBoxLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxLancamentoActionPerformed
-        jTableLancamentos.setModel(new ApresentaTabela().apresentaDespesasLancamento(jTableLancamentos, jComboBoxLancamento.getSelectedIndex() + 1));
-
+        modeloLancamento.getDespesasPorLancamento(jComboBoxLancamento.getSelectedIndex() + 1);
+        jTableLancamentos.setModel(modeloLancamento);
     }//GEN-LAST:event_jComboBoxLancamentoActionPerformed
 
     private void jButtonEditar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditar2ActionPerformed
         int index = jTableLancamentos.getSelectedRow();
-
+        
         DespesaController dc = new DespesaController();
         boolean sucesso = false;
-
+        
         if (index > -1) {
-            long idDespesa = (long) jTableLancamentos.getValueAt(index, 7);
-            try {
-                sucesso = dc.editarDespesa(idDespesa);
-            } catch (ExceptionDAO ex) {
-                Logger.getLogger(ApresentaFinancas.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+            long idLancamento = modeloLancamento.getDespesa(index).getIdDespesa();
+            
+            sucesso = dc.editarDespesa(idLancamento);
+            
             if (!sucesso) {
                 JOptionPane.showMessageDialog(null, "Erro ao selecionar PKDespesa");
             }
@@ -1378,20 +1399,27 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonEditar2ActionPerformed
 
     private void jLabelSearch4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearch4MousePressed
-
+        
         if (jTextFieldAno5.getText().equals("")) {
-            String ano = "";
-            try {
-                ano = String.valueOf(LocalDate.now().getYear());
-            } catch (Exception e) {
-
-            }
-            jTableComparativoDespesas.setModel(new ApresentaTabela().OrcamentoDespesaComparado(jTableComparativoDespesas, ano));
-
+            
+            String ano = String.valueOf(LocalDate.now().getYear());
+            modeloDespesaComparada.getDespesaComparadaPorAno(ano);
+            jTableComparativoDespesas.setModel(modeloDespesaComparada);
+            
         } else {
-            jTableComparativoDespesas.setModel(new ApresentaTabela().OrcamentoDespesaComparado(jTableComparativoDespesas, jTextFieldAno5.getText()));
+            modeloDespesaComparada.getDespesaComparadaPorAno(jTextFieldAno5.getText());
+            jTableComparativoDespesas.setModel(modeloDespesaComparada);
         }
     }//GEN-LAST:event_jLabelSearch4MousePressed
+
+    private void jComboBoxLancamentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxLancamentoItemStateChanged
+
+    }//GEN-LAST:event_jComboBoxLancamentoItemStateChanged
+
+    private void jComboBoxVencimentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxVencimentoItemStateChanged
+        
+
+    }//GEN-LAST:event_jComboBoxVencimentoItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

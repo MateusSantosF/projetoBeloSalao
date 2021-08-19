@@ -10,6 +10,7 @@ import BeutifulSalon.dao.ExceptionDAO;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -139,22 +140,22 @@ public class Despesa {
         return  new DespesaDAO().listarDespesas();
     }
     
-    public ArrayList<Despesa> listarDespesas(String ano) throws ExceptionDAO{
+    public List<Despesa> listarDespesas(String ano) throws ExceptionDAO{
         return  new DespesaDAO().listarDespesas(ano);
     }
 
-    public ArrayList<Despesa> listarDespesasVencimento(long inicioMes, long fimMes) {
+    public ArrayList<Despesa> listarDespesasVencimento(long inicioMes, long fimMes) throws ExceptionDAO{
         return new DespesaDAO().listarDespesasVencimento(inicioMes, fimMes);
     }
     
-    public ArrayList<Despesa> listarDespesasLancamento(long inicioMes, long fimMes) {
+    public ArrayList<Despesa> listarDespesasLancamento(long inicioMes, long fimMes) throws ExceptionDAO {
         return new DespesaDAO().listarDespesasLancamento(inicioMes, fimMes);
     }
     
     public Despesa buscarDespesaPaga(LocalDate ano, Month mes, long idOrcamento) throws ExceptionDAO{
         return new DespesaDAO().buscarDespesaPaga(ano,mes,idOrcamento);
     }
-    public Despesa listarDespesa(long idDespesa) {
+    public Despesa listarDespesa(long idDespesa) throws ExceptionDAO {
         return new DespesaDAO().listarDespesa(idDespesa);
     }
 

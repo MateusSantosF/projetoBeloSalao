@@ -37,9 +37,14 @@ public class ServicoController {
         return new Servico().listarServicos(nome);
     }
 
-    public Servico buscarServico(long idServicoBuscado) throws ExceptionDAO {
-
-        return new Servico().buscarServico(idServicoBuscado);
+    public Servico buscarServico(long idServicoBuscado) {
+        
+        try {
+          return new Servico().buscarServico(idServicoBuscado);  
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, "Erro ao buscarServico" + e );
+        }
+       return null;
     }
 
     public ArrayList<Servico> buscarServicoPeloAgendamento(long idAgendamento) {

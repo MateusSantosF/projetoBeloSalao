@@ -138,8 +138,7 @@ public class ServicoDAO {
         Connection connection = null;
         PreparedStatement pStatement = null;
         ResultSet rs = null;
-      
-        
+       
         try{
             
             connection = new ConnectionMVC().getConnection();

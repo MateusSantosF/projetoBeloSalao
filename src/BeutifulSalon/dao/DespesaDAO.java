@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -222,7 +223,7 @@ public class DespesaDAO {
         return despesaAtual;
     }
     
-    public Despesa listarDespesa(long idDespesa){
+    public Despesa listarDespesa(long idDespesa) throws ExceptionDAO{
         
         String sql = "SELECT ID_DESPESA, VALORPAGO, FORMAPAGAMENTO, ANO, DATALANCAMENTO, DATAVENCIMENTO, DATAPAGAMENTO, STATUS, ANOTACAO, ID_ORCAMENTO FROM DESPESAMENSAL WHERE ID_DESPESA = ?";
         
@@ -288,7 +289,7 @@ public class DespesaDAO {
         return despesaBuscada;
     }
     
-    public ArrayList<Despesa> listarDespesasVencimento(long inicioMes, long fimMes){
+    public ArrayList<Despesa> listarDespesasVencimento(long inicioMes, long fimMes)throws ExceptionDAO{
         
         String sql = "SELECT ID_DESPESA, VALORPAGO, FORMAPAGAMENTO, ANO, DATALANCAMENTO, DATAVENCIMENTO, DATAPAGAMENTO,"
                 + " STATUS, ANOTACAO, ID_ORCAMENTO FROM DESPESAMENSAL WHERE ANO = ? AND DATAVENCIMENTO BETWEEN ? AND ? ORDER BY DATALANCAMENTO";
@@ -357,7 +358,7 @@ public class DespesaDAO {
         }
         return despesas;
     }
-    public ArrayList<Despesa> listarDespesasLancamento(long inicioMes, long fimMes){
+    public ArrayList<Despesa> listarDespesasLancamento(long inicioMes, long fimMes) throws ExceptionDAO{
         
         String sql = "SELECT ID_DESPESA, VALORPAGO, FORMAPAGAMENTO, ANO, DATALANCAMENTO, DATAVENCIMENTO, DATAPAGAMENTO,"
                 + " STATUS, ANOTACAO, ID_ORCAMENTO FROM DESPESAMENSAL WHERE ANO = ? AND DATALANCAMENTO BETWEEN ? AND ? ORDER BY DATALANCAMENTO";
@@ -427,11 +428,11 @@ public class DespesaDAO {
         return despesas;
     }
     
-    public ArrayList<Despesa> listarDespesas(String ano){
+    public List<Despesa> listarDespesas(String ano){
         
-        String sql = "SELECT ID_DESPESA, VALORPAGO, FORMAPAGAMENTO, ANO, DATALANCAMENTO, DATAVENCIMENTO, DATAPAGAMENTO, STATUS, ANOTACAO, ID_ORCAMENTO FROM DESPESAMENSAL WHERE ANO = ? ORDER BY DATALANCAMENTO";
+        String sql = "SELECT ID_DESPESA, VALORPAGO, FORMAPAGAMENTO, ANO, DATALANCAMENTO, DATAVENCIMENTO, DATAPAGAMENTO, STATUS, ANOTACAO, ID_ORCAMENTO FROM DESPESAMENSAL WHERE ANO = ?";
         
-        ArrayList<Despesa> despesas = new ArrayList<>();
+        List<Despesa> despesas = new ArrayList<>();
         Connection connection = null;
         PreparedStatement pStatement = null;
         
