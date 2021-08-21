@@ -186,7 +186,6 @@ public class modalServicos extends javax.swing.JFrame implements Observado {
         Servico produtoBuscado = null;
 
         if (indice > -1) {
-            try {
 
                 DefaultTableModel tabelaServicosRealizados = (DefaultTableModel) jTableServicosRealizados.getModel();
 
@@ -203,9 +202,6 @@ public class modalServicos extends javax.swing.JFrame implements Observado {
                 });
 
                 jTableServicosRealizados.setModel(tabelaServicosRealizados);
-            } catch (ExceptionDAO e) {
-                JOptionPane.showMessageDialog(null, e);
-            }
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um serviço antes.");

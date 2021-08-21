@@ -8,7 +8,6 @@ package BeutifulSalon.dao;
 import BeutifulSalon.controller.EstoqueController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -41,7 +40,7 @@ public class CompraProdutoDAO {
             connection.setAutoCommit(false);
 
             pStatement = connection.prepareStatement(insertCompra);
-            pStatement.setDate(1, new Date(compra.getData().getTime()));
+            pStatement.setDate(1, java.sql.Date.valueOf(compra.getData()));
             pStatement.setLong(2, compra.getValorTotal());
             pStatement.setLong(3, compra.getValorDesconto());
             pStatement.setString(4, compra.getCpfCliente());

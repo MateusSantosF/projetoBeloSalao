@@ -82,14 +82,12 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         jLabel1.setText("Nome da Despesa");
 
         jTextFieldNomeDespesa.setEditable(false);
-        jTextFieldNomeDespesa.setForeground(new java.awt.Color(0, 0, 0));
         jTextFieldNomeDespesa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextFieldNomeDespesa.setEnabled(false);
 
         jLabel2.setText("ID");
 
         jTextFieldIdDespesa.setEditable(false);
-        jTextFieldIdDespesa.setForeground(new java.awt.Color(0, 0, 0));
         jTextFieldIdDespesa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldIdDespesa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextFieldIdDespesa.setEnabled(false);
@@ -166,13 +164,13 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
                 .addComponent(jComboBoxFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jDateChooserDataPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7)
-                .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jDateChooserDataPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jFormattedTextFieldValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -190,7 +188,6 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         jLabel9.setText("Pagamento de Despesa");
 
         jToggleButton.setBackground(new java.awt.Color(248, 67, 69));
-        jToggleButton.setForeground(new java.awt.Color(0, 0, 0));
         jToggleButton.setText("Pagamento Pendente");
         jToggleButton.setFocusable(false);
         jToggleButton.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -220,7 +217,16 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                        .addComponent(jToggleButton))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(519, 519, 519)
+                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -245,16 +251,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
                                 .addComponent(jDateChooserLacamento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jButtonCadastrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(74, 74, 74)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(519, 519, 519)
-                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jToggleButton)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -264,8 +261,8 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
                 .addComponent(jLabel9)
                 .addGap(19, 19, 19)
                 .addComponent(jToggleButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -285,8 +282,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jDateChooserVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(51, 51, 51)
-                        .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9))
+                        .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -321,7 +317,13 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
 
     }//GEN-LAST:event_jToggleButtonMousePressed
-
+    
+    private void limparCampos(){
+        jTextAreaAnotacao.setText("");
+        jTextFieldIdDespesa.setText("");
+        jTextFieldNomeDespesa.setText("");
+        jFormattedTextFieldValorPago.setText("");
+    }
     private void jToggleButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButtonStateChanged
  
         if (jToggleButton.isSelected()) {
@@ -348,7 +350,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         boolean sucesso = false;
         DespesaController dc = new DespesaController();
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
-        int ano = LocalDate.now().getYear();
+        int ano = LocalDate.now().getYear(); // Ano referente a despesa 
 
         if (jToggleButton.isSelected()) {
 
@@ -372,8 +374,13 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
             }
 
             //true pois está sendo registrado um pagamento
-            if (!dc.verificaExistenciaPagamento(idOrcamento, dataPagamento, true)) {
-                sucesso = dc.CadastrarDespesa(idOrcamento,
+            if (!dc.verificaExistenciaPagamento(idOrcamento, dataLancamento, true)) {
+                if(dc.verificaCompatibilidadeEntreAno(idOrcamento)){
+                    
+                    long idDespesa = dc.verificaExistencia(idOrcamento, dataLancamento);
+                  
+                    if(idDespesa == 0){
+                        sucesso = dc.CadastrarDespesa(idOrcamento,
                         dataLancamento,
                         dataVencimento,
                         dataPagamento,
@@ -382,12 +389,31 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
                         String.valueOf(ano),
                         String.valueOf(jComboBoxFormaPagamento.getSelectedItem()),
                         true
-                );
-                if (sucesso) {
+                        ); 
+                    }else{
+                        sucesso = dc.atualizarDespesa(idOrcamento, 
+                                dataLancamento, 
+                                dataVencimento,
+                                dataPagamento,
+                                jFormattedTextFieldValorPago.getText(), 
+                                jTextAreaAnotacao.getText(), 
+                                String.valueOf(ano), 
+                                String.valueOf(jComboBoxFormaPagamento.getSelectedItem()), 
+                                true, 
+                                idDespesa);
+                    }
+                   
+                    if (sucesso) {
                     JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Erro ao registrar despesa.");
+                        limparCampos();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao registrar despesa.");
+                    }
+                }else{
+                   JOptionPane.showMessageDialog(null, "O ano da despesa selecionada não é igual ao ano atual.");
                 }
+                
+               
 
             } else {
                 JOptionPane.showMessageDialog(null, "Já existe um registro de pagamento desta despesa para o mês informado.");
@@ -415,7 +441,9 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
             //false pois está sendo registrado apenas lançamento e vencimento
             if (!dc.verificaExistenciaPagamento(idOrcamento, dataLancamento, false)) {
-                sucesso = dc.CadastrarDespesa(idOrcamento,
+                
+                if(dc.verificaCompatibilidadeEntreAno(idOrcamento)){
+                     sucesso = dc.CadastrarDespesa(idOrcamento,
                         dataLancamento,
                         dataVencimento,
                         null,
@@ -428,9 +456,15 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
                 if (sucesso) {
                     JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
+                    limparCampos();
                 } else {
                     JOptionPane.showMessageDialog(null, "Erro ao registrar despesa.");
+                } 
+                }else{
+                   JOptionPane.showMessageDialog(null, "O ano da despesa selecionada não é igual ao ano atual.");
+
                 }
+              
             } else {
                 JOptionPane.showMessageDialog(null, "Já existe um registro de desta despesa para o mês informado. Realize o pagamento!");
             }

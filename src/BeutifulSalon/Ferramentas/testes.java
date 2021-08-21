@@ -5,23 +5,12 @@
  */
 package BeutifulSalon.Ferramentas;
 
-import BeutifulSalon.controller.AgendamentoController;
-import BeutifulSalon.controller.CabeleireiroController;
-import BeutifulSalon.dao.ExceptionDAO;
-import BeutifulSalon.model.Agendamento;
-import BeutifulSalon.model.Servico;
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+
+
+
 
 /**
  *
@@ -34,11 +23,16 @@ public class testes {
         //pegar todos orçamento servico por ano
         //pegar agendamentos por mes e verificar seus serviços 
         //pegar a quantidade mensal de um serviço e multiplicar pelo preço
-         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
-         LocalDate data = LocalDate.parse("16 de ago. de 2021", formatterData);
-         
-
-      
-
+       // DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LL yyyy");
+       // LocalDate data = LocalDate.parse("16 de ago. de 2021", formatterData);    
+        //System.out.println(data);
+        
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        String text = "21 agosto 2021";
+        LocalDate parsedDate = LocalDate.parse(text, formatter);
+  
+        System.out.println(text);
+        System.out.println(parsedDate);
     }
 }

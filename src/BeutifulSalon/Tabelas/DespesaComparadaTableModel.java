@@ -9,9 +9,7 @@ import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.controller.DespesaController;
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.dao.ExceptionDAO;
-import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Orcamento;
-import BeutifulSalon.model.OrcamentoServico;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -95,7 +93,7 @@ public class DespesaComparadaTableModel extends AbstractTableModel{
         return null;
     }
     
-     public void removeRow(int rowIndex) {
+    public void removeRow(int rowIndex) {
         dados.remove(rowIndex);
         this.fireTableRowsDeleted(rowIndex, rowIndex);
     }

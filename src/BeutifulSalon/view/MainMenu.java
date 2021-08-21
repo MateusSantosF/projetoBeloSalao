@@ -6,6 +6,7 @@
 package BeutifulSalon.view;
 
 
+import BeutifulSalon.model.AplicaLookAndFeel;
 import BeutifulSalon.view.modais.NovoRegistro;
 import BeutifulSalon.view.Apresenta.ApresentaFinancas;
 import BeutifulSalon.view.Apresenta.ApresentaProduto;
@@ -13,8 +14,12 @@ import BeutifulSalon.view.Apresenta.ApresentaCliente;
 import BeutifulSalon.model.GerenciadorJPanel;
 import BeutifulSalon.view.Apresenta.ApresentaAgendamentos;
 import BeutifulSalon.view.Cadastros.CadastroCabeleireiro;
+import java.awt.Color;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 
 
@@ -26,15 +31,27 @@ public class MainMenu extends javax.swing.JFrame {
 
     NovoRegistro novoRegistro = null;
     CadastroCabeleireiro cadastroCabeleireiro = null;
+    private final Color SELECIONADO = new Color(32,41,59);
+    private final Color PADRAO = new Color (36,46,66);
+    private final List<JPanel> paineis = new ArrayList<>();
     
     public MainMenu() {
         initComponents();
 
         this.setExtendedState(MAXIMIZED_BOTH);
          
-        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
+        AplicaLookAndFeel.pegaNimbus();
         new GerenciadorJPanel(painelPrincipal, new Dashboard());
         
+        paineis.add(painelDashboard);
+        paineis.add(painelProdutos);
+        paineis.add(painelClientes);
+        paineis.add(painelFinancas);
+        paineis.add(painelFinancas);
+        paineis.add(painelAgendamentos);
+        
+        painelDashboard.setBackground(SELECIONADO);
+        //muda icone do programa
         try {
           URL iconURL = getClass().getResource("/imagens/icon-barraMenu.jpeg") ;
           ImageIcon icon = new ImageIcon(iconURL);
@@ -107,15 +124,13 @@ public class MainMenu extends javax.swing.JFrame {
         painelDashboard.setLayout(painelDashboardLayout);
         painelDashboardLayout.setHorizontalGroup(
             painelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDashboardLayout.createSequentialGroup()
-                .addComponent(jLabelDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(62, 62, 62))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDashboardLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
         );
         painelDashboardLayout.setVerticalGroup(
             painelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDashboardLayout.createSequentialGroup()
-                .addComponent(jLabelDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jLabelDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
         );
 
         gridLateral.add(painelDashboard);
@@ -138,9 +153,10 @@ public class MainMenu extends javax.swing.JFrame {
         painelAgendamentos.setLayout(painelAgendamentosLayout);
         painelAgendamentosLayout.setHorizontalGroup(
             painelAgendamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelAgendamentosLayout.createSequentialGroup()
-                .addComponent(jLabelAgendamento, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addGroup(painelAgendamentosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelAgendamentosLayout.setVerticalGroup(
             painelAgendamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,9 +184,10 @@ public class MainMenu extends javax.swing.JFrame {
         painelClientes.setLayout(painelClientesLayout);
         painelClientesLayout.setHorizontalGroup(
             painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelClientesLayout.createSequentialGroup()
-                .addComponent(jLabelClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(painelClientesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelClientesLayout.setVerticalGroup(
             painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,6 +205,7 @@ public class MainMenu extends javax.swing.JFrame {
         jLabelProdutos.setText("Produtos");
         jLabelProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelProdutos.setIconTextGap(5);
+        jLabelProdutos.setPreferredSize(new java.awt.Dimension(128, 30));
         jLabelProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabelProdutosMousePressed(evt);
@@ -199,15 +217,12 @@ public class MainMenu extends javax.swing.JFrame {
         painelProdutosLayout.setHorizontalGroup(
             painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelProdutosLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jLabelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
         );
         painelProdutosLayout.setVerticalGroup(
             painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelProdutosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jLabelProdutos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
         );
 
         gridLateral.add(painelProdutos);
@@ -221,6 +236,7 @@ public class MainMenu extends javax.swing.JFrame {
         jLabelFinancas.setText("Finanças");
         jLabelFinancas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelFinancas.setIconTextGap(5);
+        jLabelFinancas.setPreferredSize(new java.awt.Dimension(128, 30));
         jLabelFinancas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabelFinancasMousePressed(evt);
@@ -231,14 +247,14 @@ public class MainMenu extends javax.swing.JFrame {
         painelFinancas.setLayout(painelFinancasLayout);
         painelFinancasLayout.setHorizontalGroup(
             painelFinancasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelFinancas, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+            .addGroup(painelFinancasLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelFinancas, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelFinancasLayout.setVerticalGroup(
             painelFinancasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFinancasLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabelFinancas, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jLabelFinancas, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
         );
 
         gridLateral.add(painelFinancas);
@@ -250,7 +266,7 @@ public class MainMenu extends javax.swing.JFrame {
         painelVazio.setLayout(painelVazioLayout);
         painelVazioLayout.setHorizontalGroup(
             painelVazioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 248, Short.MAX_VALUE)
+            .addGap(0, 266, Short.MAX_VALUE)
         );
         painelVazioLayout.setVerticalGroup(
             painelVazioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,7 +293,7 @@ public class MainMenu extends javax.swing.JFrame {
         panelNovoRegistro1.setLayout(panelNovoRegistro1Layout);
         panelNovoRegistro1Layout.setHorizontalGroup(
             panelNovoRegistro1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
         );
         panelNovoRegistro1Layout.setVerticalGroup(
             panelNovoRegistro1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,14 +319,14 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(menuLateralLayout.createSequentialGroup()
                 .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuLateralLayout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(gridLateral, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(menuLateralLayout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(Logo))
-                    .addGroup(menuLateralLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabelConfiguracoes)))
+                        .addComponent(jLabelConfiguracoes))
+                    .addGroup(menuLateralLayout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(gridLateral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(menuLateralLayout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(Logo)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         menuLateralLayout.setVerticalGroup(
@@ -318,9 +334,9 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(menuLateralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelConfiguracoes)
-                .addGap(60, 60, 60)
+                .addGap(32, 32, 32)
                 .addComponent(Logo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(48, 48, 48)
+                .addGap(76, 76, 76)
                 .addComponent(gridLateral, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE))
         );
 
@@ -363,16 +379,19 @@ public class MainMenu extends javax.swing.JFrame {
     private void jLabelClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelClientesMousePressed
         new GerenciadorJPanel(painelPrincipal, new ApresentaCliente());
         this.setTitle("Clientes");
+        trocaCorPainel(painelClientes);
     }//GEN-LAST:event_jLabelClientesMousePressed
 
     private void jLabelProdutosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProdutosMousePressed
          new GerenciadorJPanel(painelPrincipal, new ApresentaProduto());
          this.setTitle("Produtos");
+         trocaCorPainel(painelProdutos);
     }//GEN-LAST:event_jLabelProdutosMousePressed
 
     private void jLabelFinancasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelFinancasMousePressed
         new GerenciadorJPanel(painelPrincipal, new ApresentaFinancas());
         this.setTitle("Finanças");
+        trocaCorPainel(painelFinancas);
     }//GEN-LAST:event_jLabelFinancasMousePressed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
@@ -388,11 +407,13 @@ public class MainMenu extends javax.swing.JFrame {
     private void jLabelDashboardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDashboardMousePressed
        new GerenciadorJPanel(painelPrincipal, new Dashboard());
        this.setTitle("Dashboard");
+        trocaCorPainel(painelDashboard);
     }//GEN-LAST:event_jLabelDashboardMousePressed
 
     private void jLabelAgendamentoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAgendamentoMousePressed
        new GerenciadorJPanel(painelPrincipal, new ApresentaAgendamentos());
        this.setTitle("Agendamentos");
+       trocaCorPainel(painelAgendamentos);
     }//GEN-LAST:event_jLabelAgendamentoMousePressed
 
     private void jLabelConfiguracoesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelConfiguracoesMousePressed
@@ -404,7 +425,17 @@ public class MainMenu extends javax.swing.JFrame {
             cadastroCabeleireiro.setVisible(true);
         }
     }//GEN-LAST:event_jLabelConfiguracoesMousePressed
-
+    
+    private void trocaCorPainel(JPanel painelAtivo){
+        
+        for(JPanel p: paineis){
+            if( p.equals(painelAtivo)){
+                p.setBackground(SELECIONADO);
+            }else{
+                p.setBackground(PADRAO);
+            }
+        }
+    }
     /**
      * @param args the command line arguments
      */

@@ -80,7 +80,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         } catch (ParseException ex) {
             Logger.getLogger(EditarAgendamento.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("ID = > " + ag.getId());
+     
         jTableServicosSolicitados.setModel(new ApresentaTabela().apresentaServicosAgendamento(jTableServicosSolicitados, ag.getId()));
 
     }

@@ -18,6 +18,8 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -257,6 +259,39 @@ public class DespesaController {
         }
 
         return qtd > 0;
+    }
+
+    public long verificaExistencia(long idOrcamento, String dataLancamento) {
+
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
+        ManipulaData manipulaData = new ManipulaData();
+
+        LocalDate dataPagamentoFormatada = LocalDate.parse(dataLancamento, formatterData);
+        Month mesReferente = dataPagamentoFormatada.getMonth();
+        long idDespesa = 0;
+        long inicioMes = 0;
+        long fimMes = 0;
+        int ano = 0;
+
+        inicioMes = manipulaData.inicioDoMes(dataPagamentoFormatada, mesReferente);
+        fimMes = manipulaData.fimDoMes(dataPagamentoFormatada, mesReferente);
+        ano = dataPagamentoFormatada.getYear();
+
+        try {
+            idDespesa = new Despesa().verificaExistencia(idOrcamento, inicioMes, fimMes, String.valueOf(ano));
+        } catch (ExceptionDAO ex) {
+            Logger.getLogger(DespesaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return idDespesa;
+    }
+
+    public boolean verificaCompatibilidadeEntreAno(long idOrcamento) {
+
+        String anoAtual = String.valueOf(LocalDate.now().getYear());
+        OrcamentoController oc = new OrcamentoController();
+
+        return anoAtual.equals(oc.buscarOrcamento(idOrcamento).getAno());
+
     }
 
     public ArrayList<Despesa> listarDespesas() throws ExceptionDAO {

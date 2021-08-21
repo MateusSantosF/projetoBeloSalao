@@ -135,8 +135,13 @@ public class AgendamentoController {
         return new Agendamento().listarAgendamento(idAgendamento);
     }
 
-    public ArrayList<Servico> listarServicosAgendamento(long idAgendamento) throws ExceptionDAO {
-        return new Agendamento().listarServicosAgendamento(idAgendamento);
+    public ArrayList<Servico> listarServicosAgendamento(long idAgendamento) {
+        try {
+             return new Agendamento().listarServicosAgendamento(idAgendamento);
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao listar serviços do agendamento");
+        }
+       return null;
     }
 
     public ArrayList<Agendamento> listarAgendamentos() {

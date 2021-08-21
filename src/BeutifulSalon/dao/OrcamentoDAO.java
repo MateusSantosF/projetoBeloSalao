@@ -79,7 +79,7 @@ public class OrcamentoDAO {
     
     public ArrayList<Orcamento> listarOrcamento(){
         String sql  = "SELECT ID_ORCAMENTO, NOME,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
-                + "NOVEMBRO,DEZEMBRO FROM ORCAMENTO WHERE ANO = ?";
+                + "NOVEMBRO,DEZEMBRO, ANO FROM ORCAMENTO WHERE ANO = ?";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -87,16 +87,10 @@ public class OrcamentoDAO {
         
         try{
             connection = new ConnectionMVC().getConnection();
-            pStatement = connection.prepareStatement(sql);
-            
-            
-        
-            
-            
+            pStatement = connection.prepareStatement(sql);            
             pStatement.setString(1, Year.now().toString());//RETORNA o ANO atual do SISTEMA
             ResultSet rs = pStatement.executeQuery();
-           
-            
+                    
             if(rs != null){
                 orcamentos = new ArrayList<>();
                 
@@ -116,8 +110,71 @@ public class OrcamentoDAO {
                     orcamentoAtual.setOut(rs.getLong("OUTUBRO"));
                     orcamentoAtual.setNov(rs.getLong("NOVEMBRO"));
                     orcamentoAtual.setDez(rs.getLong("DEZEMBRO")); 
+                    orcamentoAtual.setAno(rs.getString("ANO"));
                     
           
+                    orcamentos.add(orcamentoAtual);
+                }
+                
+            }
+         
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ConnectionMVC: " + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+        
+        return orcamentos;
+    }
+    
+     public ArrayList<Orcamento> listarOrcamentoPorNome(String nome){
+        String sql  = "SELECT ID_ORCAMENTO, NOME,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
+                + "NOVEMBRO,DEZEMBRO, ANO FROM ORCAMENTO WHERE NOME LIKE '%" + nome + "%'";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ArrayList<Orcamento> orcamentos =  null;
+        
+        try{
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);            
+ 
+            ResultSet rs = pStatement.executeQuery();
+                    
+            if(rs != null){
+                orcamentos = new ArrayList<>();
+                
+                while(rs.next()){
+                    Orcamento orcamentoAtual = new Orcamento();
+                    orcamentoAtual.setId_orcamento(rs.getInt("ID_ORCAMENTO"));
+                    orcamentoAtual.setNome(rs.getString("NOME"));
+                    orcamentoAtual.setJan(rs.getLong("JANEIRO"));
+                    orcamentoAtual.setFev(rs.getLong("FEVEREIRO"));
+                    orcamentoAtual.setMar(rs.getLong("MARCO"));
+                    orcamentoAtual.setAbr(rs.getLong("ABRIL"));
+                    orcamentoAtual.setMai(rs.getLong("MAIO"));
+                    orcamentoAtual.setJun(rs.getLong("JUNHO"));
+                    orcamentoAtual.setJul(rs.getLong("JULHO"));
+                    orcamentoAtual.setAgo(rs.getLong("AGOSTO"));
+                    orcamentoAtual.setSet(rs.getLong("SETEMBRO"));
+                    orcamentoAtual.setOut(rs.getLong("OUTUBRO"));
+                    orcamentoAtual.setNov(rs.getLong("NOVEMBRO"));
+                    orcamentoAtual.setDez(rs.getLong("DEZEMBRO")); 
+                    orcamentoAtual.setAno(rs.getString("ANO"));
+                    
                     orcamentos.add(orcamentoAtual);
                 }
                 
@@ -279,7 +336,7 @@ public class OrcamentoDAO {
     }
     
     public Orcamento buscarOrcamento(long id_orcamento){
-        String sql = "SELECT ID_ORCAMENTO, NOME,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
+        String sql = "SELECT ID_ORCAMENTO, ANO, NOME,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
                 + "NOVEMBRO,DEZEMBRO FROM ORCAMENTO WHERE ID_ORCAMENTO = ?";
         
         Connection connection = null;
@@ -309,6 +366,7 @@ public class OrcamentoDAO {
                     orcamentoAtual.setOut(rs.getLong("OUTUBRO"));
                     orcamentoAtual.setNov(rs.getLong("NOVEMBRO"));
                     orcamentoAtual.setDez(rs.getLong("DEZEMBRO")); 
+                    orcamentoAtual.setAno(rs.getString("ANO"));
                 }
             }
       

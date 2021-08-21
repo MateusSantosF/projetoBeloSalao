@@ -53,7 +53,13 @@ public class ProdutoTableModel extends AbstractTableModel {
                 return dados.get(rowIndex).getMarca();
             }
             case 2 -> {
-                return Dinheiro.parseString(dados.get(rowIndex).getPreco());
+                if(dados.get(rowIndex).getPreco() < 0){
+                    return "Não é Vendido";
+                }else{
+                    return Dinheiro.parseString(dados.get(rowIndex).getPreco());
+                }
+                    
+                
             }
             case 3 -> {
                 EstoqueController estoque = new EstoqueController();

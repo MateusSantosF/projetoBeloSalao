@@ -357,6 +357,11 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jCheckBoxFixo.setBackground(new java.awt.Color(243, 244, 245));
         jCheckBoxFixo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jCheckBoxFixo.setText("Fixo");
+        jCheckBoxFixo.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBoxFixoStateChanged(evt);
+            }
+        });
         jCheckBoxFixo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jCheckBoxClicado(evt);
@@ -1108,11 +1113,11 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
     }//GEN-LAST:event_JTextFieldNomeDespesaKeyTyped
 
     private void jCheckBoxClicado(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBoxClicado
-        copiarValor();
+
     }//GEN-LAST:event_jCheckBoxClicado
 
     private void jTextFieldJanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldJanKeyPressed
-        copiarValor();
+        //copiarValor();
     }//GEN-LAST:event_jTextFieldJanKeyPressed
 
     private void jTextFieldJanKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldJanKeyReleased
@@ -1120,7 +1125,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
     }//GEN-LAST:event_jTextFieldJanKeyReleased
 
     private void jTextFieldJanKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldJanKeyTyped
-        copiarValor();
+        //copiarValor();
     }//GEN-LAST:event_jTextFieldJanKeyTyped
 
     private void JTextFieldNomeDespesaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JTextFieldNomeDespesaFocusLost
@@ -1239,6 +1244,10 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
 
 
     }//GEN-LAST:event_jCheckBoxFixo1ActionPerformed
+
+    private void jCheckBoxFixoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBoxFixoStateChanged
+        copiarValor();
+    }//GEN-LAST:event_jCheckBoxFixoStateChanged
 
     /**
      * @param args the command line arguments

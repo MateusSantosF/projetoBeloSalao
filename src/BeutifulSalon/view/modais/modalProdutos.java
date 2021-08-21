@@ -226,43 +226,41 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
         Produto produtoBuscado = null;
 
         if (indice > -1) {
-    
 
-                int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade comprada: "));
-                long valorPago = 0;
-                //Se for o cabeleleiro comprando
-                if (cabeleleiro) {
+            int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade comprada: "));
+            long valorPago = 0;
+            //Se for o cabeleleiro comprando
+            if (cabeleleiro) {
 
-                    DialogValorProduto modalValorProduto = new DialogValorProduto(this, true);
-                    modalValorProduto.setName("Valor do Produto");
-                    modalValorProduto.registrarObservador(this);
-                    modalValorProduto.setVisible(true);
-                }
+                DialogValorProduto modalValorProduto = new DialogValorProduto(this, true);
+                modalValorProduto.setName("Valor do Produto");
+                modalValorProduto.registrarObservador(this);
+                modalValorProduto.setVisible(true);
+            }
 
-                DefaultTableModel tabelaProdutosComprados = (DefaultTableModel) jTableProdutosComprados.getModel();
+            DefaultTableModel tabelaProdutosComprados = (DefaultTableModel) jTableProdutosComprados.getModel();
 
-                ProdutoController po = new ProdutoController();
+            ProdutoController po = new ProdutoController();
 
-                long idProdutoBuscado = (long) jTableConsultaProdutos.getValueAt(indice, 3);
+            long idProdutoBuscado = (long) jTableConsultaProdutos.getValueAt(indice, 3);
 
-                produtoBuscado = po.buscarProduto(idProdutoBuscado);
+            produtoBuscado = po.buscarProduto(idProdutoBuscado);
 
-                if (cabeleleiro) {
-                    valorPago = Dinheiro.parseCent(Dinheiro.retiraCaracteres(valorPagoPeloProduto));
-                } else {
-                    valorPago = produtoBuscado.getPreco();
-                }
+            if (cabeleleiro) {
+                valorPago = Dinheiro.parseCent(Dinheiro.retiraCaracteres(valorPagoPeloProduto));
+            } else {
+                valorPago = produtoBuscado.getPreco();
+            }
 
-                tabelaProdutosComprados.addRow(new Object[]{
-                    produtoBuscado.getNome(),
-                    produtoBuscado.getMarca(),
-                    Dinheiro.parseString(valorPago),
-                    quantidade,
-                    produtoBuscado.getId_produto()
-                });
+            tabelaProdutosComprados.addRow(new Object[]{
+                produtoBuscado.getNome(),
+                produtoBuscado.getMarca(),
+                Dinheiro.parseString(valorPago),
+                quantidade,
+                produtoBuscado.getId_produto()
+            });
 
-                jTableProdutosComprados.setModel(tabelaProdutosComprados);
-  
+            jTableProdutosComprados.setModel(tabelaProdutosComprados);
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um produto antes.");
@@ -280,18 +278,19 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
         ProdutoController pc = new ProdutoController();
 
         ArrayList<Produto> produtosListados = null;
-      
-            produtosListados = pc.listarProdutos(nome);
-     
+
+        produtosListados = pc.listarProdutos(nome);
 
         try {
             produtosListados.forEach((Produto produto) -> {
-                tabelaProdutoModel.addRow(new Object[]{
-                    produto.getNome(),
-                    produto.getMarca(),
-                    Dinheiro.parseString(produto.getPreco()),
-                    produto.getId_produto()
-                });
+                if (produto.getPreco() > 0) {
+                    tabelaProdutoModel.addRow(new Object[]{
+                        produto.getNome(),
+                        produto.getMarca(),
+                        Dinheiro.parseString(produto.getPreco()),
+                        produto.getId_produto()
+                    });
+                }
 
             });
 
@@ -363,12 +362,15 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
 
         try {
             produtosListados.forEach((Produto produto) -> {
-                tabelaProdutoModel.addRow(new Object[]{
+                if(produto.getPreco() > 0){
+                  tabelaProdutoModel.addRow(new Object[]{
                     produto.getNome(),
                     produto.getMarca(),
                     Dinheiro.parseString(produto.getPreco()),
                     produto.getId_produto()
-                });
+                });   
+                }
+               
 
             });
 

@@ -19,9 +19,9 @@ import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalInputMonetarios;
 import java.awt.HeadlessException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -344,7 +344,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                 cpf = cabc.selecionaCabeleireiro().getCpf();
             }
 
-            sucesso = cc.RegistraCompra(new Date(),
+            sucesso = cc.RegistraCompra(LocalDate.now(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
                     cpf,
                     new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));

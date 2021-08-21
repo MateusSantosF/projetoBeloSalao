@@ -2,12 +2,13 @@ package BeutifulSalon.view.Edicao;
 
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.controller.ProdutoController;
-import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Dinheiro;
 import java.awt.HeadlessException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -24,9 +25,23 @@ public class EditarProduto extends javax.swing.JFrame {
 
         initComponents();
 
+
+        
+        
+        DecimalFormat decimal = new DecimalFormat("#,###,###.00");
+        NumberFormatter numFormatter = new NumberFormatter(decimal);
+        numFormatter.setFormat(decimal);
+        numFormatter.setAllowsInvalid(false);
+        DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
+        jTextFieldPreco.setFormatterFactory(dfFactory);
+        
         jTextFieldNome.setText(produto.getNome());
         jTextFieldMarca.setText(produto.getMarca());
-        jTextFieldPreco.setText(Dinheiro.parseString(produto.getPreco()));
+        if(produto.getPreco() > 0){
+            jCheckBox1.setSelected(true);
+            jTextFieldPreco.setText(Long.toString(Dinheiro.parseDecimal(produto.getPreco())));
+        }
+        
         jTextFieldID.setText(Long.toString(produto.getId_produto()));
 
     }
@@ -55,6 +70,7 @@ public class EditarProduto extends javax.swing.JFrame {
         jLabel26 = new javax.swing.JLabel();
         jTextFieldID = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
 
         jLabel8.setText("jLabel8");
 
@@ -114,6 +130,7 @@ public class EditarProduto extends javax.swing.JFrame {
         jLabel19.setText("Marca");
 
         jTextFieldPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
+        jTextFieldPreco.setEnabled(false);
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel26.setText("*Preço de Venda ");
@@ -126,6 +143,14 @@ public class EditarProduto extends javax.swing.JFrame {
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel20.setText("ID");
+
+        jCheckBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jCheckBox1.setText("É vendido");
+        jCheckBox1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBox1StateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout JPCadastroClientes1Layout = new javax.swing.GroupLayout(JPCadastroClientes1);
         JPCadastroClientes1.setLayout(JPCadastroClientes1Layout);
@@ -152,7 +177,8 @@ public class EditarProduto extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jCheckBox1))
                 .addGap(0, 43, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPCadastroClientes1Layout.createSequentialGroup()
                 .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -163,7 +189,9 @@ public class EditarProduto extends javax.swing.JFrame {
             .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addComponent(jLabel17)
-                .addGap(56, 56, 56)
+                .addGap(18, 18, 18)
+                .addComponent(jCheckBox1)
+                .addGap(17, 17, 17)
                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(jLabel20))
@@ -179,9 +207,9 @@ public class EditarProduto extends javax.swing.JFrame {
                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49)
+                .addGap(64, 64, 64)
                 .addComponent(jPanel26, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         getContentPane().add(JPCadastroClientes1, java.awt.BorderLayout.CENTER);
@@ -201,8 +229,9 @@ public class EditarProduto extends javax.swing.JFrame {
             sucessoAoAtualizar = pc.AtualizarProduto(
                     jTextFieldNome.getText(),
                     jTextFieldMarca.getText(),
-                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldPreco.getText())),
-                    Long.parseLong(jTextFieldID.getText())
+                    jTextFieldPreco.getText(),
+                    Long.parseLong(jTextFieldID.getText()),
+                    jCheckBox1.isSelected()
             );
 
             if (sucessoAoAtualizar) {
@@ -224,6 +253,16 @@ public class EditarProduto extends javax.swing.JFrame {
             this.dispose();
         }
     }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jCheckBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox1StateChanged
+      
+        if(jCheckBox1.isSelected()){
+            jTextFieldPreco.setEnabled(true);
+        }else{
+            jTextFieldPreco.setEnabled(false);
+        }
+            
+    }//GEN-LAST:event_jCheckBox1StateChanged
 
     /**
      * @param args the command line arguments
@@ -279,6 +318,7 @@ public class EditarProduto extends javax.swing.JFrame {
     private javax.swing.JPanel JPCadastroClientes1;
     private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;

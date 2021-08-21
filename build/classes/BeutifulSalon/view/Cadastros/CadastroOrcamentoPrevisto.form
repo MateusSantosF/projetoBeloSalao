@@ -536,6 +536,7 @@
                 <Property name="text" type="java.lang.String" value="Fixo"/>
               </Properties>
               <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jCheckBoxFixoStateChanged"/>
                 <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jCheckBoxClicado"/>
               </Events>
             </Component>

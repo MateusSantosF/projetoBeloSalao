@@ -10,6 +10,7 @@ import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.ItemCompra;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -21,7 +22,7 @@ import javax.swing.JOptionPane;
 public class CompraController {
     
     
-     public boolean RegistraCompra(Date data, long valorDesconto, String cpfCliente, ArrayList<ItemCompra> itensCompra) throws ExceptionDAO {
+     public boolean RegistraCompra(LocalDate data, long valorDesconto, String cpfCliente, ArrayList<ItemCompra> itensCompra) throws ExceptionDAO {
          
          if(Valida.isCpf(cpfCliente)){
              

@@ -207,6 +207,11 @@ public class Orcamento {
 
         return new OrcamentoDAO().listarOrcamento();
     }
+    
+    public ArrayList<Orcamento> listarOrcamentoPorNome(String nome) throws ExceptionDAO {
+
+        return new OrcamentoDAO().listarOrcamentoPorNome(nome);
+    }
 
     public ArrayList<Orcamento> listarOrcamentos(String ano) throws ExceptionDAO {
 

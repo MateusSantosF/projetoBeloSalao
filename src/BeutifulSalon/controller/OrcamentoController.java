@@ -86,9 +86,23 @@ public class OrcamentoController {
     public ArrayList<Orcamento> listarOrcamentos() throws ExceptionDAO {
         return new Orcamento().listarOrcamentos();
     }
+    
+    public ArrayList<Orcamento> listarOrcamentosPorNome(String nome) {
+        try {
+            return new Orcamento().listarOrcamentoPorNome(nome);
+        } catch (Exception e) {
+            System.out.println("Erro ao listar orçamentos por nome " + e);
+        }
+          return null;
+    }
 
-    public ArrayList<Orcamento> listarOrcamentos(String ano) throws ExceptionDAO {
-        return new Orcamento().listarOrcamentos(ano);
+    public ArrayList<Orcamento> listarOrcamentos(String anoReferente) {
+        try {
+            return new Orcamento().listarOrcamentos(anoReferente); 
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, "Erro ao Listar orçamentos " + e);
+        }
+       return null;
     }
 
     public long somarOrcamento(String mes, String ano) throws ExceptionDAO {

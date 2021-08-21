@@ -162,4 +162,8 @@ public class Despesa {
     public void atualizarDespesa(Despesa despesa) throws ExceptionDAO{
        new DespesaDAO().atualizarDespesa(despesa);
     }
+
+    public long verificaExistencia(long idOrcamento, long inicioMes, long fimMes, String ano) throws ExceptionDAO {
+        return new DespesaDAO().verificaExistencia(idOrcamento, inicioMes, fimMes, ano);
+    }
 }

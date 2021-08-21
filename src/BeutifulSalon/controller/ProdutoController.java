@@ -1,10 +1,10 @@
 package BeutifulSalon.controller;
 
 import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.view.Edicao.EditarProduto;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 //import java.sql.Date;
@@ -16,16 +16,18 @@ import javax.swing.JOptionPane;
 //CONTROL
 public class ProdutoController {
 
-    public boolean cadastrarProduto(String nome, String marca, long preco, String dataReg) {
+    public boolean cadastrarProduto(String nome, String marca, String preco, LocalDate dataReg, boolean isVendido) {
 
         if (nome != null && nome.length() > 0 && marca != null && marca.length() > 0) {
-
-            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
-
-            //Convertendo datas de String para Date
-            LocalDate dataRegistro = LocalDate.parse(dataReg, formatterData);
-
-            Produto produto = new Produto(nome, marca, preco, dataRegistro);
+            
+            long valorDeVenda = -1;
+            if(isVendido){
+                valorDeVenda = Dinheiro.parseCent(Dinheiro.retiraCaracteres(preco));
+                if(valorDeVenda <= 0){
+                    return false;
+                }
+            }
+            Produto produto = new Produto(nome, marca, valorDeVenda, dataReg);
             try {
                 produto.cadastrarProduto(produto);
             } catch (ExceptionDAO e) {
@@ -36,7 +38,6 @@ public class ProdutoController {
         } else {
             return false;
         }
-
         return true;
     }
 
@@ -98,10 +99,18 @@ public class ProdutoController {
         return true;
     }
 
-    public boolean AtualizarProduto(String nome, String marca, long preco, long idProduto) {
+    public boolean AtualizarProduto(String nome, String marca, String preco, long idProduto, boolean isVendido) {
 
-        if (nome != null && nome.length() > 0 && marca != null && marca.length() > 0 && preco > 0) {
-            Produto produto = new Produto(nome, marca, preco, idProduto);
+        if (nome != null && nome.length() > 0 && marca != null && marca.length() > 0 ) {
+            
+            long valorDeVenda = -1;
+            if(isVendido){
+                valorDeVenda = Dinheiro.parseCent(Dinheiro.retiraCaracteres(preco));
+                if(valorDeVenda <= 0){
+                    return false;
+                }
+            }
+            Produto produto = new Produto(nome, marca, valorDeVenda, idProduto);
             try {
                 produto.atualizarProduto(produto);
             } catch (ExceptionDAO e) {

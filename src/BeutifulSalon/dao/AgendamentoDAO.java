@@ -207,7 +207,7 @@ public class AgendamentoDAO {
         return agendamentos;
     }
     
-    public ArrayList<Servico> listaServicosAgendamento(long idAgendamento){
+    public ArrayList<Servico> listaServicosAgendamento(long idAgendamento) throws ExceptionDAO{
         
         String sql = "SELECT * FROM AGENDAMENTO_SERVICO WHERE ID_AGENDAMENTO = ?";
         
@@ -234,7 +234,7 @@ public class AgendamentoDAO {
             
             return servicos;
             
-        } catch (ExceptionDAO | SQLException e) {
+        } catch (SQLException e) {
             JOptionPane.showConfirmDialog(null, e);
         }
           return servicos;  

@@ -8,6 +8,7 @@ package BeutifulSalon.model;
 import BeutifulSalon.dao.CompraProdutoDAO;
 import BeutifulSalon.dao.ExceptionDAO;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,7 +18,7 @@ import java.util.Date;
  */
 public class Compra {
     
-    Date data;
+    LocalDate data;
     long valorTotal;
     long valorDesconto;
     String cpfCliente;
@@ -26,7 +27,7 @@ public class Compra {
     
     public Compra() { }
     
-    public Compra(Date data, long valorDesconto, String cpfCliente, ArrayList<ItemCompra> itensCompra) {
+    public Compra(LocalDate data, long valorDesconto, String cpfCliente, ArrayList<ItemCompra> itensCompra) {
         this.data = data;
         this.valorTotal = valorTotal;
         this.valorDesconto = valorDesconto;
@@ -40,11 +41,11 @@ public class Compra {
     
     
 
-    public Date getData() {
+    public LocalDate getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(LocalDate data) {
         this.data = data;
     }
 

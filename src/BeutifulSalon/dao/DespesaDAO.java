@@ -500,7 +500,7 @@ public class DespesaDAO {
         String sql = "";
         
         if(pagamento){
-            sql = "SELECT COUNT(*) AS QTD FROM DESPESAMENSAL WHERE ID_ORCAMENTO = ? AND ANO = ? AND DATAPAGAMENTO BETWEEN " + inicioMes + " AND " + fimMes;
+            sql = "SELECT COUNT(*) AS QTD FROM DESPESAMENSAL WHERE ID_ORCAMENTO = ? AND ANO = ? AND DATALANCAMENTO BETWEEN " + inicioMes + " AND " + fimMes + " AND DATAPAGAMENTO > 0";
         }else{
            sql = "SELECT COUNT(*) AS QTD FROM DESPESAMENSAL WHERE ID_ORCAMENTO = ? AND ANO = ? AND DATALANCAMENTO BETWEEN " + inicioMes + " AND " + fimMes;
         }
@@ -552,6 +552,58 @@ public class DespesaDAO {
         
         return qtd;
 
+    }
+    
+    public long verificaExistencia(long idOrcamento, long inicioMes, long fimMes, String ano) {
+        
+        String sql = "";
+        long id = 0;
+
+        sql = "SELECT ID_DESPESA AS ID FROM DESPESAMENSAL WHERE ID_ORCAMENTO = ? AND ANO = ? AND DATALANCAMENTO BETWEEN " + inicioMes + " AND " + fimMes ;
+        
+         
+        Connection connection = null;
+        PreparedStatement pStatement = null;        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setLong(1, idOrcamento);
+            pStatement.setString(2,ano );
+                
+            ResultSet rs = pStatement.executeQuery();
+                
+            if(rs != null){
+                while(rs.next()){
+                    System.out.println("teste");
+                    id = rs.getLong("ID");
+                }      
+            }
+            
+            return id;
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }finally {
+            
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        return id;
     }
 
     public void atualizarDespesa(Despesa despesa) {
