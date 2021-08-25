@@ -6,9 +6,6 @@
 package BeutifulSalon.Ferramentas;
 
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 
 
 
@@ -26,13 +23,7 @@ public class testes {
        // DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LL yyyy");
        // LocalDate data = LocalDate.parse("16 de ago. de 2021", formatterData);    
         //System.out.println(data);
+
         
-        LocalDate date = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-        String text = "21 agosto 2021";
-        LocalDate parsedDate = LocalDate.parse(text, formatter);
-  
-        System.out.println(text);
-        System.out.println(parsedDate);
     }
 }

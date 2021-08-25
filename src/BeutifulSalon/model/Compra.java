@@ -29,7 +29,6 @@ public class Compra {
     
     public Compra(LocalDate data, long valorDesconto, String cpfCliente, ArrayList<ItemCompra> itensCompra) {
         this.data = data;
-        this.valorTotal = valorTotal;
         this.valorDesconto = valorDesconto;
         this.cpfCliente = cpfCliente;
         this.itensCompra = itensCompra;
