@@ -47,23 +47,22 @@ public class ClienteTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         switch(columnIndex){
-            case 0 -> {
+            case 0:
                 return dados.get(rowIndex).getNOME();
-            }
-            case 1 -> {
-                return dados.get(rowIndex).getSOBRENOME();
-            }
-            case 2 -> {
-                return dados.get(rowIndex).getCELULAR();
-            }
-            case 3 -> {
-               return dados.get(rowIndex).getEMAIL();
-            }
             
-            case 4 -> {
+            case 1:
+                return dados.get(rowIndex).getSOBRENOME();
+            
+            case 2:
+                return dados.get(rowIndex).getCELULAR();
+            
+            case 3:
+               return dados.get(rowIndex).getEMAIL();
+                    
+            case 4:
                 return dados.get(rowIndex).getCPF();
-            }
-            case 5 -> {
+            
+            case 5 :
                 LocalDate ultimaVisita = clienteController.ultimaVisita(dados.get(rowIndex).getCPF());
                 
                 if(ultimaVisita != null){
@@ -71,7 +70,7 @@ public class ClienteTableModel extends AbstractTableModel {
                 }else{
                     return "--";
                 }
-            }            
+                        
         }
         
         return null;

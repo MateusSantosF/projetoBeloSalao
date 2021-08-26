@@ -50,45 +50,44 @@ public class ServicoPrevistoTableModel extends AbstractTableModel {
 
         switch (columnIndex) {
 
-            case 0 -> {
+            case 0 :
                 return dados.get(rowIndex).getNome();
-            }
-            case 1 -> {
+            
+            case 1:
                 return Dinheiro.parseString(dados.get(rowIndex).getJan());
-            }
-            case 2 -> {
+            
+            case 2:
                 return Dinheiro.parseString(dados.get(rowIndex).getFev());
-            }
-            case 3 -> {
+            
+            case 3:
                 return Dinheiro.parseString(dados.get(rowIndex).getMar());
-            }
-            case 4 -> {
+            
+            case 4 :
                 return Dinheiro.parseString(dados.get(rowIndex).getAbr());
-            }
-            case 5 -> {
+            
+            case 5:
                 return Dinheiro.parseString(dados.get(rowIndex).getMai());
-            }
-            case 6 -> {
+          
+            case 6:
                 return Dinheiro.parseString(dados.get(rowIndex).getJun());
-            }
-            case 7 -> {
+            
+            case 7:
                 return Dinheiro.parseString(dados.get(rowIndex).getJul());
-            }
-            case 8 -> {
+            
+            case 8:
                 return Dinheiro.parseString(dados.get(rowIndex).getAgo());
-            }
-            case 9 -> {
+            
+            case 9:
                 return Dinheiro.parseString(dados.get(rowIndex).getSet());
-            }
-            case 10 -> {
+            case 10:
                 return Dinheiro.parseString(dados.get(rowIndex).getOut());
-            }
-            case 11 -> {
+       
+            case 11:
                 return Dinheiro.parseString(dados.get(rowIndex).getNov());
-            }
-            case 12 -> {
+            
+            case 12:
                 return Dinheiro.parseString(dados.get(rowIndex).getDez());
-            }
+            
         }
         return null;
     }

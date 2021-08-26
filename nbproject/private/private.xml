@@ -3,9 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/mateu/Documents/Projetos/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Apresenta/ApresentaDetalhesCliente.java</file>
-            <file>file:/C:/Users/mateu/Documents/Projetos/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Dashboard.java</file>
-            <file>file:/C:/Users/mateu/Documents/Projetos/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/MainMenu.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/controller/ServicoController.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/dao/ServicoDAO.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Ferramentas/GraficoDePizza.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Tabelas/ServicoComparadoTableModel.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Tabelas/ServicoPrevistoTableModel.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Dashboard.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Ferramentas/ManipulaData.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/MainMenu.java</file>
         </group>
     </open-files>
 </project-private>

@@ -41,51 +41,51 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private final ServicoPrevistoTableModel modeloServicoPrevisto = new ServicoPrevistoTableModel();
     private final DespesaPrevistaTableModel modeloDespesaPrevista = new DespesaPrevistaTableModel();
     private final String ANOATUAL = String.valueOf(LocalDate.now().getYear());
-    
+
     public ApresentaFinancas() {
         initComponents();
         AplicaLookAndFeel.pegaNimbus();
         String ano = String.valueOf(LocalDate.now().getYear());
         int mesAtual = LocalDate.now().getMonth().getValue() - 1;
-        
+
         jComboBoxVencimento.setSelectedIndex(mesAtual);
         jComboBoxLancamento.setSelectedIndex(mesAtual);
         listarOrcamentoServicoRealizado(ano);
-        
+
     }
-    
+
     public class FormatacaoConteudo extends DefaultTableCellRenderer implements TableCellRenderer {
-        
+
         private Color color;
         private int row = -1;
-        
+
         public FormatacaoConteudo(Color color, int row) {
             super();
             this.color = color;
             this.row = row;
         }
-        
+
         @Override
         public Component getTableCellRendererComponent(JTable table,
                 Object value, boolean isSelected,
                 boolean hasFocus, int row, int column) {
-            
+
             Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            
+
             if (row != -1 && color != null) {
                 if (row == this.row) {
                     c.setBackground(new Color(0, 0, 0));
                     c.setForeground(this.color);
                     this.setHorizontalAlignment(CENTER);
-                }else{
+                } else {
                     c.setBackground(Color.WHITE);
                     c.setForeground(Color.BLACK);
                 }
             }
-            
+
             return c;
         }
-        
+
     }
 
     /**
@@ -1176,77 +1176,75 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-        
+
         int indice = jTableConsultaOrcamento.getSelectedRow();
         int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este orçamento?: "
                 + jTableConsultaOrcamento.getValueAt(indice, 0), "Excluir Orçamento", JOptionPane.YES_NO_OPTION);
-        
+
         if (opc == 0) {
             if (indice > -1) {
                 try {
-                    
+
                     long id_orcamento = modeloDespesaPrevista.getOrcamento(indice).getId_orcamento(); // Retorna ID_ORÇAMENTO
                     OrcamentoController oc = new OrcamentoController();
-                    
+
                     if (oc.excluirOrcamento(id_orcamento)) {
                         JOptionPane.showMessageDialog(null, "Orçamento deletado com sucesso.");
-                        
+
                         modeloDespesaPrevista.getTodasDespesasPrevistas(ANOATUAL);
                         jTableConsultaOrcamento.setModel(modeloDespesaPrevista);
-                        jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));          
-                        
+                        jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));
+
                     } else {
                         JOptionPane.showMessageDialog(null, "Não foi possível excluir o Orçamento. Selecione um índice válido na tabela");
                     }
                 } catch (HeadlessException e) {
                     JOptionPane.showMessageDialog(null, "Erro ao excluir orçamento: " + e);
                 }
-                
+
             }
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
-   
-  
-  
+
     private void listarOrcamentoServicoRealizado(String ano) {
         modeloServicoRealizado.getTodosServicosRealizados(ano);
         jTableConsultaServicoRealizado.setModel(modeloServicoRealizado);
         jTableConsultaServicoRealizado.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaServicoRealizado.getRowCount() - 1));
-        
+
     }
-    
+
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        
+
         boolean resultado;
         int indice = jTableConsultaOrcamento.getSelectedRow();
-        
+
         if (indice > -1 && indice != jTableConsultaOrcamento.getRowCount() - 1) {
             try {
-                
+
                 long id_orcamento = modeloDespesaPrevista.getOrcamento(indice).getId_orcamento(); // Retorna IDORCAMENTO
                 OrcamentoController oc = new OrcamentoController();
                 resultado = oc.editarOrcamento(id_orcamento);
-                
+
                 if (!resultado) {
                     JOptionPane.showMessageDialog(null, "Erro ao selecionar PKOrçamento");
                 }
-                
+
             } catch (HeadlessException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao retornar informações do orçamento: " + e);
             }
         } else {
-            
+
             JOptionPane.showMessageDialog(null, "Selecione um orçamento.");
         }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jLabelSearchMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearchMousePressed
-        
+
         if (jTextFieldAno.getText().equals("")) {
             modeloDespesaPrevista.getTodasDespesasPrevistas(ANOATUAL);
             jTableConsultaOrcamento.setModel(modeloDespesaPrevista);
-            
+
         } else {
             modeloDespesaPrevista.getTodasDespesasPrevistas(jTextFieldAno.getText());
             jTableConsultaOrcamento.setModel(modeloDespesaPrevista);
@@ -1263,12 +1261,12 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonEditar1ActionPerformed
 
     private void jLabelSearch1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearch1MousePressed
-        
+
         if (jTextFieldAno1.getText().equals("")) {
             String ano = String.valueOf(LocalDate.now().getYear());
             modeloServicoPrevisto.getServicoPrevisto(ano);
             jTableConsultaOrcamentoServico.setModel(modeloServicoPrevisto);
-            jTableConsultaOrcamentoServico.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamentoServico.getRowCount() - 1));        
+            jTableConsultaOrcamentoServico.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamentoServico.getRowCount() - 1));
         } else {
             modeloServicoPrevisto.getServicoPrevisto(jTextFieldAno1.getText());
             jTableConsultaOrcamentoServico.setModel(modeloServicoPrevisto);
@@ -1278,39 +1276,41 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabelSearch1MousePressed
 
     private void jTabbedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedStateChanged
-        
+
         int indice = jTabbed.getSelectedIndex();
         String ano = String.valueOf(LocalDate.now().getYear());
         switch (indice) {
-            
-            case 0 ->
+
+            case 0:
                 listarOrcamentoServicoRealizado(ano);
-            case 1 -> {
+                break;
+            case 1:
                 modeloLancamento.getDespesasAnual(ano);
                 jTableLancamentos.setModel(modeloLancamento);
                 jTableLancamentos.getColumnModel().getColumn(2).setCellRenderer(new DestacaVencimentosTabela(2, modeloLancamento));
-            }
-            case 2 -> {
+                break;
+
+            case 2:
                 modeloServicoComparado.getOrcamentoComparadoPorAno(ano);
                 jTableServicoComparado.setModel(modeloServicoComparado);
-            }
-            case 3 -> {
+                break;
+
+            case 3:
                 modeloDespesaComparada.getDespesaComparadaPorAno(ano);
                 jTableComparativoDespesas.setModel(modeloDespesaComparada);
-            }
-            case 4 ->{
-               modeloServicoPrevisto.getServicoPrevisto(ano);
-               jTableConsultaOrcamentoServico.setModel(modeloServicoPrevisto);
-               jTableConsultaOrcamentoServico.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamentoServico.getRowCount() - 1));
+                break;
 
-            }          
-            case 5 ->{
+            case 4:
+                modeloServicoPrevisto.getServicoPrevisto(ano);
+                jTableConsultaOrcamentoServico.setModel(modeloServicoPrevisto);
+                jTableConsultaOrcamentoServico.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamentoServico.getRowCount() - 1));
+
+                break;
+            case 5:
                 modeloDespesaPrevista.getTodasDespesasPrevistas(ANOATUAL);
                 jTableConsultaOrcamento.setModel(modeloDespesaPrevista);
-                jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));          
-            }
-            default -> {
-            }
+                jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));
+                break;
         }
 
     }//GEN-LAST:event_jTabbedStateChanged
@@ -1328,11 +1328,11 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
     private void jLabelSearch3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearch3MousePressed
         if (jTextFieldAno3.getText().equals("")) {
-            
+
             String ano = String.valueOf(LocalDate.now().getYear());
             modeloServicoComparado.getOrcamentoComparadoPorAno(ano);
             jTableServicoComparado.setModel(modeloServicoComparado);
-            
+
         } else {
             modeloServicoComparado.getOrcamentoComparadoPorAno(jTextFieldAno3.getText());
             jTableServicoComparado.setModel(modeloServicoComparado);
@@ -1340,11 +1340,11 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabelSearch3MousePressed
 
     private void btnBuscaPorAno4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscaPorAno4MousePressed
-        
+
         if (jTextFieldAno4.getText().equals("")) {
             modeloLancamento.getDespesasAnual(String.valueOf(LocalDate.now().getYear()));
             jTableLancamentos.setModel(modeloLancamento);
-            
+
         } else {
             modeloLancamento.getDespesasAnual(jTextFieldAno4.getText());
             jTableLancamentos.setModel(modeloLancamento);
@@ -1352,7 +1352,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscaPorAno4MousePressed
 
     private void jComboBoxVencimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxVencimentoActionPerformed
-        
+
         modeloLancamento.getDespesasPorVencimento(jComboBoxVencimento.getSelectedIndex() + 1);
         jTableLancamentos.setModel(modeloLancamento);
     }//GEN-LAST:event_jComboBoxVencimentoActionPerformed
@@ -1363,15 +1363,15 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBoxLancamentoActionPerformed
 
     private void jButtonEditar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditar2ActionPerformed
-        int index = jTableLancamentos.getSelectedRow();     
+        int index = jTableLancamentos.getSelectedRow();
         DespesaController dc = new DespesaController();
         boolean sucesso;
-        
+
         if (index > -1) {
             long idLancamento = modeloLancamento.getDespesa(index).getIdDespesa();
-            
+
             sucesso = dc.editarDespesa(idLancamento);
-            
+
             if (!sucesso) {
                 JOptionPane.showMessageDialog(null, "Erro ao selecionar PKDespesa");
             }
@@ -1381,13 +1381,13 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jButtonEditar2ActionPerformed
 
     private void jLabelSearch4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSearch4MousePressed
-        
+
         if (jTextFieldAno5.getText().equals("")) {
-            
+
             String ano = String.valueOf(LocalDate.now().getYear());
             modeloDespesaComparada.getDespesaComparadaPorAno(ano);
             jTableComparativoDespesas.setModel(modeloDespesaComparada);
-            
+
         } else {
             modeloDespesaComparada.getDespesaComparadaPorAno(jTextFieldAno5.getText());
             jTableComparativoDespesas.setModel(modeloDespesaComparada);
@@ -1399,7 +1399,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBoxLancamentoItemStateChanged
 
     private void jComboBoxVencimentoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxVencimentoItemStateChanged
-        
+
 
     }//GEN-LAST:event_jComboBoxVencimentoItemStateChanged
 

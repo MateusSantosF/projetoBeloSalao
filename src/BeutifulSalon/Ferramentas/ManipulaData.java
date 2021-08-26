@@ -7,19 +7,15 @@ package BeutifulSalon.Ferramentas;
 
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.controller.CabeleireiroController;
-import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Servico;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
-import java.time.Year;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -50,6 +46,19 @@ public class ManipulaData {
         long meiaNoiteMs = diff.toLocalDate().toEpochDay() * 24 * 60 * 60 * 1000;
 
         return meiaNoiteMs;
+    }
+    
+    public int periodoDoDia(LocalDateTime horario){
+        
+        int hora = horario.getHour();
+        
+        if(hora >= 6 && hora <= 12 ){
+            return 0;
+        }else if( hora <= 18){
+            return 1;
+        }else{
+            return 2;
+        }
     }
 
     public long meiaNoiteAmanha(LocalDate dia) {

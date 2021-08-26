@@ -82,5 +82,15 @@ public class ServicoController {
         }
 
     }
+    
+     public List<Servico> listaOsCincoServicosMaisRealizados(){
+         
+         try {
+             return new Servico().listarOsCincoServicosMaisRealizados();
+         } catch (ExceptionDAO e) {
+             
+         }
+         return null;
+     }
 
 }

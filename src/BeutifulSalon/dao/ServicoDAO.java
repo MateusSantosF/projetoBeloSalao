@@ -132,6 +132,60 @@ public class ServicoDAO {
 
     }
     
+    public List<Servico> listaOsCincoServicosMaisRealizados(){
+         
+        String sql ="SELECT COUNT(AGENDAMENTO_SERVICO.ID_AGENDAMENTO) AS QTD, AGENDAMENTO_SERVICO.ID_SERVICO AS ID, SERVICO.NOME FROM AGENDAMENTO_SERVICO " +
+                    "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
+                    "GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) DESC LIMIT 5";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+        List<Servico> servicos = new ArrayList<>();
+       
+        try{
+            
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);       
+            rs = pStatement.executeQuery();
+            
+            
+   
+            if(rs != null){                
+                while(rs.next()){
+                
+                Servico servicoBuscado = new Servico();
+                servicoBuscado.setNome(rs.getString("NOME"));
+                servicoBuscado.setQuantidadeMensal(rs.getLong("QTD"));
+                servicoBuscado.setId(rs.getLong("ID"));
+                servicos.add(servicoBuscado);
+                }
+            }
+            
+            return servicos;
+       
+            
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) " + e);
+        }finally{
+              try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+
+        return null;
+    }
+    
+    
     public Servico buscarServico(long id){
         
         String sql = "SELECT ID_SERVICO, NOME, PRECO FROM SERVICO WHERE ID_SERVICO = ?";

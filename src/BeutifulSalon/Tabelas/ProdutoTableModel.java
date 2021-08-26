@@ -25,8 +25,7 @@ public class ProdutoTableModel extends AbstractTableModel {
     public ProdutoTableModel() {
         this.dados = new ArrayList<>();
     }
-    
-    
+
     @Override
     public int getRowCount() {
         return dados.size();
@@ -46,27 +45,27 @@ public class ProdutoTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
 
         switch (columnIndex) {
-            case 0 -> {
+            case 0:
                 return dados.get(rowIndex).getNome();
-            }
-            case 1 -> {
+
+            case 1:
                 return dados.get(rowIndex).getMarca();
-            }
-            case 2 -> {
-                if(dados.get(rowIndex).getPreco() < 0){
+
+            case 2:
+                if (dados.get(rowIndex).getPreco() < 0) {
                     return "Não é Vendido";
-                }else{
+                } else {
                     return Dinheiro.parseString(dados.get(rowIndex).getPreco());
                 }
-                    
-                
-            }
-            case 3 -> {
+
+            case 3:
                 EstoqueController estoque = new EstoqueController();
                 return estoque.quantidadeProduto(dados.get(rowIndex).getId_produto());
-            }
+            default:
+                return null;
+
         }
-        return null;
+
     }
 
     public void addRow(Produto produto) {
@@ -99,13 +98,13 @@ public class ProdutoTableModel extends AbstractTableModel {
         dados.clear();
         addRow(pc.listarProdutos(nome));
     }
-    
-    public boolean removeProduto(int rowIndex){
-       ProdutoController pc = new ProdutoController();    
-       return pc.excluirProduto(dados.get(rowIndex).getId_produto());
+
+    public boolean removeProduto(int rowIndex) {
+        ProdutoController pc = new ProdutoController();
+        return pc.excluirProduto(dados.get(rowIndex).getId_produto());
     }
-    
-    public boolean editProduto(int rowIndex){
+
+    public boolean editProduto(int rowIndex) {
         ProdutoController pc = new ProdutoController();
         return pc.editarProduto(dados.get(rowIndex).getId_produto());
     }

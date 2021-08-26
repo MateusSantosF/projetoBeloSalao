@@ -100,6 +100,10 @@ public class Servico {
     public void cadastrarServico(Servico servico) throws SQLException{
         new ServicoDAO().cadastrarServico(servico);
     }
+
+    public List<Servico> listarOsCincoServicosMaisRealizados() throws ExceptionDAO{
+        return new ServicoDAO().listaOsCincoServicosMaisRealizados();
+    }
     
     
 }

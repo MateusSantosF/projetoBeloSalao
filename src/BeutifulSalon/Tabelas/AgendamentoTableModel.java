@@ -55,16 +55,16 @@ public class AgendamentoTableModel extends AbstractTableModel {
         DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
         
         switch(columnIndex){
-            case 0 -> {
+            case 0:
                 return clienteController.buscarCliente(dados.get(rowIndex).getCpfCliente()).getNOME();
-            }
-            case 1 -> {
+            
+            case 1:
                 return dados.get(rowIndex).getData().format(formatterData);
-            }
-            case 2 -> {
+      
+            case 2:
                 return dados.get(rowIndex).getHorario().format(formatterHora);
-            }
-            case 3 -> {
+
+            case 3:
                 Agendamento g = dados.get(rowIndex);
                 ArrayList<Servico> servicosAgendamento = servicoController.buscarServicoPeloAgendamento(
                         dados.get(rowIndex).getId());
@@ -81,10 +81,8 @@ public class AgendamentoTableModel extends AbstractTableModel {
                 fimAgendamento = fimAgendamento.plusHours(horas);
                 fimAgendamento = fimAgendamento.plusMinutes(minutos);
                 return fimAgendamento.format(formatterHora);
-            }
-            case 4 -> {
-                return dados.get(rowIndex).getRealizado() ? "Realizado" : "Não realizado";
-            }            
+            case 4:
+                return dados.get(rowIndex).getRealizado() ? "Realizado" : "Não realizado";            
         }
         
         return null;

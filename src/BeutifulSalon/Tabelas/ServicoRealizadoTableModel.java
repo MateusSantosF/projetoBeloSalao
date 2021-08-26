@@ -52,54 +52,42 @@ public class ServicoRealizadoTableModel extends AbstractTableModel {
 
         switch (columnIndex) {
 
-            case 0 -> {
+            case 0:
                 return dados.get(rowIndex).getNome();
-            }
-            case 1 -> {
+            case 1:
                 return Dinheiro.parseString(dados.get(rowIndex).getJan());
-            }
-            case 2 -> {
+
+            case 2:
                 return Dinheiro.parseString(dados.get(rowIndex).getFev());
-            }
 
-            case 3 -> {
+            case 3:
                 return Dinheiro.parseString(dados.get(rowIndex).getMar());
-            }
 
-            case 4 -> {
+            case 4:
                 return Dinheiro.parseString(dados.get(rowIndex).getAbr());
-            }
-            case 5 -> {
+            case 5:
                 return Dinheiro.parseString(dados.get(rowIndex).getMai());
-            }
-            case 6 -> {
+            case 6:
                 return Dinheiro.parseString(dados.get(rowIndex).getJun());
-            }
-            case 7 -> {
+            case 7:
                 return Dinheiro.parseString(dados.get(rowIndex).getJul());
-            }
-            case 8 -> {
+            case 8:
                 return Dinheiro.parseString(dados.get(rowIndex).getAgo());
-            }
-
-            case 9 -> {
+            case 9:
                 return Dinheiro.parseString(dados.get(rowIndex).getSet());
-            }
-
-            case 10 -> {
+            case 10:
                 return Dinheiro.parseString(dados.get(rowIndex).getOut());
-            }
 
-            case 11 -> {
+            case 11:
                 return Dinheiro.parseString(dados.get(rowIndex).getNov());
-            }
 
-            case 12 -> {
+            case 12:
                 return Dinheiro.parseString(dados.get(rowIndex).getDez());
-            }
+            default:
+                return null;
 
         }
-        return null;
+
     }
 
     public void removeRow(int rowIndex) {
@@ -154,54 +142,54 @@ public class ServicoRealizadoTableModel extends AbstractTableModel {
                 for (Month m : manipulaData.meses(ano)) {
 
                     switch (m) {
-                        case JANUARY -> {
+                        case JANUARY:
                             janeiro = oc.listarOrcamentoServicorRealizado(ano, Month.JANUARY, s.getId()).getQuantidadeMensal();
                             janeiro *= s.getPreco();
-                        }
-                        case FEBRUARY -> {
+                        break;
+                        case FEBRUARY:
                             fevereiro = oc.listarOrcamentoServicorRealizado(ano, Month.FEBRUARY, s.getId()).getQuantidadeMensal();
                             fevereiro *= s.getPreco();
-                        }
-                        case MARCH -> {
+                        break;
+                        case MARCH:
                             marco = oc.listarOrcamentoServicorRealizado(ano, Month.MARCH, s.getId()).getQuantidadeMensal();
                             marco *= s.getPreco();
-                        }
-                        case APRIL -> {
+                        break;
+                        case APRIL:
                             abril = oc.listarOrcamentoServicorRealizado(ano, Month.APRIL, s.getId()).getQuantidadeMensal();
                             abril *= s.getPreco();
-                        }
-                        case MAY -> {
+                        break;
+                        case MAY:
                             maio = oc.listarOrcamentoServicorRealizado(ano, Month.MAY, s.getId()).getQuantidadeMensal();
                             maio *= s.getPreco();
-                        }
-                        case JUNE -> {
+                       break;
+                        case JUNE :
                             junho = oc.listarOrcamentoServicorRealizado(ano, Month.JUNE, s.getId()).getQuantidadeMensal();
                             junho *= s.getPreco();
-                        }
-                        case JULY -> {
+                        break;
+                        case JULY :
                             julho = oc.listarOrcamentoServicorRealizado(ano, Month.JULY, s.getId()).getQuantidadeMensal();
                             julho *= s.getPreco();
-                        }
-                        case AUGUST -> {
+                        break;
+                        case AUGUST :
                             agosto = oc.listarOrcamentoServicorRealizado(ano, Month.AUGUST, s.getId()).getQuantidadeMensal();
                             agosto *= s.getPreco();
-                        }
-                        case SEPTEMBER -> {
+                       break;
+                        case SEPTEMBER:
                             setembro = oc.listarOrcamentoServicorRealizado(ano, Month.SEPTEMBER, s.getId()).getQuantidadeMensal();
                             setembro *= s.getPreco();
-                        }
-                        case OCTOBER -> {
+                       break;
+                        case OCTOBER:
                             outubro = oc.listarOrcamentoServicorRealizado(ano, Month.OCTOBER, s.getId()).getQuantidadeMensal();
                             outubro *= s.getPreco();
-                        }
-                        case NOVEMBER -> {
+                        break;
+                        case NOVEMBER:
                             novembro = oc.listarOrcamentoServicorRealizado(ano, Month.NOVEMBER, s.getId()).getQuantidadeMensal();
                             novembro *= s.getPreco();
-                        }
-                        case DECEMBER -> {
+                        break;
+                        case DECEMBER:
                             dezembro = oc.listarOrcamentoServicorRealizado(ano, Month.DECEMBER, s.getId()).getQuantidadeMensal();
                             dezembro *= s.getPreco();
-                        }
+                        break;
                     }
 
                 }

@@ -160,8 +160,13 @@ public class OrcamentoController {
         return null;
     }
 
-    public long somaTotalGanhoServicoMensal(long inicio, long fim, long idServico) throws ExceptionDAO {
-        return new OrcamentoServico().somaTotalGanhoServicoMensal(inicio, fim, idServico);
+    public long somaTotalGanhoServicoMensal(long inicio, long fim, long idServico) {
+        try {
+                return new OrcamentoServico().somaTotalGanhoServicoMensal(inicio, fim, idServico);
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao somar ganhos de serviço mensalmente");
+        }
+        return -1;
     }
 
     public Servico listarOrcamentoServicorRealizado(LocalDate ano, Month mes, long idServico) {
