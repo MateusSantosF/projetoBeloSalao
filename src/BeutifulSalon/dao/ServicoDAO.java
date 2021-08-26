@@ -14,6 +14,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -134,8 +136,9 @@ public class ServicoDAO {
     
     public List<Servico> listaOsCincoServicosMaisRealizados(){
          
-        String sql ="SELECT COUNT(AGENDAMENTO_SERVICO.ID_AGENDAMENTO) AS QTD, AGENDAMENTO_SERVICO.ID_SERVICO AS ID, SERVICO.NOME FROM AGENDAMENTO_SERVICO " +
+        String sql ="SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) AS QTD, AGENDAMENTO_SERVICO.ID_SERVICO AS ID, SERVICO.NOME FROM AGENDAMENTO_SERVICO " +
                     "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
+                    "INNER JOIN AGENDAMENTO ON AGENDAMENTO.DATA BETWEEN ? AND ? AND AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO " +
                     "GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) DESC LIMIT 5";
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -145,10 +148,25 @@ public class ServicoDAO {
         try{
             
             connection = new ConnectionMVC().getConnection();
-            pStatement = connection.prepareStatement(sql);       
+            pStatement = connection.prepareStatement(sql); 
+            
+            try{
+                LocalDate anoAtual = LocalDate.now();
+                long inicioDoAno = LocalDate.ofYearDay(anoAtual.getYear(), 1).toEpochDay() * 24 * 60 * 60 * 1000;
+                long fimDoAno = LocalDate.ofYearDay(anoAtual.getYear(), 1).plusYears(1).toEpochDay() * 24 * 60 * 60 * 1000; 
+                pStatement.setLong(1, inicioDoAno);
+                pStatement.setLong(2, fimDoAno);
+            }catch(DateTimeException e){
+                throw new DateTimeException("erro");
+            }finally{
+                sql = "SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO), AGENDAMENTO_SERVICO.ID_SERVICO, SERVICO.NOME FROM AGENDAMENTO_SERVICO " +
+                "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
+                "GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) DESC LIMIT 5";
+            }
+       
             rs = pStatement.executeQuery();
             
-            
+          
    
             if(rs != null){                
                 while(rs.next()){

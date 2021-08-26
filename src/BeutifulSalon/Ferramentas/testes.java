@@ -5,6 +5,9 @@
  */
 package BeutifulSalon.Ferramentas;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 
 
 
@@ -24,6 +27,12 @@ public class testes {
        // LocalDate data = LocalDate.parse("16 de ago. de 2021", formatterData);    
         //System.out.println(data);
 
+        LocalDate teste = LocalDate.now();
         
+   
+        
+        LocalDate teste2 = LocalDate.ofYearDay( teste.getYear(), 1);
+       
+        System.out.println( teste2.plusYears(1));
     }
 }

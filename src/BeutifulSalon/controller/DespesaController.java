@@ -211,7 +211,7 @@ public class DespesaController {
         try {
             return new Despesa().listarDespesa(idDespesa);
         } catch (ExceptionDAO e) {
-            //erro ao listar despesa
+            System.out.println("Erro ao listar despesa");
         }
         return null;
     }
