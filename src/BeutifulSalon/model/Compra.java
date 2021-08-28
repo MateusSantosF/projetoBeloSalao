@@ -7,10 +7,8 @@ package BeutifulSalon.model;
 
 import BeutifulSalon.dao.CompraProdutoDAO;
 import BeutifulSalon.dao.ExceptionDAO;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -21,23 +19,18 @@ public class Compra {
     LocalDate data;
     long valorTotal;
     long valorDesconto;
-    String cpfCliente;
-    ArrayList<ItemCompra> itensCompra;
+    String cpfCabeleireiro;
+    ArrayList<Item> itensCompra;
 
     
     public Compra() { }
     
-    public Compra(LocalDate data, long valorDesconto, String cpfCliente, ArrayList<ItemCompra> itensCompra) {
+    public Compra(LocalDate data, long valorDesconto, String cpfCabeleireiro, ArrayList<Item> itensCompra) {
         this.data = data;
         this.valorDesconto = valorDesconto;
-        this.cpfCliente = cpfCliente;
+        this.cpfCabeleireiro = cpfCabeleireiro;
         this.itensCompra = itensCompra;
     }
-
-
-    
-    
-    
     
 
     public LocalDate getData() {
@@ -50,13 +43,13 @@ public class Compra {
 
     public long getValorTotal() {
         
-        long valorTotal = 0;
+        long valorTotalSomado = 0;
         
-        for(ItemCompra it : getItensCompra()){
-            valorTotal += it.getPrecoTotal();
+        for(Item it : getItensCompra()){
+            valorTotalSomado += it.getPrecoTotal();
         }
         
-        return valorTotal;
+        return valorTotalSomado;
     }
 
     public void setValorTotal(long valorTotal) {
@@ -71,25 +64,23 @@ public class Compra {
         this.valorDesconto = valorDesconto;
     }
 
-    public String getCpfCliente() {
-        return cpfCliente;
+    public String getCpfCabeleireiro() {
+        return cpfCabeleireiro;
     }
 
-    public void setCpfCliente(String cpfCliente) {
-        this.cpfCliente = cpfCliente;
+    public void setCpfCabeleireiro(String cpfCabeleireiro) {
+        this.cpfCabeleireiro = cpfCabeleireiro;
     }
 
-    public ArrayList<ItemCompra> getItensCompra() {
+    public ArrayList<Item> getItensCompra() {
         return itensCompra;
     }
 
-    public void setItensCompra(ArrayList<ItemCompra> itensCompra) {
+    public void setItensCompra(ArrayList<Item> itensCompra) {
         this.itensCompra = itensCompra;
     }
-    
-    
-    
-    public void cadastraCompra(Compra compra) throws ExceptionDAO, SQLException{
+
+    public void cadastraCompra(Compra compra) throws ExceptionDAO{
         new CompraProdutoDAO().cadastraCompra(compra);
     }
     

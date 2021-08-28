@@ -8,11 +8,9 @@ package BeutifulSalon.controller;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Compra;
-import BeutifulSalon.model.ItemCompra;
-import java.sql.SQLException;
+import BeutifulSalon.model.Item;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,24 +20,23 @@ import javax.swing.JOptionPane;
 public class CompraController {
     
     
-     public boolean RegistraCompra(LocalDate data, long valorDesconto, String cpfCliente, ArrayList<ItemCompra> itensCompra) throws ExceptionDAO {
+     public boolean RegistraCompra(LocalDate data, long valorDesconto, String cpfCabeleireiro, ArrayList<Item> itensCompra) {
          
-         if(Valida.isCpf(cpfCliente)){
+         if(Valida.isCpf(cpfCabeleireiro) && !itensCompra.isEmpty()){
              
-             Compra compraAtual = new Compra();
+            Compra compraAtual = new Compra();
              
-             compraAtual.setCpfCliente(cpfCliente);
-             compraAtual.setValorDesconto(valorDesconto);
-             compraAtual.setData(data);
-             compraAtual.setItensCompra(itensCompra);
+            compraAtual.setCpfCabeleireiro(cpfCabeleireiro);
+            compraAtual.setValorDesconto(valorDesconto);
+            compraAtual.setData(data);
+            compraAtual.setItensCompra(itensCompra);
              
-             try {
+            try {
                 compraAtual.cadastraCompra(compraAtual); 
-             } catch (SQLException e) {
-                 
+            } catch (ExceptionDAO e) {          
                 JOptionPane.showMessageDialog(null, "Erro ao criar objeto Compra " + e);
                 return false;
-             }
+            }
              
          }else{
              return false;

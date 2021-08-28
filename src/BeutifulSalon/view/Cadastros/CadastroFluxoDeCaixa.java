@@ -10,10 +10,11 @@ import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.view.modais.modalCliente;
 import BeutifulSalon.view.modais.modalProdutos;
 import BeutifulSalon.controller.CompraController;
+import BeutifulSalon.controller.VendaController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
-import BeutifulSalon.model.ItemCompra;
+import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
@@ -330,30 +331,39 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonFinalizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarCompraActionPerformed
+       
         boolean sucesso;
 
-        try {
+       
             CompraController cc = new CompraController();
+            VendaController vc = new VendaController();
+            CabeleireiroController cabc = new CabeleireiroController();
+            boolean isClienteComprando = jRadioButtonCliente.isSelected();
             String cpf = "";
 
             //retorna o CPF de acordo com o RadioButton
-            if (jRadioButtonCliente.isSelected()) {
+            if (isClienteComprando) {
                 cpf = jTextFieldCPF2.getText();
+                 sucesso = vc.RegistraVenda(
+                        LocalDate.now(),
+                        Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
+                        cpf,
+                        new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
             } else {
-                CabeleireiroController cabc = new CabeleireiroController();
+                    System.out.println("chegou");
                 cpf = cabc.selecionaCabeleireiro().getCpf();
-            }
-
-            sucesso = cc.RegistraCompra(LocalDate.now(),
+                sucesso = cc.RegistraCompra(
+                    LocalDate.now(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
                     cpf,
                     new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
-
+            }
+            
             if (sucesso) {
-                if (jRadioButtonCabelereiro.isSelected()) {
-                    JOptionPane.showMessageDialog(null, "Compra registrada com sucesso.");
+                if (isClienteComprando) {
+                    JOptionPane.showMessageDialog(null, "Venda registrada com sucesso.");            
                 } else {
-                    JOptionPane.showMessageDialog(null, "Venda registrada com sucesso.");
+                    JOptionPane.showMessageDialog(null, "Compra registrada com sucesso.");
                 }
 
                 limparTodosCampos();
@@ -361,10 +371,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                 JOptionPane.showMessageDialog(null, "Erro ao registrar venda");
             }
 
-        } catch (ExceptionDAO | HeadlessException e) {
-
-            JOptionPane.showMessageDialog(null, "Erro: " + e);
-        }
+ 
     }//GEN-LAST:event_jButtonFinalizarCompraActionPerformed
 
     private void jButtonFinalizarCompraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonFinalizarCompraMousePressed
@@ -444,11 +451,11 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
     private void calculaTotalBruto() {
 
-        ArrayList<ItemCompra> produtos = new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados);
+        ArrayList<Item> produtos = new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados);
         long total = 0;
 
         try {
-            for (ItemCompra prod : produtos) {
+            for (Item prod : produtos) {
                 total += prod.getPrecoTotal();
             }
         } catch (Exception e) {

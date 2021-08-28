@@ -45,90 +45,82 @@ public class Dashboard extends javax.swing.JPanel {
      */
     public Dashboard() {
         initComponents();
-        
+
         AplicaLookAndFeel.pegaNimbus();
         CabeleireiroController cc = new CabeleireiroController();
         AgendamentoController ag = new AgendamentoController();
         EstoqueController ec = new EstoqueController();
         ServicoController sc = new ServicoController();
-        
-        try {
-            Cabeleireiro cabeleireiro = cc.selecionaCabeleireiro();
-            int nAgendamentos = ag.listarAgendamentosHoje().size();
-            long nProdutosEstoque = ec.somaProdutosEstoque();
-            if(cabeleireiro.getNome() != null){
-                
-                switch(new ManipulaData().periodoDoDia(LocalDateTime.now())){
-                    case 0:
-                        jLabelNomeCabeleireiro.setText("Bom dia, " + cabeleireiro.getNome());
-                        break;
-                    case 1:
-                        jLabelNomeCabeleireiro.setText("Boa tarde, " + cabeleireiro.getNome());
-                        break;
-                    case 2:
-                        jLabelNomeCabeleireiro.setText("Boa noite, " + cabeleireiro.getNome());
-                        break;
-                    default:
-                        jLabelNomeCabeleireiro.setText("Bom dia, " + cabeleireiro.getNome());
-                        break;
-                }
-                
-               
-            }else{
-                jLabelNomeCabeleireiro.setText("Olá, Cabeleireiro");
+
+        Cabeleireiro cabeleireiro = cc.selecionaCabeleireiro();
+        int nAgendamentos = ag.listarAgendamentosHoje().size();
+        long nProdutosEstoque = ec.somaProdutosEstoque();
+        if (cabeleireiro.getNome() != null) {
+
+            switch (new ManipulaData().periodoDoDia(LocalDateTime.now())) {
+                case 0:
+                    jLabelNomeCabeleireiro.setText("Bom dia, " + cabeleireiro.getNome());
+                    break;
+                case 1:
+                    jLabelNomeCabeleireiro.setText("Boa tarde, " + cabeleireiro.getNome());
+                    break;
+                case 2:
+                    jLabelNomeCabeleireiro.setText("Boa noite, " + cabeleireiro.getNome());
+                    break;
+                default:
+                    jLabelNomeCabeleireiro.setText("Bom dia, " + cabeleireiro.getNome());
+                    break;
             }
-            
-            jLabelNumeroAgendamentos.setText(String.valueOf(nAgendamentos));
-            jLabelQtdEstoque.setText(String.valueOf(nProdutosEstoque)+" un.");
-        } catch (ExceptionDAO e) {
+
+        } else {
+            jLabelNomeCabeleireiro.setText("Olá, Cabeleireiro");
         }
-        
+
+        jLabelNumeroAgendamentos.setText(String.valueOf(nAgendamentos));
+        jLabelQtdEstoque.setText(String.valueOf(nProdutosEstoque) + " un.");
+
         new GraficoDePizza(jPanelGraficoPizza, sc.listaOsCincoServicosMaisRealizados()).plotaGrafico();
         createChartPanel();
     }
+
     private void createChartPanel() { // this method will create the chart panel containin the graph 
-    
+
         String chartTitle = "Objects Movement Chart";
-    String xAxisLabel = "X";
-    String yAxisLabel = "Y";
-    
-    XYDataset dataset = createDataset();
-    
-    JFreeChart chart =  ChartFactory.createXYLineChart(chartTitle, 
-            xAxisLabel, yAxisLabel, dataset);
+        String xAxisLabel = "X";
+        String yAxisLabel = "Y";
 
-    
-    // saves the chart as an image files
+        XYDataset dataset = createDataset();
 
-    jPanelGrafico.add(new ChartPanel(chart));
-}
+        JFreeChart chart = ChartFactory.createXYLineChart(chartTitle,
+                xAxisLabel, yAxisLabel, dataset);
+
+        // saves the chart as an image files
+        jPanelGrafico.add(new ChartPanel(chart));
+    }
 
     private XYDataset createDataset() {    // this method creates the data as time seris 
-    XYSeriesCollection dataset = new XYSeriesCollection();
-    XYSeries series1 = new XYSeries("Object 1");
-    XYSeries series2 = new XYSeries("Object 2");
-    
-    series1.add(1.0, 2.0);
-    series1.add(2.0, 3.0);
-    series1.add(3.0, 2.5);
-    series1.add(3.5, 2.8);
-    series1.add(4.2, 6.0);
-    
-    series2.add(2.0, 1.0);
-    series2.add(2.5, 2.4);
-    series2.add(3.2, 1.2);
-    series2.add(3.9, 2.8);
-    series2.add(4.6, 3.0);
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        XYSeries series1 = new XYSeries("Object 1");
+        XYSeries series2 = new XYSeries("Object 2");
 
-    
-    dataset.addSeries(series1);
-    dataset.addSeries(series2);
-    
-    return dataset;
-}
-    
+        series1.add(1.0, 2.0);
+        series1.add(2.0, 3.0);
+        series1.add(3.0, 2.5);
+        series1.add(3.5, 2.8);
+        series1.add(4.2, 6.0);
 
-    
+        series2.add(2.0, 1.0);
+        series2.add(2.5, 2.4);
+        series2.add(3.2, 1.2);
+        series2.add(3.9, 2.8);
+        series2.add(4.6, 3.0);
+
+        dataset.addSeries(series1);
+        dataset.addSeries(series2);
+
+        return dataset;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -375,7 +367,7 @@ public class Dashboard extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanelGraficoPizzaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelGraficoPizzaMousePressed
-       
+
     }//GEN-LAST:event_jPanelGraficoPizzaMousePressed
 
     private void jPanelGraficoPizzaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jPanelGraficoPizzaPropertyChange

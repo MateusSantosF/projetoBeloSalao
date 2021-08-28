@@ -35,18 +35,14 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         initComponents();
 
         CabeleireiroController cc = new CabeleireiroController();
-        try {
-            if (cc.verificaRegistro() == 1) {
-                Cabeleireiro cabeleireiro = cc.selecionaCabeleireiro();
 
-                jTextFieldNome.setText(cabeleireiro.getNome());
-                jFormattedTextFieldCPF.setText(cabeleireiro.getCpf());
-                jFormattedTextFieldCPF.setEnabled(false);
-                jTextFieldEmail.setText(cabeleireiro.getEmail());
-            }
+        if (cc.verificaRegistro() == 1) {
+            Cabeleireiro cabeleireiro = cc.selecionaCabeleireiro();
 
-        } catch (ExceptionDAO e) {
-            JOptionPane.showMessageDialog(null, "Erro ao retornar seus dados" + e);
+            jTextFieldNome.setText(cabeleireiro.getNome());
+            jFormattedTextFieldCPF.setText(cabeleireiro.getCpf());
+            jFormattedTextFieldCPF.setEnabled(false);
+            jTextFieldEmail.setText(cabeleireiro.getEmail());
         }
 
     }
@@ -236,11 +232,9 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
 
                 if (expediente == null) {
                     Cabeleireiro c = null;
-                    try {
-                        c = cc.selecionaCabeleireiro();
-                    } catch (ExceptionDAO e) {
 
-                    }
+                    c = cc.selecionaCabeleireiro();
+
                     expediente = new ArrayList<>();
                     expediente.add(c.getSegundaE());
                     expediente.add(c.getSegundaS());
@@ -366,8 +360,9 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     public void update(ArrayList<LocalTime> horarios) {
         expediente = horarios;
     }
+
     @Override
     public void update(Orcamento orcamento) {
-    
+
     }
 }

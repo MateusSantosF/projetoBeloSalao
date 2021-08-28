@@ -36,7 +36,7 @@ public class modalExpediente extends javax.swing.JFrame implements Observado {
         
         CabeleireiroController cc = new CabeleireiroController();
        DateTimeFormatter parserHora = DateTimeFormatter.ofPattern("HHmm");
-         try {
+ 
             if (cc.verificaRegistro() == 1) {
                 Cabeleireiro c = cc.selecionaCabeleireiro();
                 
@@ -56,9 +56,6 @@ public class modalExpediente extends javax.swing.JFrame implements Observado {
                 jFTDomingoSaida.setText(c.getDomingoS().format(parserHora));
             }
 
-        } catch (ExceptionDAO e) {
-            JOptionPane.showMessageDialog(null, "Erro ao retornar seus dados" + e);
-        }
 
         horarios.add(jFTSegundaEntrada);
         horarios.add(jFTSegundaSaida);

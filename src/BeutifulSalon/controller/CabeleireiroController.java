@@ -62,8 +62,13 @@ public class CabeleireiroController {
     
     
     
-    public Cabeleireiro selecionaCabeleireiro() throws ExceptionDAO{       
-       return new Cabeleireiro().selecionaCabeleireiro();
+    public Cabeleireiro selecionaCabeleireiro(){
+        try {
+           return new Cabeleireiro().selecionaCabeleireiro();
+        } catch (ExceptionDAO e) {
+            System.out.println("erro ao recuperar cabeleireiro no sistema.");
+        }
+       return null;
     }
     
     public int verificaRegistro(){

@@ -11,7 +11,6 @@ import BeutifulSalon.model.Cliente;
 import BeutifulSalon.view.Edicao.EditarCliente;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -20,50 +19,49 @@ import javax.swing.JOptionPane;
  * @author Mateus
  */
 public class ClienteController {
-    
-    public boolean cadastrarCliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC, 
-            String CEP, String BAIRRO, String RUA, String CIDADE,String NUMERO,
-            String TELEFONE, String CELULAR, String DATAREG){
-        
-        if( NOME  != null && NOME.length() > 0 && Valida.isCpf(CPF) && Valida.isEmail(EMAIL) && Valida.isData(DATANASC)){
-           
-            
+
+    public boolean cadastrarCliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC,
+            String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
+            String TELEFONE, String CELULAR, String DATAREG) {
+
+        if (NOME != null && NOME.length() > 0 && Valida.isCpf(CPF) && Valida.isEmail(EMAIL) && Valida.isData(DATANASC)
+                && verificaExistenciaCliente(CPF) == false) {
+
             //Formatador
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
             //Convertendo datas de String para Date
-            LocalDate dataNasc  = LocalDate.parse(DATANASC, formatterData);
+            LocalDate dataNasc = LocalDate.parse(DATANASC, formatterData);
             LocalDate dataReg = LocalDate.parse(DATAREG, formatterData);
             //objeto cliente
             Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, dataNasc, CEP,
-                    BAIRRO, RUA, CIDADE,NUMERO,TELEFONE, CELULAR, dataReg);
+                    BAIRRO, RUA, CIDADE, NUMERO, TELEFONE, CELULAR, dataReg);
             try {
                 //Chamando construtor de Cliente
                 cliente.cadastrarCliente(cliente);
-            } catch (Exception ex) {
+            } catch (ExceptionDAO ex) {
                 JOptionPane.showMessageDialog(null, "Erro ao criar objeto cliente");
                 return false;
             }
             return true;
-          
+
         }
         return false;
     }
-    
-    public boolean atualizarCliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC, 
-            String CEP, String BAIRRO, String RUA, String CIDADE,String NUMERO,
-            String TELEFONE, String CELULAR, String DATAREG){
-        
-        
-          if( NOME  != null && NOME.length() > 0 &&  Valida.isCpf(CPF) && Valida.isEmail(EMAIL) && Valida.isData(DATANASC)){
-           
-              //Formatador
+
+    public boolean atualizarCliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC,
+            String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
+            String TELEFONE, String CELULAR, String DATAREG) {
+
+        if (NOME != null && NOME.length() > 0 && Valida.isCpf(CPF) && Valida.isEmail(EMAIL) && Valida.isData(DATANASC)) {
+
+            //Formatador
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
-        
+
             //Convertendo datas de String para LocalDate
-            LocalDate dataNasc  = LocalDate.parse(DATANASC, formatterData);
+            LocalDate dataNasc = LocalDate.parse(DATANASC, formatterData);
             //objeto cliente
             Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, dataNasc, CEP,
-                    BAIRRO, RUA, CIDADE,NUMERO,TELEFONE, CELULAR);
+                    BAIRRO, RUA, CIDADE, NUMERO, TELEFONE, CELULAR);
             try {
                 //Chamando construtor de Cliente
                 cliente.atualizarCliente(cliente);
@@ -72,49 +70,62 @@ public class ClienteController {
                 return false;
             }
             return true;
-          
-        }else{
-             return false;
+
+        } else {
+            return false;
         }
-     
+
     }
-    
-    
-    
-    public boolean validarCPF(String cpf){
-        
-        for(int i = 0; i < cpf.length(); i++){
-            if(! Character.isDigit(cpf.charAt(i))){
-                if( ! (i == 3 || i == 7 || i == 11)){
+
+    public boolean validarCPF(String cpf) {
+
+        for (int i = 0; i < cpf.length(); i++) {
+            if (!Character.isDigit(cpf.charAt(i))) {
+                if (!(i == 3 || i == 7 || i == 11)) {
                     JOptionPane.showMessageDialog(null, "CPF Inválido");
                     return false;
                 }
-              
-            }    
+            }
         }
-            return true;
+        return true;
     }
-    
-    
-    public List<Cliente> listarClientes(String nome){
+
+    public boolean verificaExistenciaCliente(String cpf) {
+
+        try {
+            boolean existe = new Cliente().verificaExistenciaCliente(cpf);
+            
+            if(existe){
+                JOptionPane.showMessageDialog(null, "Já existe um cliente cadastrado com este CPF.");
+                return true;
+            }else{
+                return false;
+            }
+        } catch (ExceptionDAO e) {
+        }
+
+        return false;
+    }
+
+    public List<Cliente> listarClientes(String nome) {
         try {
             return new Cliente().listarClientes(nome);
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, e);
         }
-      return null;
+        return null;
     }
-    
-    public List<Cliente> listarClientes(){
+
+    public List<Cliente> listarClientes() {
         try {
             return new Cliente().listarClientes();
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, e);
         }
-      return null;
+        return null;
     }
-    
-    public Cliente buscarCliente(String cpf){
+
+    public Cliente buscarCliente(String cpf) {
         try {
             return new Cliente().buscarCliente(cpf);
         } catch (ExceptionDAO e) {
@@ -122,46 +133,45 @@ public class ClienteController {
         }
         return null;
     }
-    
-    public boolean excluirCliente(String cpf){
-        
+
+    public boolean excluirCliente(String cpf) {
+
         try {
             Cliente c = new Cliente();
             c.excluirCliente(cpf);
-          
+
         } catch (ExceptionDAO e) {
             JOptionPane.showInputDialog(null, "Erro Controller, excluir cliente");
             return false;
         }
-        
-          return true;
+
+        return true;
     }
-    
-    public boolean editarCliente(String cpf){
-        
+
+    public boolean editarCliente(String cpf) {
+
         try {
             Cliente c = new Cliente();
             Cliente clienteEditado;
-            
+
             clienteEditado = c.editarCliente(cpf);
-            
-            if(clienteEditado != null){
-               new EditarCliente(clienteEditado).setVisible(true); 
-            }else{
+
+            if (clienteEditado != null) {
+                new EditarCliente(clienteEditado).setVisible(true);
+            } else {
                 return false;
             }
-            
-          
-        } catch (ExceptionDAO e) {      
+
+        } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, "Erro ao criar objeto cliente" + e);
             return false;
         }
-        
+
         return true;
     }
-    
-    public LocalDate ultimaVisita(String cpf){
-        
+
+    public LocalDate ultimaVisita(String cpf) {
+
         try {
             return new Cliente().ultimaVisita(cpf);
         } catch (ExceptionDAO e) {
@@ -169,6 +179,5 @@ public class ClienteController {
         }
         return null;
     }
-    
-    
+
 }

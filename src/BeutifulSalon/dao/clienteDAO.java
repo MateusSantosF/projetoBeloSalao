@@ -428,5 +428,47 @@ public class clienteDAO {
         
         return null;
     }
+
+    public boolean verificaExistenciaCliente(String cpf) {
+        
+        String sql = "SELECT COUNT(*) AS QTD FROM CLIENTE WHERE CLIENTE.CPF = ?";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);          
+            pStatement.setString(1, cpf);
+            
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                   
+                    return rs.getLong("QTD") > 0; //true = existe cliente com este cpf
+                    //false = nao existe cliente
+              
+                }            
+            }
+         
+        } catch (SQLException e) { 
+            JOptionPane.showMessageDialog(null,"Erro buscar CPF existente"  + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }    
+        }
+        return true;
+    }
     
 }

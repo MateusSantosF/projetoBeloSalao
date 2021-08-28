@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import BeutifulSalon.model.Compra;
-import BeutifulSalon.model.ItemCompra;
+import BeutifulSalon.model.Item;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,12 +22,12 @@ import java.util.logging.Logger;
  */
 public class CompraProdutoDAO {
 
-    public void cadastraCompra(Compra compra) throws SQLException {
+    public void cadastraCompra(Compra compra) {
 
-        String insertCompra = "INSERT INTO COMPRA (DATA, VALORTOTAL, VALORDESCONTO, CPF_CLIENTE)"
+        String insertCompra = "INSERT INTO COMPRA (DATA, VALORTOTAL, VALORDESCONTO, CPF_CABELEIREIRO) "
                 + "VALUES (?, ?, ? , ?)";
 
-        String insertItemCompra = "INSERT INTO ITEM_COMPRA (PRECOUNITARIO, QUANTIDADE, PRECOTOTAL, ID_PRODUTO, ID_COMPRA)"
+        String insertItemCompra = "INSERT INTO ITEM_COMPRA (PRECOUNITARIO, QUANTIDADE, PRECOTOTAL, ID_PRODUTO, ID_COMPRA) "
                 + "VALUES (?,?,?,?,(SELECT ID_COMPRA  FROM COMPRA ORDER BY ID_COMPRA DESC LIMIT 1))";
 
         Connection connection = null;
@@ -43,23 +43,23 @@ public class CompraProdutoDAO {
             pStatement.setDate(1, java.sql.Date.valueOf(compra.getData()));
             pStatement.setLong(2, compra.getValorTotal());
             pStatement.setLong(3, compra.getValorDesconto());
-            pStatement.setString(4, compra.getCpfCliente());
+            pStatement.setString(4, compra.getCpfCabeleireiro());
 
             int firstInsert = pStatement.executeUpdate();
 
             if (firstInsert > 0) {
                 try {
 
-                    ArrayList<ItemCompra> itens = compra.getItensCompra();
-                    for (ItemCompra it : itens) {
+                    ArrayList<Item> itens = compra.getItensCompra();
+                    for (Item it : itens) {
+
                         pStatement = connection.prepareStatement(insertItemCompra);
                         pStatement.setLong(1, it.getPreco());
                         pStatement.setInt(2, it.getQuantidade());
                         pStatement.setLong(3, it.getPrecoTotal());
                         pStatement.setLong(4, it.getId_produto());
                         pStatement.executeUpdate();
-                       
-                        
+
                     }
 
                 } catch (SQLException e) {
@@ -69,22 +69,22 @@ public class CompraProdutoDAO {
             }
 
             connection.commit();
- 
-            try {
-               boolean sucesso = estoque.atualizaEstoque(compra);
-               
-               if(sucesso == false){
-                    JOptionPane.showMessageDialog(null, "Erro ao atualizar estoque");
 
-               }
-            } catch (ExceptionDAO ex) {
-                Logger.getLogger(CompraProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "Erro ao atualizar estoque" + ex);
-            }
+     
+                boolean sucesso = estoque.atualizaEstoque(compra);
+
+                if (sucesso == false) {
+                    JOptionPane.showMessageDialog(null, "Erro ao atualizar estoque");
+                }
+     
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro DAO" + e);
-            connection.rollback();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                Logger.getLogger(CompraProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         } finally {
 

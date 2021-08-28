@@ -8,9 +8,9 @@ package BeutifulSalon.controller;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.Estoque;
-import BeutifulSalon.model.ItemCompra;
+import BeutifulSalon.model.Item;
+import BeutifulSalon.model.Venda;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,60 +18,63 @@ import javax.swing.JOptionPane;
  */
 public class EstoqueController {
 
-    public boolean atualizaEstoque(Compra compra) throws ExceptionDAO {
+    public boolean atualizaEstoque(Compra compra) {
 
-        CabeleireiroController cc = new CabeleireiroController();
+        ArrayList<Item> produtosComprados = compra.getItensCompra();
 
-        ArrayList<ItemCompra> produtosComprados = compra.getItensCompra();
+        for (Item i : produtosComprados) {
+            Estoque estoque = new Estoque();
 
-        String cpfCabeleireiro = cc.selecionaCabeleireiro().getCpf();
-        String cpfCompra = compra.getCpfCliente();
-
-        try {
-            if (cpfCompra.equals(cpfCabeleireiro)) {
-                for (ItemCompra i : produtosComprados) {
-                    Estoque estoque = new Estoque();
-
-                    estoque.setIdProduto(i.getId_produto());
-                    estoque.setQuantidade(i.getQuantidade());
-                    estoque.setValorUnitario(i.getPreco());
-
-                    estoque.atualizaEstoque(estoque);
-                }
-
-            } else {
-                for (ItemCompra i : produtosComprados) {
-                    Estoque estoque = new Estoque();
-                    estoque.setIdProduto(i.getId_produto());
-                    estoque.setQuantidade(i.getQuantidade() * -1);
-                    estoque.setValorUnitario(i.getPreco());
-                    estoque.atualizaEstoque(estoque);
-                }
+            estoque.setIdProduto(i.getId_produto());
+            estoque.setQuantidade(i.getQuantidade());
+            estoque.setValorUnitario(i.getPreco());
+            try {
+                estoque.atualizaEstoque(estoque);
+            } catch (ExceptionDAO e) {
+                return false;
             }
 
-            return true;
-            
-        } catch (ExceptionDAO e) {
-            JOptionPane.showMessageDialog(null, "Controller" + e);
-            return false;
         }
 
+        return true;
+
     }
-    
-    public long somaProdutosEstoque(){
+
+    public boolean atualizaEstoque(Venda venda) throws ExceptionDAO {
+
+        ArrayList<Item> produtosVendidos = venda.getItensCompra();
+ 
+        for (Item i : produtosVendidos) {
+            Estoque estoque = new Estoque();
+            estoque.setIdProduto(i.getId_produto());
+            estoque.setQuantidade(i.getQuantidade() * -1);
+            estoque.setValorUnitario(i.getPreco());
+            try {
+                estoque.atualizaEstoque(estoque);
+            } catch (ExceptionDAO e) {
+                return false;
+            }
+
+        }
+
+        return true;
+
+    }
+
+    public long somaProdutosEstoque() {
         try {
-             return new Estoque().somaProdutosEstoque();
+            return new Estoque().somaProdutosEstoque();
         } catch (ExceptionDAO e) {
         }
         return 0;
     }
-    
-    public long quantidadeProduto(long idProduto){
+
+    public long quantidadeProduto(long idProduto) {
         try {
             return new Estoque().quantidadeProduto(idProduto);
         } catch (ExceptionDAO e) {
         }
-       return 0; 
+        return 0;
     }
 
 }

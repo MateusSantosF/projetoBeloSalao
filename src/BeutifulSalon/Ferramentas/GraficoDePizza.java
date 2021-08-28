@@ -31,7 +31,6 @@ public class GraficoDePizza {
 
     public GraficoDePizza() {
     }
-   
 
     public GraficoDePizza(JPanel painel, List<Servico> servicos) {
         this.painelGrafico = painel;
@@ -42,10 +41,14 @@ public class GraficoDePizza {
 
         DefaultPieDataset dataset = new DefaultPieDataset();
 
-        for (Servico s : servicos) {
-            if (s != null) {
-                Long qtd = s.getQuantidadeMensal();
-                dataset.setValue(s.getNome(), qtd.doubleValue());
+        if (servicos.isEmpty()) {
+            dataset.setValue("Nenhum Serviço Realizado", 0);
+        } else {
+            for (Servico s : servicos) {
+                if (s != null) {
+                    Long qtd = s.getQuantidadeMensal();
+                    dataset.setValue(s.getNome(), qtd.doubleValue());
+                }
             }
         }
 
@@ -54,10 +57,10 @@ public class GraficoDePizza {
     }
 
     private JFreeChart criaGrafico() {
-        
+
         PieDataset dataset = montaDataSet();
         RingPlot plot = new RingPlot(dataset);
-        
+
         plot.setOutlineVisible(false);
         plot.setShadowPaint(null);
         plot.setOutlineVisible(false);
@@ -67,10 +70,10 @@ public class GraficoDePizza {
         plot.setSectionDepth(0.25); //Define tamanho/expressura das seções
         plot.setSeparatorStroke(new BasicStroke(8)); // aumenta expressura da linha que separa as seções
         plot.setSeparatorPaint(Color.WHITE);
-        
+
         plot.setOuterSeparatorExtension(0);
         plot.setInnerSeparatorExtension(0);
-        
+
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator(
                 "{1} ({2})")); // Mostra quantidade {1} e apresenta a porcentagem {2}
         plot.setLabelBackgroundPaint(null);
@@ -88,15 +91,15 @@ public class GraficoDePizza {
 
         return chart;
     }
-    
-    public void plotaGrafico(){
-        
-        int largura = 300;
-        int altura = 300;
-       
-        ChartPanel g = new ChartPanel(criaGrafico(), largura, altura,largura, altura,700, 700, true, 
-                true, true, true,true,true);
-        
+
+    public void plotaGrafico() {
+
+        int largura = 400;
+        int altura = 400;
+
+        ChartPanel g = new ChartPanel(criaGrafico(), largura, altura, largura, altura, 700, 700, true,
+                true, true, true, true, true);
+
         g.setBackground(Color.WHITE);
         painelGrafico.add(g);
     }

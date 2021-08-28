@@ -6,7 +6,7 @@
 package BeutifulSalon.Ferramentas;
 
 import BeutifulSalon.model.Dinheiro;
-import BeutifulSalon.model.ItemCompra;
+import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import java.util.ArrayList;
@@ -47,13 +47,13 @@ public class RecuperaTabela {
         return produtos;
     }
 
-    public ArrayList<ItemCompra> recuperaItensCompra(JTable tabela) {
+    public ArrayList<Item> recuperaItensCompra(JTable tabela) {
 
-        ArrayList<ItemCompra> itensCompra = new ArrayList<>();
+        ArrayList<Item> itensCompra = new ArrayList<>();
 
         try {
             for (int i = 0; i < tabela.getRowCount(); i++) {
-                ItemCompra produtoAtual = new ItemCompra();
+                Item produtoAtual = new Item();
                 for (int j = 0; j < tabela.getColumnCount(); j++) {
 
                     if (j == 0) {

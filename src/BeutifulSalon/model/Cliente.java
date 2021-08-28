@@ -229,4 +229,8 @@ public class Cliente {
         return new clienteDAO().ultimaVisita(cpf);
     }
     
+    public boolean verificaExistenciaCliente(String cpf) throws ExceptionDAO{  
+        return new clienteDAO().verificaExistenciaCliente(cpf);
+    }
+    
 }

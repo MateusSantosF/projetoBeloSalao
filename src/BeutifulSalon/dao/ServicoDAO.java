@@ -6,7 +6,7 @@
 package BeutifulSalon.dao;
 
 import BeutifulSalon.model.Cliente;
-import BeutifulSalon.model.ItemCompra;
+import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import java.sql.Connection;

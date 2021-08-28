@@ -9,17 +9,17 @@ package BeutifulSalon.model;
  *
  * @author mateus
  */
-public class ItemCompra extends Produto {
+public class Item extends Produto {
     
     int quantidade;
     long precoTotal;
     long id_compra;
 
-    public ItemCompra(){
+    public Item(){
         super();
     }
     
-    public ItemCompra(String nome, String marca, long idProduto, 
+    public Item(String nome, String marca, long idProduto, 
             long preco, int quantidade, long precoTotal, long id_compra) {    
         super(nome, marca, preco, idProduto);
         this.quantidade = quantidade;
