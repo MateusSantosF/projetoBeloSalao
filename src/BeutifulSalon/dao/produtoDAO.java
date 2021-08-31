@@ -7,13 +7,18 @@ package BeutifulSalon.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import BeutifulSalon.model.Produto;
+import BeutifulSalon.model.Venda;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class produtoDAO {
+public class ProdutoDAO {
     
     
     public void cadastrarProduto(Produto produto){
@@ -339,6 +344,76 @@ public class produtoDAO {
         }
 
         return null;
+    }
+    
+    public List<Produto> produtosMaisVendidosDoAno(int anoReferente){
+        String sql = "SELECT SUM(ITEM_VENDA.QUANTIDADE) AS QTD , PRODUTO.NOME " +
+        " FROM ITEM_VENDA " +
+        " INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO " +
+        " INNER JOIN VENDA ON VENDA.ID_VENDA = ITEM_VENDA.ID_VENDA " +
+        " WHERE VENDA.DATA BETWEEN ? AND ? " +
+        " GROUP BY ITEM_VENDA.ID_PRODUTO ORDER BY SUM(ITEM_VENDA.QUANTIDADE) DESC LIMIT 5";
+
+        List<Produto> produtos = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            
+
+            long inicioDoAno = LocalDate.ofYearDay(anoReferente, 1).toEpochDay() * 24 * 60 * 60 * 1000;
+            long fimDoAno = LocalDate.ofYearDay(anoReferente, 1).plusYears(1).toEpochDay() * 24 * 60 * 60 * 1000; 
+            pStatement.setLong(1, inicioDoAno);
+            pStatement.setLong(2, fimDoAno);
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                    Produto p = new Produto();
+                    p.setNome(rs.getString("NOME"));
+                    p.setRendimento(rs.getInt("QTD"));
+                    
+                    produtos.add(p);
+                }
+            }
+            
+            return produtos;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                Logger.getLogger(CompraProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return produtos;
     }
     
 }

@@ -51,7 +51,6 @@ public class ManipulaData {
     public int periodoDoDia(LocalDateTime horario){
         
         int hora = horario.getHour();
-        System.out.println(hora);
         
         if(hora >= 6 && hora < 12 ){
             return 0;

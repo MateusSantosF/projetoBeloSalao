@@ -80,21 +80,23 @@ public class GraficoDePizza {
         //plot.setSimpleLabels(true); // Labeis simples ficam em cima das seções ao invez de criar aquela risquinha
         plot.setSectionPaint(dataset.getKey(0), new Color(0, 172, 178)); //Altera cores das seções com base na primeira cor passada
 
-        Font font = new Font("Arial", 0, 12);
+        Font font = new Font("Arial", 0, 13);
         plot.setLabelFont(font);
         plot.setLabelBackgroundPaint(new Color(36, 46, 66));
         plot.setLabelPaint(Color.WHITE);
-
-        JFreeChart chart = new JFreeChart("Top 5 Serviços", new Font("Arial", 0, 28), plot, true);
+        
+      
+        JFreeChart chart = new JFreeChart("", new Font("Arial", 0, 28), plot, true);
+     
         chart.setBackgroundPaint(Color.WHITE);
-        chart.setPadding(new RectangleInsets(20, 8, 20, 2));
+        chart.setPadding(new RectangleInsets(0, 8, 20, 20));
 
         return chart;
     }
 
     public void plotaGrafico() {
 
-        int largura = 400;
+        int largura = 350;
         int altura = 400;
 
         ChartPanel g = new ChartPanel(criaGrafico(), largura, altura, largura, altura, 700, 700, true,

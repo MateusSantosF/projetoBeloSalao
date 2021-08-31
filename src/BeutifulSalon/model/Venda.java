@@ -9,13 +9,16 @@ import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.dao.VendaProdutoDAO;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  *
  * @author mateu
  */
-public class Venda {
+public class Venda{
     
+    long idVenda;
     LocalDate data;
     long valorTotal;
     long valorDesconto;
@@ -51,6 +54,14 @@ public class Venda {
         return valorTotalSomado;
     }
 
+    public long getIdVenda() {
+        return idVenda;
+    }
+
+    public void setIdVenda(long idVenda) {
+        this.idVenda = idVenda;
+    }
+
     public void setValorTotal(long valorTotal) {
         this.valorTotal = valorTotal;
     }
@@ -82,4 +93,11 @@ public class Venda {
     public void cadastrarVenda(Venda venda) throws ExceptionDAO{
         new VendaProdutoDAO().cadastrarVenda(venda);
     }
+
+    public List<Venda> selecionaVendasDoAno(int anoReferente) throws ExceptionDAO{
+        return new VendaProdutoDAO().selecionaVendasDoAno(anoReferente);
+    }
+ 
+
+
 }

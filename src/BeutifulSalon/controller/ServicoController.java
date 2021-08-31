@@ -92,5 +92,17 @@ public class ServicoController {
          }
          return null;
      }
+     
+     public List<Servico> selecionaServicosDoAno(int anoReferente){
+         
+         try {
+              return new Servico().selecionaServicosDoAno(anoReferente);
+         } catch (ExceptionDAO e) {
+             System.out.println("erro ao listar serviços do ano");
+         }
+         
+         return null;
+        
+     }
 
 }

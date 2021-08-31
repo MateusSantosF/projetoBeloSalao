@@ -8,6 +8,7 @@ package BeutifulSalon.model;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.dao.ServicoDAO;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +24,7 @@ public class Servico {
     private long preco;
     private ArrayList<Produto> produtos;
     private LocalTime tempoGasto;
+    private LocalDate dataRealizado; //data em que foi feito;
     private long quantidadeMensal;
 
     public LocalTime getTempoGasto() {
@@ -74,6 +76,15 @@ public class Servico {
         this.preco = preco;
     }
 
+    public LocalDate getDataRealizado() {
+        return dataRealizado;
+    }
+
+    public void setDataRealizado(LocalDate dataRealizado) {
+        this.dataRealizado = dataRealizado;
+    }
+    
+
     public long getQuantidadeMensal() {
         return quantidadeMensal;
     }
@@ -103,6 +114,10 @@ public class Servico {
 
     public List<Servico> listarOsCincoServicosMaisRealizados() throws ExceptionDAO{
         return new ServicoDAO().listaOsCincoServicosMaisRealizados();
+    }
+
+    public List<Servico> selecionaServicosDoAno(int anoReferente) throws ExceptionDAO {
+        return new ServicoDAO().selecionaServicosDoAno(anoReferente);
     }
     
     

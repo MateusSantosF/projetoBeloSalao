@@ -6,6 +6,7 @@ import BeutifulSalon.model.Produto;
 import BeutifulSalon.view.Edicao.EditarProduto;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 //import java.sql.Date;
 
@@ -19,11 +20,11 @@ public class ProdutoController {
     public boolean cadastrarProduto(String nome, String marca, String preco, LocalDate dataReg, boolean isVendido) {
 
         if (nome != null && nome.length() > 0 && marca != null && marca.length() > 0) {
-            
+
             long valorDeVenda = -1;
-            if(isVendido){
+            if (isVendido) {
                 valorDeVenda = Dinheiro.parseCent(Dinheiro.retiraCaracteres(preco));
-                if(valorDeVenda <= 0){
+                if (valorDeVenda <= 0) {
                     return false;
                 }
             }
@@ -101,12 +102,12 @@ public class ProdutoController {
 
     public boolean AtualizarProduto(String nome, String marca, String preco, long idProduto, boolean isVendido) {
 
-        if (nome != null && nome.length() > 0 && marca != null && marca.length() > 0 ) {
-            
+        if (nome != null && nome.length() > 0 && marca != null && marca.length() > 0) {
+
             long valorDeVenda = -1;
-            if(isVendido){
+            if (isVendido) {
                 valorDeVenda = Dinheiro.parseCent(Dinheiro.retiraCaracteres(preco));
-                if(valorDeVenda <= 0){
+                if (valorDeVenda <= 0) {
                     return false;
                 }
             }
@@ -120,6 +121,17 @@ public class ProdutoController {
             return false;
         }
         return true;
+
+    }
+
+    public List<Produto> produtosMaisVendidosDoAno(int anoReferente) {
+        try {
+            return new Produto().produtosMaisVendidosDoAno(anoReferente);
+        } catch (ExceptionDAO e) {
+            System.out.println("erro ao listar produtos mais vendidos" + e);
+        }
+
+        return null;
 
     }
 }

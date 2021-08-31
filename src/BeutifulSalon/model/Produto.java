@@ -1,9 +1,10 @@
 package BeutifulSalon.model;
 
 import BeutifulSalon.dao.ExceptionDAO;
-import BeutifulSalon.dao.produtoDAO;
+import BeutifulSalon.dao.ProdutoDAO;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -95,30 +96,33 @@ public class Produto {
     }
 
     public void cadastrarProduto(Produto produto) throws ExceptionDAO {
-        new produtoDAO().cadastrarProduto(produto);
+        new ProdutoDAO().cadastrarProduto(produto);
     }
 
     public ArrayList<Produto> listarProdutos() throws ExceptionDAO {
-        return new produtoDAO().listarProdutos();
+        return new ProdutoDAO().listarProdutos();
     }
 
     public ArrayList<Produto> listarProdutos(String nome) throws ExceptionDAO {
-        return new produtoDAO().listarProdutos(nome);
+        return new ProdutoDAO().listarProdutos(nome);
     }
 
     public void excluirProduto(long idProdutoSelecionado) throws ExceptionDAO {
-        new produtoDAO().deletarProduto(idProdutoSelecionado);
+        new ProdutoDAO().deletarProduto(idProdutoSelecionado);
     }
 
     public Produto editarProduto(long id_produto) throws ExceptionDAO {
-        return new produtoDAO().editarProduto(id_produto);
+        return new ProdutoDAO().editarProduto(id_produto);
     }
 
     public void atualizarProduto(Produto produto) throws ExceptionDAO {
-        new produtoDAO().atualizarProduto(produto);
+        new ProdutoDAO().atualizarProduto(produto);
     }
 
     public Produto buscarProduto(long id) throws ExceptionDAO {
-        return new produtoDAO().buscarProduto(id);
+        return new ProdutoDAO().buscarProduto(id);
+    }
+    public List<Produto> produtosMaisVendidosDoAno(int anoReferente) throws ExceptionDAO{
+         return new ProdutoDAO().produtosMaisVendidosDoAno(anoReferente);
     }
 }

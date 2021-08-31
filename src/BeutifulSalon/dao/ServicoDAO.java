@@ -5,12 +5,10 @@
  */
 package BeutifulSalon.dao;
 
-import BeutifulSalon.model.Cliente;
-import BeutifulSalon.model.Item;
+
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -420,6 +418,69 @@ public class ServicoDAO {
         }
 
         return null;
+    }
+    
+    public List<Servico> selecionaServicosDoAno(int anoReferente) throws ExceptionDAO{
+       
+        String sql = "SELECT AGENDAMENTO.DATA AS DATA, SERVICO.ID_SERVICO, SERVICO.NOME, SERVICO.PRECO FROM SERVICO " +
+        "    INNER JOIN AGENDAMENTO_SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
+        "    INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO " +
+        "WHERE AGENDAMENTO.DATA BETWEEN ? AND ?";
+        ArrayList<Servico> servicos = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+      
+        
+        try{
+            
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+          
+            long inicioDoAno = LocalDate.ofYearDay(anoReferente, 1).toEpochDay() * 24 * 60 * 60 * 1000;
+            long fimDoAno = LocalDate.ofYearDay(anoReferente, 1).plusYears(1).toEpochDay() * 24 * 60 * 60 * 1000; 
+            
+ 
+            pStatement.setLong(1, inicioDoAno);
+            pStatement.setLong(2, fimDoAno);       
+            rs = pStatement.executeQuery();
+  
+            if(rs != null){                
+                while(rs.next()){  
+              
+                Servico servicoBuscado = new Servico();     
+                servicoBuscado.setNome(rs.getString("NOME"));
+                servicoBuscado.setPreco(rs.getLong("PRECO"));
+                servicoBuscado.setId(rs.getLong("ID_SERVICO"));
+                servicoBuscado.setDataRealizado(rs.getDate("DATA").toLocalDate());     
+                servicos.add(servicoBuscado);
+                
+                }
+            }
+            
+            return servicos;
+       
+            
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) " + e);
+        }finally{
+              try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+
+        return null;
+        
     }
     
     

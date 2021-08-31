@@ -7,10 +7,12 @@ package BeutifulSalon.controller;
 
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.dao.VendaProdutoDAO;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Venda;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,43 +20,54 @@ import javax.swing.JOptionPane;
  * @author mateu
  */
 public class VendaController {
-    
+
     public boolean RegistraVenda(LocalDate data, long valorDesconto, String cpfCliente, ArrayList<Item> itensCompra) {
-         
-         if(Valida.isCpf(cpfCliente) && validaQuantidadeProduto(itensCompra)){
-             
+
+        if (Valida.isCpf(cpfCliente) && validaQuantidadeProduto(itensCompra)) {
+
             Venda vendaAtual = new Venda();
-             
+
             vendaAtual.setCpfCliente(cpfCliente);
             vendaAtual.setValorDesconto(valorDesconto);
             vendaAtual.setData(data);
             vendaAtual.setItensCompra(itensCompra);
-             
-             try {
-                vendaAtual.cadastrarVenda(vendaAtual); 
-             } catch (ExceptionDAO e) {           
+
+            try {
+                vendaAtual.cadastrarVenda(vendaAtual);
+            } catch (ExceptionDAO e) {
                 JOptionPane.showMessageDialog(null, "Erro ao criar objeto Compra " + e);
                 return false;
-             }
-             
-        }else{
+            }
+
+        } else {
             return false;
         }
-         
+
         return true;
     }
-    
-    public boolean validaQuantidadeProduto(ArrayList<Item> itensDaVenda){
-        
+
+    public boolean validaQuantidadeProduto(ArrayList<Item> itensDaVenda) {
+
         EstoqueController ec = new EstoqueController();
-        
-        for(Item i: itensDaVenda){
-            if(ec.quantidadeProduto(i.getId_produto()) <= 0){
+
+        for (Item i : itensDaVenda) {
+            if (ec.quantidadeProduto(i.getId_produto()) <= 0) {
                 JOptionPane.showMessageDialog(null, "Quantidade de produto(s) insuficiente no estoque.");
                 return false;
             }
         }
-        
+
         return true;
     }
+
+    public List<Venda> selecionaVendasDoAno(int anoReferente) {
+        try {
+            return new Venda().selecionaVendasDoAno(anoReferente);
+        } catch (ExceptionDAO e) {
+            System.out.println("erro ao listar vendas do ano");
+            return null;
+        }
+
+    }
+
 }
