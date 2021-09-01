@@ -5,6 +5,10 @@
  */
 package BeutifulSalon.model;
 
+import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.dao.VendaProdutoDAO;
+import java.util.List;
+
 /**
  *
  * @author mateus
@@ -52,6 +56,10 @@ public class Item extends Produto {
 
     public void setId_compra(long id_compra) {
         this.id_compra = id_compra;
+    }
+
+    public List<Item> retornaItemsCompra(String cpf) throws ExceptionDAO {
+        return new VendaProdutoDAO().retornaItemsCompra(cpf);
     }
     
     

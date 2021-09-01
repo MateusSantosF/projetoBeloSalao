@@ -8,6 +8,8 @@ package BeutifulSalon.controller;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
+import BeutifulSalon.view.Apresenta.ApresentaDetalhesCliente;
+import BeutifulSalon.view.Apresenta.DetalhesCliente;
 import BeutifulSalon.view.Edicao.EditarCliente;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -169,6 +171,10 @@ public class ClienteController {
 
         return true;
     }
+    
+    public void exibirMaisDetalhes(Cliente cliente){
+        new DetalhesCliente(cliente).setVisible(true);
+    }
 
     public LocalDate ultimaVisita(String cpf) {
 
@@ -178,6 +184,31 @@ public class ClienteController {
             JOptionPane.showMessageDialog(null, "Erro ao buscar ultima visita do cliente " + e);
         }
         return null;
+    }
+    
+    public boolean atualizarDetalhesCliente(Cliente cliente) {
+        
+        if(cliente.getCorCabelo().length() < 16 && cliente.getFacebook().length() < 32 && cliente.getInstagram().length() < 32){
+            try {
+                cliente.atualizarDetalhesCliente(cliente);
+            } catch (ExceptionDAO e) {
+                JOptionPane.showMessageDialog(null, e);
+                return false;
+            }
+            
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public List<Cliente> top5Clientes(int anoReferente){
+        try {
+             return new Cliente().top5Clientes(anoReferente);
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao listar top 5 clientes" + e);
+        }
+       return null;
     }
 
 }

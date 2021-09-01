@@ -119,6 +119,10 @@ public class Servico {
     public List<Servico> selecionaServicosDoAno(int anoReferente) throws ExceptionDAO {
         return new ServicoDAO().selecionaServicosDoAno(anoReferente);
     }
+
+    public List<Servico> listarServicosDeAgendamentoPorCliente(String cpf) throws ExceptionDAO{
+        return new ServicoDAO().listarServicosDeAgendamentoPorCliente(cpf);
+    }
     
     
 }

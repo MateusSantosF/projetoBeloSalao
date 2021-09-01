@@ -93,6 +93,15 @@ public class ServicoController {
          return null;
      }
      
+     public List<Servico> listarServicosDeAgendamentoPorCliente(String cpf){
+         try {
+             return new Servico().listarServicosDeAgendamentoPorCliente(cpf);
+         } catch (ExceptionDAO e) {
+             System.out.println(e);
+         }
+            return null;
+     }
+     
      public List<Servico> selecionaServicosDoAno(int anoReferente){
          
          try {

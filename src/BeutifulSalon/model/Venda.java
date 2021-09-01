@@ -97,6 +97,10 @@ public class Venda{
     public List<Venda> selecionaVendasDoAno(int anoReferente) throws ExceptionDAO{
         return new VendaProdutoDAO().selecionaVendasDoAno(anoReferente);
     }
+
+    public int retornaQuantidadeDeVendasHoje() throws ExceptionDAO {
+        return new VendaProdutoDAO().retornaQuantidadeDeVendasHoje();
+    }
  
 
 

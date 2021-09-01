@@ -482,6 +482,60 @@ public class ServicoDAO {
         return null;
         
     }
+
+    public List<Servico> listarServicosDeAgendamentoPorCliente(String cpf) {
+        
+        String sql = "SELECT SERVICO.ID_SERVICO, SERVICO.NOME, AGENDAMENTO.DATA, AGENDAMENTO.HORARIO FROM AGENDAMENTO_SERVICO " +
+        "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
+        "INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO " +
+        "WHERE CPF_CLIENTE = ? ORDER BY AGENDAMENTO.DATA DESC LIMIT 20";
+        ArrayList<Servico> servicos = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+      
+        
+        try{
+            
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1, cpf);         
+            rs = pStatement.executeQuery();
+   
+            if(rs != null){                
+                while(rs.next()){  
+                    Servico s = new Servico();
+                    s.setId(rs.getLong("ID_SERVICO"));
+                    s.setNome(rs.getString("NOME"));
+                    s.setDataRealizado(rs.getDate("DATA").toLocalDate());
+                    s.setTempoGasto(rs.getTime("HORARIO").toLocalTime());
+                    servicos.add(s);
+                }
+            }
+            
+            return servicos;
+       
+            
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) " + e);
+        }finally{
+              try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+
+        return null;
+    }
     
     
 }

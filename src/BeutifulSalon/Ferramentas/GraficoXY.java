@@ -152,7 +152,7 @@ public class GraficoXY {
         
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
         renderer.setSeriesToolTipGenerator(0, new StandardXYToolTipGenerator(StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, datas, numeros));
-        renderer.setSeriesToolTipGenerator(1, new StandardXYToolTipGenerator());
+        renderer.setSeriesToolTipGenerator(1, new StandardXYToolTipGenerator(StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, datas, numeros));
      
         renderer.setSeriesPaint(0, new Color(0, 172, 178));
         renderer.setSeriesPaint(1, new Color(239, 70, 55));

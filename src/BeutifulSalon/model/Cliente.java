@@ -2,10 +2,8 @@
 package BeutifulSalon.model;
 
 import BeutifulSalon.dao.ExceptionDAO;
-import java.util.Date;
 import BeutifulSalon.dao.clienteDAO;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,6 +25,13 @@ public class Cliente {
     private String NUMERO;
     private String TELEFONE; 
     private String CELULAR; 
+    private int tipoDeCabelo;
+    private int tamanhoCabelo;
+    private int deOndeConheceu;
+    private String corCabelo;
+    private String facebook;
+    private String instagram;
+    private String observacoes;
    
     
     //construtor padrão
@@ -68,13 +73,71 @@ public class Cliente {
         this.CELULAR = CELULAR;
 
     }
-      
-      
-      //Cosntrutor para a tela de FluxoDeCaixa
+   
+    //Cosntrutor para a tela de FluxoDeCaixa
     public Cliente (String nome, String CPF){
         this.NOME = nome;
         this.CPF = CPF;
     }
+
+    public int getDeOndeConheceu() {
+        return deOndeConheceu;
+    }
+
+    public void setDeOndeConheceu(int deOndeConheceu) {
+        this.deOndeConheceu = deOndeConheceu;
+    }
+
+    
+    
+    public int getTipoDeCabelo() {
+        return tipoDeCabelo;
+    }
+
+    public void setTipoDeCabelo(int tipoDeCabelo) {
+        this.tipoDeCabelo = tipoDeCabelo;
+    }
+
+    public int getTamanhoCabelo() {
+        return tamanhoCabelo;
+    }
+
+    public void setTamanhoCabelo(int tamanhoCabelo) {
+        this.tamanhoCabelo = tamanhoCabelo;
+    }
+
+    public String getCorCabelo() {
+        return corCabelo;
+    }
+
+    public void setCorCabelo(String corCabelo) {
+        this.corCabelo = corCabelo;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
 
     public LocalDate getDATAREG() {
         return DATAREG;
@@ -231,6 +294,14 @@ public class Cliente {
     
     public boolean verificaExistenciaCliente(String cpf) throws ExceptionDAO{  
         return new clienteDAO().verificaExistenciaCliente(cpf);
+    }
+    
+     public void atualizarDetalhesCliente(Cliente cliente) throws ExceptionDAO{
+        new clienteDAO().atualizarDetalhesCliente(cliente);
+     }
+
+    public List<Cliente> top5Clientes(int anoReferente) throws ExceptionDAO{
+        return new clienteDAO().top5Clientes(anoReferente);
     }
     
 }

@@ -8,6 +8,7 @@ package BeutifulSalon.view.Apresenta;
 import BeutifulSalon.Tabelas.ClienteTableModel;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.AplicaLookAndFeel;
+import BeutifulSalon.model.Cliente;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
@@ -172,6 +173,11 @@ public class ApresentaCliente extends javax.swing.JPanel {
         jButtonDetalhes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButtonDetalhes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonDetalhes.setPreferredSize(new java.awt.Dimension(150, 65));
+        jButtonDetalhes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDetalhesActionPerformed(evt);
+            }
+        });
 
         jButtonExcluir.setBackground(new java.awt.Color(248, 67, 69));
         jButtonExcluir.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -306,6 +312,24 @@ public class ApresentaCliente extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
+
+    private void jButtonDetalhesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDetalhesActionPerformed
+       
+        int indice = jTableConsultaCliente.getSelectedRow();
+
+       
+            if (indice > -1) {
+                try {
+                    String cpfCliente = modelo.getCliente(indice).getCPF(); // Retorna CPF
+                    ClienteController cc = new ClienteController();
+                    cc.exibirMaisDetalhes(cc.buscarCliente(cpfCliente));
+                  
+                } catch (HeadlessException e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e);
+                }
+            }
+       
+    }//GEN-LAST:event_jButtonDetalhesActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonDetalhes;

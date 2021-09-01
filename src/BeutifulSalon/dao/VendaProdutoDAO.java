@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.dao;
 
+import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.controller.EstoqueController;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Venda;
@@ -183,6 +184,131 @@ public class VendaProdutoDAO {
         }
         
         return vendas;
+    }
+    
+    public int retornaQuantidadeDeVendasHoje(){
+         
+        String sql = "SELECT COUNT(VENDA.ID_VENDA) AS QTD FROM VENDA " +
+        "    WHERE VENDA.DATA BETWEEN ? AND ?";
+        int vendas = 0;
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            
+
+            
+            pStatement.setLong(1, new ManipulaData().meiaNoiteHoje());
+            pStatement.setLong(2, new ManipulaData().MeiaNoiteAmanha());
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                    vendas = rs.getInt("QTD");
+                }
+            }
+            
+            return vendas;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                Logger.getLogger(CompraProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return vendas;
+    }
+
+    public List<Item> retornaItemsCompra(String cpf) {
+        
+        String sql = "SELECT PRODUTO.NOME, PRODUTO.MARCA, ITEM_VENDA.QUANTIDADE, VENDA.DATA, PRODUTO.PRECO FROM ITEM_VENDA " 
+        + "INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO " 
+        + "INNER JOIN VENDA ON VENDA.ID_VENDA = ITEM_VENDA.ID_VENDA "
+        + "WHERE VENDA.CPF_CLIENTE = ? ORDER BY VENDA.DATA DESC LIMIT 20";
+        
+        List<Item> items = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+
+            pStatement.setString(1, cpf);
+  
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+   
+                   Item i = new Item();
+                   i.setNome(rs.getString("NOME"));
+                   i.setMarca(rs.getString("MARCA"));
+                   i.setQuantidade(rs.getInt("QUANTIDADE"));
+                   i.setDataReg(rs.getDate("DATA").toLocalDate());
+                   i.setPreco(rs.getLong("PRECO"));
+                   items.add(i);
+                }
+            }
+            
+            return items;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+    
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return items;
     }
 
    

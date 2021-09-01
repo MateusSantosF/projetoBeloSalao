@@ -279,7 +279,10 @@ public class clienteDAO {
      public Cliente buscarCliente(String cpf){
         
         
-        String sqlScript = "SELECT NOME,SOBRENOME,CPF, EMAIL, CELULAR, DATANASC, CEP, BAIRRO, RUA,NUMERO, CIDADE,CELULAR, TELEFONE FROM CLIENTE WHERE CPF = ?";
+        String sqlScript = "SELECT NOME,SOBRENOME,CPF, EMAIL, CELULAR, DATANASC, "
+                + "CEP, BAIRRO, RUA,NUMERO, CIDADE,CELULAR, TELEFONE,"
+                +" TIPODECABELO, TAMANHOCABELO,CORCABELO, CONHECEU, FACEBOOK,INSTAGRAM, OBSERVACOES"
+                + " FROM CLIENTE WHERE CPF = ?";
         
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -307,6 +310,13 @@ public class clienteDAO {
                 cliente.setCIDADE(rs.getString("CIDADE"));
                 cliente.setCELULAR(rs.getString("CELULAR"));
                 cliente.setTELEFONE(rs.getString("TELEFONE")); 
+                cliente.setTipoDeCabelo(rs.getInt("TIPODECABELO"));
+                cliente.setTamanhoCabelo(rs.getInt("TAMANHOCABELO"));
+                cliente.setCorCabelo(rs.getString("CORCABELO"));
+                cliente.setDeOndeConheceu(rs.getInt("CONHECEU"));
+                cliente.setFacebook(rs.getString("FACEBOOK"));
+                cliente.setInstagram(rs.getString("INSTAGRAM"));
+                cliente.setObservacoes(rs.getString("OBSERVACOES"));
                 }
             }
            
@@ -383,6 +393,51 @@ public class clienteDAO {
         }
         
     }
+     
+    public void atualizarDetalhesCliente(Cliente cliente) {
+    
+        String sqlScript = "UPDATE CLIENTE SET TIPODECABELO = ?, TAMANHOCABELO = ?, CORCABELO = ?, CONHECEU = ? , FACEBOOK = ?, INSTAGRAM = ?, OBSERVACOES = ? WHERE CPF = ? ";
+        
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        
+        try {
+            
+            connection = new ConnectionMVC().getConnection();
+            
+            pStatement = connection.prepareStatement(sqlScript);
+            pStatement.setString(8, cliente.getCPF());
+            pStatement.setInt(1, cliente.getTipoDeCabelo());
+            pStatement.setInt(2, cliente.getTamanhoCabelo());
+            pStatement.setString(3, cliente.getCorCabelo());
+            pStatement.setInt(4, cliente.getDeOndeConheceu());
+            pStatement.setString(5, cliente.getFacebook());
+            pStatement.setString(6, cliente.getInstagram());
+            pStatement.setString(7, cliente.getObservacoes());
+            
+            pStatement.execute(); 
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Erro atualizar dados do cliente"  + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+           
+        }
+        
+    }
+    
      
     public LocalDate ultimaVisita(String cpf) throws ExceptionDAO{
         
@@ -471,4 +526,60 @@ public class clienteDAO {
         return true;
     }
     
+    public List<Cliente> top5Clientes(int anoReferente){
+         String sql  = "SELECT COUNT(AGENDAMENTO.CPF_CLIENTE) AS QTD, CLIENTE.NOME, CLIENTE.SOBRENOME FROM AGENDAMENTO\n" +
+                "INNER JOIN CLIENTE ON CLIENTE.CPF = AGENDAMENTO.CPF_CLIENTE " +
+                "WHERE AGENDAMENTO.DATA BETWEEN ? AND ?" +
+                "GROUP BY AGENDAMENTO.CPF_CLIENTE ORDER BY COUNT(AGENDAMENTO.CPF_CLIENTE) DESC LIMIT 5;";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        List<Cliente> clientes =  null;
+        
+        try{
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            
+            long inicioDoAno = LocalDate.ofYearDay(anoReferente, 1).toEpochDay() * 24 * 60 * 60 * 1000;
+            long fimDoAno = LocalDate.ofYearDay(anoReferente, 1).plusYears(1).toEpochDay() * 24 * 60 * 60 * 1000; 
+            pStatement.setLong(1, inicioDoAno);
+            pStatement.setLong(2, fimDoAno);
+            
+            ResultSet rs = pStatement.executeQuery();
+           
+            
+            if(rs != null){
+                clientes = new ArrayList<>();
+                
+                while(rs.next()){
+                    Cliente clienteAtual = new Cliente();
+                    clienteAtual.setNOME(rs.getString("NOME"));
+                    clienteAtual.setSOBRENOME(rs.getString("SOBRENOME"));
+                    clienteAtual.setDeOndeConheceu(rs.getInt("QTD"));//gambiarra
+                    clientes.add(clienteAtual);
+                }
+                
+            }
+         
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ConnectionMVC: " + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+        
+        return clientes;
+    }
 }

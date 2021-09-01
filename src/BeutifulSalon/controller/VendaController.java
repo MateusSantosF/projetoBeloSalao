@@ -7,7 +7,6 @@ package BeutifulSalon.controller;
 
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
-import BeutifulSalon.dao.VendaProdutoDAO;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Venda;
 import java.time.LocalDate;
@@ -68,6 +67,29 @@ public class VendaController {
             return null;
         }
 
+    }
+    
+    public List<Item> retornaItemsCompra(String cpf){
+        
+        try {
+            return new Item().retornaItemsCompra(cpf);
+        } catch (ExceptionDAO e) {
+            System.out.println(e);
+        }
+        
+        return null;
+    }
+    
+    public int retornaQuantidadeDeVendasHoje(){
+        
+        try {
+           return new Venda().retornaQuantidadeDeVendasHoje(); 
+        } catch (ExceptionDAO e) {
+            System.out.println(e);
+        }
+        
+        return 0;
+        
     }
 
 }

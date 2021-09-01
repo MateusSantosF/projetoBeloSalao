@@ -13,7 +13,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -37,6 +39,11 @@ public class ManipulaData {
 
         return meiaNoiteMs;
     }
+    
+    public int calculaIdade(LocalDate dataNascimento){
+        
+        return Period.between(dataNascimento, LocalDate.now()).getYears();
+    }
 
     public long meiaNoite(LocalDate dia) {
 
@@ -50,11 +57,12 @@ public class ManipulaData {
     
     public int periodoDoDia(LocalDateTime horario){
         
+       
         int hora = horario.getHour();
         
         if(hora >= 6 && hora < 12 ){
             return 0;
-        }else if( hora < 18){
+        }else if( hora < 18 && hora >=12){
             return 1;
         }else{
             return 2;
