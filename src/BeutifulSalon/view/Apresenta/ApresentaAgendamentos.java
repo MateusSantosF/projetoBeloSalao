@@ -5,9 +5,11 @@
  */
 package BeutifulSalon.view.Apresenta;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Tabelas.AgendamentoTableModel;
 import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.controller.AgendamentoController;
+import java.awt.Font;
 
 import javax.swing.JOptionPane;
 
@@ -26,6 +28,21 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
     
     public ApresentaAgendamentos() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+
+	jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f));
+        jLabel2.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f));
+        jLabel3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
+        jLabel5.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
+        jLabel6.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
+
+        jRadioButtonHoje.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
+        jRadioButtonAmanha.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
+        jRadioButtonSemana.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
+        jRadioButton1.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
+        jRadioButtonTodos.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
+        jTableAgendamentos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f));
         
         
         CentralizaElementosTabela render = new CentralizaElementosTabela();

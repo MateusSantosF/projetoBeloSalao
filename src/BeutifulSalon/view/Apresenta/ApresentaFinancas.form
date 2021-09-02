@@ -405,7 +405,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Confira aqui o or&#xe7;amento de servi&#xe7;os previstos do seu sal&#xe3;o!"/>
+                    <Property name="text" type="java.lang.String" value="Confira aqui os servi&#xe7;os previstos do seu sal&#xe3;o!"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -708,11 +708,11 @@
                           <Component id="jLabel16" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jLabel8" pref="1044" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel4" min="-2" pref="569" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" min="-2" pref="865" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="jLabel8" pref="1039" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -761,7 +761,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Aqui voc&#xea; confere todos os servi&#xe7;os realizados e seus lucros!"/>
+                    <Property name="text" type="java.lang.String" value="Confira aqui todos os servi&#xe7;os realizados e seus lucros!"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1036,11 +1036,11 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel7" max="32767" attributes="0"/>
+                                  <Component id="jLabel7" pref="662" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="392" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <Component id="jLabel23" min="-2" pref="651" max="-2" attributes="0"/>
+                                  <Component id="jLabel23" min="-2" pref="982" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -1161,7 +1161,7 @@
                               </Group>
                               <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                               <Component id="jButtonEditar2" min="-2" pref="169" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="478" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
@@ -1427,15 +1427,17 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           <Component id="jLabel18" min="-2" pref="47" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                   <Component id="jLabel26" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jLabel11" min="-2" pref="733" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jLabel11" min="-2" pref="635" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace pref="316" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1443,7 +1445,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -1464,7 +1466,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Confira todos os Lan&#xe7;amentos Realizados"/>
+                    <Property name="text" type="java.lang.String" value="Lan&#xe7;amentos Realizados"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel18">
@@ -1483,7 +1485,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Confira aqui o pagamentos realizados!"/>
+                    <Property name="text" type="java.lang.String" value="Confira aqui os pagamentos realizados!"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -2152,7 +2154,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Confira aqui o or&#xe7;amento de despesas previstas do seu sal&#xe3;o!"/>
+                    <Property name="text" type="java.lang.String" value="Confira aqui as despesas previstas do seu sal&#xe3;o!"/>
                   </Properties>
                 </Component>
               </SubComponents>

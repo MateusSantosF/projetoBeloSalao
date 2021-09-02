@@ -17,14 +17,18 @@ import java.io.IOException;
 public class ManipulaFontes {
 
     private Font font;
+   
     public String REGULAR = "Quicksand-Regular.ttf";
     public String BOLD = "Quicksand-Bold.ttf";
     public String LIGHT = "Quicksand-Light.ttf";
+    public String MEDIUM = "Quicksand-Medium.ttf";
+    public String SEMIBOLD = "Quicksand-SemiBold.ttf";
 
-    public Font getFont(String nome, int estilo, float tamanho) {
+
+    public Font getFont(String nome ,int estilo, float tamanho) {
         try {
         
-            font = Font.createFont(Font.TRUETYPE_FONT,getClass().getClassLoader().getResourceAsStream("\\Fontes\\"+nome));
+            font = Font.createFont( Font.TRUETYPE_FONT,getClass().getClassLoader().getResourceAsStream("\\Fontes\\"+nome));
                    
             
         } catch (IOException | FontFormatException e) {

@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.Apresenta;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Tabelas.DespesaComparadaTableModel;
 import BeutifulSalon.Tabelas.DespesaPrevistaTableModel;
 import BeutifulSalon.Tabelas.DestacaVencimentosTabela;
@@ -16,6 +17,7 @@ import BeutifulSalon.controller.DespesaController;
 import BeutifulSalon.controller.OrcamentoController;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -43,6 +45,54 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
     public ApresentaFinancas() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();    
+        
+	//SERVICOS PREVISTOS
+        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Serviços Previstos
+        jLabel2.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f)); //Confira aqui o orçamento de serviços previstos do seu salão!
+        jLabel6.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Buscar por Ano
+        jLabelEditar1.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Editar
+        jLabelExcluir1.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Excluir
+        jTableConsultaOrcamentoServico.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
+
+        //SERVICOS REALIZADOS
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Serviços Realizados
+        jLabel4.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f)); //Aqui você confere todos os serviços realizados e seus lucros!
+        jLabel9.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Buscar por Ano
+        jTableConsultaServicoRealizado.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
+
+        //COMPARATIVO SERVICOS REALIZADOS
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Comparativo de Serviços Realizados
+        jLabel23.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f)); //Aqui você encontra um comparativo entre o previsto e o realizado!
+        jLabel10.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Buscar por Ano
+        jTableServicoComparado.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
+
+        //LANÇAMENTOS REALIZADOS
+        jLabel11.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Confira todos os Lançamentos Realizados
+        jLabel26.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f)); //Confira aqui o pagamentos realizados!
+        jLabel13.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Buscar por Ano
+        jLabel15.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Lançamento em
+        jLabel14.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Vencimento em
+        jTextFieldAno4.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Box Busca por ano
+        jComboBoxLancamento.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Box Lançamento
+        jComboBoxVencimento.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Box Vencimento
+        jButtonEditar2.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Pagar | Editar
+        jTableLancamentos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
+
+        //COMPARATIVO DESPESAS
+        jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Comparativo de Despesas
+        jLabel24.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f)); //Aqui você confere o quanto você cumpriu do previsto!
+        jLabel12.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Buscar por Ano
+        jTableComparativoDespesas.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
+
+        //DESPESAS PREVISTAS
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Despesas Previstas
+        jLabel25.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f)); //Confira aqui o orçamento de despesas previstas do seu salão!
+        jLabel3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Buscar por Ano
+        jLabelEditar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Editar
+        jLabelExcluir.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Excluir
+        jTableConsultaOrcamento.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
    
         String ano = String.valueOf(LocalDate.now().getYear());
         int mesAtual = LocalDate.now().getMonth().getValue() - 1;
@@ -292,7 +342,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Confira aqui o orçamento de serviços previstos do seu salão!");
+        jLabel2.setText("Confira aqui os serviços previstos do seu salão!");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -488,7 +538,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Aqui você confere todos os serviços realizados e seus lucros!");
+        jLabel4.setText("Confira aqui todos os serviços realizados e seus lucros!");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -499,10 +549,10 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                 .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 1044, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 569, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 1039, Short.MAX_VALUE))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 865, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -676,10 +726,10 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
                         .addGap(392, 392, 392))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 982, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel5Layout.setVerticalGroup(
@@ -861,14 +911,14 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("Confira todos os Lançamentos Realizados");
+        jLabel11.setText("Lançamentos Realizados");
 
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-financas-48.png"))); // NOI18N
         jLabel18.setText("jLabel18");
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel26.setText("Confira aqui o pagamentos realizados!");
+        jLabel26.setText("Confira aqui os pagamentos realizados!");
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -877,19 +927,20 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel26))
-                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(316, Short.MAX_VALUE))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 635, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel18)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -935,7 +986,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                             .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(54, 54, 54)
                         .addComponent(jButtonEditar2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 478, Short.MAX_VALUE)))
                 .addGap(22, 22, 22))
             .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -1230,7 +1281,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setText("Confira aqui o orçamento de despesas previstas do seu salão!");
+        jLabel25.setText("Confira aqui as despesas previstas do seu salão!");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -1636,7 +1687,6 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

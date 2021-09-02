@@ -5,8 +5,10 @@
  */
 package BeutifulSalon.view.Apresenta;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.Tabelas.ProdutoTableModel;
+import java.awt.Font;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,6 +21,18 @@ public class ApresentaProduto extends javax.swing.JPanel {
 
     public ApresentaProduto() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes(); 
+        
+        //PRODUTOS
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Produtos
+        jLabel2.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f)); //Confira os produtos cadastrados!
+        jLabel3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Buscar por nome
+        jLabelDetalhes.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //+Detalhes
+        jLabelEditar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Editar
+        jLabelExcluir.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Excluir
+        jScrollPane2.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //ScrollPane
+        
         produtoTableModel.getTodosProdutos();
         CentralizaElementosTabela render = new CentralizaElementosTabela();
         jTableConsultaProdutos.setDefaultRenderer(Object.class, render);
@@ -78,7 +92,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Buscar por nome");
 
-        jPanel1.setBackground(new java.awt.Color(36, 46, 65));
+        jPanel1.setBackground(new java.awt.Color(48, 63, 79));
 
         jLabel1.setBackground(new java.awt.Color(34, 34, 34));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -178,12 +192,11 @@ public class ApresentaProduto extends javax.swing.JPanel {
                         .addComponent(jScrollPane2)
                         .addGap(19, 19, 19))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelBtnBuscarProdutos))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelBtnBuscarProdutos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)

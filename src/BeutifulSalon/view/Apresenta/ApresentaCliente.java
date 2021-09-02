@@ -5,9 +5,11 @@
  */
 package BeutifulSalon.view.Apresenta;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Tabelas.ClienteTableModel;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.Cliente;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
@@ -21,6 +23,16 @@ public class ApresentaCliente extends javax.swing.JPanel {
 
     public ApresentaCliente() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Clientes
+        jLabel2.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f)); //Confira os clientes cadastrados em seu salão!
+        jLabel3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Buscar por nome
+        jLabel7.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //+Detalhes
+        jLabelEditar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Editar
+        jLabelExcluir.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Excluir
+        jScrollPane2.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
+        
         modelo.getTodosClientes();
         jTableConsultaCliente.setModel(modelo);
      
