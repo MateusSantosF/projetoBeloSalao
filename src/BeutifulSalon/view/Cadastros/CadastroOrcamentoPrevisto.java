@@ -35,7 +35,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
      */
     public CadastroOrcamentoPrevisto() {
         initComponents();
-        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
+      
         
            DecimalFormat decimal = new DecimalFormat("#,###,###.00");
            NumberFormatter numFormatter = new NumberFormatter(decimal);
@@ -69,6 +69,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelDespesas = new javax.swing.JPanel();
+        btnReg = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -85,11 +86,9 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jTextFieldMaio = new javax.swing.JFormattedTextField();
         jLabel18 = new javax.swing.JLabel();
         jTextFieldJun = new javax.swing.JFormattedTextField();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         JTextFieldNomeDespesa = new javax.swing.JTextField();
         jCheckBoxFixo = new javax.swing.JCheckBox();
-        btnReg = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         jTextFieldJul = new javax.swing.JFormattedTextField();
         jLabel19 = new javax.swing.JLabel();
@@ -108,8 +107,9 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         btnCanc = new javax.swing.JButton();
         jTextFieldAno = new javax.swing.JFormattedTextField();
         jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jPanelServicos = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
         jTextFieldIdServico = new javax.swing.JTextField();
         jTextFieldNomeServico = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -147,10 +147,11 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel32 = new javax.swing.JLabel();
         jTextFieldAnoOrc = new javax.swing.JFormattedTextField();
         jCheckBoxFixo1 = new javax.swing.JCheckBox();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1400, 720));
-        setPreferredSize(new java.awt.Dimension(1200, 620));
         setResizable(false);
 
         jTabbedPane1.setMaximumSize(new java.awt.Dimension(1400, 720));
@@ -159,6 +160,25 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jPanelDespesas.setBackground(new java.awt.Color(243, 244, 245));
         jPanelDespesas.setMaximumSize(new java.awt.Dimension(1400, 720));
         jPanelDespesas.setPreferredSize(new java.awt.Dimension(1200, 650));
+
+        btnReg.setBackground(new java.awt.Color(57, 201, 114));
+        btnReg.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnReg.setForeground(new java.awt.Color(255, 255, 255));
+        btnReg.setText("Registrar");
+        btnReg.setBorder(null);
+        btnReg.setBorderPainted(false);
+        btnReg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnReg.setPreferredSize(new java.awt.Dimension(150, 65));
+        btnReg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnRegMousePressed(evt);
+            }
+        });
+        btnReg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegActionPerformed(evt);
+            }
+        });
 
         jPanel5.setBackground(new java.awt.Color(243, 244, 245));
         jPanel5.setLayout(new java.awt.GridLayout(3, 3, 0, 5));
@@ -332,11 +352,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
 
         jPanel5.add(jPanel12);
 
-        jLabel1.setBackground(new java.awt.Color(34, 34, 34));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(34, 34, 34));
-        jLabel1.setText("Nova Despesa Prevista");
-
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(34, 34, 34));
         jLabel2.setText("Nome da despesa");
@@ -365,25 +380,6 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jCheckBoxFixo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jCheckBoxClicado(evt);
-            }
-        });
-
-        btnReg.setBackground(new java.awt.Color(57, 201, 114));
-        btnReg.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnReg.setForeground(new java.awt.Color(255, 255, 255));
-        btnReg.setText("Registrar");
-        btnReg.setBorder(null);
-        btnReg.setBorderPainted(false);
-        btnReg.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnReg.setPreferredSize(new java.awt.Dimension(150, 65));
-        btnReg.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnRegMousePressed(evt);
-            }
-        });
-        btnReg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegActionPerformed(evt);
             }
         });
 
@@ -552,60 +548,73 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel3.setForeground(new java.awt.Color(34, 34, 34));
         jLabel3.setText("Exercício (AAAA)");
 
+        jPanel1.setBackground(new java.awt.Color(36, 46, 65));
+
+        jLabel1.setBackground(new java.awt.Color(34, 34, 34));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Nova Despesa Prevista");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jLabel1)
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanelDespesasLayout = new javax.swing.GroupLayout(jPanelDespesas);
         jPanelDespesas.setLayout(jPanelDespesasLayout);
         jPanelDespesasLayout.setHorizontalGroup(
             jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelDespesasLayout.createSequentialGroup()
+                .addGap(98, 98, 98)
+                .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JTextFieldNomeDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(28, 28, 28)
                 .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelDespesasLayout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelDespesasLayout.createSequentialGroup()
-                                .addGap(69, 69, 69)
-                                .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(JTextFieldNomeDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2))
-                                .addGap(28, 28, 28)
-                                .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelDespesasLayout.createSequentialGroup()
-                                        .addComponent(jTextFieldAno)
-                                        .addGap(86, 86, 86)
-                                        .addComponent(jCheckBoxFixo)
-                                        .addGap(346, 346, 346))
-                                    .addGroup(jPanelDespesasLayout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(0, 0, Short.MAX_VALUE))))
-                            .addGroup(jPanelDespesasLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(393, 393, 393))))
+                        .addComponent(jTextFieldAno)
+                        .addGap(86, 86, 86)
+                        .addComponent(jCheckBoxFixo)
+                        .addGap(358, 358, 358))
                     .addGroup(jPanelDespesasLayout.createSequentialGroup()
-                        .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelDespesasLayout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDespesasLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43)))
-                        .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDespesasLayout.createSequentialGroup()
-                                .addComponent(btnCanc, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(316, 316, 316)))))
-                .addGap(12, 12, 12))
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanelDespesasLayout.createSequentialGroup()
+                .addGap(53, 53, 53)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(102, 102, 102))
+            .addGroup(jPanelDespesasLayout.createSequentialGroup()
+                .addGap(285, 285, 285)
+                .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(93, 93, 93)
+                .addComponent(btnCanc, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelDespesasLayout.setVerticalGroup(
             jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelDespesasLayout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(jLabel1)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelDespesasLayout.createSequentialGroup()
-                        .addGap(60, 60, 60)
+                        .addGap(25, 25, 25)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JTextFieldNomeDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -619,27 +628,23 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanelDespesasLayout.createSequentialGroup()
-                        .addGap(58, 58, 58)
+                        .addGap(23, 23, 23)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextFieldAno, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jCheckBoxFixo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCanc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCanc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Despesas", jPanelDespesas);
 
         jPanelServicos.setBackground(new java.awt.Color(243, 244, 245));
         jPanelServicos.setPreferredSize(new java.awt.Dimension(1200, 650));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(34, 34, 34));
-        jLabel4.setText("Novo Orçamento Previsto de Serviços");
 
         jTextFieldIdServico.setEditable(false);
         jTextFieldIdServico.setBackground(new java.awt.Color(231, 231, 231));
@@ -942,6 +947,29 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
             }
         });
 
+        jPanel2.setBackground(new java.awt.Color(36, 46, 65));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Novo Orçamento Previsto de Serviços");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jLabel4)
+                .addContainerGap(49, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanelServicosLayout = new javax.swing.GroupLayout(jPanelServicos);
         jPanelServicos.setLayout(jPanelServicosLayout);
         jPanelServicosLayout.setHorizontalGroup(
@@ -951,13 +979,10 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
                     .addGroup(jPanelServicosLayout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnRegOrcServico, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
+                        .addGap(58, 58, 58)
                         .addComponent(btnCanc1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(73, 73, 73))
+                        .addGap(115, 115, 115))
                     .addGroup(jPanelServicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanelServicosLayout.createSequentialGroup()
-                            .addGap(29, 29, 29)
-                            .addComponent(jLabel4))
                         .addGroup(jPanelServicosLayout.createSequentialGroup()
                             .addGap(109, 109, 109)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -982,14 +1007,14 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
                                         .addComponent(jTextFieldAnoOrc))
                                     .addGap(60, 60, 60)
                                     .addComponent(jCheckBoxFixo1))))))
-                .addContainerGap(226, Short.MAX_VALUE))
+                .addContainerGap(223, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelServicosLayout.setVerticalGroup(
             jPanelServicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelServicosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addGap(28, 28, 28)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addGroup(jPanelServicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelServicosLayout.createSequentialGroup()
                         .addGroup(jPanelServicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1017,7 +1042,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
                 .addGroup(jPanelServicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegOrcServico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCanc1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(92, 92, 92))
+                .addGap(110, 110, 110))
         );
 
         jTabbedPane1.addTab("Serviços", jPanelServicos);
@@ -1326,12 +1351,14 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAddServico;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;

@@ -28,7 +28,7 @@ public class CadastroCliente extends javax.swing.JFrame {
      */
     public CadastroCliente() {
         initComponents();
-        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
+     
     }
 
     public void buscarCep(String cepDigitado) {

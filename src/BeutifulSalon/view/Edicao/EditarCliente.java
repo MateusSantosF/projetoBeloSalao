@@ -31,7 +31,7 @@ public class EditarCliente extends javax.swing.JFrame {
     
     public EditarCliente() {
         initComponents();
-        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
+       
     }
 
     public EditarCliente(Cliente cliente) {

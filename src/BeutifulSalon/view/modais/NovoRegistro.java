@@ -25,7 +25,7 @@ public class NovoRegistro extends javax.swing.JFrame {
      */
     public NovoRegistro() {
         initComponents();
-        new BeutifulSalon.model.AplicaLookAndFeel().pegaNimbus();
+    
     }
 
     /**

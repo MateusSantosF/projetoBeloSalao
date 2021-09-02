@@ -7,6 +7,8 @@ package BeutifulSalon.Ferramentas;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import javax.mail.MessagingException;
+import javax.swing.JOptionPane;
 
 
 
@@ -19,20 +21,13 @@ import java.time.temporal.ChronoUnit;
 public class testes {
 
     public static void main(String[] args) {
-
-        //pegar todos orçamento servico por ano
-        //pegar agendamentos por mes e verificar seus serviços 
-        //pegar a quantidade mensal de um serviço e multiplicar pelo preço
-       // DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LL yyyy");
-       // LocalDate data = LocalDate.parse("16 de ago. de 2021", formatterData);    
-        //System.out.println(data);
-
-        LocalDate teste = LocalDate.now();
-        
-   
-        
-        LocalDate teste2 = LocalDate.ofYearDay( teste.getYear(), 1);
        
-        System.out.println( teste2.plusYears(1));
+      String nomeCompletoDoArquivo = "/home/gustavo/arquivo de imagem.jpg";
+      
+       String extensao = nomeCompletoDoArquivo.substring(nomeCompletoDoArquivo.lastIndexOf("."));
+       String nome = nomeCompletoDoArquivo.substring(nomeCompletoDoArquivo.lastIndexOf("/") + 1, nomeCompletoDoArquivo.lastIndexOf("."));
+       
+        System.out.println(nome+extensao);
+        System.out.println(extensao);
     }
 }

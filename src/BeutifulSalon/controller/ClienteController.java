@@ -8,7 +8,6 @@ package BeutifulSalon.controller;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
-import BeutifulSalon.view.Apresenta.ApresentaDetalhesCliente;
 import BeutifulSalon.view.Apresenta.DetalhesCliente;
 import BeutifulSalon.view.Edicao.EditarCliente;
 import java.time.LocalDate;

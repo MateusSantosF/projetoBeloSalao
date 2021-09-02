@@ -14,7 +14,9 @@ import java.awt.Color;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JPanel;
 import jdk.net.Sockets;
@@ -32,6 +34,7 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.ui.HorizontalAlignment;
 import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.data.time.Day;
+import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
@@ -84,6 +87,7 @@ public class GraficoXY {
 
                 if (dataAtual.equals(dataAnterior)) {
                     series1.addOrUpdate(new Day(dia, mes, anoAtual), ++qtd);
+                   
 
                 } else {
                     dia = vendas.get(i).getData().getDayOfMonth();
@@ -142,7 +146,10 @@ public class GraficoXY {
                 xAxisLabel, yAxisLabel, dataset, true, true, false);
         chart.setPadding(new RectangleInsets(20, 8, 20, 8));
         XYPlot plot = chart.getXYPlot();
-      
+   
+        plot.setRangeCrosshairVisible(true);
+       
+       
         plot.setBackgroundPaint(Color.WHITE);
         //plot.setDomainGridlinePaint(Color.red);
         //plot.setRangeGridlinePaint(Color.red);
@@ -150,12 +157,12 @@ public class GraficoXY {
         SimpleDateFormat datas = new SimpleDateFormat("dd/MM/yyyy"); 
         NumberFormat numeros = NumberFormat.getIntegerInstance();
         
-        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(true, true);
         renderer.setSeriesToolTipGenerator(0, new StandardXYToolTipGenerator(StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, datas, numeros));
         renderer.setSeriesToolTipGenerator(1, new StandardXYToolTipGenerator(StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT, datas, numeros));
      
-        renderer.setSeriesPaint(0, new Color(0, 172, 178));
-        renderer.setSeriesPaint(1, new Color(239, 70, 55));
+        renderer.setSeriesPaint(0, new Color(239, 70, 55));
+        renderer.setSeriesPaint(1, new Color(0, 172, 178));
         renderer.setSeriesStroke(0, new BasicStroke(1.0f));
         renderer.setSeriesStroke(1, new BasicStroke(1.0f));
         plot.setRenderer(renderer);
