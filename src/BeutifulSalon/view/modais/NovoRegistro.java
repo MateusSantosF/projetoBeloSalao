@@ -45,7 +45,7 @@ public class NovoRegistro extends javax.swing.JFrame {
 
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(36, 46, 66));
+        jPanel1.setBackground(new java.awt.Color(36, 46, 65));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -58,7 +58,6 @@ public class NovoRegistro extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("de Registro");
 
-        jComboBoxTipoRegistro.setBackground(new java.awt.Color(255, 255, 255));
         jComboBoxTipoRegistro.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jComboBoxTipoRegistro.setForeground(new java.awt.Color(34, 34, 34));
         jComboBoxTipoRegistro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Produto", "Orçamento", "Cliente", "Venda | Compra", "Serviço", "Agendamento", "Despesa" }));

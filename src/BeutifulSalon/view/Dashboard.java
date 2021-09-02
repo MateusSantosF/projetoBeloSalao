@@ -213,7 +213,7 @@ public class Dashboard extends javax.swing.JPanel {
 
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        jPanel1.setBackground(new java.awt.Color(236, 236, 236));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabelNomeCabeleireiro.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabelNomeCabeleireiro.setText("jLabel2");

@@ -111,7 +111,6 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         JPCadastroClientes1 = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
         JPanelNome1 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
@@ -151,6 +150,9 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel26 = new javax.swing.JPanel();
         jButtonAtualizar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         jLabel8.setText("jLabel8");
 
@@ -159,22 +161,16 @@ public class EditarCliente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Editar Cliente");
 
-        JPCadastroClientes1.setBackground(new java.awt.Color(243, 244, 245));
-
-        jLabel17.setBackground(new java.awt.Color(34, 34, 34));
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(34, 34, 34));
-        jLabel17.setText("Editar dados Cadastrais");
+        JPCadastroClientes1.setBackground(new java.awt.Color(255, 255, 255));
 
         JPanelNome1.setBackground(new java.awt.Color(243, 244, 245));
         JPanelNome1.setLayout(new java.awt.GridLayout(1, 3));
 
-        jPanel15.setBackground(new java.awt.Color(243, 244, 245));
+        jPanel15.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setText("*Nome");
 
-        jTextFieldNome.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextFieldNome.setToolTipText("Nome");
         jTextFieldNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
@@ -202,12 +198,11 @@ public class EditarCliente extends javax.swing.JFrame {
 
         JPanelNome1.add(jPanel15);
 
-        jPanel16.setBackground(new java.awt.Color(243, 244, 245));
+        jPanel16.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel19.setText("*Sobrenome");
 
-        jTextFieldSobrenome.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldSobrenome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextFieldSobrenome.setToolTipText("Sobrenome");
         jTextFieldSobrenome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
@@ -235,12 +230,11 @@ public class EditarCliente extends javax.swing.JFrame {
 
         JPanelNome1.add(jPanel16);
 
-        jPanel17.setBackground(new java.awt.Color(243, 244, 245));
+        jPanel17.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel20.setText("CPF");
 
-        jFormattedTextFieldCPF.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextFieldCPF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         try {
             jFormattedTextFieldCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -277,9 +271,8 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanelEmail1.setBackground(new java.awt.Color(243, 244, 245));
         jPanelEmail1.setLayout(new java.awt.GridLayout(1, 0));
 
-        jPanel18.setBackground(new java.awt.Color(243, 244, 245));
+        jPanel18.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextFieldEmail.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextFieldEmail.setToolTipText("Informe o email do cliente");
         jTextFieldEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
@@ -310,7 +303,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jPanelEmail1.add(jPanel18);
 
-        jPanel19.setBackground(new java.awt.Color(243, 244, 245));
+        jPanel19.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel22.setText("Data de Nasc.");
@@ -318,7 +311,6 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel23.setText("Celular");
 
-        jFormattedTextFieldDataNasc.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextFieldDataNasc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         try {
             jFormattedTextFieldDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
@@ -328,7 +320,6 @@ public class EditarCliente extends javax.swing.JFrame {
         jFormattedTextFieldDataNasc.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jFormattedTextFieldDataNasc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        jTextFieldCelular.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldCelular.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         try {
             jTextFieldCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
@@ -359,7 +350,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel19Layout.setVerticalGroup(
             jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel19Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel23, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel22))
@@ -372,12 +363,12 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jPanelEmail1.add(jPanel19);
 
-        jPanel20.setBackground(new java.awt.Color(243, 244, 245));
+        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel24.setBackground(new java.awt.Color(255, 255, 255));
         jLabel24.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel24.setText("Telefone");
 
-        jTextFieldTelefone.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldTelefone.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         try {
             jTextFieldTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
@@ -414,9 +405,8 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanelCep1.setBackground(new java.awt.Color(243, 244, 245));
         jPanelCep1.setLayout(new java.awt.GridLayout(1, 3));
 
-        jPanel21.setBackground(new java.awt.Color(243, 244, 245));
+        jPanel21.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextFieldCep.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldCep.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextFieldCep.setToolTipText("Informe o CEP");
         jTextFieldCep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
@@ -437,7 +427,6 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel25.setText("CEP");
 
-        jTextFieldRua.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldRua.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextFieldRua.setToolTipText("Preencha o CEP");
         jTextFieldRua.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
@@ -465,7 +454,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel21Layout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel25)
                     .addComponent(jLabel26))
@@ -478,9 +467,8 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jPanelCep1.add(jPanel21);
 
-        jPanel22.setBackground(new java.awt.Color(243, 244, 245));
+        jPanel22.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextFieldCidade.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldCidade.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextFieldCidade.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldCidade.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
@@ -491,7 +479,6 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel27.setText("Bairro");
 
-        jTextFieldBairro.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldBairro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextFieldBairro.setToolTipText("");
         jTextFieldBairro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
@@ -527,9 +514,8 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jPanelCep1.add(jPanel22);
 
-        jPanel24.setBackground(new java.awt.Color(243, 244, 245));
+        jPanel24.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextFieldNumero.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldNumero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextFieldNumero.setToolTipText("Informe o numero da Residência");
         jTextFieldNumero.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
@@ -565,7 +551,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jPanelCep1.add(jPanel24);
 
-        jPanel26.setBackground(new java.awt.Color(243, 244, 245));
+        jPanel26.setBackground(new java.awt.Color(255, 255, 255));
         jPanel26.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 5));
 
         jButtonAtualizar.setBackground(new java.awt.Color(57, 201, 114));
@@ -597,6 +583,37 @@ public class EditarCliente extends javax.swing.JFrame {
         });
         jPanel26.add(jButtonCancelar);
 
+        jPanel1.setBackground(new java.awt.Color(36, 46, 65));
+
+        jLabel17.setBackground(new java.awt.Color(34, 34, 34));
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel17.setText("Editar dados Cadastrais");
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-clientes-48.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+                .addGap(67, 67, 67))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel17))
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout JPCadastroClientes1Layout = new javax.swing.GroupLayout(JPCadastroClientes1);
         JPCadastroClientes1.setLayout(JPCadastroClientes1Layout);
         JPCadastroClientes1Layout.setHorizontalGroup(
@@ -604,29 +621,29 @@ public class EditarCliente extends javax.swing.JFrame {
             .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
                 .addGap(118, 118, 118)
                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                        .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(4, 4, 4))
-                    .addComponent(JPanelNome1, javax.swing.GroupLayout.DEFAULT_SIZE, 878, Short.MAX_VALUE)
-                    .addComponent(jPanelEmail1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanelCep1, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(JPanelNome1, javax.swing.GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
+                    .addComponent(jPanelEmail1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanelCep1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPCadastroClientes1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(35, 35, 35))
         );
         JPCadastroClientes1Layout.setVerticalGroup(
             JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addComponent(jLabel17)
-                .addGap(28, 28, 28)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JPanelNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelCep1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(48, 48, 48))
+                .addGap(34, 34, 34)
+                .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                .addGap(29, 29, 29))
         );
 
         getContentPane().add(JPCadastroClientes1, java.awt.BorderLayout.CENTER);
@@ -777,6 +794,7 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JFormattedTextField jFormattedTextFieldCPF;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataNasc;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
@@ -792,6 +810,7 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;

@@ -75,12 +75,13 @@ public class modalInputMonetarios extends javax.swing.JFrame implements Observad
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
         jLabelTexto.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelTexto.setText("jLabel1");
 
         jLabelBtnInserir.setBackground(new java.awt.Color(57, 201, 114));
         jLabelBtnInserir.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabelBtnInserir.setForeground(new java.awt.Color(0, 0, 0));
         jLabelBtnInserir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelBtnInserir.setText("Confirmar");
         jLabelBtnInserir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
