@@ -56,8 +56,8 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jTableCompras.setModel(modeloCompras);
         
         byte[] imagemPerfil = cc.getImagemPerfil(cliente.getCPF());
-        System.out.println(imagemPerfil.length);
-        if(imagemPerfil.length > 0){
+      
+        if(imagemPerfil != null){
             try {
                 jLabelFotoPerfil.setIcon(mi.redimensionaImg(imagemPerfil));
             } catch (IOException ex) {
@@ -832,5 +832,9 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     @Override
     public void update(ImageIcon imagem) {
         jLabelFotoPerfil.setIcon(imagem);
+    }
+
+    @Override
+    public void update(boolean gostouDaFoto) {
     }
 }

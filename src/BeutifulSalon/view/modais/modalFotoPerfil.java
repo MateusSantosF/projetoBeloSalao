@@ -195,6 +195,7 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
 
     private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
        new modalWebcam(cpfCliente).setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_jLabel2MousePressed
 
     /**

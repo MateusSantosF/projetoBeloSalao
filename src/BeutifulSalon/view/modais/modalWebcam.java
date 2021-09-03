@@ -19,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,7 +47,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
 
     public modalWebcam(String cpf) {
         initComponents();
-        //iniciarWebCam();
+        iniciarWebCam();
         cpfCliente = cpf;
 
     }
@@ -54,14 +55,12 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
     public void iniciarWebCam() {
 
         try {
-            webcam = Webcam.getDefault(2000L);
+            webcam = Webcam.getDefault(8L, TimeUnit.SECONDS);
         } catch (WebcamException e) {
             System.out.println(e);
         } catch (TimeoutException ex) {
-            System.out.println("tempo execidido");
-        } finally {
-            webcam = null;
-        }
+            Logger.getLogger(modalWebcam.class.getName()).log(Level.SEVERE, null, ex);
+        } 
 
         if (webcam != null) {
             webcam.setViewSize(WebcamResolution.VGA.getSize());
@@ -105,7 +104,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Diga X!");
+        jLabel1.setText("Sorria!");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -210,7 +209,9 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
 
                 byte[] imagemEmBytes = baos.toByteArray();
 
-                new modalFotoTirada(this, true, imagemEmBytes);
+                modalFotoTirada modal = new modalFotoTirada(this, true, imagemEmBytes);
+                modal.registrarObservador(this);
+                modal.setVisible(true);
 
                 if (gostouDaFoto) {
                     boolean sucesso = cc.cadastraImagemPerfil(cpfCliente, imagemEmBytes);
