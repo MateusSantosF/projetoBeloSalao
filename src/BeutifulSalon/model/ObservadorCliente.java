@@ -14,4 +14,5 @@ import javax.swing.ImageIcon;
 public interface ObservadorCliente {
     
     public void update(ImageIcon imagem);
+    public void update(boolean gostouDaFoto);
 }
