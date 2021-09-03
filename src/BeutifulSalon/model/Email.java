@@ -81,7 +81,7 @@ public class Email {
        StringBuilder sb = new StringBuilder();
        
        for(Character c: Texto.toCharArray()){
-           System.out.println(c.charValue());
+        
            if(c.equals('\n') || c.equals('\r') || c.equals("\t")){
                sb.append("<br>");
                
