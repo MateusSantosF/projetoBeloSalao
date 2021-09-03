@@ -168,8 +168,8 @@ public class GraficoXY {
         plot.setRenderer(renderer);
 
         // adiciona JChartPanel ao painel chamador
-        int largura = 700;
-        int altura = 510;
+        int largura = 600;
+        int altura = 410;
 
         ChartPanel g = new ChartPanel(chart, largura, altura, largura, altura, 800, 600, true,
                 true, true, true, true, true);

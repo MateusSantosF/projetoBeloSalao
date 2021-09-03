@@ -6,6 +6,7 @@
 package BeutifulSalon.Ferramentas;
 
 import com.github.sarxos.webcam.Webcam;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -25,9 +26,8 @@ import javax.swing.JOptionPane;
 public class testes {
 
     public static void main(String[] args) throws IOException {
-       
-     Webcam webcam = Webcam.getDefault();
-     webcam.open();
-        ImageIO.write(webcam.getImage(), "jpg", new File("HelloWorld.jpg"));
+
+     
+     
     }
 }

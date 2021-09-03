@@ -25,8 +25,8 @@ import javax.swing.ImageIcon;
 public class ManipulaImagem {
 
     public ImageIcon redimensionaImg(byte []img) throws IOException {
-      int new_w = 300;
-      int new_h = 300;
+      int new_w = 320;
+      int new_h = 240;
         
       try {
      

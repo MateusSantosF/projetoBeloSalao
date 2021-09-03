@@ -73,6 +73,11 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-webcam.png"))); // NOI18N
         jLabel2.setText("Nova imagem");
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel2MousePressed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -187,6 +192,10 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
             JOptionPane.showMessageDialog(null, "Selecione uma imagem e tente novamente");
         }    
     }//GEN-LAST:event_jLabel3MousePressed
+
+    private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
+       new modalWebcam(cpfCliente).setVisible(true);
+    }//GEN-LAST:event_jLabel2MousePressed
 
     /**
      * @param args the command line arguments
