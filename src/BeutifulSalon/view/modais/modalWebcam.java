@@ -55,7 +55,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
     public void iniciarWebCam() {
 
         try {
-            webcam = Webcam.getDefault(8L, TimeUnit.SECONDS);
+            webcam = Webcam.getDefault(3000, TimeUnit.NANOSECONDS);
         } catch (WebcamException e) {
             System.out.println(e);
         } catch (TimeoutException ex) {
@@ -129,6 +129,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("Tirar Foto");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -138,6 +139,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton2.setText("Fechar Webcam");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);

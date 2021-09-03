@@ -134,7 +134,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
                 .addContainerGap(53, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(36, 46, 65));
+        jPanel2.setBackground(new java.awt.Color(48, 63, 79));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -144,7 +144,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
 
         jLabelDetalhes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -224,7 +224,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
                         .addComponent(jLabelDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(24, 24, 24)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
-                .addGap(149, 149, 149)
+                .addGap(49, 49, 49)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents

@@ -153,6 +153,10 @@ public class Agendamento {
     public ArrayList<Agendamento> listarAgendamentosNaoRealizados() throws ExceptionDAO {
         return new AgendamentoDAO().listarAgendamentosNaoRealizados();
     }
+
+    public long retornaSomaDeAgendamentosMensal() throws ExceptionDAO {
+        return new AgendamentoDAO().retornaSomaDeAgendamentosMensal();
+    }
     
     
 }

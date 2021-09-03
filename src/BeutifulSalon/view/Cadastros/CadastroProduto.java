@@ -58,6 +58,7 @@ public class CadastroProduto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Produto");
+        setResizable(false);
 
         JPCadastroClientes1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -114,7 +115,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         jButton3.setText("Cadastrar");
         jButton3.setBorder(null);
         jButton3.setBorderPainted(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.setPreferredSize(new java.awt.Dimension(150, 65));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +127,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton4.setText("Cancelar");
         jButton4.setBorder(null);
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton4.setPreferredSize(new java.awt.Dimension(150, 65));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

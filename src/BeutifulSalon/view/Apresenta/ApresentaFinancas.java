@@ -1474,6 +1474,8 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             case 4:
                 modeloDespesaPrevista.getTodasDespesasPrevistas(ANOATUAL);
                 jTableConsultaOrcamento.setModel(modeloDespesaPrevista);
+                jTableConsultaOrcamento.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));
+
       
                 break;
             case 5:

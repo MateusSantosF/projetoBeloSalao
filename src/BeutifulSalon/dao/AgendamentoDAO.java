@@ -747,5 +747,57 @@ public class AgendamentoDAO {
         
         return agendamentos;
     }
+    
+     public long retornaSomaDeAgendamentosMensal(){
+        
+         String sql = "SELECT SUM(AGENDAMENTO.TOTAL) AS RENDAMENSAL FROM AGENDAMENTO WHERE AGENDAMENTO.DATA BETWEEN ? AND ?";
+        long agendamentos = 0;
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
 
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+        
+            pStatement.setLong(1, new ManipulaData().inicioDoMes(LocalDate.now(), LocalDate.now().getMonth()));
+            pStatement.setLong(2, new ManipulaData().fimDoMes(LocalDate.now(), LocalDate.now().getMonth()));
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                    agendamentos = rs.getInt("RENDAMENSAL");
+                }
+            }
+            
+            return agendamentos;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+   
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return agendamentos;
+     }
 }

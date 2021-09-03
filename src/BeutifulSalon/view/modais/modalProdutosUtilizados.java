@@ -148,10 +148,10 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
             jTableProdutosSelecionados.getColumnModel().getColumn(3).setMaxWidth(1);
         }
 
-        button1.setBackground(new java.awt.Color(57, 201, 114));
+        button1.setBackground(new java.awt.Color(255, 255, 255));
         button1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         button1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        button1.setForeground(new java.awt.Color(255, 255, 255));
+        button1.setForeground(new java.awt.Color(187, 187, 187));
         button1.setLabel("Concluir");
         button1.setName(""); // NOI18N
         button1.addActionListener(new java.awt.event.ActionListener() {
@@ -202,9 +202,9 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71))
+                .addGap(29, 29, 29))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -554,9 +554,8 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel26.setBackground(new java.awt.Color(255, 255, 255));
         jPanel26.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 5));
 
-        jButtonAtualizar.setBackground(new java.awt.Color(57, 201, 114));
+        jButtonAtualizar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonAtualizar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonAtualizar.setForeground(new java.awt.Color(255, 255, 255));
         jButtonAtualizar.setText("Atualizar");
         jButtonAtualizar.setBorder(null);
         jButtonAtualizar.setBorderPainted(false);
@@ -569,9 +568,8 @@ public class EditarCliente extends javax.swing.JFrame {
         });
         jPanel26.add(jButtonAtualizar);
 
-        jButtonCancelar.setBackground(new java.awt.Color(248, 67, 69));
+        jButtonCancelar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCancelar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonCancelar.setForeground(new java.awt.Color(255, 255, 255));
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.setBorder(null);
         jButtonCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

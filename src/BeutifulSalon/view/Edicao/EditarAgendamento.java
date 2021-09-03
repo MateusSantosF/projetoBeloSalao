@@ -235,9 +235,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
             }
         });
 
-        jButtonFinalizarEdicao.setBackground(new java.awt.Color(57, 201, 114));
+        jButtonFinalizarEdicao.setBackground(new java.awt.Color(255, 255, 255));
         jButtonFinalizarEdicao.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonFinalizarEdicao.setForeground(new java.awt.Color(255, 255, 255));
         jButtonFinalizarEdicao.setText("Concluir Edição");
         jButtonFinalizarEdicao.setBorder(null);
         jButtonFinalizarEdicao.setBorderPainted(false);
@@ -308,7 +307,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         }
 
         jLabelAddServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
-        jLabelAddServicos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabelAddServicos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelAddServicos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabelAddServicosMousePressed(evt);
@@ -402,12 +401,12 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
                             .addComponent(jLabel2)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jTextFieldHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)

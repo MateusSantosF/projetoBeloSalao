@@ -177,6 +177,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jLabel8.setText("Identificador");
 
         jLabelAddServico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
+        jLabelAddServico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelAddServico.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabelAddServicoMousePressed(evt);
@@ -557,6 +558,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         jTabbedPane1.addTab("Serviços", jPanelServicos);
 
         jPanelDespesas.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelDespesas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanelDespesas.setMaximumSize(new java.awt.Dimension(1400, 720));
         jPanelDespesas.setPreferredSize(new java.awt.Dimension(1200, 650));
 

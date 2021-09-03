@@ -205,5 +205,14 @@ public class AgendamentoController {
         }
         return null;
     }
+    
+     public long retornaSomaDeAgendamentosMensal(){
+         try {
+            return new Agendamento().retornaSomaDeAgendamentosMensal(); 
+         } catch (ExceptionDAO e) {
+            System.out.println("erro ao retornar soma mensal de agemdamentos");
+         }
+         return 0L;
+     }
 
 }

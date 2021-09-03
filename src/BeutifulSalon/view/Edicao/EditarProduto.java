@@ -155,9 +155,8 @@ public class EditarProduto extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel19.setText("Marca");
 
-        jButtonAtualizar.setBackground(new java.awt.Color(57, 201, 114));
+        jButtonAtualizar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonAtualizar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonAtualizar.setForeground(new java.awt.Color(255, 255, 255));
         jButtonAtualizar.setText("Atualizar");
         jButtonAtualizar.setBorder(null);
         jButtonAtualizar.setBorderPainted(false);
@@ -169,9 +168,8 @@ public class EditarProduto extends javax.swing.JFrame {
             }
         });
 
-        jButtonCancelar.setBackground(new java.awt.Color(248, 67, 69));
+        jButtonCancelar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCancelar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonCancelar.setForeground(new java.awt.Color(255, 255, 255));
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.setBorder(null);
         jButtonCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));

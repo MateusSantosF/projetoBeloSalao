@@ -7,6 +7,7 @@ package BeutifulSalon.controller;
 
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.dao.VendaProdutoDAO;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Venda;
 import java.time.LocalDate;
@@ -68,28 +69,37 @@ public class VendaController {
         }
 
     }
-    
-    public List<Item> retornaItemsCompra(String cpf){
-        
+
+    public List<Item> retornaItemsCompra(String cpf) {
+
         try {
             return new Item().retornaItemsCompra(cpf);
         } catch (ExceptionDAO e) {
             System.out.println(e);
         }
-        
+
         return null;
     }
-    
-    public int retornaQuantidadeDeVendasHoje(){
-        
+
+    public int retornaQuantidadeDeVendasHoje() {
+
         try {
-           return new Venda().retornaQuantidadeDeVendasHoje(); 
+            return new Venda().retornaQuantidadeDeVendasHoje();
         } catch (ExceptionDAO e) {
             System.out.println(e);
         }
-        
+
         return 0;
-        
+
+    }
+
+    public long retornaSomaDeVendasMensal() {
+        try {
+            return new Venda().retornaSomaDeVendasMensal();
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao somar vendas mensais.");
+        }
+        return 0L;
     }
 
 }

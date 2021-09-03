@@ -101,6 +101,10 @@ public class Venda{
     public int retornaQuantidadeDeVendasHoje() throws ExceptionDAO {
         return new VendaProdutoDAO().retornaQuantidadeDeVendasHoje();
     }
+    
+    public long retornaSomaDeVendasMensal() throws ExceptionDAO{
+        return new VendaProdutoDAO().retornaSomaDeVendasMensal();
+    }
  
 
 

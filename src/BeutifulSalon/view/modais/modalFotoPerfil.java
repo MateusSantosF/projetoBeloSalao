@@ -73,6 +73,7 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-webcam.png"))); // NOI18N
         jLabel2.setText("Nova imagem");
         jLabel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel2MousePressed(evt);
@@ -84,6 +85,7 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-anexo.png"))); // NOI18N
         jLabel3.setText("Existente");
         jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel3MousePressed(evt);

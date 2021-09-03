@@ -131,7 +131,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         });
 
         jLabelAddCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
-        jLabelAddCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabelAddCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelAddCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabelAddClienteMousePressed(evt);
@@ -219,7 +219,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         }
 
         jLabelAddServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
-        jLabelAddServicos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jLabelAddServicos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelAddServicos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabelAddServicosMousePressed(evt);
@@ -259,13 +259,12 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jTextFieldHorario.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldHorario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
-        jButtonFinalizarCompra.setBackground(new java.awt.Color(57, 201, 114));
+        jButtonFinalizarCompra.setBackground(new java.awt.Color(255, 255, 255));
         jButtonFinalizarCompra.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonFinalizarCompra.setForeground(new java.awt.Color(255, 255, 255));
         jButtonFinalizarCompra.setText("Finalizar Agendamento");
         jButtonFinalizarCompra.setBorder(null);
         jButtonFinalizarCompra.setBorderPainted(false);
-        jButtonFinalizarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonFinalizarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonFinalizarCompra.setFocusPainted(false);
         jButtonFinalizarCompra.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonFinalizarCompra.setPreferredSize(new java.awt.Dimension(150, 65));

@@ -115,6 +115,7 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Cliente");
+        setResizable(false);
 
         JPCadastroClientes1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -148,9 +149,8 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jPanel22.setBackground(new java.awt.Color(243, 244, 245));
 
-        jButtonCancelar.setBackground(new java.awt.Color(248, 67, 69));
+        jButtonCancelar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCancelar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonCancelar.setForeground(new java.awt.Color(255, 255, 255));
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.setBorder(null);
         jButtonCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -161,9 +161,8 @@ public class CadastroCliente extends javax.swing.JFrame {
             }
         });
 
-        jButtonCadastrar.setBackground(new java.awt.Color(57, 201, 114));
+        jButtonCadastrar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCadastrar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonCadastrar.setForeground(new java.awt.Color(255, 255, 255));
         jButtonCadastrar.setText("Cadastrar");
         jButtonCadastrar.setBorder(null);
         jButtonCadastrar.setBorderPainted(false);

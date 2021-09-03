@@ -97,6 +97,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jTextFieldCPF2.setEditable(false);
 
         jLabelAddCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
+        jLabelAddCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelAddCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabelAddClienteMousePressed(evt);
@@ -107,6 +108,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jLabel3.setText("Produtos Comprados");
 
         jLabelAddProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
+        jLabelAddProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelAddProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabelAddProdutosMousePressed(evt);
@@ -174,13 +176,12 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             }
         });
 
-        jButtonFinalizarCompra.setBackground(new java.awt.Color(57, 201, 114));
+        jButtonFinalizarCompra.setBackground(new java.awt.Color(255, 255, 255));
         jButtonFinalizarCompra.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jButtonFinalizarCompra.setForeground(new java.awt.Color(255, 255, 255));
         jButtonFinalizarCompra.setText("Finalizar Compra");
         jButtonFinalizarCompra.setBorder(null);
         jButtonFinalizarCompra.setBorderPainted(false);
-        jButtonFinalizarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jButtonFinalizarCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonFinalizarCompra.setFocusPainted(false);
         jButtonFinalizarCompra.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonFinalizarCompra.setPreferredSize(new java.awt.Dimension(150, 65));

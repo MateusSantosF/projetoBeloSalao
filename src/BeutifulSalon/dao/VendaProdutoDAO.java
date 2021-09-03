@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -309,6 +310,59 @@ public class VendaProdutoDAO {
         }
         
         return items;
+    }
+    
+    public long retornaSomaDeVendasMensal(){
+         
+        String sql = "SELECT SUM(VENDA.VALORTOTAL) AS RENDAMENSAL FROM VENDA WHERE VENDA.DATA BETWEEN ? AND ?";
+        long vendas = 0;
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+        
+            pStatement.setLong(1, new ManipulaData().inicioDoMes(LocalDate.now(), LocalDate.now().getMonth()));
+            pStatement.setLong(2, new ManipulaData().fimDoMes(LocalDate.now(), LocalDate.now().getMonth()));
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                    vendas = rs.getInt("RENDAMENSAL");
+                }
+            }
+            
+            return vendas;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+   
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return vendas;
     }
 
    

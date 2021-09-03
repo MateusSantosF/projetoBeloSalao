@@ -297,9 +297,8 @@ public class EditarOrcamento extends javax.swing.JFrame {
             }
         });
 
-        btnReg.setBackground(new java.awt.Color(57, 201, 114));
+        btnReg.setBackground(new java.awt.Color(255, 255, 255));
         btnReg.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnReg.setForeground(new java.awt.Color(255, 255, 255));
         btnReg.setText("Atualizar");
         btnReg.setToolTipText("");
         btnReg.setBorder(null);
@@ -452,9 +451,8 @@ public class EditarOrcamento extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnCanc.setBackground(new java.awt.Color(248, 67, 69));
+        btnCanc.setBackground(new java.awt.Color(255, 255, 255));
         btnCanc.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btnCanc.setForeground(new java.awt.Color(255, 255, 255));
         btnCanc.setText("Cancelar");
         btnCanc.setBorder(null);
         btnCanc.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

@@ -79,10 +79,11 @@ public class modalServicoUnico extends javax.swing.JFrame implements Observado {
             jTableConsultaServicos.getColumnModel().getColumn(2).setMaxWidth(1);
         }
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("Confirmar");
         jButton1.setToolTipText("");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);

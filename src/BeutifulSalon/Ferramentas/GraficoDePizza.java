@@ -99,7 +99,7 @@ public class GraficoDePizza {
         int largura = 350;
         int altura = 400;
 
-        ChartPanel g = new ChartPanel(criaGrafico(), largura, altura, largura, altura, 300, 300, true,
+        ChartPanel g = new ChartPanel(criaGrafico(), largura, altura, largura, altura, 700, 700, true,
                 true, true, true, true, true);
 
         g.setBackground(Color.WHITE);

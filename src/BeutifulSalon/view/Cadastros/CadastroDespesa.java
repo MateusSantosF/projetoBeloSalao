@@ -86,6 +86,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
         jToggleButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jToggleButton.setText("Pagamento Pendente");
+        jToggleButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToggleButton.setFocusable(false);
         jToggleButton.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -205,6 +206,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         });
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel3MousePressed(evt);
@@ -221,9 +223,10 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
         jDateChooserVencimento.setDateFormatString("dd/MM/yyyy");
 
-        jButtonCadastrar.setBackground(new java.awt.Color(57, 201, 114));
+        jButtonCadastrar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCadastrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButtonCadastrar.setText("Confirmar");
+        jButtonCadastrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCadastrarActionPerformed(evt);

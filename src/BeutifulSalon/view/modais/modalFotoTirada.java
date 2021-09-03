@@ -62,10 +62,11 @@ public class modalFotoTirada extends javax.swing.JDialog implements ObservadoCli
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Deseja salvar ?");
+        jLabel2.setText("Deseja salvar esta imagem ?");
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Salvar");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -74,6 +75,7 @@ public class modalFotoTirada extends javax.swing.JDialog implements ObservadoCli
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Descartar");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
