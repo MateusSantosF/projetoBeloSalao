@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.ObservadoCliente;
 import BeutifulSalon.model.Observador;
@@ -14,6 +15,7 @@ import com.github.sarxos.webcam.WebcamException;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
@@ -47,6 +49,12 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
 
     public modalWebcam(String cpf) {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Sorria!
+        jButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Tirar foto
+        jButton2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Fechar Webcam
+        
         iniciarWebCam();
         cpfCliente = cpf;
 
@@ -55,7 +63,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
     public void iniciarWebCam() {
 
         try {
-            webcam = Webcam.getDefault(3000, TimeUnit.NANOSECONDS);
+            webcam = Webcam.getDefault(30000, TimeUnit.MILLISECONDS);
         } catch (WebcamException e) {
             System.out.println(e);
         } catch (TimeoutException ex) {

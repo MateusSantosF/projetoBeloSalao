@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.ProdutoController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
@@ -14,6 +15,7 @@ import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
+import java.awt.Font;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -45,6 +47,15 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
     public modalProdutos(boolean cabeleleiro) {
 
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Busca por Nome
+        jTextFieldNomeProduto.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Box Busca por Nome
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Produtos Comprados
+        jButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); //Concluir
+        jTableConsultaProdutos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f)); //Tabela
+        
         this.cabeleleiro = cabeleleiro;
         listarTodosProdutos();
 

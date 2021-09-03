@@ -6,6 +6,7 @@
 package BeutifulSalon.view;
 
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.view.modais.NovoRegistro;
 import BeutifulSalon.view.Apresenta.ApresentaFinancas;
 import BeutifulSalon.view.Apresenta.ApresentaProduto;
@@ -14,6 +15,7 @@ import BeutifulSalon.model.GerenciadorJPanel;
 import BeutifulSalon.view.Apresenta.ApresentaAgendamentos;
 import BeutifulSalon.view.Cadastros.CadastroCabeleireiro;
 import java.awt.Color;
+import java.awt.Font;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +38,14 @@ public class MainMenu extends javax.swing.JFrame {
     
     public MainMenu() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabelDashboard.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Envie um Email
+        jLabelAgendamento.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Agendamentos
+        jLabelClientes.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Clientes
+        jLabelProdutos.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Produtos
+        jLabelFinancas.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Finanças
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Novo Registro
 
         this.setExtendedState(MAXIMIZED_BOTH);
         
@@ -148,12 +158,12 @@ public class MainMenu extends javax.swing.JFrame {
         painelAgendamentos.setLayout(painelAgendamentosLayout);
         painelAgendamentosLayout.setHorizontalGroup(
             painelAgendamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 272, Short.MAX_VALUE)
             .addGroup(painelAgendamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(painelAgendamentosLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jLabelAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(49, Short.MAX_VALUE)))
+                    .addComponent(jLabelAgendamento, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                    .addContainerGap()))
         );
         painelAgendamentosLayout.setVerticalGroup(
             painelAgendamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,7 +172,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGroup(painelAgendamentosLayout.createSequentialGroup()
                     .addGap(7, 7, 7)
                     .addComponent(jLabelAgendamento, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(7, Short.MAX_VALUE)))
+                    .addContainerGap(11, Short.MAX_VALUE)))
         );
 
         painelProdutos.setBackground(new java.awt.Color(36, 46, 66));

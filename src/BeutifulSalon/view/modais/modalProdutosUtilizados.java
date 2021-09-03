@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.ProdutoController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Dinheiro;
@@ -12,6 +13,7 @@ import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.view.Apresenta.ApresentaProduto;
+import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -29,6 +31,17 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
 
     public modalProdutosUtilizados() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Adicione os produtos utilizados para realizar o serviço
+        jLabelBuscaNome.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f)); //Busca por nome
+        jTextFieldBuscaPorNome.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Box Busca por Nome
+        jTablePesquisaProdutos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f)); //Tabela1
+        jTableProdutosSelecionados.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f)); //Tabela2
+        button1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); //Concluir
+        
+        
         listarProdutos();
     }
 

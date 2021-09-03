@@ -6,6 +6,7 @@
 package BeutifulSalon.view.Apresenta;
 
 import BeutifulSalon.Ferramentas.ManipulaData;
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.ManipulaImagem;
 import BeutifulSalon.Tabelas.ClienteCompraTableModel;
 import BeutifulSalon.Tabelas.ClienteServicoTableModel;
@@ -15,6 +16,7 @@ import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.ObservadorCliente;
 import BeutifulSalon.view.modais.modalEmail;
 import BeutifulSalon.view.modais.modalFotoPerfil;
+import java.awt.Font;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.logging.Level;
@@ -42,10 +44,57 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     
     public DetalhesCliente() {
         initComponents();
+        
+     
     }
 
     public DetalhesCliente(Cliente cliente) {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+		
+    jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 30f)); //Endereço
+    jLabel29.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 20f)); //Enviar Email
+
+    jLabel15.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Rua
+    jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Número
+    jLabel14.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Bairro
+    jLabel16.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //CEP
+    jLabel13.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //UF
+
+    jLabel21.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 25f)); //+ Informações
+    jToggleButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Alterar informações
+    jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Tipo do Cabelo
+    jComboBoxTipoCabelo.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Tipo do Cabelo
+    jLabel22.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Tamanho
+    jComboBoxTamanhoCabelo.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Tamanho
+    jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Cor
+    jTextFieldCorCabelo.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Cor
+    jLabel23.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Como nos conheceu?
+    jComboBoxComoNosConheceu.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Como nos conheceu?
+    jLabel27.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Instagram
+    jTextFieldInstagram.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Instagram
+    jLabel28.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Facebook
+    jTextFieldFacebook.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Facebook
+    jTableCompras.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
+
+    //MENU LATERAL
+
+    jLabelAlterarFotoPerfil.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 10f)); //Alterar
+    jLabelNome.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //NomeUsuario
+    jLabelIdade.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Idade
+    jLabelEmail.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Email
+    jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Telefone
+    jLabelTelefone.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Tel2
+
+    jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Celular
+    jLabelCelular.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Cel2
+    jLabelCpf.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //CPF
+    jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Última Visita
+    jLabelUltimaViisita.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Sem informações
+    jLabel26.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Observações
+    jTextAreaObservacoes.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Area Observacoes
+        
          
         cpfCliente = cliente.getCPF();
         ClienteController cc = new ClienteController();

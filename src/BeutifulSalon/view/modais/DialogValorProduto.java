@@ -5,8 +5,10 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
+import java.awt.Font;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.text.DefaultFormatterFactory;
@@ -27,6 +29,16 @@ public class DialogValorProduto extends javax.swing.JDialog implements Observado
     public DialogValorProduto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Insira o valor pago por unidade
+        jFormattedTextFieldValor.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Box Insira o valor
+        jButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Confirmar
+        
+        
+        
+        
+        
         DecimalFormat decimal = new DecimalFormat("#,###,###.00");
                 NumberFormatter numFormatter = new NumberFormatter(decimal);
                 numFormatter.setFormat(decimal);

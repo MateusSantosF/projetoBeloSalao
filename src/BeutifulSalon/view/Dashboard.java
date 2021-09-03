@@ -46,6 +46,41 @@ public class Dashboard extends javax.swing.JPanel {
     
     public Dashboard() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabelNomeCabeleireiro.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Nome Cabeleireiro
+        
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Agendamentos
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Qtd estoque
+        jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Vendas hoje
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Receita mensal
+        
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Titulo grafico
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Top5 serviços
+        
+        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Rank Clientes
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Produtos mais vendidos
+        
+        jLabel15.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        jLabel16.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        jLabelCliente1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        jLabelCliente2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        jLabelCliente3.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        jLabelCliente4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        jLabelCliente5.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        
+        jLabel14.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        jLabelProduto1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        jLabelProduto2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        jLabelProduto3.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        jLabelProduto4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        jLabelProduto5.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
+        
+        
+        
+        
+        
          
         ClienteController clientec = new ClienteController();
         CabeleireiroController cc = new CabeleireiroController();
@@ -348,23 +383,23 @@ public class Dashboard extends javax.swing.JPanel {
         jLabelProduto4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelProduto4.setText("Produto 4");
 
-        jLabelQtdP1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelQtdP1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelQtdP1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelQtdP1.setText("0");
         jLabelQtdP1.setToolTipText("");
 
-        jLabelQtdP2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelQtdP2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelQtdP2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelQtdP2.setText("0");
 
-        jLabelQtdP3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelQtdP3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelQtdP3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelQtdP3.setText("0");
 
         jLabelProduto3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelProduto3.setText("Produto 3");
 
-        jLabelQtdP4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelQtdP4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelQtdP4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelQtdP4.setText("0");
 
@@ -379,7 +414,7 @@ public class Dashboard extends javax.swing.JPanel {
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("#4");
 
-        jLabelQtdP5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelQtdP5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelQtdP5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelQtdP5.setText("0");
 

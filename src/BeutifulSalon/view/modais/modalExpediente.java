@@ -5,12 +5,14 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cabeleireiro;
 import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -33,6 +35,20 @@ public class modalExpediente extends javax.swing.JFrame implements Observado {
      */
     public modalExpediente() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabel10.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 22f)); //Configure seu expediente
+        jLabel1.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Entrada
+        jLabel2.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Saída
+        jLabel3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //2a
+        jLabel5.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //3a
+        jLabel4.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //4a
+        jLabel7.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //5a
+        jLabel6.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //6a
+        jLabel9.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //sab
+        jLabel8.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //dom
+        jButton1.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Confirmar
+
         
         CabeleireiroController cc = new CabeleireiroController();
        DateTimeFormatter parserHora = DateTimeFormatter.ofPattern("HHmm");
@@ -291,7 +307,7 @@ public class modalExpediente extends javax.swing.JFrame implements Observado {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 301, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 303, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

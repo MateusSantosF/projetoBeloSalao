@@ -5,11 +5,13 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
+import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,6 +28,15 @@ public class modalOrcamentoPrevisto extends javax.swing.JFrame implements Observ
      */
     public modalOrcamentoPrevisto() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Selecione uma despesa
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Busca por Nome
+        jTextField1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Box Busca por Nome
+        jButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); //Confirmar
+        jTableOrcamentos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f)); //Tabela
+
+        
         listarOrcamentos();
     }
     

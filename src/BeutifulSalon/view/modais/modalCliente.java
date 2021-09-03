@@ -5,10 +5,12 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -28,6 +30,16 @@ public class modalCliente extends javax.swing.JFrame implements Observado {
     
     public modalCliente() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Busca por Nome:
+        jTextFieldNomeCliente.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Box Busca por Nome
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 20f)); //Selecione um cliente
+        jButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Confirmar
+        jTableConsultaCliente.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f)); //Tabela
+        
+        
+        
         listarTodosClientes();
        
     }

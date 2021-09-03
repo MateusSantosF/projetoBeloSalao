@@ -5,10 +5,12 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.view.Cadastros.CadastroFluxoDeCaixa;
+import java.awt.Font;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JTextField;
@@ -31,6 +33,12 @@ public class modalInputMonetarios extends javax.swing.JFrame implements Observad
      
     public modalInputMonetarios() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabelTexto.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Salvar
+        jFormattedTextFieldValor.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Descartar
+        jLabelBtnInserir.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Descartar
+        
         
                   
                 DecimalFormat decimal = new DecimalFormat("#,###,###.00");

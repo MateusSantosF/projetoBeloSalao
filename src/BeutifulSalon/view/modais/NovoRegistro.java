@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.view.Cadastros.CadastroAgendamento;
 import BeutifulSalon.view.Cadastros.CadastroProduto;
 import BeutifulSalon.view.Cadastros.CadastroCliente;
@@ -12,6 +13,7 @@ import BeutifulSalon.view.Cadastros.CadastroDespesa;
 import BeutifulSalon.view.Cadastros.CadastroFluxoDeCaixa;
 import BeutifulSalon.view.Cadastros.CadastroOrcamentoPrevisto;
 import BeutifulSalon.view.Cadastros.CadastroServico;
+import java.awt.Font;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +27,12 @@ public class NovoRegistro extends javax.swing.JFrame {
      */
     public NovoRegistro() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 30f)); //Selecione o tipo 
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 30f)); //de Registro
+        jComboBoxTipoRegistro.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Combobox
+        jButtonConfirmar.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Confirmar
     
     }
 

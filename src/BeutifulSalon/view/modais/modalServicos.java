@@ -5,12 +5,14 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Servico;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -29,6 +31,16 @@ public class modalServicos extends javax.swing.JFrame implements Observado {
 
     public modalServicos() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f)); //Busca por nome
+        jTextFieldNomeServico.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Box Busca por Nome
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f)); //Serviços Realizados
+        jTableConsultaServicos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f)); //Tabela1
+        jTableServicosRealizados.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f)); //Tabela2
+        jButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); //Concluir
+        
         listarServicos();
 
         DefaultTableModel model = (DefaultTableModel) jTableServicosRealizados.getModel();

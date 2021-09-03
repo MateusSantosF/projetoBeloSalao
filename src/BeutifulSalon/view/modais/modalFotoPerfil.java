@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.ManipulaImagem;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.Email;
@@ -12,6 +13,7 @@ import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.ObservadoCliente;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.ObservadorCliente;
+import java.awt.Font;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,6 +44,12 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
     }
     public modalFotoPerfil(String cpf) {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 27f)); //Selecione uma imagem:
+        jLabel2.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Nova imagem
+        jLabel3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Existente
+        
         this.cpfCliente = cpf;
     }
     

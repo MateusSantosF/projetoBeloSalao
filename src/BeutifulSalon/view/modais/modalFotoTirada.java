@@ -5,9 +5,11 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.ManipulaImagem;
 import BeutifulSalon.model.ObservadoCliente;
 import BeutifulSalon.model.ObservadorCliente;
+import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -29,6 +31,12 @@ public class modalFotoTirada extends javax.swing.JDialog implements ObservadoCli
    public modalFotoTirada(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 27f)); //Deseja salvar esta imagem ?
+        jButton1.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Salvar
+        jButton2.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Descartar
+        
     }
    
    public modalFotoTirada(java.awt.Frame parent, boolean modal, byte [] foto) {
