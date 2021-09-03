@@ -582,4 +582,88 @@ public class clienteDAO {
         
         return clientes;
     }
+    
+      
+    
+    
+    public boolean cadastraImagemPerfil(String cpf, byte[] imagem){
+        
+  
+        String sql2 = "UPDATE CLIENTE SET FOTOPERFIL = ? WHERE CLIENTE.CPF = ?";
+
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+   
+        
+        try {
+            connection = new ConnectionMVC().getConnection();  
+            pStatement = connection.prepareStatement(sql2);
+            pStatement.setString(2, cpf);
+            pStatement.setObject(1, imagem);
+            
+            int sucesso = pStatement.executeUpdate();
+            
+            return sucesso > 0;
+   
+        } catch (SQLException e) { 
+            JOptionPane.showMessageDialog(null,"Erro Cliente DAO"  + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }    
+        }
+        return false;
+    }
+
+    public byte[] recuperaImagemPerfil(String cpf) {
+        
+        String sql = "SELECT FOTOPERFIL FROM CLIENTE WHERE CPF = ?";
+
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+  
+        
+        try {
+            connection = new ConnectionMVC().getConnection();  
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1, cpf);
+            
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                System.out.println("chegou dao");
+                return rs.getBytes("FOTOPERFIL");
+            }
+  
+        } catch (SQLException e) { 
+            JOptionPane.showMessageDialog(null,"Erro Cliente DAO"  + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }    
+        }
+        return null;
+    }
 }

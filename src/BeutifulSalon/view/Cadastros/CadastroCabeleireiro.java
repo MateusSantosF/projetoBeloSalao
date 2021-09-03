@@ -103,7 +103,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("E-mail");
 
-        jButtonCadastrar.setBackground(new java.awt.Color(0, 0, 0));
+        jButtonCadastrar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCadastrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButtonCadastrar.setText("Confirmar");
         jButtonCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -115,7 +115,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Configurar Expediente");
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 0));
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Abrir grade ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {

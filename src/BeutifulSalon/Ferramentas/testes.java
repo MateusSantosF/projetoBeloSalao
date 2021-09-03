@@ -5,8 +5,12 @@
  */
 package BeutifulSalon.Ferramentas;
 
+import com.github.sarxos.webcam.Webcam;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
 
@@ -20,14 +24,10 @@ import javax.swing.JOptionPane;
  */
 public class testes {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
        
-      String nomeCompletoDoArquivo = "/home/gustavo/arquivo de imagem.jpg";
-      
-       String extensao = nomeCompletoDoArquivo.substring(nomeCompletoDoArquivo.lastIndexOf("."));
-       String nome = nomeCompletoDoArquivo.substring(nomeCompletoDoArquivo.lastIndexOf("/") + 1, nomeCompletoDoArquivo.lastIndexOf("."));
-       
-        System.out.println(nome+extensao);
-        System.out.println(extensao);
+     Webcam webcam = Webcam.getDefault();
+     webcam.open();
+        ImageIO.write(webcam.getImage(), "jpg", new File("HelloWorld.jpg"));
     }
 }

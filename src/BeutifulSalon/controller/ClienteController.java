@@ -10,9 +10,14 @@ import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.view.Apresenta.DetalhesCliente;
 import BeutifulSalon.view.Edicao.EditarCliente;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.imageio.stream.ImageInputStream;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -209,5 +214,29 @@ public class ClienteController {
         }
        return null;
     }
-
+    
+      public boolean cadastraImagemPerfil(String cpf, byte[] imagem){
+          
+          try {
+            return new Cliente().cadastraImagemPerfil(cpf, imagem);
+          } catch (ExceptionDAO e) {
+            System.out.println("erro ao cadastrar iimagem perfil");
+          }
+         
+          return false;
+      }
+      
+      public byte[] getImagemPerfil(String cpf){
+          
+          byte[] imgNula = new byte[0];
+         
+          try { 
+              
+             return new Cliente().recuperaImagemPerfil(cpf);
+              
+          } catch (ExceptionDAO e) {
+              System.out.println(e);
+          }
+          return imgNula;
+      }
 }

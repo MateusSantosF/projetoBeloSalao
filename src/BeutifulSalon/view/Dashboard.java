@@ -219,6 +219,7 @@ public class Dashboard extends javax.swing.JPanel {
         jLabelNomeCabeleireiro.setText("jLabel2");
 
         painelNumeroAgendamentos.setBackground(new java.awt.Color(255, 255, 255));
+        painelNumeroAgendamentos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
         jPanel2Layout.columnWidths = new int[] {200};
         jPanel2Layout.rowHeights = new int[] {1};
@@ -245,6 +246,7 @@ public class Dashboard extends javax.swing.JPanel {
         painelNumeroAgendamentos.add(jLabelNumeroAgendamentos, gridBagConstraints);
 
         painelNumeroAgendamentos3.setBackground(new java.awt.Color(255, 255, 255));
+        painelNumeroAgendamentos3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         painelNumeroAgendamentos3.setLayout(new java.awt.GridBagLayout());
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -271,6 +273,7 @@ public class Dashboard extends javax.swing.JPanel {
         painelNumeroAgendamentos3.add(jLabelQtdEstoque, gridBagConstraints);
 
         painelNumeroAgendamentos2.setBackground(new java.awt.Color(255, 255, 255));
+        painelNumeroAgendamentos2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         painelNumeroAgendamentos2.setLayout(new java.awt.GridBagLayout());
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -627,6 +630,7 @@ public class Dashboard extends javax.swing.JPanel {
         jLabel4.setText("Top 5 Serviços");
 
         painelNumeroAgendamentos4.setBackground(new java.awt.Color(255, 255, 255));
+        painelNumeroAgendamentos4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         painelNumeroAgendamentos4.setLayout(new java.awt.GridBagLayout());
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N

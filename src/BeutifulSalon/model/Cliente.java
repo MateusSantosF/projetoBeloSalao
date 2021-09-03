@@ -1,4 +1,3 @@
-
 package BeutifulSalon.model;
 
 import BeutifulSalon.dao.ExceptionDAO;
@@ -11,20 +10,20 @@ import java.util.List;
  * @author Mateus
  */
 public class Cliente {
-    
+
     private String CPF;
-    private String NOME; 
+    private String NOME;
     private String SOBRENOME;
     private String EMAIL;
-    private LocalDate DATANASC; 
+    private LocalDate DATANASC;
     private LocalDate DATAREG; //Data que o cliente foi registrado no sistema
-    private String CEP; 
+    private String CEP;
     private String BAIRRO;
-    private String RUA; 
-    private String CIDADE; 
+    private String RUA;
+    private String CIDADE;
     private String NUMERO;
-    private String TELEFONE; 
-    private String CELULAR; 
+    private String TELEFONE;
+    private String CELULAR;
     private int tipoDeCabelo;
     private int tamanhoCabelo;
     private int deOndeConheceu;
@@ -32,14 +31,14 @@ public class Cliente {
     private String facebook;
     private String instagram;
     private String observacoes;
-   
-    
+
     //construtor padrão
-    public Cliente(){}
-    
+    public Cliente() {
+    }
+
     //Construtor não padrão
-    public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, LocalDate DATANASC, 
-            String CEP, String BAIRRO, String RUA, String CIDADE,String NUMERO,
+    public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, LocalDate DATANASC,
+            String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR, LocalDate DATAREG) {
         this.CPF = CPF;
         this.NOME = NOME;
@@ -55,8 +54,8 @@ public class Cliente {
         this.CELULAR = CELULAR;
         this.DATAREG = DATAREG;
     }
-    
-      public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, LocalDate DATANASC, 
+
+    public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, LocalDate DATANASC,
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR) {
         this.CPF = CPF;
@@ -73,9 +72,9 @@ public class Cliente {
         this.CELULAR = CELULAR;
 
     }
-   
+
     //Cosntrutor para a tela de FluxoDeCaixa
-    public Cliente (String nome, String CPF){
+    public Cliente(String nome, String CPF) {
         this.NOME = nome;
         this.CPF = CPF;
     }
@@ -88,8 +87,6 @@ public class Cliente {
         this.deOndeConheceu = deOndeConheceu;
     }
 
-    
-    
     public int getTipoDeCabelo() {
         return tipoDeCabelo;
     }
@@ -138,7 +135,6 @@ public class Cliente {
         this.observacoes = observacoes;
     }
 
-
     public LocalDate getDATAREG() {
         return DATAREG;
     }
@@ -146,8 +142,7 @@ public class Cliente {
     public void setDATAREG(LocalDate DATAREG) {
         this.DATAREG = DATAREG;
     }
-    
-    
+
     //Getters and Setters
     public String getNUMERO() {
         return NUMERO;
@@ -244,64 +239,72 @@ public class Cliente {
     public void setCELULAR(String CELULAR) {
         this.CELULAR = CELULAR;
     }
-    
-    
+
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("Nome: %s\nSobrenome: %s\nEmail: %s\nData Nasc:",
-                getNOME(),getSOBRENOME(), getEMAIL(), getDATANASC());
+                getNOME(), getSOBRENOME(), getEMAIL(), getDATANASC());
     }
-    
-    
+
     //Cadastrar clientes
-    public void cadastrarCliente(Cliente cliente) throws ExceptionDAO{
+    public void cadastrarCliente(Cliente cliente) throws ExceptionDAO {
         new clienteDAO().cadastrarCliente(cliente);
     }
-    
+
     //Atualizar Clientes
-    public void atualizarCliente(Cliente cliente) throws ExceptionDAO{
+    public void atualizarCliente(Cliente cliente) throws ExceptionDAO {
         new clienteDAO().atualizarCliente(cliente);
     }
-    
+
     //Listar cliente pelo nome
-    public List<Cliente> listarClientes(String nome) throws ExceptionDAO{
-        
+    public List<Cliente> listarClientes(String nome) throws ExceptionDAO {
+
         return new clienteDAO().listarClientes(nome);
-       
+
     }
+
     //Listar todos os clientes do sistema
-    public List<Cliente> listarClientes() throws ExceptionDAO{
+    public List<Cliente> listarClientes() throws ExceptionDAO {
         return new clienteDAO().listarClientes();
     }
     //Busca cliente por CPF
-    
-    public Cliente buscarCliente(String cpf) throws ExceptionDAO{
+
+    public Cliente buscarCliente(String cpf) throws ExceptionDAO {
         return new clienteDAO().buscarCliente(cpf);
     }
-        
+
     //Excluir cliente
-    public void excluirCliente(String cpf) throws ExceptionDAO{
+    public void excluirCliente(String cpf) throws ExceptionDAO {
         new clienteDAO().deletarCliente(cpf);
     }
-    
-    public Cliente editarCliente(String cpf) throws ExceptionDAO{
+
+    public Cliente editarCliente(String cpf) throws ExceptionDAO {
         return new clienteDAO().editarCliente(cpf);
     }
-    
-    public LocalDate ultimaVisita(String cpf) throws ExceptionDAO{
+
+    public LocalDate ultimaVisita(String cpf) throws ExceptionDAO {
         return new clienteDAO().ultimaVisita(cpf);
     }
-    
-    public boolean verificaExistenciaCliente(String cpf) throws ExceptionDAO{  
+
+    public boolean verificaExistenciaCliente(String cpf) throws ExceptionDAO {
         return new clienteDAO().verificaExistenciaCliente(cpf);
     }
-    
-     public void atualizarDetalhesCliente(Cliente cliente) throws ExceptionDAO{
-        new clienteDAO().atualizarDetalhesCliente(cliente);
-     }
 
-    public List<Cliente> top5Clientes(int anoReferente) throws ExceptionDAO{
+    public void atualizarDetalhesCliente(Cliente cliente) throws ExceptionDAO {
+        new clienteDAO().atualizarDetalhesCliente(cliente);
+    }
+
+    public List<Cliente> top5Clientes(int anoReferente) throws ExceptionDAO {
         return new clienteDAO().top5Clientes(anoReferente);
     }
-    
+
+    public boolean cadastraImagemPerfil(String cpf, byte[] imagem) throws ExceptionDAO {
+
+        return new clienteDAO().cadastraImagemPerfil(cpf, imagem);
+    }
+
+    public byte[] recuperaImagemPerfil(String cpf) throws ExceptionDAO {
+        return new clienteDAO().recuperaImagemPerfil(cpf);
+    }
+
 }

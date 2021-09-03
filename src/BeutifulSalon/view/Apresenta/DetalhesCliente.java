@@ -6,40 +6,65 @@
 package BeutifulSalon.view.Apresenta;
 
 import BeutifulSalon.Ferramentas.ManipulaData;
+import BeutifulSalon.Ferramentas.ManipulaImagem;
 import BeutifulSalon.Tabelas.ClienteCompraTableModel;
 import BeutifulSalon.Tabelas.ClienteServicoTableModel;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.Cliente;
+import BeutifulSalon.model.Observador;
+import BeutifulSalon.model.ObservadorCliente;
 import BeutifulSalon.view.modais.modalEmail;
+import BeutifulSalon.view.modais.modalFotoPerfil;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+
 
 /**
  *
  * @author Mateus
  */
-public class DetalhesCliente extends javax.swing.JFrame {
+public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCliente{
 
     /**
      * Creates new form DetalhesCliente
      */
     
-    private modalEmail modEmail = null;
-    
+    private String cpfCliente = null;
+    private modalEmail modEmail = null;  
+    private modalFotoPerfil modFotoPerfil = null;
     private ClienteServicoTableModel modeloServicos = new ClienteServicoTableModel();
     private ClienteCompraTableModel modeloCompras = new ClienteCompraTableModel();
+    
+    
     public DetalhesCliente() {
         initComponents();
     }
 
     public DetalhesCliente(Cliente cliente) {
         initComponents();
-
+         
+        cpfCliente = cliente.getCPF();
         ClienteController cc = new ClienteController();
+        ManipulaImagem mi = new ManipulaImagem();
         modeloServicos.listarServicos(cliente.getCPF());
         modeloCompras.listarItens(cliente.getCPF());
         jTableServicos.setModel(modeloServicos);
         jTableCompras.setModel(modeloCompras);
+        
+        byte[] imagemPerfil = cc.getImagemPerfil(cliente.getCPF());
+        System.out.println(imagemPerfil.length);
+        if(imagemPerfil.length > 0){
+            try {
+                jLabelFotoPerfil.setIcon(mi.redimensionaImg(imagemPerfil));
+            } catch (IOException ex) {
+                Logger.getLogger(DetalhesCliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+       
 
         jButtonSalvar.setVisible(false);
         jLabelNome.setText(cliente.getNOME() + " " + cliente.getSOBRENOME());
@@ -114,8 +139,8 @@ public class DetalhesCliente extends javax.swing.JFrame {
         jToggleButton1 = new javax.swing.JToggleButton();
         jButtonSalvar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabelFotoPerfil = new javax.swing.JLabel();
+        jLabelAlterarFotoPerfil = new javax.swing.JLabel();
         jLabelNome = new javax.swing.JLabel();
         jLabelIdade = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -301,13 +326,20 @@ public class DetalhesCliente extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(36, 46, 65));
 
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-pessoa.png"))); // NOI18N
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabelFotoPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelFotoPerfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-pessoa.png"))); // NOI18N
+        jLabelFotoPerfil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Alterar");
+        jLabelAlterarFotoPerfil.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelAlterarFotoPerfil.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelAlterarFotoPerfil.setText("Alterar");
+        jLabelAlterarFotoPerfil.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jLabelAlterarFotoPerfil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelAlterarFotoPerfil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabelAlterarFotoPerfilMousePressed(evt);
+            }
+        });
 
         jLabelNome.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelNome.setForeground(new java.awt.Color(255, 255, 255));
@@ -413,13 +445,13 @@ public class DetalhesCliente extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelFotoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(100, 100, 100)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabelAlterarFotoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -436,9 +468,9 @@ public class DetalhesCliente extends javax.swing.JFrame {
                                 .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(72, 72, 72))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelFotoPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(jLabel6)
+                .addComponent(jLabelAlterarFotoPerfil)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelNome)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -610,7 +642,7 @@ public class DetalhesCliente extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 846, Short.MAX_VALUE)
+            .addGap(0, 848, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -695,6 +727,17 @@ public class DetalhesCliente extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jLabel29MousePressed
 
+    private void jLabelAlterarFotoPerfilMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAlterarFotoPerfilMousePressed
+        
+        if(modFotoPerfil == null){
+            modFotoPerfil = new modalFotoPerfil(cpfCliente);
+            modFotoPerfil.registrarObservador(this);
+            modFotoPerfil.setVisible(true);
+        }else{
+            modFotoPerfil.setVisible(true);
+        }
+    }//GEN-LAST:event_jLabelAlterarFotoPerfilMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -737,7 +780,6 @@ public class DetalhesCliente extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxComoNosConheceu;
     private javax.swing.JComboBox<String> jComboBoxTamanhoCabelo;
     private javax.swing.JComboBox<String> jComboBoxTipoCabelo;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -754,13 +796,14 @@ public class DetalhesCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelAlterarFotoPerfil;
     private javax.swing.JLabel jLabelCelular;
     private javax.swing.JLabel jLabelCpf;
     private javax.swing.JTextField jLabelEmail;
+    private javax.swing.JLabel jLabelFotoPerfil;
     private javax.swing.JLabel jLabelIdade;
     private javax.swing.JLabel jLabelNome;
     private javax.swing.JLabel jLabelTelefone;
@@ -785,4 +828,9 @@ public class DetalhesCliente extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldUF;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(ImageIcon imagem) {
+        jLabelFotoPerfil.setIcon(imagem);
+    }
 }
