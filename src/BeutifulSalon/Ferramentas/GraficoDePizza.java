@@ -9,6 +9,7 @@ import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Servico;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
 import javax.swing.JPanel;
@@ -89,18 +90,19 @@ public class GraficoDePizza {
         JFreeChart chart = new JFreeChart("", new Font("Arial", 0, 28), plot, true);
      
         chart.setBackgroundPaint(Color.WHITE);
-        chart.setPadding(new RectangleInsets(0, 8, 20, 20));
+        chart.setPadding(new RectangleInsets(-50, 0, 70, 0));
 
         return chart;
     }
 
     public void plotaGrafico() {
 
-        int largura = 350;
-        int altura = 400;
+        int largura = 222;
+        int altura = 100;
 
-        ChartPanel g = new ChartPanel(criaGrafico(), largura, altura, largura, altura, 700, 700, true,
+        ChartPanel g = new ChartPanel(criaGrafico(), largura, altura, largura, altura, 480, 840, true,
                 true, true, true, true, true);
+
 
         g.setBackground(Color.WHITE);
         painelGrafico.add(g);

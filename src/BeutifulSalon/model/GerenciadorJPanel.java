@@ -23,7 +23,7 @@ public class GerenciadorJPanel {
         this.container.removeAll();
         this.container.revalidate();
         this.container.repaint();
-        this.container.add(this.content);
+        this.container.add(content);   
         this.container.revalidate();
         this.container.repaint();
     }

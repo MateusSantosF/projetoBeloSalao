@@ -20,6 +20,7 @@ public class Cabeleireiro {
     private String cpf;
     private String nome;
     private String email;
+    private Email emailAniversario;
     private LocalTime segundaE;
     private LocalTime tercaE;
     private LocalTime quartaE;
@@ -61,6 +62,14 @@ public class Cabeleireiro {
         
         this.domingoE = expediente.get(12);   
         this.domingoS = expediente.get(13);
+    }
+
+    public Email getEmailAniversario() {
+        return emailAniversario;
+    }
+
+    public void setEmailAniversario(Email emailAniversario) {
+        this.emailAniversario = emailAniversario;
     }
     
     
@@ -225,5 +234,8 @@ public class Cabeleireiro {
 
     public int verificaRegistro() {
         return new CabeleireiroDAO().verificaRegistro();
+    }
+     public void cadastrarEmailPadraoAniversario(Email email, String cpf) throws ExceptionDAO{
+        new CabeleireiroDAO().cadastrarEmailPadraoAniversario(email,cpf);
     }
 }

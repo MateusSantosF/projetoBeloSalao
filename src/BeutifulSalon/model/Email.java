@@ -16,11 +16,13 @@ import javax.mail.MessagingException;
  */
 public class Email {
     
-    String rementente;
-    String destinatario;
-    String diretorioArquivo;
-    String Titulo;
-    String Texto;
+    private String rementente;
+    private String destinatario;
+    private String diretorioArquivo;
+    private String Titulo;
+    private String Texto;
+    private byte[] anexo;
+    private boolean enviar;
     
     
     public Email(){};
@@ -40,6 +42,22 @@ public class Email {
 
     public void setRementente(String rementente) {
         this.rementente = rementente;
+    }
+
+    public byte[] getAnexo() {
+        return anexo;
+    }
+
+    public void setAnexo(byte[] anexo) {
+        this.anexo = anexo;
+    }
+
+    public boolean isEnviar() {
+        return enviar;
+    }
+
+    public void setEnviar(boolean enviar) {
+        this.enviar = enviar;
     }
     
     
@@ -68,11 +86,18 @@ public class Email {
     }
     
     public String getNomeDoArquivo(){
-        String diretorio = this.getDiretorioArquivo();
-        String nome =  diretorio.substring( diretorio.lastIndexOf("\\") + 1,  diretorio.lastIndexOf("."));
-        String extensao =  diretorio.substring( diretorio.lastIndexOf("."));
         
-        return nome+extensao;
+        if(this.getDiretorioArquivo() != null){
+           String diretorio = this.getDiretorioArquivo();
+            String nome =  diretorio.substring( diretorio.lastIndexOf("\\") + 1,  diretorio.lastIndexOf("."));
+            String extensao =  diretorio.substring( diretorio.lastIndexOf("."));
+            return nome+extensao;
+        }else{
+            return "Não existem arquivos anexados";
+        }
+        
+        
+       
     }
 
     public String getTexto() {

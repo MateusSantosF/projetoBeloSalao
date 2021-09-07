@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import BeutifulSalon.model.Cabeleireiro;
+import BeutifulSalon.model.Email;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -163,6 +164,17 @@ public class CabeleireiroDAO {
                     cabeleireiro.setSextaS(rs.getTime("SEXTAS").toLocalTime());
                     cabeleireiro.setSabadoS(rs.getTime("SABADOS").toLocalTime());
                     cabeleireiro.setDomingoS(rs.getTime("DOMINGOS").toLocalTime());
+                    
+                    Email emailAniversario = new Email();
+                    emailAniversario.setTitulo(rs.getString("TITULOANIVERSARIO"));
+                    emailAniversario.setTexto(rs.getString("TEXTOANIVERSARIO"));
+                    emailAniversario.setEnviar(rs.getBoolean("ENVIARANIVERSARIO"));
+                    emailAniversario.setDiretorioArquivo(rs.getString("NOMEANEXOANIVERSARIO"));
+                    byte[] anexoAniversario = rs.getBytes("ANEXOANIVERSARIO");
+                    if(anexoAniversario != null){
+                        emailAniversario.setAnexo(anexoAniversario);
+                    }
+                    cabeleireiro.setEmailAniversario(emailAniversario);
 
                 }
             }
@@ -170,7 +182,7 @@ public class CabeleireiroDAO {
             return cabeleireiro;
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO teste2 " + e);
+            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO teste " + e);
         } finally {
 
             try {
@@ -259,7 +271,7 @@ public class CabeleireiroDAO {
            
             return horario;
         }catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO teste3 " + e);
+            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO teste " + e);
         } finally {
 
             try {
@@ -344,6 +356,104 @@ public class CabeleireiroDAO {
 
         }
    
+    }
+    
+    public void cadastrarEmailPadraoAniversario(Email email, String cpf){
+         String sqlScript = "UPDATE CABELEIREIRO SET ENVIARANIVERSARIO = ?, TITULOANIVERSARIO = ? ,TEXTOANIVERSARIO = ?,"
+                 + "ANEXOANIVERSARIO = ?, NOMEANEXOANIVERSARIO = ? WHERE CPF = ?";
+             
+  
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+
+            pStatement = connection.prepareStatement(sqlScript);
+            pStatement.setString(6, cpf);
+            pStatement.setBoolean(1, email.isEnviar());
+            pStatement.setString(2, email.getTitulo());
+            pStatement.setString(3, email.getTexto());
+            pStatement.setBytes(4, email.getAnexo());
+            pStatement.setString(5, email.getDiretorioArquivo() );
+            
+            pStatement.execute();
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+
+        }
+  
+    }
+    
+    
+    public Email getEmailPadraoAniversario(){
+        String sqlScript = "SELECT ENVIARANIVERSARIO,TITULOANIVERSARIO,TEXTOANIVERSARIO,ANEXOANIVERSARIO FROM CABELEIREIRO";
+  
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        Email email = null;
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+
+            pStatement = connection.prepareStatement(sqlScript);
+            
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                email = new Email();
+                
+                email.setEnviar(rs.getBoolean("ENVIARANIVERSARIO"));
+                email.setTitulo(rs.getString("TITULOANIVERSARIO"));
+                email.setTexto(rs.getString("TEXTOANIVERSARIO"));
+                email.setAnexo(rs.getBytes("ANEXOANIVERSARIO"));
+            }
+            
+            return email;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+
+        }
+        return email;
     }
 
 }
