@@ -39,6 +39,7 @@ public class ClienteController {
             //Convertendo datas de String para Date
             LocalDate dataReg = LocalDate.parse(DATAREG, formatterData);
             //objeto cliente
+            NOME = NOME.replaceAll("\\s", "");
             Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, DATANASC, CEP,
                     BAIRRO, RUA, CIDADE, NUMERO, TELEFONE, CELULAR, dataReg);
             try {
@@ -64,6 +65,8 @@ public class ClienteController {
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
 
             //objeto cliente
+         
+            NOME = NOME.replaceAll("\\s", "");
             Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, DATANASC, CEP,
                     BAIRRO, RUA, CIDADE, NUMERO, TELEFONE, CELULAR);
             try {
@@ -247,4 +250,13 @@ public class ClienteController {
         }
         return null;
     }
+    
+     public void atualizarUltimoEnvioEmailAniversario(String cpf){
+         try {
+              new Cliente().atualizarUltimoEnvioEmailAniversario(cpf);
+         } catch (ExceptionDAO e) {
+             System.out.println("Erro ao atualizar ultiimo envio de email aniversario");
+         }
+       
+     }
 }

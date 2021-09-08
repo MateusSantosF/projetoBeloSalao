@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
@@ -103,7 +104,13 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         listarOrcamentoServicoRealizado(ANOATUAL);  
         modeloDespesaPrevista.getTodasDespesasPrevistas(ANOATUAL);
         jTableConsultaOrcamento.setModel(modeloDespesaPrevista);
-       
+        ((DefaultTableCellRenderer)  jTableConsultaOrcamento.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer)  jTableConsultaServicoRealizado.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer)  jTableConsultaOrcamentoServico.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer)  jTableServicoComparado.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer)  jTableLancamentos.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer)  jTableComparativoDespesas.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+
 
     }
 

@@ -80,15 +80,19 @@ public class ServicoDAO {
 
     public ArrayList<Servico> listarServicos(String nome) {
 
-        String sql = "SELECT ID_SERVICO, NOME, PRECO FROM SERVICO WHERE NOME LIKE '%" + nome + "%' ORDER BY NOME DESC";
-
+ 
+        
+        String sql2 ="SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) AS QTD, AGENDAMENTO_SERVICO.ID_SERVICO AS ID_SERVICO, SERVICO.NOME, SERVICO.PRECO, SERVICO.TEMPOGASTO FROM AGENDAMENTO_SERVICO " +
+                    "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
+                    " WHERE SERVICO.NOME LIKE '%" + nome + "%' GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) ";
+        
         Connection connection = null;
         PreparedStatement pStatement = null;
         ArrayList<Servico> servicos = null;
 
         try {
             connection = new ConnectionMVC().getConnection();
-            pStatement = connection.prepareStatement(sql);
+            pStatement = connection.prepareStatement(sql2);
 
             ResultSet rs = pStatement.executeQuery();
 
@@ -99,6 +103,8 @@ public class ServicoDAO {
                     Servico servicoAtual = new Servico();
                     servicoAtual.setNome(rs.getString("NOME"));
                     servicoAtual.setPreco(rs.getLong("PRECO"));
+                    servicoAtual.setTempoGasto(rs.getTime("TEMPOGASTO").toLocalTime());
+                    servicoAtual.setQuantidadeRealizada(rs.getLong("QTD"));
                     servicoAtual.setId(rs.getLong("ID_SERVICO"));
                     servicos.add(servicoAtual);
                 }
@@ -134,7 +140,7 @@ public class ServicoDAO {
     
     public List<Servico> listaOsCincoServicosMaisRealizados(){
          
-        String sql ="SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) AS QTD, AGENDAMENTO_SERVICO.ID_SERVICO AS ID, SERVICO.NOME FROM AGENDAMENTO_SERVICO " +
+        String sql ="SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) AS QTD, AGENDAMENTO_SERVICO.ID_SERVICO AS ID_SERVICO, SERVICO.NOME FROM AGENDAMENTO_SERVICO " +
                     "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
                     "INNER JOIN AGENDAMENTO ON AGENDAMENTO.DATA BETWEEN ? AND ? AND AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO " +
                     "GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) DESC LIMIT 5";
@@ -155,11 +161,10 @@ public class ServicoDAO {
                 pStatement.setLong(1, inicioDoAno);
                 pStatement.setLong(2, fimDoAno);
             }catch(DateTimeException e){
-                throw new DateTimeException("erro");
-            }finally{
-                sql = "SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO), AGENDAMENTO_SERVICO.ID_SERVICO, SERVICO.NOME FROM AGENDAMENTO_SERVICO " +
+                 sql = "SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO), AGENDAMENTO_SERVICO.ID_SERVICO AS ID_SERVICO, SERVICO.NOME FROM AGENDAMENTO_SERVICO " +
                 "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
                 "GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) DESC LIMIT 5";
+                throw new DateTimeException("erro");
             }
        
             rs = pStatement.executeQuery();
@@ -171,7 +176,77 @@ public class ServicoDAO {
                 
                 Servico servicoBuscado = new Servico();
                 servicoBuscado.setNome(rs.getString("NOME"));
-                servicoBuscado.setQuantidadeMensal(rs.getLong("QTD"));
+                servicoBuscado.setQuantidadeRealizada(rs.getLong("QTD"));
+                servicoBuscado.setId(rs.getLong("ID_SERVICO"));
+                servicos.add(servicoBuscado);
+                }
+            }
+            
+            return servicos;
+       
+            
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) " + e);
+        }finally{
+              try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+
+        return null;
+    }
+    
+    public List<Servico> listarServicosRealizadosAno(){
+         
+        String sql ="SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) AS QTD, AGENDAMENTO_SERVICO.ID_SERVICO AS ID, SERVICO.NOME, SERVICO.PRECO, SERVICO.TEMPOGASTO FROM AGENDAMENTO_SERVICO " +
+                    "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
+                    "INNER JOIN AGENDAMENTO ON AGENDAMENTO.DATA BETWEEN ? AND ? AND AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO " +
+                    "GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO)";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+        List<Servico> servicos = new ArrayList<>();
+       
+        try{
+            
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql); 
+            
+            try{
+                LocalDate anoAtual = LocalDate.now();
+                long inicioDoAno = LocalDate.ofYearDay(anoAtual.getYear(), 1).toEpochDay() * 24 * 60 * 60 * 1000;
+                long fimDoAno = LocalDate.ofYearDay(anoAtual.getYear(), 1).plusYears(1).toEpochDay() * 24 * 60 * 60 * 1000; 
+                pStatement.setLong(1, inicioDoAno);
+                pStatement.setLong(2, fimDoAno);
+            }catch(DateTimeException e){
+                sql = "SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO), AGENDAMENTO_SERVICO.ID_SERVICO, SERVICO.NOME FROM AGENDAMENTO_SERVICO " +
+                "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
+                "GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) DESC LIMIT 5";
+                throw new DateTimeException("erro");
+            }
+       
+            rs = pStatement.executeQuery();
+            
+          
+   
+            if(rs != null){                
+                while(rs.next()){
+                
+                Servico servicoBuscado = new Servico();
+                servicoBuscado.setNome(rs.getString("NOME"));
+                servicoBuscado.setPreco(rs.getLong("PRECO"));
+                servicoBuscado.setTempoGasto(rs.getTime("TEMPOGASTO").toLocalTime());
+                servicoBuscado.setQuantidadeRealizada(rs.getLong("QTD"));
                 servicoBuscado.setId(rs.getLong("ID"));
                 servicos.add(servicoBuscado);
                 }

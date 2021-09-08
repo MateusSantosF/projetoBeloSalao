@@ -16,6 +16,7 @@ import BeutifulSalon.view.Apresenta.ApresentaProduto;
 import BeutifulSalon.view.Apresenta.ApresentaCliente;
 import BeutifulSalon.model.GerenciadorJPanel;
 import BeutifulSalon.view.Apresenta.ApresentaAgendamentos;
+import BeutifulSalon.view.Apresenta.ApresentaServico;
 import BeutifulSalon.view.Cadastros.CadastroCabeleireiro;
 import java.awt.Color;
 import java.awt.Font;
@@ -59,6 +60,7 @@ public class MainMenu extends javax.swing.JFrame {
         paineis.add(painelFinancas);
         paineis.add(painelFinancas);
         paineis.add(painelAgendamentos);
+        paineis.add(jPanelServicos);
 
         painelDashboard.setBackground(SELECIONADO);
         //muda icone do programa
@@ -83,6 +85,8 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel8 = new javax.swing.JLabel();
         menuLateral = new javax.swing.JPanel();
+        jPanelServicos = new javax.swing.JPanel();
+        jLabelServicos = new javax.swing.JLabel();
         painelDashboard = new javax.swing.JPanel();
         jLabelDashboard = new javax.swing.JLabel();
         painelAgendamentos = new javax.swing.JPanel();
@@ -93,8 +97,6 @@ public class MainMenu extends javax.swing.JFrame {
         jLabelFinancas = new javax.swing.JLabel();
         painelClientes = new javax.swing.JPanel();
         jLabelClientes = new javax.swing.JLabel();
-        panelNovoRegistro1 = new javax.swing.JPanel();
-        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 30), new java.awt.Dimension(0, 30), new java.awt.Dimension(32767, 30));
         jLabel1 = new javax.swing.JLabel();
         jLabelConfiguracoes = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -110,6 +112,40 @@ public class MainMenu extends javax.swing.JFrame {
 
         menuLateral.setBackground(new java.awt.Color(36, 46, 66));
         menuLateral.setPreferredSize(new java.awt.Dimension(300, 500));
+
+        jPanelServicos.setBackground(new java.awt.Color(36, 46, 66));
+        jPanelServicos.setMaximumSize(new java.awt.Dimension(139, 30));
+        jPanelServicos.setMinimumSize(new java.awt.Dimension(139, 30));
+
+        jLabelServicos.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabelServicos.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-servicos.png"))); // NOI18N
+        jLabelServicos.setText("Serviços");
+        jLabelServicos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelServicos.setIconTextGap(5);
+        jLabelServicos.setPreferredSize(new java.awt.Dimension(128, 30));
+        jLabelServicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabelServicosMousePressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelServicosLayout = new javax.swing.GroupLayout(jPanelServicos);
+        jPanelServicos.setLayout(jPanelServicosLayout);
+        jPanelServicosLayout.setHorizontalGroup(
+            jPanelServicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelServicosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelServicos, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanelServicosLayout.setVerticalGroup(
+            jPanelServicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelServicosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelServicos, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         painelDashboard.setBackground(new java.awt.Color(36, 46, 66));
 
@@ -131,7 +167,7 @@ public class MainMenu extends javax.swing.JFrame {
             .addGroup(painelDashboardLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabelDashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
         painelDashboardLayout.setVerticalGroup(
             painelDashboardLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,7 +195,7 @@ public class MainMenu extends javax.swing.JFrame {
         painelAgendamentos.setLayout(painelAgendamentosLayout);
         painelAgendamentosLayout.setHorizontalGroup(
             painelAgendamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 272, Short.MAX_VALUE)
+            .addGap(0, 262, Short.MAX_VALUE)
             .addGroup(painelAgendamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(painelAgendamentosLayout.createSequentialGroup()
                     .addContainerGap()
@@ -235,7 +271,7 @@ public class MainMenu extends javax.swing.JFrame {
             painelFinancasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFinancasLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelFinancas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelFinancas, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
                 .addContainerGap())
         );
         painelFinancasLayout.setVerticalGroup(
@@ -281,26 +317,6 @@ public class MainMenu extends javax.swing.JFrame {
                     .addContainerGap(11, Short.MAX_VALUE)))
         );
 
-        panelNovoRegistro1.setBackground(new java.awt.Color(36, 46, 66));
-        panelNovoRegistro1.setPreferredSize(new java.awt.Dimension(50, 200));
-
-        javax.swing.GroupLayout panelNovoRegistro1Layout = new javax.swing.GroupLayout(panelNovoRegistro1);
-        panelNovoRegistro1.setLayout(panelNovoRegistro1Layout);
-        panelNovoRegistro1Layout.setHorizontalGroup(
-            panelNovoRegistro1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNovoRegistro1Layout.createSequentialGroup()
-                .addGap(81, 81, 81)
-                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
-        );
-        panelNovoRegistro1Layout.setVerticalGroup(
-            panelNovoRegistro1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelNovoRegistro1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/beauty_salon_logo.png"))); // NOI18N
 
@@ -339,22 +355,23 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuLateralLayout.createSequentialGroup()
                         .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(painelClientes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+                            .addComponent(painelClientes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, menuLateralLayout.createSequentialGroup()
                                 .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(painelDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(painelAgendamentos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(1, 1, 1))
-                            .addComponent(painelProdutos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
-                            .addComponent(painelFinancas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE))
+                            .addComponent(painelProdutos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                            .addComponent(painelFinancas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))
                         .addGap(212, 212, 212))
                     .addGroup(menuLateralLayout.createSequentialGroup()
                         .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(filler2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(panelNovoRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21))))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(menuLateralLayout.createSequentialGroup()
+                                .addGap(278, 278, 278)
+                                .addComponent(filler2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                            .addComponent(jPanelServicos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         menuLateralLayout.setVerticalGroup(
             menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -373,13 +390,10 @@ public class MainMenu extends javax.swing.JFrame {
                 .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelFinancas, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(menuLateralLayout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(panelNovoRegistro1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(menuLateralLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(filler2, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(jPanelServicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addGap(103, 103, 103))
@@ -399,7 +413,7 @@ public class MainMenu extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 809, Short.MAX_VALUE)
+            .addGap(0, 812, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -471,6 +485,12 @@ public class MainMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabelConfiguracoesMousePressed
 
+    private void jLabelServicosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelServicosMousePressed
+      new GerenciadorJPanel(painelPrincipal, new ApresentaServico());
+      this.setTitle("Serviços");
+        trocaCorPainel(jPanelServicos);
+    }//GEN-LAST:event_jLabelServicosMousePressed
+
     private void trocaCorPainel(JPanel painelAtivo) {
 
         for (JPanel p : paineis) {
@@ -521,10 +541,11 @@ public class MainMenu extends javax.swing.JFrame {
                         new ClienteController().listarAniversariantesDoMes().forEach(c -> {
 
                             try {
+                                new ClienteController().atualizarUltimoEnvioEmailAniversario(c.getCpf());
                                 Email mail = cc.selecionaCabeleireiro().getEmailAniversario();
                       
                                 mail.setDestinatario(c.getEmail());
-                                mail.setTexto(mail.getTexto().replace("<nome>", c.getNome() + " " + c.getSobrenome()));
+                                mail.setTexto( mail.getTexto().replace("<nome>", c.getNome() ));
                                 mail.sendEmail(JavaMail.EMAIL_ANIVERSARIO);
                             } catch (MessagingException ex) {
                                 System.out.println(ex);
@@ -540,7 +561,6 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.Box.Filler filler1;
     private javax.swing.Box.Filler filler2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
@@ -550,16 +570,21 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelConfiguracoes;
     private javax.swing.JLabel jLabelDashboard;
     private javax.swing.JLabel jLabelFinancas;
+    private javax.swing.JLabel jLabelFinancas1;
+    private javax.swing.JLabel jLabelFinancas2;
     private javax.swing.JLabel jLabelProdutos;
+    private javax.swing.JLabel jLabelServicos;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelServicos;
     private javax.swing.JPanel menuLateral;
     private javax.swing.JPanel painelAgendamentos;
     private javax.swing.JPanel painelClientes;
     private javax.swing.JPanel painelDashboard;
     private javax.swing.JPanel painelFinancas;
+    private javax.swing.JPanel painelFinancas1;
+    private javax.swing.JPanel painelFinancas2;
     private javax.swing.JPanel painelPrincipal;
     private javax.swing.JPanel painelProdutos;
-    private javax.swing.JPanel panelNovoRegistro1;
     // End of variables declaration//GEN-END:variables
 }

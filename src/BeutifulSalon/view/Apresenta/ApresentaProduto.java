@@ -10,6 +10,8 @@ import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.Tabelas.ProdutoTableModel;
 import java.awt.Font;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -32,9 +34,11 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jLabelEditar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Editar
         jLabelExcluir.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Excluir
         jScrollPane2.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //ScrollPane
+        jTableConsultaProdutos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); // tabela
         
         produtoTableModel.getTodosProdutos();
         CentralizaElementosTabela render = new CentralizaElementosTabela();
+        ((DefaultTableCellRenderer) jTableConsultaProdutos.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         jTableConsultaProdutos.setDefaultRenderer(Object.class, render);
         jTableConsultaProdutos.setModel(produtoTableModel);
     }

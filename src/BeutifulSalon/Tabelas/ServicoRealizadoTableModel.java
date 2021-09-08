@@ -143,51 +143,51 @@ public class ServicoRealizadoTableModel extends AbstractTableModel {
 
                     switch (m) {
                         case JANUARY:
-                            janeiro = oc.listarOrcamentoServicorRealizado(ano, Month.JANUARY, s.getId()).getQuantidadeMensal();
+                            janeiro = oc.listarOrcamentoServicorRealizado(ano, Month.JANUARY, s.getId()).getQuantidadeRealizada();
                             janeiro *= s.getPreco();
                         break;
                         case FEBRUARY:
-                            fevereiro = oc.listarOrcamentoServicorRealizado(ano, Month.FEBRUARY, s.getId()).getQuantidadeMensal();
+                            fevereiro = oc.listarOrcamentoServicorRealizado(ano, Month.FEBRUARY, s.getId()).getQuantidadeRealizada();
                             fevereiro *= s.getPreco();
                         break;
                         case MARCH:
-                            marco = oc.listarOrcamentoServicorRealizado(ano, Month.MARCH, s.getId()).getQuantidadeMensal();
+                            marco = oc.listarOrcamentoServicorRealizado(ano, Month.MARCH, s.getId()).getQuantidadeRealizada();
                             marco *= s.getPreco();
                         break;
                         case APRIL:
-                            abril = oc.listarOrcamentoServicorRealizado(ano, Month.APRIL, s.getId()).getQuantidadeMensal();
+                            abril = oc.listarOrcamentoServicorRealizado(ano, Month.APRIL, s.getId()).getQuantidadeRealizada();
                             abril *= s.getPreco();
                         break;
                         case MAY:
-                            maio = oc.listarOrcamentoServicorRealizado(ano, Month.MAY, s.getId()).getQuantidadeMensal();
+                            maio = oc.listarOrcamentoServicorRealizado(ano, Month.MAY, s.getId()).getQuantidadeRealizada();
                             maio *= s.getPreco();
                        break;
                         case JUNE :
-                            junho = oc.listarOrcamentoServicorRealizado(ano, Month.JUNE, s.getId()).getQuantidadeMensal();
+                            junho = oc.listarOrcamentoServicorRealizado(ano, Month.JUNE, s.getId()).getQuantidadeRealizada();
                             junho *= s.getPreco();
                         break;
                         case JULY :
-                            julho = oc.listarOrcamentoServicorRealizado(ano, Month.JULY, s.getId()).getQuantidadeMensal();
+                            julho = oc.listarOrcamentoServicorRealizado(ano, Month.JULY, s.getId()).getQuantidadeRealizada();
                             julho *= s.getPreco();
                         break;
                         case AUGUST :
-                            agosto = oc.listarOrcamentoServicorRealizado(ano, Month.AUGUST, s.getId()).getQuantidadeMensal();
+                            agosto = oc.listarOrcamentoServicorRealizado(ano, Month.AUGUST, s.getId()).getQuantidadeRealizada();
                             agosto *= s.getPreco();
                        break;
                         case SEPTEMBER:
-                            setembro = oc.listarOrcamentoServicorRealizado(ano, Month.SEPTEMBER, s.getId()).getQuantidadeMensal();
+                            setembro = oc.listarOrcamentoServicorRealizado(ano, Month.SEPTEMBER, s.getId()).getQuantidadeRealizada();
                             setembro *= s.getPreco();
                        break;
                         case OCTOBER:
-                            outubro = oc.listarOrcamentoServicorRealizado(ano, Month.OCTOBER, s.getId()).getQuantidadeMensal();
+                            outubro = oc.listarOrcamentoServicorRealizado(ano, Month.OCTOBER, s.getId()).getQuantidadeRealizada();
                             outubro *= s.getPreco();
                         break;
                         case NOVEMBER:
-                            novembro = oc.listarOrcamentoServicorRealizado(ano, Month.NOVEMBER, s.getId()).getQuantidadeMensal();
+                            novembro = oc.listarOrcamentoServicorRealizado(ano, Month.NOVEMBER, s.getId()).getQuantidadeRealizada();
                             novembro *= s.getPreco();
                         break;
                         case DECEMBER:
-                            dezembro = oc.listarOrcamentoServicorRealizado(ano, Month.DECEMBER, s.getId()).getQuantidadeMensal();
+                            dezembro = oc.listarOrcamentoServicorRealizado(ano, Month.DECEMBER, s.getId()).getQuantidadeRealizada();
                             dezembro *= s.getPreco();
                         break;
                     }

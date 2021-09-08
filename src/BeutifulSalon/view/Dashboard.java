@@ -22,19 +22,14 @@ import BeutifulSalon.controller.VendaController;
 import BeutifulSalon.model.Cabeleireiro;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
-import BeutifulSalon.model.Email;
 import BeutifulSalon.model.Produto;
-import java.awt.Component;
 import java.awt.Font;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.mail.MessagingException;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
+
 
 /**
  *
@@ -47,8 +42,6 @@ public class Dashboard extends javax.swing.JPanel {
      */
     public Dashboard() {
         initComponents();
-
-        System.out.println(jPanelGraficoPizza.getWidth());
 
         ManipulaFontes mf = new ManipulaFontes();
         jLabelNomeCabeleireiro.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Nome Cabeleireiro

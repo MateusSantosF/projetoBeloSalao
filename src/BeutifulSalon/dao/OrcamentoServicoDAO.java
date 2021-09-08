@@ -293,7 +293,7 @@ public class OrcamentoServicoDAO {
                    
                     orcamento.setId(rs.getLong("ID_SERVICO"));
                     orcamento.setNome(rs.getString("NOME"));
-                    orcamento.setQuantidadeMensal(rs.getLong("QUANTIDADE"));                 
+                    orcamento.setQuantidadeRealizada(rs.getLong("QUANTIDADE"));                 
                 }
                 
             }

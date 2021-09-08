@@ -23,28 +23,32 @@ import javax.swing.JOptionPane;
  */
 public class ServicoController {
 
-    public List<Servico> listarServicos(){
-        
+    public List<Servico> listarServicos() {
+
         try {
             return new Servico().listarServicos();
         } catch (ExceptionDAO e) {
-           JOptionPane.showMessageDialog(null, "Erro ao listar Serviços realizados" + e); 
+            JOptionPane.showMessageDialog(null, "Erro ao listar Serviços realizados" + e);
         }
         return null;
     }
 
-    public ArrayList<Servico> listarServicos(String nome) throws ExceptionDAO {
-        return new Servico().listarServicos(nome);
+    public ArrayList<Servico> listarServicos(String nome) {
+        try {
+            return new Servico().listarServicos(nome);
+        } catch (ExceptionDAO e) {
+        }
+       return null;
     }
 
     public Servico buscarServico(long idServicoBuscado) {
-        
+
         try {
-          return new Servico().buscarServico(idServicoBuscado);  
+            return new Servico().buscarServico(idServicoBuscado);
         } catch (ExceptionDAO e) {
-            JOptionPane.showMessageDialog(null, "Erro ao buscarServico" + e );
+            JOptionPane.showMessageDialog(null, "Erro ao buscarServico" + e);
         }
-       return null;
+        return null;
     }
 
     public ArrayList<Servico> buscarServicoPeloAgendamento(long idAgendamento) {
@@ -82,36 +86,47 @@ public class ServicoController {
         }
 
     }
-    
-     public List<Servico> listaOsCincoServicosMaisRealizados(){
-         
-         try {
-             return new Servico().listarOsCincoServicosMaisRealizados();
-         } catch (ExceptionDAO e) {
-             
-         }
-         return null;
-     }
-     
-     public List<Servico> listarServicosDeAgendamentoPorCliente(String cpf){
-         try {
-             return new Servico().listarServicosDeAgendamentoPorCliente(cpf);
-         } catch (ExceptionDAO e) {
-             System.out.println(e);
-         }
-            return null;
-     }
-     
-     public List<Servico> selecionaServicosDoAno(int anoReferente){
-         
-         try {
-              return new Servico().selecionaServicosDoAno(anoReferente);
-         } catch (ExceptionDAO e) {
-             System.out.println("erro ao listar serviços do ano");
-         }
-         
-         return null;
-        
-     }
+
+    public List<Servico> listaOsCincoServicosMaisRealizados() {
+
+        try {
+            return new Servico().listarOsCincoServicosMaisRealizados();
+        } catch (ExceptionDAO e) {
+
+        }
+        return null;
+    }
+
+    public List<Servico> listarServicosDeAgendamentoPorCliente(String cpf) {
+        try {
+            return new Servico().listarServicosDeAgendamentoPorCliente(cpf);
+        } catch (ExceptionDAO e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public List<Servico> selecionaServicosDoAno(int anoReferente) {
+
+        try {
+            return new Servico().selecionaServicosDoAno(anoReferente);
+        } catch (ExceptionDAO e) {
+            System.out.println("erro ao listar serviços do ano");
+        }
+
+        return null;
+
+    }
+
+    public List<Servico> listarServicosRealizadosAno() {
+
+        try {
+            return new Servico().listarServicosRealizadosAno();
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao listar serviços anual");
+        }
+
+        return null;
+    }
 
 }

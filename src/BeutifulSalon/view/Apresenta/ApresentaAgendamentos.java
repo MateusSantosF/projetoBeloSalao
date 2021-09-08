@@ -12,6 +12,8 @@ import BeutifulSalon.controller.AgendamentoController;
 import java.awt.Font;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 
 
 /**
@@ -47,6 +49,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         
         CentralizaElementosTabela render = new CentralizaElementosTabela();
         modelo.getTodosAgendamentos();
+        ((DefaultTableCellRenderer) jTableAgendamentos.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         jTableAgendamentos.setDefaultRenderer(Object.class, render);
         jTableAgendamentos.setModel(modelo);
        

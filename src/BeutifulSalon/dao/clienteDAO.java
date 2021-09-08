@@ -16,6 +16,7 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +42,7 @@ public class clienteDAO {
             
             pStatement = connection.prepareStatement(sqlScript);
             pStatement.setString(1, cliente.getCpf());
+   
             pStatement.setString(2, cliente.getNome());
             pStatement.setString(3, cliente.getSobrenome());
             pStatement.setString(4, cliente.getEmail());
@@ -76,20 +78,66 @@ public class clienteDAO {
        
     }
     
+   
+                             
+    
+    public void atualizarUltimoEnvioEmailAniversario(String cpf){
+        
+        String sql = "UPDATE EMAILANIVERSARIO SET ULTIMOENVIO = ? WHERE CPF = ?";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        try {
+            
+            connection = new ConnectionMVC().getConnection();
+            
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(2, cpf);
+            pStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+           
+            
+            pStatement.execute(); 
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Erro atualizar ultimo envio de email"  + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+           
+        }
+   
+    }
+    
     public List<Cliente> listarAniversariantesDoMes() throws ExceptionDAO{
         
-        String sql = "SELECT * FROM CLIENTE WHERE Substr(Cliente.DATANASC,0, 6) = (SELECT strftime('%d/%m',date('now', 'localtime')))";
+        String sql = "SELECT * FROM CLIENTE " +
+        " INNER JOIN EMAILANIVERSARIO ON EMAILANIVERSARIO.CPF = CLIENTE.CPF " +
+        " WHERE Substr(Cliente.DATANASC,0, 6) = ? AND (EMAILANIVERSARIO.ULTIMOENVIO NOT BETWEEN ? AND ? OR EMAILANIVERSARIO.ULTIMOENVIO IS NULL)";
         Connection connection = null;
         PreparedStatement pStatement = null;
    
         List<Cliente> clientes =  null;
             
-        try {
+        try {   
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/LL");
+            
             connection = new ConnectionMVC().getConnection();
             
             pStatement = connection.prepareStatement(sql);
             ManipulaData md = new ManipulaData();
-
+            pStatement.setString(1, LocalDate.now().format(formatterData));
+            pStatement.setLong(2 ,md.meiaNoiteHoje());
+            pStatement.setLong(3, md.MeiaNoiteAmanha());
             
             ResultSet rs = pStatement.executeQuery();
             
@@ -99,6 +147,7 @@ public class clienteDAO {
                 while(rs.next()){
                     Cliente clienteAtual = new Cliente();
                     clienteAtual.setNome(rs.getString("NOME"));
+                    clienteAtual.setCpf(rs.getString("CPF"));
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
                     clienteAtual.setEmail(rs.getString("EMAIL"));
                     clientes.add(clienteAtual);
@@ -336,7 +385,7 @@ public class clienteDAO {
      public Cliente buscarCliente(String cpf){
         
         
-        String sqlScript = "SELECT NOME,SOBRENOME,CPF, EMAIL, CELULAR, DATANASC, "
+        String sqlScript = "SELECT NOME,SOBRENOME,CPF, EMAIL, CELULAR, DATANASC,DATAREG, "
                 + "CEP, BAIRRO, RUA,NUMERO, CIDADE,CELULAR, TELEFONE,"
                 +" TIPODECABELO, TAMANHOCABELO,CORCABELO, CONHECEU, FACEBOOK,INSTAGRAM, OBSERVACOES"
                 + " FROM CLIENTE WHERE CPF = ?";
@@ -363,6 +412,7 @@ public class clienteDAO {
                 cliente.setCep(rs.getString("CEP"));
                 cliente.setBairro(rs.getString("BAIRRO"));
                 cliente.setRua(rs.getString("RUA"));
+                cliente.setDataDeRegistro(rs.getDate("DATAREG").toLocalDate());
                 cliente.setNumeroDaCasa(rs.getString("NUMERO"));
                 cliente.setCidade(rs.getString("CIDADE"));
                 cliente.setCelular(rs.getString("CELULAR"));

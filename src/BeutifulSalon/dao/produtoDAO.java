@@ -1,7 +1,7 @@
 package BeutifulSalon.dao;
 /**
  *
- * @author Melissa
+ * @author Mateus Santos
  */
 
 import java.sql.Connection;

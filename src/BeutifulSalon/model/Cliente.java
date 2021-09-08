@@ -311,4 +311,8 @@ public class Cliente {
         return new clienteDAO().listarAniversariantesDoMes();
     }
 
+    public void atualizarUltimoEnvioEmailAniversario(String cpf) throws ExceptionDAO {
+        new clienteDAO().atualizarUltimoEnvioEmailAniversario(cpf);
+    }
+
 }

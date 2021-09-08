@@ -46,7 +46,7 @@ public class ClienteCompraTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         
         switch(columnIndex){

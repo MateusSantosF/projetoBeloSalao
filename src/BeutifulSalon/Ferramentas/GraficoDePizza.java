@@ -47,7 +47,7 @@ public class GraficoDePizza {
         } else {
             for (Servico s : servicos) {
                 if (s != null) {
-                    Long qtd = s.getQuantidadeMensal();
+                    Long qtd = s.getQuantidadeRealizada();
                     dataset.setValue(s.getNome(), qtd.doubleValue());
                 }
             }

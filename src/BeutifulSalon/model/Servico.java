@@ -25,7 +25,7 @@ public class Servico {
     private ArrayList<Produto> produtos;
     private LocalTime tempoGasto;
     private LocalDate dataRealizado; //data em que foi feito;
-    private long quantidadeMensal;
+    private long quantidadeRealizada;
 
     public LocalTime getTempoGasto() {
         return tempoGasto;
@@ -85,12 +85,12 @@ public class Servico {
     }
     
 
-    public long getQuantidadeMensal() {
-        return quantidadeMensal;
+    public long getQuantidadeRealizada() {
+        return quantidadeRealizada;
     }
 
-    public void setQuantidadeMensal(long quantidadeMensal) {
-        this.quantidadeMensal = quantidadeMensal;
+    public void setQuantidadeRealizada(long quantidadeRealizada) {
+        this.quantidadeRealizada = quantidadeRealizada;
     }
     
     public List<Servico> listarServicos() throws ExceptionDAO{
@@ -123,6 +123,10 @@ public class Servico {
     public List<Servico> listarServicosDeAgendamentoPorCliente(String cpf) throws ExceptionDAO{
         return new ServicoDAO().listarServicosDeAgendamentoPorCliente(cpf);
     }
+     public List<Servico> listarServicosRealizadosAno() throws ExceptionDAO{
+        return new ServicoDAO().listarServicosRealizadosAno();
+     }
+    
     
     
 }
