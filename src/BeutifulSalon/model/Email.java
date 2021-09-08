@@ -123,8 +123,52 @@ public class Email {
         this.Texto = Texto;
     }
     
-    public void sendEmail() throws MessagingException{
-        new JavaMail(this).sendMail();
+    public void sendEmail(int tipo) throws MessagingException{
+        new JavaMail(this, tipo).sendMail();
+    }
+    
+    //gmail, outlook, hotmail?
+    public String getSmtpHostMail(){
+
+      
+        String host = getRementente().substring(getRementente().lastIndexOf("@"));
+        
+        if(host.contains("gmail")){
+            return "smtp.gmail.com";
+        }else if(host.contains("outlook")){
+            return "smtp.live.com";
+        }else if(host.contains("hotmail")){
+            return "smtp.live.com";
+        }else{
+            return null;
+        }
+    }
+    
+   
+    public String getSmtpPortMail(){
+        
+        String host = getRementente().substring(getRementente().lastIndexOf("@"));
+        
+        if(host.contains("gmail")){
+            return "587";
+        }else if(host.contains("outlook")){
+            return "25";
+        }else if(host.contains("hotmail")){
+            return "25";
+        }
+        
+        return null;
+        
+    }
+    
+    //verifica se precisa de autenticação
+    public String getSmtpAuth(){
+        return "true";
+    }
+    
+    //conexão segura
+    public String smtpStarttls(){
+          return "true";
     }
     
     

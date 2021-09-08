@@ -5,8 +5,11 @@
  */
 package BeutifulSalon.view;
 
-
+import BeutifulSalon.Ferramentas.JavaMail;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
+import BeutifulSalon.controller.CabeleireiroController;
+import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.model.Email;
 import BeutifulSalon.view.modais.NovoRegistro;
 import BeutifulSalon.view.Apresenta.ApresentaFinancas;
 import BeutifulSalon.view.Apresenta.ApresentaProduto;
@@ -19,10 +22,9 @@ import java.awt.Font;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import javax.mail.MessagingException;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-
-
 
 /**
  *
@@ -32,14 +34,13 @@ public class MainMenu extends javax.swing.JFrame {
 
     NovoRegistro novoRegistro = null;
     CadastroCabeleireiro cadastroCabeleireiro = null;
-    private final Color SELECIONADO = new Color(32,41,59);
-    private final Color PADRAO = new Color (36,46,66);
+    private final Color SELECIONADO = new Color(32, 41, 59);
+    private final Color PADRAO = new Color(36, 46, 66);
     private final List<JPanel> paineis = new ArrayList<>();
-    
+
     public MainMenu() {
         initComponents();
-        
-        
+
         ManipulaFontes mf = new ManipulaFontes();
         jLabelDashboard.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Envie um Email
         jLabelAgendamento.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Agendamentos
@@ -49,28 +50,27 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Novo Registro
 
         this.setExtendedState(MAXIMIZED_BOTH);
-        
+
         new GerenciadorJPanel(painelPrincipal, new Dashboard());
-        
+
         paineis.add(painelDashboard);
         paineis.add(painelProdutos);
         paineis.add(painelClientes);
         paineis.add(painelFinancas);
         paineis.add(painelFinancas);
         paineis.add(painelAgendamentos);
-        
+
         painelDashboard.setBackground(SELECIONADO);
         //muda icone do programa
         try {
-          URL iconURL = getClass().getResource("/imagens/icon-beauty_salon.png") ;
-          ImageIcon icon = new ImageIcon(iconURL);
-          this.setIconImage(icon.getImage());
+            URL iconURL = getClass().getResource("/imagens/icon-beauty_salon.png");
+            ImageIcon icon = new ImageIcon(iconURL);
+            this.setIconImage(icon.getImage());
         } catch (Exception e) {
             System.out.println(e);
         }
-       
-    }
 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -428,9 +428,9 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelClientesMousePressed
 
     private void jLabelProdutosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelProdutosMousePressed
-         new GerenciadorJPanel(painelPrincipal, new ApresentaProduto());
-         this.setTitle("Produtos");
-         trocaCorPainel(painelProdutos);
+        new GerenciadorJPanel(painelPrincipal, new ApresentaProduto());
+        this.setTitle("Produtos");
+        trocaCorPainel(painelProdutos);
     }//GEN-LAST:event_jLabelProdutosMousePressed
 
     private void jLabelFinancasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelFinancasMousePressed
@@ -440,47 +440,48 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelFinancasMousePressed
 
     private void jLabel4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MousePressed
-       
-        if(novoRegistro == null){
+
+        if (novoRegistro == null) {
             novoRegistro = new NovoRegistro();
             novoRegistro.setVisible(true);
-        }else{
+        } else {
             novoRegistro.setVisible(true);
         }
     }//GEN-LAST:event_jLabel4MousePressed
 
     private void jLabelDashboardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDashboardMousePressed
-       new GerenciadorJPanel(painelPrincipal, new Dashboard());
-       this.setTitle("Dashboard");
+        new GerenciadorJPanel(painelPrincipal, new Dashboard());
+        this.setTitle("Dashboard");
         trocaCorPainel(painelDashboard);
     }//GEN-LAST:event_jLabelDashboardMousePressed
 
     private void jLabelAgendamentoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAgendamentoMousePressed
-       new GerenciadorJPanel(painelPrincipal, new ApresentaAgendamentos());
-       this.setTitle("Agendamentos");
-       trocaCorPainel(painelAgendamentos);
+        new GerenciadorJPanel(painelPrincipal, new ApresentaAgendamentos());
+        this.setTitle("Agendamentos");
+        trocaCorPainel(painelAgendamentos);
     }//GEN-LAST:event_jLabelAgendamentoMousePressed
 
     private void jLabelConfiguracoesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelConfiguracoesMousePressed
-       
-        if(cadastroCabeleireiro == null){
+
+        if (cadastroCabeleireiro == null) {
             cadastroCabeleireiro = new CadastroCabeleireiro();
             cadastroCabeleireiro.setVisible(true);
-        }else{
+        } else {
             cadastroCabeleireiro.setVisible(true);
         }
     }//GEN-LAST:event_jLabelConfiguracoesMousePressed
-    
-    private void trocaCorPainel(JPanel painelAtivo){
-        
-        for(JPanel p: paineis){
-            if( p.equals(painelAtivo)){
+
+    private void trocaCorPainel(JPanel painelAtivo) {
+
+        for (JPanel p : paineis) {
+            if (p.equals(painelAtivo)) {
                 p.setBackground(SELECIONADO);
-            }else{
+            } else {
                 p.setBackground(PADRAO);
             }
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -512,9 +513,28 @@ public class MainMenu extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainMenu().setVisible(true);
-                
 
-                
+                CabeleireiroController cc = new CabeleireiroController();
+
+                if (cc.verificaRegistro() == 1) {
+                    if (cc.selecionaCabeleireiro().getEmailAniversario().isEnviar()) {
+                        new ClienteController().listarAniversariantesDoMes().forEach(c -> {
+
+                            try {
+                                Email mail = cc.selecionaCabeleireiro().getEmailAniversario();
+                      
+                                mail.setDestinatario(c.getEmail());
+                                mail.setTexto(mail.getTexto().replace("<nome>", c.getNome() + " " + c.getSobrenome()));
+                                mail.sendEmail(JavaMail.EMAIL_ANIVERSARIO);
+                            } catch (MessagingException ex) {
+                                System.out.println(ex);
+                            }
+
+                        });
+                    }
+
+                }
+
             }
         });
     }

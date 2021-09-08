@@ -24,8 +24,8 @@ public class CabeleireiroDAO {
     public void cadastrarCabeleireiro(Cabeleireiro cabeleireiro) {
         String sqlScript = "INSERT INTO CABELEIREIRO (CPF ,EMAIL, NOME"
                 + ", SEGUNDAE, TERCAE, QUARTAE, QUINTAE, SEXTAE, SABADOE, DOMINGOE,"
-                + "SEGUNDAS, TERCAS, QUARTAS, QUINTAS, SEXTAS,SABADOS,DOMINGOS) "
-                + "VALUES( ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ? , ? ,? ,? ,? ,?)";
+                + "SEGUNDAS, TERCAS, QUARTAS, QUINTAS, SEXTAS,SABADOS,DOMINGOS, SENHA) "
+                + "VALUES( ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ? , ? ,? ,? ,? ,?, ?)";
 
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -53,6 +53,7 @@ public class CabeleireiroDAO {
             pStatement.setTime(15, java.sql.Time.valueOf(cabeleireiro.getSextaS()));
             pStatement.setTime(16, java.sql.Time.valueOf(cabeleireiro.getSabadoS()));
             pStatement.setTime(17, java.sql.Time.valueOf(cabeleireiro.getDomingoS()));
+            pStatement.setString(18, cabeleireiro.getSenha());
 
             pStatement.execute();
 
@@ -166,6 +167,7 @@ public class CabeleireiroDAO {
                     cabeleireiro.setDomingoS(rs.getTime("DOMINGOS").toLocalTime());
                     
                     Email emailAniversario = new Email();
+                    emailAniversario.setRementente(cabeleireiro.getEmail());
                     emailAniversario.setTitulo(rs.getString("TITULOANIVERSARIO"));
                     emailAniversario.setTexto(rs.getString("TEXTOANIVERSARIO"));
                     emailAniversario.setEnviar(rs.getBoolean("ENVIARANIVERSARIO"));
@@ -175,6 +177,7 @@ public class CabeleireiroDAO {
                         emailAniversario.setAnexo(anexoAniversario);
                     }
                     cabeleireiro.setEmailAniversario(emailAniversario);
+                    cabeleireiro.setSenha(rs.getString("SENHA"));
 
                 }
             }
@@ -300,7 +303,7 @@ public class CabeleireiroDAO {
         
         String sqlScript = "UPDATE CABELEIREIRO SET CPF = ? ,EMAIL = ? , NOME = ? ,"
                 + " SEGUNDAE = ?, TERCAE = ?, QUARTAE = ?, QUINTAE = ?, SEXTAE = ?, SABADOE = ?, DOMINGOE = ?,"
-                + " SEGUNDAS = ?, TERCAS = ?, QUARTAS =?, QUINTAS = ?, SEXTAS = ? , SABADOS = ?, DOMINGOS = ? WHERE CPF = ?";
+                + " SEGUNDAS = ?, TERCAS = ?, QUARTAS =?, QUINTAS = ?, SEXTAS = ? , SABADOS = ?, DOMINGOS = ?, SENHA = ? WHERE CPF = ?";
   
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -311,7 +314,7 @@ public class CabeleireiroDAO {
             pStatement = connection.prepareStatement(sqlScript);
             
          
-            pStatement.setString(18, cabeleireiro.getCpf());
+            pStatement.setString(19, cabeleireiro.getCpf());
             pStatement.setString(1, cabeleireiro.getCpf());
             pStatement.setString(2, cabeleireiro.getEmail());
             pStatement.setString(3, cabeleireiro.getNome());
@@ -330,6 +333,8 @@ public class CabeleireiroDAO {
             pStatement.setTime(15, java.sql.Time.valueOf(cabeleireiro.getSextaS()));
             pStatement.setTime(16, java.sql.Time.valueOf(cabeleireiro.getSabadoS()));
             pStatement.setTime(17, java.sql.Time.valueOf(cabeleireiro.getDomingoS()));
+            pStatement.setString(18, cabeleireiro.getSenha());
+
             
             pStatement.execute();
 

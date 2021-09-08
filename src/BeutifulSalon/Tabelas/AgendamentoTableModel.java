@@ -56,7 +56,7 @@ public class AgendamentoTableModel extends AbstractTableModel {
         
         switch(columnIndex){
             case 0:
-                return clienteController.buscarCliente(dados.get(rowIndex).getCpfCliente()).getNOME();
+                return clienteController.buscarCliente(dados.get(rowIndex).getCpfCliente()).getNome();
             
             case 1:
                 return dados.get(rowIndex).getData().format(formatterData);

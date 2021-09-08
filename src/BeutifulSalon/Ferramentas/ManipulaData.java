@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.util.ArrayList;
@@ -39,9 +40,9 @@ public class ManipulaData {
 
         return meiaNoiteMs;
     }
-    
-    public int calculaIdade(LocalDate dataNascimento){
-        
+
+    public int calculaIdade(LocalDate dataNascimento) {
+
         return Period.between(dataNascimento, LocalDate.now()).getYears();
     }
 
@@ -54,17 +55,16 @@ public class ManipulaData {
 
         return meiaNoiteMs;
     }
-    
-    public int periodoDoDia(LocalDateTime horario){
-        
-       
+
+    public int periodoDoDia(LocalDateTime horario) {
+
         int hora = horario.getHour();
-        
-        if(hora >= 6 && hora < 12 ){
+
+        if (hora >= 6 && hora < 12) {
             return 0;
-        }else if( hora < 18 && hora >=12){
+        } else if (hora < 18 && hora >= 12) {
             return 1;
-        }else{
+        } else {
             return 2;
         }
     }
@@ -78,8 +78,8 @@ public class ManipulaData {
 
         return meiaNoiteMs;
     }
-    
-    public Date localDateToDate(LocalDate data){
+
+    public Date localDateToDate(LocalDate data) {
         return java.sql.Date.valueOf(data);
     }
 
@@ -91,7 +91,6 @@ public class ManipulaData {
         LocalDateTime meiaNoiteAmanha = diff.plusDays(1);
 
         long meiaNoiteAmanhaMs = meiaNoiteAmanha.toLocalDate().toEpochDay() * 24 * 60 * 60 * 1000;
-
         return meiaNoiteAmanhaMs;
     }
 
@@ -103,7 +102,7 @@ public class ManipulaData {
 
         return tempoEmMs;
     }
-    
+
     public long fimDoMes(LocalDate data, Month mes) {
 
         LocalDate dataMes = LocalDate.of(data.getYear(), mes, 1);
@@ -132,8 +131,6 @@ public class ManipulaData {
         return meses;
     }
 
-    
-
     public long somaDia(LocalDateTime diaAtual, long qtdDias) {
 
         LocalDateTime soma = diaAtual.plusDays(qtdDias);
@@ -153,88 +150,119 @@ public class ManipulaData {
         LocalTime saida;
         int diaDaSemana = 0; // 1 (segunda) -  7 (Domingo)
 
+        AgendamentoController ag = new AgendamentoController();
+        CabeleireiroController cc = new CabeleireiroController();
 
-            AgendamentoController ag = new AgendamentoController();
-            CabeleireiroController cc = new CabeleireiroController();
+        //busca agendamentos do dia inserido na tela de agendamento
+        agendamentos = ag.listarAgendamentosRealizados(data);
+        if (agendamentos.isEmpty()) {
+            return null;
+        }
+        //recupera dia da semana
+        diaDaSemana = agendamentos.get(0).getData().getDayOfWeek().getValue();
+        //System.out.println("Dia da semana: " + diaDaSemana);
 
-            //busca agendamentos do dia inserido na tela de agendamento
-            agendamentos = ag.listarAgendamentosRealizados(data);
-            if (agendamentos.isEmpty()) {
-                return null;
+        //recupera horario de inicio e término do expediente
+        expedienteDoDia = cc.selecionaExpediente(diaDaSemana);
+
+        entrada = expedienteDoDia.get(0);
+        saida = expedienteDoDia.get(1);
+
+        //System.out.println("entrada e saida " + entrada + " " + saida);
+        LocalTime horarioEntrada = null;
+        //itera pelos agendamentos
+        for (Agendamento a : agendamentos) {
+
+            if (horarios.isEmpty()) {
+                horarioEntrada = entrada;
             }
-            //recupera dia da semana
-            diaDaSemana = agendamentos.get(0).getData().getDayOfWeek().getValue();
-            //System.out.println("Dia da semana: " + diaDaSemana);
+            //System.out.println("Tempo de inicio " + horarioEntrada);
+            //System.out.println("Próximo Agendamento = " + a.getHorario());
+            Long tempoComparado = null;
+            try {
+                tempoComparado = horarioEntrada.until(a.getHorario(), ChronoUnit.NANOS);
+                //System.out.println("Tempo comparado " + tempoComparado);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
 
-            //recupera horario de inicio e término do expediente
-            expedienteDoDia = cc.selecionaExpediente(diaDaSemana);
-
-            entrada = expedienteDoDia.get(0);
-            saida = expedienteDoDia.get(1);
-
-            //System.out.println("entrada e saida " + entrada + " " + saida);
-            LocalTime horarioEntrada = null;
-            //itera pelos agendamentos
-            for (Agendamento a : agendamentos) {
-
-                if (horarios.isEmpty()) {
-                    horarioEntrada = entrada;
-                }
-                //System.out.println("Tempo de inicio " + horarioEntrada);
-                //System.out.println("Próximo Agendamento = " + a.getHorario());
-                Long tempoComparado = null;
+            if (tempoComparado >= 0) {
                 try {
-                    tempoComparado = horarioEntrada.until(a.getHorario(), ChronoUnit.NANOS);
-                    //System.out.println("Tempo comparado " + tempoComparado);
+                    LocalTime saidaAtual = LocalTime.ofNanoOfDay(tempoComparado);
+                    //System.out.println("Tempo entre o proximo agendamento" + saidaAtual);
+                    horarios.add(saidaAtual);
+
                 } catch (Exception e) {
-                    System.out.println(e);
+                    JOptionPane.showMessageDialog(null, "Erro ao verificar intervalo entre horas" + e);
                 }
-
-                if (tempoComparado >= 0) {
-                    try {
-                        LocalTime saidaAtual = LocalTime.ofNanoOfDay(tempoComparado);
-                        //System.out.println("Tempo entre o proximo agendamento" + saidaAtual);
-                        horarios.add(saidaAtual);
-
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Erro ao verificar intervalo entre horas" + e);
-                    }
-                }
-                //guardo no array o tempComprado
-                int horas = 0;
-                int minutos = 0;
-
-                LocalTime agendamentoAtual = a.getHorario();
-                ArrayList<Servico> servicosAgendamentoAtual = a.getServicos();
-
-                //itera pelo serviços do agendamento
-                for (Servico s : servicosAgendamentoAtual) {
-                    horas += s.getTempoGasto().getHour();
-                    minutos += s.getTempoGasto().getMinute();
-                }
- 
-                //soma horas e minutos
-           
-                agendamentoAtual = agendamentoAtual.plusHours(horas);
-                agendamentoAtual = agendamentoAtual.plusMinutes(minutos);
-              
-                //verifica se o tempo dos serviços do agendamento é maior que o fim do expediente
-                if (agendamentoAtual.isAfter(saida)) {
-      
-                    break;
-                }
-                //System.out.println("Horario agendamento somado " + agendamentoAtual);
-                horarioEntrada = agendamentoAtual;
-                horarios.add(horarioEntrada);
             }
-            if(!horarioEntrada.isAfter(saida)){
-                LocalTime ultimoHorario =  saida.minusHours(horarios.get(horarios.size() - 1).getHour()).minusMinutes(horarios.get(horarios.size() - 1).getMinute());
-                horarios.add(ultimoHorario);
+            //guardo no array o tempComprado
+            int horas = 0;
+            int minutos = 0;
+
+            LocalTime agendamentoAtual = a.getHorario();
+            ArrayList<Servico> servicosAgendamentoAtual = a.getServicos();
+
+            //itera pelo serviços do agendamento
+            for (Servico s : servicosAgendamentoAtual) {
+                horas += s.getTempoGasto().getHour();
+                minutos += s.getTempoGasto().getMinute();
             }
 
-            horarios.add(0, entrada);
-            
+            //soma horas e minutos
+            agendamentoAtual = agendamentoAtual.plusHours(horas);
+            agendamentoAtual = agendamentoAtual.plusMinutes(minutos);
+
+            //verifica se o tempo dos serviços do agendamento é maior que o fim do expediente
+            if (agendamentoAtual.isAfter(saida)) {
+
+                break;
+            }
+            //System.out.println("Horario agendamento somado " + agendamentoAtual);
+            horarioEntrada = agendamentoAtual;
+            horarios.add(horarioEntrada);
+        }
+        if (!horarioEntrada.isAfter(saida)) {
+            LocalTime ultimoHorario = saida.minusHours(horarios.get(horarios.size() - 1).getHour()).minusMinutes(horarios.get(horarios.size() - 1).getMinute());
+            horarios.add(ultimoHorario);
+        }
+
+        horarios.add(0, entrada);
+
         return horarios;
+    }
+
+    public boolean validaHorarioAgendamento(LocalTime entradaCliente, LocalTime terminoAgendamento, LocalDate data) {
+
+        ArrayList<LocalTime> horarios = recuperaHorariosDisponiveis(data);
+        boolean livre = false;
+
+        if (horarios != null) {
+            int i = 0;
+            int tamanho = horarios.size();
+
+            for (i = 0; i < tamanho; i++) {
+
+                if (i % 2 != 0) {
+                    LocalTime entrada = horarios.get(i - 1);
+                    LocalTime saida = horarios.get(i - 1).plusHours(horarios.get(i).getHour()).plusMinutes(horarios.get(i).getMinute());
+        
+                    if (!entrada.equals(saida)) {
+                       if(entradaCliente.isAfter(entrada) || entradaCliente.equals(entrada)){
+                           if( terminoAgendamento.isBefore(saida) || terminoAgendamento.equals(saida)){
+                               livre = true;
+                               return livre;
+                           }
+                       }
+                    }
+
+                }
+
+            }
+        } else {
+            return true;
+        }
+        return livre;
     }
 
     public ArrayList<String> formataHorariosDisponiveis(ArrayList<LocalTime> horarios) {

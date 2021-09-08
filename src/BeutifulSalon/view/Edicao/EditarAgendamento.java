@@ -60,8 +60,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
 
             clienteAgendamento = cc.buscarCliente(ag.getCpfCliente());
 
-        jTextFieldNome.setText(clienteAgendamento.getNOME());
-        jTextFieldCPF.setText(clienteAgendamento.getCPF());
+        jTextFieldNome.setText(clienteAgendamento.getNome());
+        jTextFieldCPF.setText(clienteAgendamento.getCpf());
         jTextFieldTotal.setText(Dinheiro.parseString(ag.getTotal()));
         jTextFieldTotalBruto.setText(Dinheiro.parseString(ag.getTotal() - ag.getDesconto()));
         jTextFieldDesconto.setText(Dinheiro.parseString(ag.getDesconto()));
@@ -739,8 +739,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
     @Override
     public void update(Cliente cliente) {
 
-        jTextFieldNome.setText(cliente.getNOME());
-        jTextFieldCPF.setText(cliente.getCPF());
+        jTextFieldNome.setText(cliente.getNome());
+        jTextFieldCPF.setText(cliente.getCpf());
     }
 
     @Override

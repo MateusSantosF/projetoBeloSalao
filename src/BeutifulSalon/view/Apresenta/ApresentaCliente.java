@@ -293,7 +293,7 @@ public class ApresentaCliente extends javax.swing.JPanel {
         if (indice > -1) {
             try {
 
-                String cpfClienteSelecionado = modelo.getCliente(indice).getCPF(); // Retorna CPF
+                String cpfClienteSelecionado = modelo.getCliente(indice).getCpf(); // Retorna CPF
                 ClienteController cc = new ClienteController();
                 resultado = cc.editarCliente(cpfClienteSelecionado);
 
@@ -315,7 +315,7 @@ public class ApresentaCliente extends javax.swing.JPanel {
        
             if (indice > -1) {
                 try {
-                    String cpfCliente = modelo.getCliente(indice).getCPF(); // Retorna CPF
+                    String cpfCliente = modelo.getCliente(indice).getCpf(); // Retorna CPF
                     ClienteController cc = new ClienteController();
                     cc.exibirMaisDetalhes(cc.buscarCliente(cpfCliente));
                   
@@ -335,7 +335,7 @@ public class ApresentaCliente extends javax.swing.JPanel {
         if (opc == 0) {
             if (indice > -1) {
                 try {
-                    String cpfClienteSelecionado = modelo.getCliente(indice).getCPF(); // Retorna CPF
+                    String cpfClienteSelecionado = modelo.getCliente(indice).getCpf(); // Retorna CPF
                     ClienteController cc = new ClienteController();
 
                     if (cc.excluirCliente(cpfClienteSelecionado)) {

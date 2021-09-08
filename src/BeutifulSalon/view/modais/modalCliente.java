@@ -226,9 +226,9 @@ public class modalCliente extends javax.swing.JFrame implements Observado {
         try {
             clientesConsultados.forEach( (Cliente cliente) -> {
                 tabelaClienteModel.addRow(new Object[] {
-                    cliente.getNOME(),
-                    cliente.getSOBRENOME(),
-                    cliente.getCPF()});
+                    cliente.getNome(),
+                    cliente.getSobrenome(),
+                    cliente.getCpf()});
 
         });
 
@@ -260,9 +260,9 @@ public class modalCliente extends javax.swing.JFrame implements Observado {
             
             try {
                clientesConsultados.forEach( (Cliente cliente) -> {
-                 tabelaClienteModel.addRow(new Object[] {cliente.getNOME(),
-                                                        cliente.getSOBRENOME(),
-                                                        cliente.getCPF()});
+                 tabelaClienteModel.addRow(new Object[] {cliente.getNome(),
+                                                        cliente.getSobrenome(),
+                                                        cliente.getCpf()});
             
                });
                

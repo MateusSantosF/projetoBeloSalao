@@ -204,7 +204,7 @@ public class ServicoDAO {
     
     public Servico buscarServico(long id){
         
-        String sql = "SELECT ID_SERVICO, NOME, PRECO FROM SERVICO WHERE ID_SERVICO = ?";
+        String sql = "SELECT ID_SERVICO, NOME, PRECO, TEMPOGASTO FROM SERVICO WHERE ID_SERVICO = ?";
         Connection connection = null;
         PreparedStatement pStatement = null;
         ResultSet rs = null;
@@ -224,6 +224,7 @@ public class ServicoDAO {
                 servicoBuscado.setNome(rs.getString("NOME"));
                 servicoBuscado.setPreco(rs.getLong("PRECO"));
                 servicoBuscado.setId(rs.getLong("ID_SERVICO"));
+                servicoBuscado.setTempoGasto(rs.getTime("TEMPOGASTO").toLocalTime());
   
                 }
             }

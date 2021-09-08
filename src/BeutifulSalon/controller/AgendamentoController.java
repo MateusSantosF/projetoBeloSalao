@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.controller;
 
+import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.AgendamentoDAO;
 import BeutifulSalon.dao.ExceptionDAO;
@@ -43,6 +44,25 @@ public class AgendamentoController {
                 JOptionPane.showMessageDialog(null, "Erro ao convertar datas " + e);
                 return false;
             }
+                
+                LocalTime fimAgendamento = h;
+                int horas = 0;
+                int minutos = 0;
+                
+                for (Servico s : servicos) {
+                    Servico sAtual = new ServicoController().buscarServico(s.getId());
+                    horas += sAtual.getTempoGasto().getHour();
+                    minutos += sAtual.getTempoGasto().getMinute();
+                }
+                fimAgendamento = fimAgendamento.plusHours(horas);
+                fimAgendamento = fimAgendamento.plusMinutes(minutos);
+             
+            
+            if(!new ManipulaData().validaHorarioAgendamento(h, fimAgendamento, dataAgendamento)){
+                JOptionPane.showMessageDialog(null, "Horário não disponível");
+                return false;
+            }
+            
             //Passando parametros
 
             Agendamento agendamento = new Agendamento();

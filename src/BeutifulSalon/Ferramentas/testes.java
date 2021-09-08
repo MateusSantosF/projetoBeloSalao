@@ -5,12 +5,15 @@
  */
 package BeutifulSalon.Ferramentas;
 
+import BeutifulSalon.controller.CabeleireiroController;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamDiscoveryService;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -37,7 +40,16 @@ public class testes {
         webcans.forEach(w -> { 
             System.out.println(w.getName());
         });
-
+        
+        CabeleireiroController cc = new CabeleireiroController();
+        
+        System.out.println("tamanho " + cc.selecionaCabeleireiro().getEmailAniversario().getNomeDoArquivo());
+        
+        LocalTime t1 = LocalTime.now();
+        LocalTime t2 = LocalTime.now();
+        
+        System.out.println(t1.isAfter(t2));
+        System.out.println(t1.equals(t2));
        
     }
 }

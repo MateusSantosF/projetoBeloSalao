@@ -15,11 +15,11 @@ import java.util.ArrayList;
  * @author mateus
  */
 public class Cabeleireiro {
-    
-    
+
     private String cpf;
     private String nome;
     private String email;
+    private String senha;
     private Email emailAniversario;
     private LocalTime segundaE;
     private LocalTime tercaE;
@@ -36,7 +36,10 @@ public class Cabeleireiro {
     private LocalTime sabadoS;
     private LocalTime domingoS;
 
-    public Cabeleireiro(){};
+    public Cabeleireiro() {
+    }
+
+    ;
 
     public Cabeleireiro(String cpf, String nome, String email, ArrayList<LocalTime> expediente) {
         this.cpf = cpf;
@@ -44,23 +47,23 @@ public class Cabeleireiro {
         this.email = email;
         this.segundaE = expediente.get(0);
         this.segundaS = expediente.get(1);
-        
+
         this.tercaE = expediente.get(2);
         this.tercaS = expediente.get(3);
-        
+
         this.quartaE = expediente.get(4);
         this.quartaS = expediente.get(5);
-        
+
         this.quintaE = expediente.get(6);
         this.quintaS = expediente.get(7);
-        
+
         this.sextaE = expediente.get(8);
         this.sextaS = expediente.get(9);
-        
+
         this.sabadoE = expediente.get(10);
         this.sabadoS = expediente.get(11);
-        
-        this.domingoE = expediente.get(12);   
+
+        this.domingoE = expediente.get(12);
         this.domingoS = expediente.get(13);
     }
 
@@ -71,17 +74,21 @@ public class Cabeleireiro {
     public void setEmailAniversario(Email emailAniversario) {
         this.emailAniversario = emailAniversario;
     }
-    
-    
 
-    
-    
     public String getCpf() {
         return cpf;
     }
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
     public String getNome() {
@@ -91,7 +98,6 @@ public class Cabeleireiro {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
 
     public String getEmail() {
         return email;
@@ -212,19 +218,16 @@ public class Cabeleireiro {
     public void setDomingoS(LocalTime domingoS) {
         this.domingoS = domingoS;
     }
-            
-            
 
-   
-    
-    public void cadastrarCabeleireiro(Cabeleireiro cabeleireiro) throws ExceptionDAO{
+    public void cadastrarCabeleireiro(Cabeleireiro cabeleireiro) throws ExceptionDAO {
         new CabeleireiroDAO().cadastrarCabeleireiro(cabeleireiro);
     }
-    public void atualizarCabeleireiro(Cabeleireiro cabeleireiro) throws ExceptionDAO{
+
+    public void atualizarCabeleireiro(Cabeleireiro cabeleireiro) throws ExceptionDAO {
         new CabeleireiroDAO().atualizarCabeleireiro(cabeleireiro);
     }
-    
-    public Cabeleireiro selecionaCabeleireiro() throws ExceptionDAO{
+
+    public Cabeleireiro selecionaCabeleireiro() throws ExceptionDAO {
         return new CabeleireiroDAO().selecionaCabeleireiro();
     }
 
@@ -235,7 +238,8 @@ public class Cabeleireiro {
     public int verificaRegistro() {
         return new CabeleireiroDAO().verificaRegistro();
     }
-     public void cadastrarEmailPadraoAniversario(Email email, String cpf) throws ExceptionDAO{
-        new CabeleireiroDAO().cadastrarEmailPadraoAniversario(email,cpf);
+
+    public void cadastrarEmailPadraoAniversario(Email email, String cpf) throws ExceptionDAO {
+        new CabeleireiroDAO().cadastrarEmailPadraoAniversario(email, cpf);
     }
 }

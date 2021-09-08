@@ -7,6 +7,7 @@ package BeutifulSalon.controller;
 
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.dao.clienteDAO;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.view.Apresenta.DetalhesCliente;
 import BeutifulSalon.view.Edicao.EditarCliente;
@@ -36,10 +37,9 @@ public class ClienteController {
             //Formatador
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
             //Convertendo datas de String para Date
-            LocalDate dataNasc = LocalDate.parse(DATANASC, formatterData);
             LocalDate dataReg = LocalDate.parse(DATAREG, formatterData);
             //objeto cliente
-            Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, dataNasc, CEP,
+            Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, DATANASC, CEP,
                     BAIRRO, RUA, CIDADE, NUMERO, TELEFONE, CELULAR, dataReg);
             try {
                 //Chamando construtor de Cliente
@@ -63,10 +63,8 @@ public class ClienteController {
             //Formatador
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
 
-            //Convertendo datas de String para LocalDate
-            LocalDate dataNasc = LocalDate.parse(DATANASC, formatterData);
             //objeto cliente
-            Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, dataNasc, CEP,
+            Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, DATANASC, CEP,
                     BAIRRO, RUA, CIDADE, NUMERO, TELEFONE, CELULAR);
             try {
                 //Chamando construtor de Cliente
@@ -100,11 +98,11 @@ public class ClienteController {
 
         try {
             boolean existe = new Cliente().verificaExistenciaCliente(cpf);
-            
-            if(existe){
+
+            if (existe) {
                 JOptionPane.showMessageDialog(null, "Já existe um cliente cadastrado com este CPF.");
                 return true;
-            }else{
+            } else {
                 return false;
             }
         } catch (ExceptionDAO e) {
@@ -175,8 +173,8 @@ public class ClienteController {
 
         return true;
     }
-    
-    public void exibirMaisDetalhes(Cliente cliente){
+
+    public void exibirMaisDetalhes(Cliente cliente) {
         new DetalhesCliente(cliente).setVisible(true);
     }
 
@@ -189,54 +187,64 @@ public class ClienteController {
         }
         return null;
     }
-    
+
     public boolean atualizarDetalhesCliente(Cliente cliente) {
-        
-        if(cliente.getCorCabelo().length() < 16 && cliente.getFacebook().length() < 32 && cliente.getInstagram().length() < 32){
+
+        if (cliente.getCorCabelo().length() < 16 && cliente.getFacebook().length() < 32 && cliente.getInstagram().length() < 32) {
             try {
                 cliente.atualizarDetalhesCliente(cliente);
             } catch (ExceptionDAO e) {
                 JOptionPane.showMessageDialog(null, e);
                 return false;
             }
-            
+
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    
-    public List<Cliente> top5Clientes(int anoReferente){
+
+    public List<Cliente> top5Clientes(int anoReferente) {
         try {
-             return new Cliente().top5Clientes(anoReferente);
+            return new Cliente().top5Clientes(anoReferente);
         } catch (ExceptionDAO e) {
             System.out.println("Erro ao listar top 5 clientes" + e);
         }
-       return null;
+        return null;
     }
-    
-      public boolean cadastraImagemPerfil(String cpf, byte[] imagem){
-          
-          try {
+
+    public boolean cadastraImagemPerfil(String cpf, byte[] imagem) {
+
+        try {
             return new Cliente().cadastraImagemPerfil(cpf, imagem);
-          } catch (ExceptionDAO e) {
-            System.out.println("erro ao cadastrar iimagem perfil");
-          }
-         
-          return false;
-      }
-      
-      public byte[] getImagemPerfil(String cpf){
-          
-          byte[] imgNula = new byte[0];
-         
-          try { 
-              
-             return new Cliente().recuperaImagemPerfil(cpf);
-              
-          } catch (ExceptionDAO e) {
-              System.out.println(e);
-          }
-          return imgNula;
-      }
+        } catch (ExceptionDAO e) {
+            System.out.println("erro ao cadastrar imagem perfil");
+        }
+
+        return false;
+    }
+
+    public byte[] getImagemPerfil(String cpf) {
+
+        byte[] imgNula = new byte[0];
+
+        try {
+
+            return new Cliente().recuperaImagemPerfil(cpf);
+
+        } catch (ExceptionDAO e) {
+            System.out.println(e);
+        }
+        return imgNula;
+    }
+
+    public List<Cliente> listarAniversariantesDoMes() {
+
+        try {
+            return new clienteDAO().listarAniversariantesDoMes();
+        } catch (ExceptionDAO e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 }

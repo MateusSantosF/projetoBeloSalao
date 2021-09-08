@@ -5,8 +5,10 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.JavaMail;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.Valida;
+import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.model.Email;
 import java.awt.Font;
 import java.io.File;
@@ -262,13 +264,16 @@ public class modalEmail extends javax.swing.JFrame {
                     
                     Email email = new Email();
                     
+                    email.setRementente(new CabeleireiroController().selecionaCabeleireiro().getEmail());
                     email.setDiretorioArquivo(caminhoArquivo);
+   
                     email.setTexto(jTextArea.getText());
                     email.setTitulo(jTextFieldTitulo.getText());
                     email.setDestinatario(jTextFieldEmail.getText());
+                  
                     
                     try {
-                        email.sendEmail();
+                        email.sendEmail(JavaMail.EMAIL_PADRAO);
                     } catch (MessagingException e) {
                         JOptionPane.showMessageDialog(null, "ERRO ao enviar email" + e);
                     }

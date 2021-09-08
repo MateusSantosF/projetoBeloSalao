@@ -39,23 +39,21 @@ public class EditarCliente extends javax.swing.JFrame {
         
         initComponents();
         
-        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String dateString = cliente.getDATANASC().format(formatterData);
+   
         
-        System.out.println(dateString);
         
-        jTextFieldNome.setText(cliente.getNOME());
-        jTextFieldSobrenome.setText(cliente.getSOBRENOME());
-        jFormattedTextFieldCPF.setText(cliente.getCPF());
-        jTextFieldEmail.setText(cliente.getEMAIL());
-        jFormattedTextFieldDataNasc.setText(dateString);
-        jTextFieldCelular.setText(cliente.getCELULAR());
-        jTextFieldTelefone.setText(cliente.getTELEFONE());
-        jTextFieldCep.setText(cliente.getCEP());
-        jTextFieldRua.setText(cliente.getRUA());
-        jTextFieldBairro.setText(cliente.getBAIRRO());
-        jTextFieldCidade.setText(cliente.getCIDADE());
-        jTextFieldNumero.setText(cliente.getNUMERO()); 
+        jTextFieldNome.setText(cliente.getNome());
+        jTextFieldSobrenome.setText(cliente.getSobrenome());
+        jFormattedTextFieldCPF.setText(cliente.getCpf());
+        jTextFieldEmail.setText(cliente.getEmail());
+        jFormattedTextFieldDataNasc.setText(cliente.getDataNasc());
+        jTextFieldCelular.setText(cliente.getCelular());
+        jTextFieldTelefone.setText(cliente.getTelefoneResidencial());
+        jTextFieldCep.setText(cliente.getCep());
+        jTextFieldRua.setText(cliente.getRua());
+        jTextFieldBairro.setText(cliente.getBairro());
+        jTextFieldCidade.setText(cliente.getCidade());
+        jTextFieldNumero.setText(cliente.getNumeroDaCasa()); 
     }
     
    

@@ -9,13 +9,8 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageInputStream;
-import javax.imageio.stream.ImageInputStream;
 import javax.swing.ImageIcon;
 
 /**
@@ -37,8 +32,7 @@ public class ManipulaImagem {
             Graphics2D g = new_img.createGraphics();
             g.drawImage(imagem, 0, 0, new_w, new_h, null);
             g.dispose();
-            
-            System.out.println("chegou!");
+
             return new ImageIcon(new_img);
            
         } catch (IOException ex) {

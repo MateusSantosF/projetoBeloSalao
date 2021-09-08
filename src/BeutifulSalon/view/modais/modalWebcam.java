@@ -18,6 +18,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -216,6 +217,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(image, "PNG", baos);
+                
 
                 byte[] imagemEmBytes = baos.toByteArray();
 

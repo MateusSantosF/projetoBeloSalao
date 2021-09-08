@@ -7,6 +7,7 @@ package BeutifulSalon.dao;
  * @author Mateus
  */
 
+import BeutifulSalon.Ferramentas.ManipulaData;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import BeutifulSalon.model.Cliente;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,19 +40,19 @@ public class clienteDAO {
             connection = new ConnectionMVC().getConnection();
             
             pStatement = connection.prepareStatement(sqlScript);
-            pStatement.setString(1, cliente.getCPF());
-            pStatement.setString(2, cliente.getNOME());
-            pStatement.setString(3, cliente.getSOBRENOME());
-            pStatement.setString(4, cliente.getEMAIL());
-            pStatement.setDate(5,  java.sql.Date.valueOf(cliente.getDATANASC()));
-            pStatement.setString(6, cliente.getCEP());
-            pStatement.setString(7, cliente.getBAIRRO());
-            pStatement.setString(8, cliente.getRUA());
-            pStatement.setString(9, cliente.getCIDADE());
-            pStatement.setString(10, cliente.getTELEFONE());
-            pStatement.setString(11, cliente.getCELULAR());
-            pStatement.setDate(12, java.sql.Date.valueOf(cliente.getDATAREG()));
-            pStatement.setString(13, cliente.getNUMERO());
+            pStatement.setString(1, cliente.getCpf());
+            pStatement.setString(2, cliente.getNome());
+            pStatement.setString(3, cliente.getSobrenome());
+            pStatement.setString(4, cliente.getEmail());
+            pStatement.setString(5,  cliente.getDataNasc());
+            pStatement.setString(6, cliente.getCep());
+            pStatement.setString(7, cliente.getBairro());
+            pStatement.setString(8, cliente.getRua());
+            pStatement.setString(9, cliente.getCidade());
+            pStatement.setString(10, cliente.getTelefoneResidencial());
+            pStatement.setString(11, cliente.getCelular());
+            pStatement.setDate(12, java.sql.Date.valueOf(cliente.getDataDeRegistro()));
+            pStatement.setString(13, cliente.getNumeroDaCasa());
             pStatement.execute(); 
             
         } catch (SQLException e) {
@@ -74,6 +76,61 @@ public class clienteDAO {
        
     }
     
+    public List<Cliente> listarAniversariantesDoMes() throws ExceptionDAO{
+        
+        String sql = "SELECT * FROM CLIENTE WHERE Substr(Cliente.DATANASC,0, 6) = (SELECT strftime('%d/%m',date('now', 'localtime')))";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+   
+        List<Cliente> clientes =  null;
+            
+        try {
+            connection = new ConnectionMVC().getConnection();
+            
+            pStatement = connection.prepareStatement(sql);
+            ManipulaData md = new ManipulaData();
+
+            
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                clientes = new ArrayList<>();
+                
+                while(rs.next()){
+                    Cliente clienteAtual = new Cliente();
+                    clienteAtual.setNome(rs.getString("NOME"));
+                    clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
+                    clienteAtual.setEmail(rs.getString("EMAIL"));
+                    clientes.add(clienteAtual);
+                    
+                }
+                
+                
+            }
+            
+        } catch (SQLException e) {
+            throw new ExceptionDAO("Erro ao consultar cliente (classClienteDAO)");
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+                    
+        return clientes;
+        
+    }
+    
     public List<Cliente> listarClientes(String nome) throws ExceptionDAO{
         
         
@@ -95,11 +152,11 @@ public class clienteDAO {
                 
                 while(rs.next()){
                     Cliente clienteAtual = new Cliente();
-                    clienteAtual.setNOME(rs.getString("NOME"));
-                    clienteAtual.setSOBRENOME(rs.getString("SOBRENOME"));
-                    clienteAtual.setCELULAR(rs.getString("CELULAR"));
-                    clienteAtual.setEMAIL(rs.getString("EMAIL"));
-                    clienteAtual.setCPF(rs.getString("CPF"));
+                    clienteAtual.setNome(rs.getString("NOME"));
+                    clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
+                    clienteAtual.setCelular(rs.getString("CELULAR"));
+                    clienteAtual.setEmail(rs.getString("EMAIL"));
+                    clienteAtual.setCpf(rs.getString("CPF"));
                     clientes.add(clienteAtual);
                 }
             }
@@ -148,11 +205,11 @@ public class clienteDAO {
                 
                 while(rs.next()){
                     Cliente clienteAtual = new Cliente();
-                    clienteAtual.setNOME(rs.getString("NOME"));
-                    clienteAtual.setSOBRENOME(rs.getString("SOBRENOME"));
-                    clienteAtual.setCELULAR(rs.getString("CELULAR"));
-                    clienteAtual.setEMAIL(rs.getString("EMAIL"));
-                    clienteAtual.setCPF(rs.getString("CPF"));
+                    clienteAtual.setNome(rs.getString("NOME"));
+                    clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
+                    clienteAtual.setCelular(rs.getString("CELULAR"));
+                    clienteAtual.setEmail(rs.getString("EMAIL"));
+                    clienteAtual.setCpf(rs.getString("CPF"));
                     clientes.add(clienteAtual);
                 }
                 
@@ -236,19 +293,19 @@ public class clienteDAO {
       
             if(rs != null){                
                 while(rs.next()){
-                cliente.setNOME(rs.getString("NOME"));
-                cliente.setSOBRENOME(rs.getString("SOBRENOME"));
-                cliente.setCPF(rs.getString("CPF"));
-                cliente.setEMAIL(rs.getString("EMAIL"));
-                cliente.setCELULAR(rs.getString("CELULAR"));
-                cliente.setDATANASC(rs.getDate("DATANASC").toLocalDate());
-                cliente.setCEP(rs.getString("CEP"));
-                cliente.setBAIRRO(rs.getString("BAIRRO"));
-                cliente.setRUA(rs.getString("RUA"));
-                cliente.setNUMERO(rs.getString("NUMERO"));
-                cliente.setCIDADE(rs.getString("CIDADE"));
-                cliente.setCELULAR(rs.getString("CELULAR"));
-                cliente.setTELEFONE(rs.getString("TELEFONE")); 
+                cliente.setNome(rs.getString("NOME"));
+                cliente.setSobrenome(rs.getString("SOBRENOME"));
+                cliente.setCpf(rs.getString("CPF"));
+                cliente.setEmail(rs.getString("EMAIL"));
+                cliente.setCelular(rs.getString("CELULAR"));
+                cliente.setDataNasc(rs.getString("DATANASC"));
+                cliente.setCep(rs.getString("CEP"));
+                cliente.setBairro(rs.getString("BAIRRO"));
+                cliente.setRua(rs.getString("RUA"));
+                cliente.setNumeroDaCasa(rs.getString("NUMERO"));
+                cliente.setCidade(rs.getString("CIDADE"));
+                cliente.setCelular(rs.getString("CELULAR"));
+                cliente.setTelefoneResidencial(rs.getString("TELEFONE")); 
                 }
             }
            
@@ -297,19 +354,19 @@ public class clienteDAO {
       
             if(rs != null){                
                 while(rs.next()){
-                cliente.setNOME(rs.getString("NOME"));
-                cliente.setSOBRENOME(rs.getString("SOBRENOME"));
-                cliente.setCPF(rs.getString("CPF"));
-                cliente.setEMAIL(rs.getString("EMAIL"));
-                cliente.setCELULAR(rs.getString("CELULAR"));
-                cliente.setDATANASC(rs.getDate("DATANASC").toLocalDate());
-                cliente.setCEP(rs.getString("CEP"));
-                cliente.setBAIRRO(rs.getString("BAIRRO"));
-                cliente.setRUA(rs.getString("RUA"));
-                cliente.setNUMERO(rs.getString("NUMERO"));
-                cliente.setCIDADE(rs.getString("CIDADE"));
-                cliente.setCELULAR(rs.getString("CELULAR"));
-                cliente.setTELEFONE(rs.getString("TELEFONE")); 
+                cliente.setNome(rs.getString("NOME"));
+                cliente.setSobrenome(rs.getString("SOBRENOME"));
+                cliente.setCpf(rs.getString("CPF"));
+                cliente.setEmail(rs.getString("EMAIL"));
+                cliente.setCelular(rs.getString("CELULAR"));
+                cliente.setDataNasc(rs.getString("DATANASC"));
+                cliente.setCep(rs.getString("CEP"));
+                cliente.setBairro(rs.getString("BAIRRO"));
+                cliente.setRua(rs.getString("RUA"));
+                cliente.setNumeroDaCasa(rs.getString("NUMERO"));
+                cliente.setCidade(rs.getString("CIDADE"));
+                cliente.setCelular(rs.getString("CELULAR"));
+                cliente.setTelefoneResidencial(rs.getString("TELEFONE")); 
                 cliente.setTipoDeCabelo(rs.getInt("TIPODECABELO"));
                 cliente.setTamanhoCabelo(rs.getInt("TAMANHOCABELO"));
                 cliente.setCorCabelo(rs.getString("CORCABELO"));
@@ -357,19 +414,19 @@ public class clienteDAO {
             connection = new ConnectionMVC().getConnection();
             
             pStatement = connection.prepareStatement(sqlScript);
-            pStatement.setString(13, cliente.getCPF());
-            pStatement.setString(1, cliente.getCPF());
-            pStatement.setString(2, cliente.getNOME());
-            pStatement.setString(3, cliente.getSOBRENOME());
-            pStatement.setString(4, cliente.getEMAIL());
-            pStatement.setDate(5, java.sql.Date.valueOf(cliente.getDATANASC()));
-            pStatement.setString(6, cliente.getCEP());
-            pStatement.setString(7, cliente.getBAIRRO());
-            pStatement.setString(8, cliente.getRUA());
-            pStatement.setString(9, cliente.getCIDADE());
-            pStatement.setString(10, cliente.getTELEFONE());
-            pStatement.setString(11, cliente.getCELULAR());
-            pStatement.setString(12, cliente.getNUMERO());
+            pStatement.setString(13, cliente.getCpf());
+            pStatement.setString(1, cliente.getCpf());
+            pStatement.setString(2, cliente.getNome());
+            pStatement.setString(3, cliente.getSobrenome());
+            pStatement.setString(4, cliente.getEmail());
+            pStatement.setString(5, cliente.getDataNasc());
+            pStatement.setString(6, cliente.getCep());
+            pStatement.setString(7, cliente.getBairro());
+            pStatement.setString(8, cliente.getRua());
+            pStatement.setString(9, cliente.getCidade());
+            pStatement.setString(10, cliente.getTelefoneResidencial());
+            pStatement.setString(11, cliente.getCelular());
+            pStatement.setString(12, cliente.getNumeroDaCasa());
             
             pStatement.execute(); 
             
@@ -406,7 +463,7 @@ public class clienteDAO {
             connection = new ConnectionMVC().getConnection();
             
             pStatement = connection.prepareStatement(sqlScript);
-            pStatement.setString(8, cliente.getCPF());
+            pStatement.setString(8, cliente.getCpf());
             pStatement.setInt(1, cliente.getTipoDeCabelo());
             pStatement.setInt(2, cliente.getTamanhoCabelo());
             pStatement.setString(3, cliente.getCorCabelo());
@@ -553,8 +610,8 @@ public class clienteDAO {
                 
                 while(rs.next()){
                     Cliente clienteAtual = new Cliente();
-                    clienteAtual.setNOME(rs.getString("NOME"));
-                    clienteAtual.setSOBRENOME(rs.getString("SOBRENOME"));
+                    clienteAtual.setNome(rs.getString("NOME"));
+                    clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
                     clienteAtual.setDeOndeConheceu(rs.getInt("QTD"));//gambiarra
                     clientes.add(clienteAtual);
                 }
@@ -643,7 +700,7 @@ public class clienteDAO {
             ResultSet rs = pStatement.executeQuery();
             
             if(rs != null){
-                System.out.println("chegou dao");
+            
                 return rs.getBytes("FOTOPERFIL");
             }
   

@@ -48,22 +48,22 @@ public class ClienteTableModel extends AbstractTableModel {
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         switch(columnIndex){
             case 0:
-                return dados.get(rowIndex).getNOME();
+                return dados.get(rowIndex).getNome();
             
             case 1:
-                return dados.get(rowIndex).getSOBRENOME();
+                return dados.get(rowIndex).getSobrenome();
             
             case 2:
-                return dados.get(rowIndex).getCELULAR();
+                return dados.get(rowIndex).getCelular();
             
             case 3:
-               return dados.get(rowIndex).getEMAIL();
+               return dados.get(rowIndex).getEmail();
                     
             case 4:
-                return dados.get(rowIndex).getCPF();
+                return dados.get(rowIndex).getCpf();
             
             case 5 :
-                LocalDate ultimaVisita = clienteController.ultimaVisita(dados.get(rowIndex).getCPF());
+                LocalDate ultimaVisita = clienteController.ultimaVisita(dados.get(rowIndex).getCpf());
                 
                 if(ultimaVisita != null){
                     return ultimaVisita.format(formatterData);

@@ -11,19 +11,19 @@ import java.util.List;
  */
 public class Cliente {
 
-    private String CPF;
-    private String NOME;
-    private String SOBRENOME;
-    private String EMAIL;
-    private LocalDate DATANASC;
-    private LocalDate DATAREG; //Data que o cliente foi registrado no sistema
-    private String CEP;
-    private String BAIRRO;
-    private String RUA;
-    private String CIDADE;
-    private String NUMERO;
-    private String TELEFONE;
-    private String CELULAR;
+    private String cpf;
+    private String nome;
+    private String sobrenome;
+    private String email;
+    private String dataNasc;
+    private LocalDate dataDeRegistro; //Data que o cliente foi registrado no sistema
+    private String cep;
+    private String bairro;
+    private String rua;
+    private String cidade;
+    private String numeroDaCasa;
+    private String telefoneResidencial;
+    private String celular;
     private int tipoDeCabelo;
     private int tamanhoCabelo;
     private int deOndeConheceu;
@@ -37,46 +37,46 @@ public class Cliente {
     }
 
     //Construtor não padrão
-    public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, LocalDate DATANASC,
+    public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC,
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR, LocalDate DATAREG) {
-        this.CPF = CPF;
-        this.NOME = NOME;
-        this.SOBRENOME = SOBRENOME;
-        this.EMAIL = EMAIL;
-        this.DATANASC = DATANASC;
-        this.CEP = CEP;
-        this.BAIRRO = BAIRRO;
-        this.RUA = RUA;
-        this.NUMERO = NUMERO;
-        this.CIDADE = CIDADE;
-        this.TELEFONE = TELEFONE;
-        this.CELULAR = CELULAR;
-        this.DATAREG = DATAREG;
+        this.cpf = CPF;
+        this.nome = NOME;
+        this.sobrenome = SOBRENOME;
+        this.email = EMAIL;
+        this.dataNasc = DATANASC;
+        this.cep = CEP;
+        this.bairro = BAIRRO;
+        this.rua = RUA;
+        this.numeroDaCasa = NUMERO;
+        this.cidade = CIDADE;
+        this.telefoneResidencial = TELEFONE;
+        this.celular = CELULAR;
+        this.dataDeRegistro = DATAREG;
     }
 
-    public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, LocalDate DATANASC,
+    public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC,
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR) {
-        this.CPF = CPF;
-        this.NOME = NOME;
-        this.SOBRENOME = SOBRENOME;
-        this.EMAIL = EMAIL;
-        this.DATANASC = DATANASC;
-        this.CEP = CEP;
-        this.BAIRRO = BAIRRO;
-        this.RUA = RUA;
-        this.NUMERO = NUMERO;
-        this.CIDADE = CIDADE;
-        this.TELEFONE = TELEFONE;
-        this.CELULAR = CELULAR;
+        this.cpf = CPF;
+        this.nome = NOME;
+        this.sobrenome = SOBRENOME;
+        this.email = EMAIL;
+        this.dataNasc = DATANASC;
+        this.cep = CEP;
+        this.bairro = BAIRRO;
+        this.rua = RUA;
+        this.numeroDaCasa = NUMERO;
+        this.cidade = CIDADE;
+        this.telefoneResidencial = TELEFONE;
+        this.celular = CELULAR;
 
     }
 
     //Cosntrutor para a tela de FluxoDeCaixa
     public Cliente(String nome, String CPF) {
-        this.NOME = nome;
-        this.CPF = CPF;
+        this.nome = nome;
+        this.cpf = CPF;
     }
 
     public int getDeOndeConheceu() {
@@ -135,115 +135,115 @@ public class Cliente {
         this.observacoes = observacoes;
     }
 
-    public LocalDate getDATAREG() {
-        return DATAREG;
+    public LocalDate getDataDeRegistro() {
+        return dataDeRegistro;
     }
 
-    public void setDATAREG(LocalDate DATAREG) {
-        this.DATAREG = DATAREG;
+    public void setDataDeRegistro(LocalDate dataDeRegistro) {
+        this.dataDeRegistro = dataDeRegistro;
     }
 
     //Getters and Setters
-    public String getNUMERO() {
-        return NUMERO;
+    public String getNumeroDaCasa() {
+        return numeroDaCasa;
     }
 
-    public void setNUMERO(String NUMERO) {
-        this.NUMERO = NUMERO;
+    public void setNumeroDaCasa(String numeroDaCasa) {
+        this.numeroDaCasa = numeroDaCasa;
     }
 
-    public String getCPF() {
-        return CPF;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setCPF(String CPF) {
-        this.CPF = CPF;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public String getNOME() {
-        return NOME;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNOME(String NOME) {
-        this.NOME = NOME;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getSOBRENOME() {
-        return SOBRENOME;
+    public String getSobrenome() {
+        return sobrenome;
     }
 
-    public void setSOBRENOME(String SOBRENOME) {
-        this.SOBRENOME = SOBRENOME;
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
     }
 
-    public String getEMAIL() {
-        return EMAIL;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEMAIL(String EMAIL) {
-        this.EMAIL = EMAIL;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public LocalDate getDATANASC() {
-        return DATANASC;
+    public String getDataNasc() {
+        return dataNasc;
     }
 
-    public void setDATANASC(LocalDate DATANASC) {
-        this.DATANASC = DATANASC;
+    public void setDataNasc(String dataNasc) {
+        this.dataNasc = dataNasc;
     }
 
-    public String getCEP() {
-        return CEP;
+    public String getCep() {
+        return cep;
     }
 
-    public void setCEP(String CEP) {
-        this.CEP = CEP;
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 
-    public String getBAIRRO() {
-        return BAIRRO;
+    public String getBairro() {
+        return bairro;
     }
 
-    public void setBAIRRO(String BAIRRO) {
-        this.BAIRRO = BAIRRO;
+    public void setBairro(String bairro) {
+        this.bairro = bairro;
     }
 
-    public String getRUA() {
-        return RUA;
+    public String getRua() {
+        return rua;
     }
 
-    public void setRUA(String RUA) {
-        this.RUA = RUA;
+    public void setRua(String rua) {
+        this.rua = rua;
     }
 
-    public String getCIDADE() {
-        return CIDADE;
+    public String getCidade() {
+        return cidade;
     }
 
-    public void setCIDADE(String CIDADE) {
-        this.CIDADE = CIDADE;
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
     }
 
-    public String getTELEFONE() {
-        return TELEFONE;
+    public String getTelefoneResidencial() {
+        return telefoneResidencial;
     }
 
-    public void setTELEFONE(String TELEFONE) {
-        this.TELEFONE = TELEFONE;
+    public void setTelefoneResidencial(String telefoneResidencial) {
+        this.telefoneResidencial = telefoneResidencial;
     }
 
-    public String getCELULAR() {
-        return CELULAR;
+    public String getCelular() {
+        return celular;
     }
 
-    public void setCELULAR(String CELULAR) {
-        this.CELULAR = CELULAR;
+    public void setCelular(String celular) {
+        this.celular = celular;
     }
 
     @Override
     public String toString() {
         return String.format("Nome: %s\nSobrenome: %s\nEmail: %s\nData Nasc:",
-                getNOME(), getSOBRENOME(), getEMAIL(), getDATANASC());
+                getNome(), getSobrenome(), getEmail(), getDataNasc());
     }
 
     //Cadastrar clientes
@@ -267,7 +267,7 @@ public class Cliente {
     public List<Cliente> listarClientes() throws ExceptionDAO {
         return new clienteDAO().listarClientes();
     }
-    //Busca cliente por CPF
+    //Busca cliente por cpf
 
     public Cliente buscarCliente(String cpf) throws ExceptionDAO {
         return new clienteDAO().buscarCliente(cpf);
@@ -305,6 +305,10 @@ public class Cliente {
 
     public byte[] recuperaImagemPerfil(String cpf) throws ExceptionDAO {
         return new clienteDAO().recuperaImagemPerfil(cpf);
+    }
+    
+    public List<Cliente> listarAniversariantesDoMes() throws ExceptionDAO{
+        return new clienteDAO().listarAniversariantesDoMes();
     }
 
 }

@@ -19,6 +19,7 @@ import BeutifulSalon.view.modais.modalFotoPerfil;
 import java.awt.Font;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -96,15 +97,15 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     jTextAreaObservacoes.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Area Observacoes
         
          
-        cpfCliente = cliente.getCPF();
+        cpfCliente = cliente.getCpf();
         ClienteController cc = new ClienteController();
         ManipulaImagem mi = new ManipulaImagem();
-        modeloServicos.listarServicos(cliente.getCPF());
-        modeloCompras.listarItens(cliente.getCPF());
+        modeloServicos.listarServicos(cliente.getCpf());
+        modeloCompras.listarItens(cliente.getCpf());
         jTableServicos.setModel(modeloServicos);
         jTableCompras.setModel(modeloCompras);
         
-        byte[] imagemPerfil = cc.getImagemPerfil(cliente.getCPF());
+        byte[] imagemPerfil = cc.getImagemPerfil(cliente.getCpf());
       
         if(imagemPerfil != null){
             try {
@@ -116,25 +117,26 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
        
 
         jButtonSalvar.setVisible(false);
-        jLabelNome.setText(cliente.getNOME() + " " + cliente.getSOBRENOME());
-        jLabelIdade.setText(String.valueOf(new ManipulaData().calculaIdade(cliente.getDATANASC())) + " Anos");
-        jLabelEmail.setText(cliente.getEMAIL());
+        jLabelNome.setText(cliente.getNome() + " " + cliente.getSobrenome());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        jLabelIdade.setText(String.valueOf(new ManipulaData().calculaIdade(LocalDate.parse(cliente.getDataNasc(), formatter))) + " Anos");
+        jLabelEmail.setText(cliente.getEmail());
         jLabelEmail.setCaretPosition(0);
-        jLabelTelefone.setText(cliente.getTELEFONE());
-        jLabelCelular.setText(cliente.getCELULAR());
-        jLabelCpf.setText(cliente.getCPF());
+        jLabelTelefone.setText(cliente.getTelefoneResidencial());
+        jLabelCelular.setText(cliente.getCelular());
+        jLabelCpf.setText(cliente.getCpf());
 
-        LocalDate ultimaVisita = cc.ultimaVisita(cliente.getCPF());
+        LocalDate ultimaVisita = cc.ultimaVisita(cliente.getCpf());
 
         if (ultimaVisita != null) {
             jLabelUltimaViisita.setText(ultimaVisita.toString());
         }
 
-        jTextFielRua.setText(cliente.getRUA());
-        jTextFieldBairro.setText(cliente.getBAIRRO());
-        jTextFieldCep.setText(cliente.getCEP());
-        jTextFieldUF.setText(cliente.getCIDADE());
-        jTextFieldNumero.setText(cliente.getNUMERO());
+        jTextFielRua.setText(cliente.getRua());
+        jTextFieldBairro.setText(cliente.getBairro());
+        jTextFieldCep.setText(cliente.getCep());
+        jTextFieldUF.setText(cliente.getCidade());
+        jTextFieldNumero.setText(cliente.getNumeroDaCasa());
 
         jComboBoxTipoCabelo.setSelectedIndex(cliente.getTipoDeCabelo());
         jComboBoxTamanhoCabelo.setSelectedIndex(cliente.getTamanhoCabelo());
@@ -590,9 +592,9 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jTextFielRua, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
+                        .addComponent(jTextFielRua, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE)
                         .addGap(24, 24, 24)
-                        .addComponent(jTextFieldNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
+                        .addComponent(jTextFieldNumero, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -600,11 +602,11 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 306, Short.MAX_VALUE))
+                            .addComponent(jTextFieldBairro, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE))
                         .addGap(19, 19, 19)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldCep, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE))
+                            .addComponent(jTextFieldCep, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE))
                         .addGap(22, 22, 22)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -685,9 +687,9 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 827, Short.MAX_VALUE)
+            .addGap(0, 861, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 861, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -734,7 +736,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         if (opc == 0) {
             Cliente cliente = new Cliente();
             ClienteController cc = new ClienteController();
-            cliente.setCPF(jLabelCpf.getText());
+            cliente.setCpf(jLabelCpf.getText());
             cliente.setFacebook(jTextFieldFacebook.getText());
             cliente.setInstagram(jTextFieldInstagram.getText());
             cliente.setCorCabelo(jTextFieldCorCabelo.getText());

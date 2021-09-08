@@ -5,7 +5,14 @@
  */
 package BeutifulSalon.Ferramentas;
 
+import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.model.Email;
+import java.io.BufferedOutputStream;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -15,7 +22,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
-import javax.activation.DataHandler; //imports para imagem
+import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.BodyPart;
@@ -29,25 +36,39 @@ import javax.mail.internet.MimeMultipart;
  */
 public class JavaMail {
 
-    private Email email;
+    public static final int EMAIL_PADRAO = 0;
+    public static final int EMAIL_ANIVERSARIO = 1;
 
-    public JavaMail(Email email) {
+    private Email email;
+    private int tipo;
+
+    public JavaMail() {
+
+    }
+
+    public JavaMail(Email email, int tipo) {
         this.email = email;
+        this.tipo = tipo;
     }
 
     public void sendMail() throws MessagingException {
 
-        System.out.println("Preparando para enviar email");
-
         Properties properties = new Properties();
+        CabeleireiroController cc = new CabeleireiroController();
+
+        System.out.println("Host =>" + email.getSmtpHostMail());
+        System.out.println("Porta =>" + email.getSmtpPortMail());
+        System.out.println("Rementente =>" + email.getRementente());
+        System.out.println("Destinatário =>" + email.getDestinatario());
+
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
-        properties.put("mail.smtp.ssl.trust", "smtp.gmail.com"); //linha adicionada para antivirus não dar problema
-        properties.put("mail.smtp.host", "smtp.gmail.com");
-        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.ssl.trust", email.getSmtpHostMail()); //linha adicionada para antivirus não dar problema
+        properties.put("mail.smtp.host", email.getSmtpHostMail());
+        properties.put("mail.smtp.port", email.getSmtpPortMail());
 
-        String myAccountEmail = "beutifulsalontest@gmail.com";
-        String password = "40028922@";
+        String myAccountEmail = cc.selecionaCabeleireiro().getEmail();
+        String password = cc.selecionaCabeleireiro().getSenha();
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -56,31 +77,41 @@ public class JavaMail {
             }
         });
 
-        Message message = prepareMessage(session, myAccountEmail, email.getDestinatario());
+        //session.setDebug(true);
 
-        Transport.send(message);
-      
+        Message message = prepareMessage(session, myAccountEmail, email.getDestinatario(), email, tipo);
+
+        try {
+
+            Transport.send(message);
+        } catch (MessagingException e) {
+            System.out.println("tranport => " + e);
+        }
+
     }
 
-    private Message prepareMessage(
+    private static Message prepareMessage(
             Session session,
             String myAccountEmail,
-            String recepient) {
+            String recepient,
+            Email email,
+            int tipo) {
 
         try {
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(myAccountEmail));
+
             message.setRecipient(
                     Message.RecipientType.TO,
                     new InternetAddress(recepient));
 
             message.setSubject(email.getTitulo());
-            //message.setText( "Acho que pode dar certo o teste hahahha" );
 
             if (email.getDiretorioArquivo() != null && email.getDiretorioArquivo().length() > 0) {
-                // Criando a parte que vai tratar a imagem
+                
 
+                // Criando a parte que vai tratar a imagem
                 MimeMultipart multipart = new MimeMultipart("related");
 
                 // Corpo da mensagem
@@ -92,19 +123,58 @@ public class JavaMail {
                 multipart.addBodyPart(messageBodyPart);
 
                 // Pegando a imagem
-                messageBodyPart = new MimeBodyPart();
+              
 
-                DataSource file = new FileDataSource(email.getDiretorioArquivo());
+                if (tipo == EMAIL_PADRAO) {
+                    messageBodyPart = new MimeBodyPart();
+                    
+                    
+                    DataSource file = new FileDataSource(email.getDiretorioArquivo());
 
-                messageBodyPart.setDataHandler(new DataHandler(file));
+                    messageBodyPart.setDataHandler(new DataHandler(file));
 
-                messageBodyPart.setFileName(email.getNomeDoArquivo());
+                    messageBodyPart.setFileName(email.getNomeDoArquivo());
 
-                // Add arquivo
-                multipart.addBodyPart(messageBodyPart);
+                    // Add arquivo
+                    multipart.addBodyPart(messageBodyPart);
+                    
+                    // Juntando tudo
+                    message.setContent(multipart);
+                }
 
-                // Juntando tudo
-                message.setContent(multipart);
+                if (tipo == EMAIL_ANIVERSARIO) {
+                    
+                    
+                    messageBodyPart = new MimeBodyPart();
+                    File file = null;
+                    try {
+                        file = File.createTempFile("temp" + LocalDate.now().toEpochDay(), ".png");
+                        if(file.exists()){
+                          
+                            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file)); 
+                            bos.write(email.getAnexo()); 
+                            bos.close(); 
+                        }else{
+                            System.out.println("NAO EXISTE KKKKKKKK");
+                        }
+                        
+                        DataSource t = new FileDataSource(file.getAbsolutePath());
+                        messageBodyPart.setDataHandler(new DataHandler(t));
+                        messageBodyPart.setFileName(email.getNomeDoArquivo());
+                        
+                    } catch (IOException e) {
+                        
+                        System.out.println(e);
+                    }
+                    
+                  
+
+                    // Add arquivo
+                    multipart.addBodyPart(messageBodyPart);
+    
+                    // Juntando tudo
+                    message.setContent(multipart);
+                }
 
             } else {
                 MimeMultipart multipart = new MimeMultipart("related");
@@ -126,4 +196,5 @@ public class JavaMail {
         return null;
 
     }
+
 }

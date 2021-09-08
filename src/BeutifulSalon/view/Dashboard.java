@@ -7,6 +7,7 @@ package BeutifulSalon.view;
 
 import BeutifulSalon.Ferramentas.GraficoDePizza;
 import BeutifulSalon.Ferramentas.GraficoXY;
+import BeutifulSalon.Ferramentas.JavaMail;
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.OrdenaClientePorVisitas;
@@ -21,6 +22,7 @@ import BeutifulSalon.controller.VendaController;
 import BeutifulSalon.model.Cabeleireiro;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
+import BeutifulSalon.model.Email;
 import BeutifulSalon.model.Produto;
 import java.awt.Component;
 import java.awt.Font;
@@ -28,9 +30,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-
 
 /**
  *
@@ -41,46 +45,41 @@ public class Dashboard extends javax.swing.JPanel {
     /**
      * Creates new form testePainel
      */
-    
-   
-    
     public Dashboard() {
         initComponents();
-        
+
         System.out.println(jPanelGraficoPizza.getWidth());
-        
+
         ManipulaFontes mf = new ManipulaFontes();
         jLabelNomeCabeleireiro.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Nome Cabeleireiro
-        
+
         jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Agendamentos
         jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Qtd estoque
         jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Vendas hoje
         jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Receita mensal
-        
+
         jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Titulo grafico
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Top5 serviços
-        
+
         jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Rank Clientes
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Produtos mais vendidos
-        
-        jLabel15.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        jLabel16.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        jLabelCliente1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        jLabelCliente2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        jLabelCliente3.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        jLabelCliente4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        jLabelCliente5.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        
-        jLabel14.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        jLabelProduto1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        jLabelProduto2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        jLabelProduto3.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        jLabelProduto4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        jLabelProduto5.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); 
-        
-        
-  
+
+        jLabel15.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+        jLabel16.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+        jLabelCliente1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+        jLabelCliente2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+        jLabelCliente3.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+        jLabelCliente4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+        jLabelCliente5.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+
+        jLabel14.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+        jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+        jLabelProduto1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+        jLabelProduto2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+        jLabelProduto3.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+        jLabelProduto4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+        jLabelProduto5.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f));
+
         ClienteController clientec = new ClienteController();
         CabeleireiroController cc = new CabeleireiroController();
         AgendamentoController ag = new AgendamentoController();
@@ -88,46 +87,41 @@ public class Dashboard extends javax.swing.JPanel {
         ServicoController sc = new ServicoController();
         ProdutoController pc = new ProdutoController();
         VendaController vc = new VendaController();
-        
+
         JLabel[] labelNomesCliente = new JLabel[5];
         labelNomesCliente[0] = jLabelCliente1;
         labelNomesCliente[1] = jLabelCliente2;
         labelNomesCliente[2] = jLabelCliente3;
         labelNomesCliente[3] = jLabelCliente4;
         labelNomesCliente[4] = jLabelCliente5;
-        
+
         JLabel[] labelQuantidadeVisitas = new JLabel[5];
         labelQuantidadeVisitas[0] = jLabelVisita1;
         labelQuantidadeVisitas[1] = jLabelVisita2;
         labelQuantidadeVisitas[2] = jLabelVisita3;
         labelQuantidadeVisitas[3] = jLabelVisita4;
         labelQuantidadeVisitas[4] = jLabelVisita5;
-        
-        
-        
+
         JLabel[] labelNomes = new JLabel[5];
         labelNomes[0] = jLabelProduto1;
         labelNomes[1] = jLabelProduto2;
         labelNomes[2] = jLabelProduto3;
         labelNomes[3] = jLabelProduto4;
         labelNomes[4] = jLabelProduto5;
-        
+
         JLabel[] labelQuantidade = new JLabel[5];
         labelQuantidade[0] = jLabelQtdP1;
         labelQuantidade[1] = jLabelQtdP2;
         labelQuantidade[2] = jLabelQtdP3;
         labelQuantidade[3] = jLabelQtdP4;
         labelQuantidade[4] = jLabelQtdP5;
-      
-        
-        
 
         Cabeleireiro cabeleireiro = cc.selecionaCabeleireiro();
         int nAgendamentos = ag.listarAgendamentosHoje().size();
         long nProdutosEstoque = ec.somaProdutosEstoque();
-        
+
         long receitaMensal = vc.retornaSomaDeVendasMensal() + ag.retornaSomaDeAgendamentosMensal();
-        
+
         jLabelReceitaMensal.setText(Dinheiro.parseString(receitaMensal));
         if (cabeleireiro.getNome() != null) {
 
@@ -153,34 +147,34 @@ public class Dashboard extends javax.swing.JPanel {
         jLabelNumeroAgendamentos.setText(String.valueOf(nAgendamentos));
         jLabelQtdEstoque.setText(String.valueOf(nProdutosEstoque) + " un.");
         jLabelQtdVendas.setText(String.valueOf(vc.retornaQuantidadeDeVendasHoje()));
-        
-        
+
         List<Produto> produtos = pc.produtosMaisVendidosDoAno(LocalDate.now().getYear());
         Collections.sort(produtos, new OrdenaProdutoPorQuantidade());
-       
-        for( int i = 0; i < produtos.size(); i++){
-            if(produtos.get(i) != null){
+
+        for (int i = 0; i < produtos.size(); i++) {
+            if (produtos.get(i) != null) {
                 labelNomes[i].setText(produtos.get(i).getNome());
                 labelQuantidade[i].setText(String.valueOf(produtos.get(i).getRendimento()));
             }
         }
-       
+
         List<Cliente> clientes = clientec.top5Clientes(LocalDate.now().getYear());
         Collections.sort(clientes, new OrdenaClientePorVisitas());
-        
-        for( int j = 0; j < clientes.size(); j++){
-            if(clientes.get(j) != null){
-                labelNomesCliente[j].setText(clientes.get(j).getNOME() + " " + clientes.get(j).getSOBRENOME());
+
+        for (int j = 0; j < clientes.size(); j++) {
+            if (clientes.get(j) != null) {
+                labelNomesCliente[j].setText(clientes.get(j).getNome() + " " + clientes.get(j).getSobrenome());
                 labelQuantidadeVisitas[j].setText(String.valueOf(clientes.get(j).getDeOndeConheceu())); //gambiarra para nao criar atributos a mais na classe cliente
             }
         }
 
         new GraficoDePizza(jPanelGraficoPizza, sc.listaOsCincoServicosMaisRealizados()).plotaGrafico();
         new GraficoXY(jPanelGrafico).plotaGrafico();
-      
+
+       
+
     }
 
-   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -778,7 +772,7 @@ public class Dashboard extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jPanelGraficoPizzaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelGraficoPizzaMousePressed
-        
+
     }//GEN-LAST:event_jPanelGraficoPizzaMousePressed
 
     private void jPanelGraficoPizzaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jPanelGraficoPizzaPropertyChange

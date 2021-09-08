@@ -19,12 +19,13 @@ import javax.swing.JOptionPane;
  */
 public class CabeleireiroController {
 
-    public boolean cadastrarCabeleireiro(String nome, String cpf, String email, ArrayList<LocalTime> expediente) {
+    public boolean cadastrarCabeleireiro(String nome, String cpf, String email, ArrayList<LocalTime> expediente, char[] senha) {
 
         if (nome.length() > 0 && Valida.isCpf(cpf) && Valida.isEmail(email) && !expediente.isEmpty() && expediente.size() == 14) {
 
             try {
                 Cabeleireiro cabeleireiro = new Cabeleireiro(cpf, nome, email, expediente);
+                cabeleireiro.setSenha(String.copyValueOf(senha));
 
                 cabeleireiro.cadastrarCabeleireiro(cabeleireiro);
             } catch (ExceptionDAO e) {
@@ -38,13 +39,16 @@ public class CabeleireiroController {
         return true;
     }
 
-    public boolean atualizarCabeleireiro(String nome, String cpf, String email, ArrayList<LocalTime> expediente) {
+    public boolean atualizarCabeleireiro(String nome, String cpf, String email, ArrayList<LocalTime> expediente,  char[] senha) {
 
         if (nome.length() > 0 && Valida.isCpf(cpf) && Valida.isEmail(email) && !expediente.isEmpty() && expediente.size() == 14) {
 
             try {
                 Cabeleireiro cabeleireiro = new Cabeleireiro(cpf, nome, email, expediente);
+                cabeleireiro.setSenha(String.copyValueOf(senha));
+               
                 cabeleireiro.atualizarCabeleireiro(cabeleireiro);
+                
             } catch (ExceptionDAO e) {
 
                 JOptionPane.showMessageDialog(null, "Controller" + e);
@@ -91,4 +95,5 @@ public class CabeleireiroController {
         }
 
     }
+ 
 }

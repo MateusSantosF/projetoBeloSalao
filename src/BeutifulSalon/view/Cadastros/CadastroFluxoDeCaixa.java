@@ -539,8 +539,8 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         //se for compra de produto
         // if (tabSelecionada == 2) {} 
         Cliente clienteSelecionado = cliente;
-        jTextFieldNome2.setText(clienteSelecionado.getNOME());
-        jTextFieldCPF2.setText(clienteSelecionado.getCPF());
+        jTextFieldNome2.setText(clienteSelecionado.getNome());
+        jTextFieldCPF2.setText(clienteSelecionado.getCpf());
 
     }
 
