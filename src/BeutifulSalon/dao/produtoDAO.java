@@ -7,9 +7,7 @@ package BeutifulSalon.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import BeutifulSalon.model.Produto;
-import BeutifulSalon.model.Venda;
 import java.sql.SQLException;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -80,6 +78,7 @@ public class ProdutoDAO {
                     produtoAtual.setPreco(rs.getLong("PRECO"));
                     produtoAtual.setDataReg(rs.getDate("DATAREG").toLocalDate());
                     produtoAtual.setId_produto(rs.getLong("IDPRODUTO"));
+  
                     produtos.add(produtoAtual);
                 }
                 

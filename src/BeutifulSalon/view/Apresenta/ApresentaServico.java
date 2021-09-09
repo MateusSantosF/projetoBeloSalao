@@ -10,6 +10,7 @@ import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.Tabelas.ClienteTableModel;
 import BeutifulSalon.Tabelas.ServicoTableModel;
 import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Cliente;
 import java.awt.Font;
 import java.awt.HeadlessException;
@@ -42,7 +43,7 @@ public class ApresentaServico extends javax.swing.JPanel {
         CentralizaElementosTabela render = new CentralizaElementosTabela();
         ((DefaultTableCellRenderer)jTableServicos.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         jTableServicos.setDefaultRenderer(Object.class, render);
-        modelo.getServicosAnual();
+        modelo.getTodosServicos();
         jTableServicos.setModel(modelo);
      
 
@@ -286,7 +287,7 @@ public class ApresentaServico extends javax.swing.JPanel {
 
 
         if (jTextFieldNomeCliente.getText().equals("")) {
-            modelo.getServicosAnual();
+            modelo.getTodosServicos();
             jTableServicos.setModel(modelo);
         } else {
             modelo.getServicosNome(jTextFieldNomeCliente.getText());
@@ -320,9 +321,7 @@ public class ApresentaServico extends javax.swing.JPanel {
        
             if (indice > -1) {
                 try {
-                    long id = modelo.getServico(indice).getId(); // Retorna CPF
-                    ClienteController cc = new ClienteController();
-                    //cc.exibirMaisDetalhes(cc.buscarCliente(cpfCliente));
+                    new DetalhesServico(new ServicoController().buscarServico(modelo.getServico(indice).getId())).setVisible(true);
                   
                 } catch (HeadlessException e) {
                     JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e);

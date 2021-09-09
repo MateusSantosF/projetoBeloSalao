@@ -18,13 +18,23 @@ import javax.swing.JOptionPane;
  */
 public class EstoqueDAO {
 
-    public void atualizaEstoque(Estoque estoque){
+    public void atualizaEstoque(Estoque estoque, boolean venda){
         
       String sql = "SELECT count(1) AS QTD FROM ESTOQUE WHERE ID_PRODUTO = ?";
-      
-      String sql2 = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE + ?, VALOR_UNITARIO = ? WHERE ID_PRODUTO  = ?";
-      
-      String sql3 = "INSERT INTO ESTOQUE (ID_PRODUTO, QUANTIDADE, VALOR_UNITARIO) VALUES (?,?,?)";
+      String sql2;
+      String sql3;
+      if(venda){
+        sql2 = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE + ? WHERE ID_PRODUTO  = ?";
+      }else{
+        sql2 = "UPDATE ESTOQUE SET QUANTIDADE = QUANTIDADE + ?, VALOR_UNITARIO = ? WHERE ID_PRODUTO  = ?";
+      }
+     
+      if(venda){
+           sql3 = "INSERT INTO ESTOQUE (ID_PRODUTO, QUANTIDADE) VALUES (?,?)";
+      }else{
+          sql3 = "INSERT INTO ESTOQUE (ID_PRODUTO, QUANTIDADE, VALOR_UNITARIO) VALUES (?,?,?)";
+      }
+    
       
       Connection connection = null;
         PreparedStatement ps = null;
@@ -47,15 +57,31 @@ public class EstoqueDAO {
             //verifica se o produto já está no estoque, caso afirmativo, realiza um update, caso negativo insere
             if(nRegistro > 0){
                 ps = connection.prepareStatement(sql2);
-                ps.setLong(3, estoque.getIdProduto());
-                ps.setLong(1, estoque.getQuantidade());
-                ps.setLong(2, estoque.getValorUnitario()); 
+               
+                if(!venda){ // eh uma compra
+                    ps.setLong(3, estoque.getIdProduto());
+                    ps.setLong(1, estoque.getQuantidade());
+                    ps.setLong(2, estoque.getValorUnitario()); 
+                }else{
+                    ps.setLong(2, estoque.getIdProduto());
+                    ps.setLong(1, estoque.getQuantidade());
+    
+                }
+                
                 ps.executeUpdate();
             }else{
                 ps = connection.prepareStatement(sql3);  
                 ps.setLong(1, estoque.getIdProduto());
                 ps.setLong(2, estoque.getQuantidade());
-                ps.setLong(3, estoque.getValorUnitario());
+                if(!venda){// eh uma compra
+                    ps.setLong(3, estoque.getValorUnitario()); 
+                    ps.setLong(1, estoque.getIdProduto());
+                    ps.setLong(2, estoque.getQuantidade());
+                }else{
+                    ps.setLong(2, estoque.getIdProduto());
+                    ps.setLong(1, estoque.getQuantidade());
+    
+                }
                 
                 ps.execute();
             }
@@ -84,6 +110,54 @@ public class EstoqueDAO {
 
         }
             
+    }
+    
+    public long ultimoValorPagoProduto(long idProduto){
+        
+        String sql = "SELECT VALOR_UNITARIO AS VALOR FROM ESTOQUE WHERE ID_PRODUTO = ? ";
+
+        Connection connection = null;
+        PreparedStatement ps = null;
+        long valor = 0;
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+           
+            ps = connection.prepareStatement(sql);
+            ps.setLong(1, idProduto);
+            ResultSet rs = ps.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                    valor += rs.getLong("VALOR");
+                }
+            }
+  
+            return valor;
+            
+        }  catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO " + e);
+        } finally {
+
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+
+        }
+        return valor;
     }
     
     public long somaProdutosEstoque(){

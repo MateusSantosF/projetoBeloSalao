@@ -62,8 +62,8 @@ public class Estoque {
         this.valorUnitario = valorUnitario;
     }
     
-    public void atualizaEstoque(Estoque estoque) throws ExceptionDAO{
-        new EstoqueDAO().atualizaEstoque(estoque);
+    public void atualizaEstoque(Estoque estoque, boolean venda) throws ExceptionDAO{
+        new EstoqueDAO().atualizaEstoque(estoque, venda);
     }
 
     public long somaProdutosEstoque() throws ExceptionDAO{
@@ -72,6 +72,10 @@ public class Estoque {
 
     public long quantidadeProduto(long idProduto) throws ExceptionDAO {
         return new EstoqueDAO().quantidadeProduto(idProduto);
+    }
+    
+    public long ultimoValorPagoProduto(long idProduto) throws ExceptionDAO{
+        return new EstoqueDAO().ultimoValorPagoProduto(idProduto);
     }
     
     

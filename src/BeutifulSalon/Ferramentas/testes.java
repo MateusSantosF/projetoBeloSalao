@@ -7,6 +7,7 @@ package BeutifulSalon.Ferramentas;
 
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.controller.ServicoController;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamDiscoveryService;
 import java.awt.image.BufferedImage;
@@ -42,11 +43,8 @@ public class testes {
         webcans.forEach(w -> { 
             System.out.println(w.getName());
         });
-        
-       new ClienteController().listarAniversariantesDoMes().forEach(C -> {
-           System.out.println(C.getNome());
-       } );
        
+        System.out.println(  new ServicoController().buscarServico(10).getProdutos().size() );
     
        
     }

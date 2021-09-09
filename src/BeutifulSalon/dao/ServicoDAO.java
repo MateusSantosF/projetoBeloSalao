@@ -6,6 +6,7 @@
 package BeutifulSalon.dao;
 
 
+import BeutifulSalon.controller.ProdutoController;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import java.sql.Connection;
@@ -16,6 +17,8 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,7 +29,8 @@ public class ServicoDAO {
 
     public List<Servico> listarServicos() throws ExceptionDAO {
 
-        String sql = "SELECT ID_SERVICO, NOME, PRECO FROM SERVICO ORDER BY NOME DESC";
+        String sql = "SELECT ID_SERVICO, NOME, PRECO, TEMPOGASTO, (SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) FROM AGENDAMENTO_SERVICO WHERE AGENDAMENTO_SERVICO.ID_SERVICO = SERVICO.ID_SERVICO) AS QTD FROM SERVICO ORDER BY NOME DESC";
+        String sql2 = "SELECT * FROM PRODUTO_SERVICO WHERE ID_SERVICO = ?";
 
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -45,14 +49,38 @@ public class ServicoDAO {
                     Servico servicoAtual = new Servico();
                     servicoAtual.setNome(rs.getString("NOME"));
                     servicoAtual.setPreco(rs.getLong("PRECO"));
+                    servicoAtual.setTempoGasto(rs.getTime("TEMPOGASTO").toLocalTime());
                     servicoAtual.setId(rs.getLong("ID_SERVICO"));
-                    servicos.add(servicoAtual);
+                    servicoAtual.setQuantidadeRealizada(rs.getLong("QTD"));
+                    
+                    pStatement = connection.prepareStatement(sql2);
+        
+                    pStatement.setLong(1, servicoAtual.getId());
+                    ResultSet rs2 = pStatement.executeQuery();
+                    
+                    if(rs2 != null){
+                        ArrayList<Produto> produtos = new ArrayList<>();                
+                        while(rs2.next()){
+                            Produto p = new ProdutoController().buscarProduto(rs2.getLong("ID_PRODUTO"));
+                            p.setRendimento(rs2.getInt("RENDIMENTO"));
+                            produtos.add(p);                          
+                        }
+                        servicoAtual.setProdutos(produtos);
+                    }
+                servicos.add(servicoAtual);
                 }
 
             }
 
+
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ConnectionMVC: " + e);
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                Logger.getLogger(CompraProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         } finally {
 
             try {
@@ -71,9 +99,8 @@ public class ServicoDAO {
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
             }
-
         }
-
+        
         return servicos;
 
     }
@@ -212,6 +239,9 @@ public class ServicoDAO {
                     "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
                     "INNER JOIN AGENDAMENTO ON AGENDAMENTO.DATA BETWEEN ? AND ? AND AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO " +
                     "GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO)";
+        
+        String sql2 = "SELECT * FROM PRODUTO_SERVICO WHERE ID_SERVICO = ?";
+
         Connection connection = null;
         PreparedStatement pStatement = null;
         ResultSet rs = null;
@@ -236,8 +266,7 @@ public class ServicoDAO {
             }
        
             rs = pStatement.executeQuery();
-            
-          
+     
    
             if(rs != null){                
                 while(rs.next()){
@@ -248,6 +277,23 @@ public class ServicoDAO {
                 servicoBuscado.setTempoGasto(rs.getTime("TEMPOGASTO").toLocalTime());
                 servicoBuscado.setQuantidadeRealizada(rs.getLong("QTD"));
                 servicoBuscado.setId(rs.getLong("ID"));
+                
+                 pStatement = connection.prepareStatement(sql2);
+        
+                    pStatement.setLong(1, servicoBuscado.getId());
+                    ResultSet rs2 = pStatement.executeQuery();
+                    
+                    if(rs2 != null){
+                        ArrayList<Produto> produtos = new ArrayList<>();
+                    
+                        while(rs2.next()){
+                            Produto p = new ProdutoController().buscarProduto(rs2.getLong("ID_PRODUTO"));
+                            p.setRendimento(rs2.getInt("RENDIMENTO"));
+                            produtos.add(p);
+                           
+                        }
+                        servicoBuscado.setProdutos(produtos);
+                    }
                 servicos.add(servicoBuscado);
                 }
             }
@@ -280,52 +326,80 @@ public class ServicoDAO {
     public Servico buscarServico(long id){
         
         String sql = "SELECT ID_SERVICO, NOME, PRECO, TEMPOGASTO FROM SERVICO WHERE ID_SERVICO = ?";
+        String sql2 = "SELECT * FROM PRODUTO_SERVICO WHERE ID_SERVICO = ?";
+
         Connection connection = null;
         PreparedStatement pStatement = null;
-        ResultSet rs = null;
-       
-        try{
-            
+        Servico servicos = null;
+
+        try {
             connection = new ConnectionMVC().getConnection();
+
             pStatement = connection.prepareStatement(sql);
-            pStatement.setLong(1, id);         
-            rs = pStatement.executeQuery();
-            
-            Servico servicoBuscado = new Servico();
-   
-            if(rs != null){                
-                while(rs.next()){  
-             
-                servicoBuscado.setNome(rs.getString("NOME"));
-                servicoBuscado.setPreco(rs.getLong("PRECO"));
-                servicoBuscado.setId(rs.getLong("ID_SERVICO"));
-                servicoBuscado.setTempoGasto(rs.getTime("TEMPOGASTO").toLocalTime());
-  
+            pStatement.setLong(1, id);
+
+            ResultSet rs = pStatement.executeQuery();
+
+            if (rs != null) {
+
+                Servico servicoAtual = new Servico();
+                servicoAtual.setNome(rs.getString("NOME"));
+                servicoAtual.setPreco(rs.getLong("PRECO"));
+                servicoAtual.setTempoGasto(rs.getTime("TEMPOGASTO").toLocalTime());
+                servicoAtual.setId(rs.getLong("ID_SERVICO"));
+
+                pStatement = connection.prepareStatement(sql2);
+
+                pStatement.setLong(1, servicoAtual.getId());
+                ResultSet rs2 = pStatement.executeQuery();
+
+                if (rs2 != null) {
+                    ArrayList<Produto> produtos = new ArrayList<>();
+
+                    while (rs2.next()) {
+                        System.out.println("teste");
+                        Produto p = new ProdutoController().buscarProduto(rs2.getLong("ID_PRODUTO"));
+                        p.setRendimento(rs2.getInt("RENDIMENTO"));
+                        produtos.add(p);
+
+                    }
+                    servicoAtual.setProdutos(produtos);
                 }
-            }
-            
-            return servicoBuscado;
-       
-            
-        } catch (SQLException e){
-            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) " + e);
-        }finally{
-              try {
-                if(pStatement != null) pStatement.close();
 
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+                servicos = servicoAtual;
+
             }
-            
+            return servicos;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
             try {
-                if(connection != null) connection.close();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+                connection.rollback();
+            } catch (SQLException ex) {
+                Logger.getLogger(CompraProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        }
 
-        return null;
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return servicos;
     }
 
     public void cadastrarServico(Servico servico) throws SQLException {

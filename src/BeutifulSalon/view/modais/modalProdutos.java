@@ -47,15 +47,15 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
     public modalProdutos(boolean cabeleleiro) {
 
         initComponents();
-        
+
         ManipulaFontes mf = new ManipulaFontes();
-        
+
         jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Busca por Nome
         jTextFieldNomeProduto.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Box Busca por Nome
         jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Produtos Comprados
         jButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); //Concluir
         jTableConsultaProdutos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f)); //Tabela
-        
+
         this.cabeleleiro = cabeleleiro;
         listarTodosProdutos();
 
@@ -198,7 +198,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
                             .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(350, 350, 350)
+                .addGap(357, 357, 357)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -209,20 +209,18 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(120, 120, 120))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(38, 38, 38)))
+                        .addGap(100, 100, 100))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(26, 26, 26))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -235,7 +233,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -393,15 +391,29 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
 
         try {
             produtosListados.forEach((Produto produto) -> {
-                if(produto.getPreco() > 0){
-                  tabelaProdutoModel.addRow(new Object[]{
-                    produto.getNome(),
-                    produto.getMarca(),
-                    Dinheiro.parseString(produto.getPreco()),
-                    produto.getId_produto()
-                });   
+
+                if (cabeleleiro) {
+                    
+                    String preco = Dinheiro.parseString(produto.getPreco());
+                    if(produto.getPreco() < 0){
+                        preco = "Não vendido";
+                    }
+                    tabelaProdutoModel.addRow(new Object[]{
+                        produto.getNome(),
+                        produto.getMarca(),
+                       preco,
+                        produto.getId_produto()
+                    });
+                } else {
+                    if (produto.getPreco() > 0) {
+                        tabelaProdutoModel.addRow(new Object[]{
+                            produto.getNome(),
+                            produto.getMarca(),
+                            Dinheiro.parseString(produto.getPreco()),
+                            produto.getId_produto()
+                        });
+                    }
                 }
-               
 
             });
 

@@ -246,7 +246,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabelBtnBuscarProdutosConsultarCliente
 
     private void jLabelDetalhesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDetalhesMousePressed
-
+        
     }//GEN-LAST:event_jLabelDetalhesMousePressed
 
     private void jLabelEditarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEditarMousePressed

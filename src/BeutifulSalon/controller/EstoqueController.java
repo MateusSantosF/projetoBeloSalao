@@ -29,7 +29,7 @@ public class EstoqueController {
             estoque.setQuantidade(i.getQuantidade());
             estoque.setValorUnitario(i.getPreco());
             try {
-                estoque.atualizaEstoque(estoque);
+                estoque.atualizaEstoque(estoque, false);
             } catch (ExceptionDAO e) {
                 return false;
             }
@@ -48,9 +48,9 @@ public class EstoqueController {
             Estoque estoque = new Estoque();
             estoque.setIdProduto(i.getId_produto());
             estoque.setQuantidade(i.getQuantidade() * -1);
-            estoque.setValorUnitario(i.getPreco());
+            //estoque.setValorUnitario(i.getPreco());
             try {
-                estoque.atualizaEstoque(estoque);
+                estoque.atualizaEstoque(estoque, true);
             } catch (ExceptionDAO e) {
                 return false;
             }
@@ -76,5 +76,16 @@ public class EstoqueController {
         }
         return 0;
     }
+    
+     public long ultimoValorPagoProduto(long idProduto){
+        
+        try {
+            return new Estoque().ultimoValorPagoProduto(idProduto);
+        } catch (ExceptionDAO e) {
+            System.out.println("produto não encontrado");
+        }
+         
+         return 0;
+     }
 
 }

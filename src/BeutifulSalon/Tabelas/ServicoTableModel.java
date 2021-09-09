@@ -22,7 +22,7 @@ public class ServicoTableModel extends AbstractTableModel {
      
     private final DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
     private final List<Servico> dados;
-    private final String[] columns = {"Nome", "Valor", "Tempo Gasto", "Qtd. Anual"};
+    private final String[] columns = {"Nome", "Valor", "Tempo Gasto", "Qtd. Realizada Anual"};
     private final ServicoController servicoController;
 
     public ServicoTableModel() {
@@ -59,7 +59,7 @@ public class ServicoTableModel extends AbstractTableModel {
                 return Dinheiro.parseString(dados.get(rowIndex).getPreco());
             
             case 2:
-                return dados.get(rowIndex).getTempoGasto().format(formatterHora);
+                return dados.get(rowIndex).getTempoGasto().format(formatterHora) + "h";
             
             case 3:
                return dados.get(rowIndex).getQuantidadeRealizada();
@@ -80,10 +80,11 @@ public class ServicoTableModel extends AbstractTableModel {
        this.fireTableDataChanged();
     }
     
-    public void getServicosAnual(){
+    public void getTodosServicos(){
         dados.clear();
-        addRow(servicoController.listarServicosRealizadosAno());
+        addRow(servicoController.listarServicos());
     }
+
     
     public void getServicosNome(String nome){
         dados.clear();
