@@ -1,6 +1,7 @@
 package BeutifulSalon.view.Cadastros;
 
 import BeutifulSalon.Ferramentas.ManipulaData;
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.controller.AgendamentoController;
@@ -13,6 +14,7 @@ import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalCliente;
 import BeutifulSalon.view.modais.modalInputMonetarios;
 import BeutifulSalon.view.modais.modalServicos;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -38,6 +40,24 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
      */
     public CadastroAgendamento() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes(); ;
+        
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Cadastro de Agendamento
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome do Cliente
+        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CPF
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Serviços Solicitados
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Total Bruto: 
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Valor Desconto:
+        jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //TOTAL :
+        jLabel10.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Horários disponíveis
+        jLabel11.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Horário
+        jTableServicosSolicitados.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Tabela Serviços Solicitados
+        jListHorarios.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //ListaHorarios
+        jCheckBoxDesconto.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Desconto 
+        jButtonFinalizarCompra.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Finalizar Agendamento
+
     }
 
     /**

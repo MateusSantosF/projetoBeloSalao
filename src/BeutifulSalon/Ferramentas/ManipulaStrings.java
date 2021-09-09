@@ -16,12 +16,12 @@ public class ManipulaStrings {
     public String abreviarNome(String nome) {
         
         String nomeInteiro = nome;
+        nomeInteiro = nomeInteiro.replaceAll("\\s+"," ").trim();
         nomeInteiro = nomeInteiro.replace(' ', ';');
         String nomePedacos[] = nomeInteiro.split(";");
-   
-        int k;
+        
         String saida = "";
-        for (k = 0; k <= nomePedacos.length - 1; k++) {
+        for (int k = 0; k <= nomePedacos.length - 1; k++) {
             if (k == 0 || k == (nomePedacos.length - 1)) {
                 saida = saida + " " + nomePedacos[k];
             } else {
@@ -47,4 +47,5 @@ public class ManipulaStrings {
         }
         return saida;
     }
+    
 }
