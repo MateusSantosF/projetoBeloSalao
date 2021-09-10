@@ -42,7 +42,7 @@ public class testes {
         
         Cabeleireiro c = new CabeleireiroController().selecionaCabeleireiro(); 
         
-        
+ 
         BigDecimal bigDecimal = new BigDecimal("1627786800000"); // agendamento da mulher
         BigDecimal bigDecimal2 = new BigDecimal("1625875200000"); // 3 meses atras
           

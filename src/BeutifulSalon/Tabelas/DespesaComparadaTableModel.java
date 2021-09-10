@@ -21,8 +21,8 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author mateu
  */
-public class DespesaComparadaTableModel extends AbstractTableModel{
-    
+public class DespesaComparadaTableModel extends AbstractTableModel {
+
     List<Orcamento> dados;
     private final String[] columns = {"Despesa", "Janeiro", "Fevereiro", "Março",
         "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
@@ -30,7 +30,7 @@ public class DespesaComparadaTableModel extends AbstractTableModel{
     public DespesaComparadaTableModel() {
         this.dados = new ArrayList<>();
     }
-    
+
     @Override
     public int getRowCount() {
         return dados.size();
@@ -40,9 +40,9 @@ public class DespesaComparadaTableModel extends AbstractTableModel{
     public int getColumnCount() {
         return columns.length;
     }
-    
+
     @Override
-    public String getColumnName(int rowIndex){
+    public String getColumnName(int rowIndex) {
         return columns[rowIndex];
     }
 
@@ -52,45 +52,47 @@ public class DespesaComparadaTableModel extends AbstractTableModel{
 
             case 0:
                 return dados.get(rowIndex).getNome();
-            
+
             case 1:
-                return dados.get(rowIndex).getJan()+"%";
-            
+                return dados.get(rowIndex).getJan() + "%";
+
             case 2:
-                return dados.get(rowIndex).getFev()+"%";
-            
+
+                return dados.get(rowIndex).getFev() + "%";
+
             case 3:
-                return dados.get(rowIndex).getMar()+"%";
-            
+                return dados.get(rowIndex).getMar() + "%";
+
             case 4:
-                return dados.get(rowIndex).getAbr()+"%";
-            
+                return dados.get(rowIndex).getAbr() + "%";
+
             case 5:
-                return dados.get(rowIndex).getMai()+"%";
-         
+                return dados.get(rowIndex).getMai() + "%";
+
             case 6:
-                return dados.get(rowIndex).getJun()+"%";
-            
+                return dados.get(rowIndex).getJun() + "%";
+
             case 7:
-                return dados.get(rowIndex).getJul()+"%";
-            
+                return dados.get(rowIndex).getJul() + "%";
+
             case 8:
-                return dados.get(rowIndex).getAgo()+"%";
-            
+                return dados.get(rowIndex).getAgo() + "%";
+
             case 9:
-                return dados.get(rowIndex).getSet()+"%";
-          
+
+                return dados.get(rowIndex).getSet() + "%";
+
             case 10:
-                return dados.get(rowIndex).getOut()+"%";
+                return dados.get(rowIndex).getOut() + "%";
             case 11:
-                return dados.get(rowIndex).getNov()+"%";
-   
+                return dados.get(rowIndex).getNov() + "%";
+
             case 12:
-                return dados.get(rowIndex).getDez()+"%";
+                return dados.get(rowIndex).getDez() + "%";
         }
         return null;
     }
-    
+
     public void removeRow(int rowIndex) {
         dados.remove(rowIndex);
         this.fireTableRowsDeleted(rowIndex, rowIndex);
@@ -102,12 +104,15 @@ public class DespesaComparadaTableModel extends AbstractTableModel{
     }
 
     public void addRow(List<Orcamento> orcamentos) {
-        orcamentos.forEach(orc -> dados.add(orc));
+        orcamentos.forEach(orc -> {
+
+            dados.add(orc);
+        });
         this.fireTableDataChanged();
     }
-    
-    public void getDespesaComparadaPorAno(String anoReferente){
-        
+
+    public void getDespesaComparadaPorAno(String anoReferente) {
+
         dados.clear();
         ManipulaData manipulaData = new ManipulaData();
         OrcamentoController oc = new OrcamentoController();
@@ -115,18 +120,18 @@ public class DespesaComparadaTableModel extends AbstractTableModel{
         List<Orcamento> orcamentos = null;
         List<Orcamento> orcamentoComparado = new ArrayList<>();
         LocalDate ano;
-        
+
         try {
             ano = LocalDate.ofYearDay(Integer.parseInt(anoReferente), 1);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Erro ao retornar ano digitado" + e);
-        }finally{
+        } finally {
             ano = LocalDate.now();
         }
 
         try {
             orcamentos = oc.listarOrcamentos(anoReferente);
-            
+
             for (Orcamento o : orcamentos) {
                 Double janeiro = 0.0;
                 Double fevereiro = 0.0;
@@ -148,66 +153,69 @@ public class DespesaComparadaTableModel extends AbstractTableModel{
                             Long previstoJan = o.getJan();
 
                             janeiro = (realizadoJan.doubleValue() / previstoJan.doubleValue()) * 100;
-                        break;
-                        case FEBRUARY :
+                            break;
+                        case FEBRUARY:
                             Long realizadoFev = dc.buscarDespesaPaga(ano, m.FEBRUARY, o.getId_orcamento()).getValorPago();
                             Long previstoFev = o.getFev();
 
                             fevereiro = (realizadoFev.doubleValue() / previstoFev.doubleValue()) * 100;
-                         break;
-                        case MARCH :
+                            break;
+                        case MARCH:
                             Long realizadoMar = dc.buscarDespesaPaga(ano, m.MARCH, o.getId_orcamento()).getValorPago();
                             Long previstoMar = o.getMar();
 
                             marco = (realizadoMar.doubleValue() / previstoMar.doubleValue()) * 100;
-                         break;
+                            break;
                         case APRIL:
                             Long realizadoAbr = dc.buscarDespesaPaga(ano, m.APRIL, o.getId_orcamento()).getValorPago();
                             Long previstoAbr = o.getAbr();
 
                             abril = (realizadoAbr.doubleValue() / previstoAbr.doubleValue()) * 100;
-                         break;
+                            break;
                         case MAY:
                             Long realizadoMai = dc.buscarDespesaPaga(ano, m.MAY, o.getId_orcamento()).getValorPago();
                             Long previstoMai = o.getMai();
                             maio = (realizadoMai.doubleValue() / previstoMai.doubleValue()) * 100;
-                         break;
+                            break;
                         case JUNE:
                             Long realizadoJun = dc.buscarDespesaPaga(ano, m.JUNE, o.getId_orcamento()).getValorPago();
                             Long previstoJun = o.getJun();
                             junho = (realizadoJun.doubleValue() / previstoJun.doubleValue()) * 100;
-                         break;
-                        case JULY :
+                            break;
+                        case JULY:
                             Long realizadoJul = dc.buscarDespesaPaga(ano, m.JULY, o.getId_orcamento()).getValorPago();
                             Long previstoJul = o.getJul();
                             julho = (realizadoJul.doubleValue() / previstoJul.doubleValue()) * 100;
-                        break;
+                            break;
                         case AUGUST:
                             Long realizadoAgo = dc.buscarDespesaPaga(ano, m.AUGUST, o.getId_orcamento()).getValorPago();
                             Long previstoAgo = o.getAgo();
                             agosto = (realizadoAgo.doubleValue() / previstoAgo.doubleValue()) * 100;
-                         break;
+                            break;
                         case SEPTEMBER:
                             Long realizadoSet = dc.buscarDespesaPaga(ano, m.SEPTEMBER, o.getId_orcamento()).getValorPago();
+
                             Long previstoSet = o.getSet();
                             setembro = (realizadoSet.doubleValue() / previstoSet.doubleValue()) * 100;
-                         break;
+
+                            break;
                         case OCTOBER:
                             Long realizadoOut = dc.buscarDespesaPaga(ano, m.OCTOBER, o.getId_orcamento()).getValorPago();
                             Long previstoOut = o.getOut();
-                            setembro = (realizadoOut.doubleValue() / previstoOut.doubleValue()) * 100;
-                         break;
+                            outubro = (realizadoOut.doubleValue() / previstoOut.doubleValue()) * 100;
+                            break;
                         case NOVEMBER:
                             Long realizadoNov = dc.buscarDespesaPaga(ano, m.NOVEMBER, o.getId_orcamento()).getValorPago();
                             Long previstoNov = o.getNov();
                             novembro = (realizadoNov.doubleValue() / previstoNov.doubleValue()) * 100;
-                         break;
+                            break;
                         case DECEMBER:
                             Long realizadoDez = dc.buscarDespesaPaga(ano, m.DECEMBER, o.getId_orcamento()).getValorPago();
                             Long previstoDez = o.getDez();
-                            novembro = (realizadoDez.doubleValue() / previstoDez.doubleValue()) * 100;
-                         break;
+                            dezembro = (realizadoDez.doubleValue() / previstoDez.doubleValue()) * 100;
+                            break;
                     }
+
                 }
                 Orcamento orcamentoAtual = new Orcamento();
                 orcamentoAtual.setNome(o.getNome());
@@ -218,13 +226,15 @@ public class DespesaComparadaTableModel extends AbstractTableModel{
                 orcamentoAtual.setMai(maio.longValue());
                 orcamentoAtual.setJun(junho.longValue());
                 orcamentoAtual.setJul(julho.longValue());
+
                 orcamentoAtual.setAgo(agosto.longValue());
                 orcamentoAtual.setSet(setembro.longValue());
                 orcamentoAtual.setOut(outubro.longValue());
                 orcamentoAtual.setNov(novembro.longValue());
                 orcamentoAtual.setDez(dezembro.longValue());
+
                 orcamentoComparado.add(orcamentoAtual);
-         
+
             }
             addRow(orcamentoComparado);
 
@@ -232,5 +242,5 @@ public class DespesaComparadaTableModel extends AbstractTableModel{
             System.out.println(e);
         }
     }
-    
+
 }

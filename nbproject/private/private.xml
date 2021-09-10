@@ -3,19 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Ferramentas/Valida.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Ferramentas/JavaMail.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Ferramentas/testes.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/controller/ClienteController.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/modais/modalServicoUnico.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/dao/clienteDAO.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Cadastros/CadastroServico.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/model/Email.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Cadastros/CadastroCabeleireiro.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Ferramentas/ManipulaData.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Ferramentas/JFrameTeste.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/MainMenu.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/controller/CabeleireiroController.java</file>
+            <file>file:/C:/Users/mateu/Documents/Projetos/BeloSalao/projetoBeloSalao/src/BeutifulSalon/model/GerenciadorJPanel.java</file>
+            <file>file:/C:/Users/mateu/Documents/Projetos/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/MainMenu.java</file>
+            <file>file:/C:/Users/mateu/Documents/Projetos/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Ferramentas/testes.java</file>
+            <file>file:/C:/Users/mateu/Documents/Projetos/BeloSalao/projetoBeloSalao/src/BeutifulSalon/model/Dinheiro.java</file>
         </group>
     </open-files>
 </project-private>

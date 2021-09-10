@@ -588,7 +588,7 @@ public class MainMenu extends javax.swing.JFrame {
 
                     }
 
-                }
+                }//Fim envio email
 
             }
         });

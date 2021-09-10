@@ -597,7 +597,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6))
                 .addGap(25, 25, 25))
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1084, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1081, Short.MAX_VALUE)
         );
         ServicoPrevistoLayout.setVerticalGroup(
             ServicoPrevistoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -781,7 +781,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                             .addComponent(jLabel27))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(25, 25, 25))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1084, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1081, Short.MAX_VALUE)
         );
         ServicoComparadoLayout.setVerticalGroup(
             ServicoComparadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1015,7 +1015,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                         .addGap(35, 35, 35)
                         .addComponent(jButtonEditar2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(25, 25, 25))
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1084, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1081, Short.MAX_VALUE)
         );
         lançamentosLayout.setVerticalGroup(
             lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1492,9 +1492,9 @@ public class ApresentaFinancas extends javax.swing.JPanel {
       
                 break;
             case 5:
+               
                 modeloDespesaComparada.getDespesaComparadaPorAno(ano);
                 jTableComparativoDespesas.setModel(modeloDespesaComparada);
-                jTableComparativoDespesas.getColumnModel().getColumn(0).setCellRenderer(new ApresentaFinancas.FormatacaoConteudo(Color.WHITE, jTableConsultaOrcamento.getRowCount() - 1));
                 break;
         }
       

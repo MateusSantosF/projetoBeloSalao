@@ -185,11 +185,11 @@ public class DespesaDAO {
                     despesaAtual.setIdOrcamento(rs.getLong("ID_ORCAMENTO"));
                     despesaAtual.setValorPago(rs.getLong("VALORPAGO"));
                     despesaAtual.setFormaPagamento(rs.getString("FORMAPAGAMENTO")); 
-                    
+                 
                     if(rs.getDate("DATAPAGAMENTO") == null){
                         despesaAtual.setPagamento(null);
                     }else{
-                        despesaAtual.setPagamento(rs.getDate("DATAPAGAMENTO").toLocalDate());     
+                        despesaAtual.setPagamento(rs.getDate("DATAPAGAMENTO").toLocalDate());
                     }
                    
                     despesaAtual.setAnotacao(rs.getString("ANOTACAO"));
