@@ -31,16 +31,16 @@ public class modalServicos extends javax.swing.JFrame implements Observado {
 
     public modalServicos() {
         initComponents();
-        
+
         ManipulaFontes mf = new ManipulaFontes();
-        
+
         jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f)); //Busca por nome
         jTextFieldNomeServico.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Box Busca por Nome
         jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f)); //Serviços Realizados
         jTableConsultaServicos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f)); //Tabela1
         jTableServicosRealizados.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f)); //Tabela2
         jButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); //Concluir
-        
+
         listarServicos();
 
         DefaultTableModel model = (DefaultTableModel) jTableServicosRealizados.getModel();
@@ -136,6 +136,7 @@ public class modalServicos extends javax.swing.JFrame implements Observado {
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("Confirmar");
+        jButton1.setBorder(null);
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,21 +213,21 @@ public class modalServicos extends javax.swing.JFrame implements Observado {
 
         if (indice > -1) {
 
-                DefaultTableModel tabelaServicosRealizados = (DefaultTableModel) jTableServicosRealizados.getModel();
+            DefaultTableModel tabelaServicosRealizados = (DefaultTableModel) jTableServicosRealizados.getModel();
 
-                ServicoController svc = new ServicoController();
+            ServicoController svc = new ServicoController();
 
-                long idServicoBuscado = (long) jTableConsultaServicos.getValueAt(indice, 2);
+            long idServicoBuscado = (long) jTableConsultaServicos.getValueAt(indice, 2);
 
-                produtoBuscado = svc.buscarServico(idServicoBuscado);
+            produtoBuscado = svc.buscarServico(idServicoBuscado);
 
-                tabelaServicosRealizados.addRow(new Object[]{
-                    produtoBuscado.getNome(),
-                    Dinheiro.parseString(produtoBuscado.getPreco()),
-                    produtoBuscado.getId()
-                });
+            tabelaServicosRealizados.addRow(new Object[]{
+                produtoBuscado.getNome(),
+                Dinheiro.parseString(produtoBuscado.getPreco()),
+                produtoBuscado.getId()
+            });
 
-                jTableServicosRealizados.setModel(tabelaServicosRealizados);
+            jTableServicosRealizados.setModel(tabelaServicosRealizados);
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um serviço antes.");
@@ -237,6 +238,31 @@ public class modalServicos extends javax.swing.JFrame implements Observado {
     private void jTextFieldNomeServicoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldNomeServicoCaretUpdate
         if (jTextFieldNomeServico.getText().equals("")) {
             listarServicos();
+        }else{
+             String nome = jTextFieldNomeServico.getText();
+        DefaultTableModel model = (DefaultTableModel) jTableConsultaServicos.getModel();
+        model.setRowCount(0);
+
+        ServicoController sc = new ServicoController();
+
+        ArrayList<Servico> servicos = null;
+
+        servicos = sc.listarServicos(nome);
+
+        try {
+            servicos.forEach((Servico s) -> {
+                model.addRow(new Object[]{
+                    s.getNome(),
+                    Dinheiro.parseString(s.getPreco()),
+                    s.getId()
+                });
+            });
+
+            jTableConsultaServicos.setModel(model);
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(null, "Erro ao listar servicos");
+        }
         }
 
     }//GEN-LAST:event_jTextFieldNomeServicoCaretUpdate
@@ -251,11 +277,7 @@ public class modalServicos extends javax.swing.JFrame implements Observado {
 
         ArrayList<Servico> servicos = null;
 
-        try {
-            servicos = sc.listarServicos(nome);
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(modalServicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        servicos = sc.listarServicos(nome);
 
         try {
             servicos.forEach((Servico s) -> {

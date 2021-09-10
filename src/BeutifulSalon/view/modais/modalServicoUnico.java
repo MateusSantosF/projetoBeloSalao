@@ -178,6 +178,35 @@ public class modalServicoUnico extends javax.swing.JFrame implements Observado {
     private void jTextFieldNomeServicoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldNomeServicoCaretUpdate
         if (jTextFieldNomeServico.getText().equals("")) {
             listarServicos();
+        }else{
+            
+            String nome = jTextFieldNomeServico.getText();
+        DefaultTableModel model = (DefaultTableModel) jTableConsultaServicos.getModel();
+        model.setRowCount(0);
+
+        ServicoController sc = new ServicoController();
+
+        ArrayList<Servico> servicos = null;
+
+   
+            servicos = sc.listarServicos(nome);
+
+
+        try {
+            servicos.forEach((Servico s) -> {
+                model.addRow(new Object[]{
+                    s.getNome(),
+                    Dinheiro.parseString(s.getPreco()),
+                    s.getId()
+                });
+            });
+
+            jTableConsultaServicos.setModel(model);
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(null, "Erro ao listar servicos");
+        }
+            
         }
 
     }//GEN-LAST:event_jTextFieldNomeServicoCaretUpdate
@@ -218,11 +247,9 @@ public class modalServicoUnico extends javax.swing.JFrame implements Observado {
 
         ArrayList<Servico> servicos = null;
 
-        try {
+   
             servicos = sc.listarServicos(nome);
-        } catch (ExceptionDAO ex) {
-            java.util.logging.Logger.getLogger(modalServicos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+
 
         try {
             servicos.forEach((Servico s) -> {

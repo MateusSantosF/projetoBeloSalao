@@ -95,5 +95,21 @@ public class CabeleireiroController {
         }
 
     }
+    
+    public boolean cadastrarEmailUltimaVisita(Email email, String cpf, int periodo) {
+
+        if (email.getTitulo().length() > 0 && email.getTexto().length() > 24) {
+            try {
+                new Cabeleireiro().cadastrarEmailUltimaVisita(email, cpf, periodo);
+                return true;
+            } catch (ExceptionDAO e) {
+                System.out.println("Erro ao cadastrarEmailUltimaVisita" + e);
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    }
  
 }

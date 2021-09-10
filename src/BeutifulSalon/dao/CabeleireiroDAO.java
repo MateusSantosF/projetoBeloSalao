@@ -176,6 +176,20 @@ public class CabeleireiroDAO {
                     if(anexoAniversario != null){
                         emailAniversario.setAnexo(anexoAniversario);
                     }
+                    
+                    Email emailUltimaVisita = new Email();
+                    emailUltimaVisita.setEnviar(rs.getBoolean("ENVIARULTIMAVISITA"));
+                    emailUltimaVisita.setRementente(cabeleireiro.getEmail());
+                    emailUltimaVisita.setTitulo(rs.getString("TITULOULTIMAVISITA"));
+                    emailUltimaVisita.setTexto(rs.getString("TEXTOULTIMAVISITA"));             
+                    emailUltimaVisita.setDiretorioArquivo(rs.getString("NOMEANEXOULTIMAVISITA"));
+                    emailUltimaVisita.setPeriodoReenvio(rs.getInt("PERIODOULTIMAVISITA"));
+                    byte[] anexoUltimaVisita = rs.getBytes("ANEXOULTIMAVISITA");
+                    if(anexoAniversario != null){
+                        emailUltimaVisita.setAnexo(anexoUltimaVisita);
+                    }
+                    
+                    cabeleireiro.setEmailUltimaVisita(emailUltimaVisita);
                     cabeleireiro.setEmailAniversario(emailAniversario);
                     cabeleireiro.setSenha(rs.getString("SENHA"));
 
@@ -459,6 +473,53 @@ public class CabeleireiroDAO {
 
         }
         return email;
+    }
+
+    public void cadastrarEmailUltimaVisita(Email email, String cpf, int periodo) {
+        
+        String sqlScript = "UPDATE CABELEIREIRO SET ENVIARULTIMAVISITA = ?, TITULOULTIMAVISITA = ? ,TEXTOULTIMAVISITA = ?,"
+                 + "ANEXOULTIMAVISITA = ?, NOMEANEXOULTIMAVISITA = ?, PERIODOULTIMAVISITA = ? WHERE CPF = ?";
+             
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+
+            pStatement = connection.prepareStatement(sqlScript);
+            pStatement.setString(7, cpf);
+            pStatement.setBoolean(1, email.isEnviar());
+            pStatement.setString(2, email.getTitulo());
+            pStatement.setString(3, email.getTexto());
+            pStatement.setBytes(4, email.getAnexo());
+            pStatement.setString(5, email.getDiretorioArquivo() );
+            pStatement.setInt(6, periodo);
+            
+            pStatement.execute();
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+
+        }
     }
 
 }

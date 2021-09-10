@@ -73,7 +73,7 @@ public class LancamentoTableModel extends AbstractTableModel {
                 return Dinheiro.parseString(dados.get(rowIndex).getValorPago());
 
             case 6:
-                return dados.get(rowIndex).isStatus() ? "Pagamento Realizado" : "Pendente";
+                return dados.get(rowIndex).isStatus() ? "Pago" : "Pendente";
             default:
                 return null;
 

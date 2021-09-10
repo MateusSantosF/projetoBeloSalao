@@ -37,7 +37,7 @@ import javax.mail.internet.MimeMultipart;
 public class JavaMail {
 
     public static final int EMAIL_PADRAO = 0;
-    public static final int EMAIL_ANIVERSARIO = 1;
+    public static final int EMAIL_ANIVERSARIO_ULTIMAVISITA = 1;
 
     private Email email;
     private int tipo;
@@ -142,7 +142,7 @@ public class JavaMail {
                     message.setContent(multipart);
                 }
 
-                if (tipo == EMAIL_ANIVERSARIO) {
+                if (tipo == EMAIL_ANIVERSARIO_ULTIMAVISITA) {
                     
                     
                     messageBodyPart = new MimeBodyPart();

@@ -63,7 +63,7 @@ public class ClienteTableModel extends AbstractTableModel {
                 return dados.get(rowIndex).getCpf();
             
             case 5 :
-                LocalDate ultimaVisita = clienteController.ultimaVisita(dados.get(rowIndex).getCpf());
+                LocalDate ultimaVisita = dados.get(rowIndex).getUltimaVisita();
                 
                 if(ultimaVisita != null){
                     return ultimaVisita.format(formatterData);

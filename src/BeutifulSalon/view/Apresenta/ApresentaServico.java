@@ -75,7 +75,7 @@ public class ApresentaServico extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane2.setBorder(null);
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jScrollPane2.setForeground(new java.awt.Color(34, 34, 34));
         jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -84,6 +84,7 @@ public class ApresentaServico extends javax.swing.JPanel {
         jScrollPane2.setRequestFocusEnabled(false);
 
         jTableServicos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jTableServicos.setForeground(new java.awt.Color(25, 25, 25));
         jTableServicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

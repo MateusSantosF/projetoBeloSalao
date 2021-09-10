@@ -39,6 +39,8 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private ArrayList<LocalTime> expediente = null;
     private modalExpediente modalExpediente = null;
     private String caminhoArquivo;
+    private String caminhoArquivoUltimaVisita;
+    private Email emailUltimaVisita = new Email();
     private Email email = new Email();
 
     public CadastroCabeleireiro() {
@@ -55,13 +57,26 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
             jTextFieldEmail.setText(cabeleireiro.getEmail());
             
             jTextFieldTituloAniversario.setText(cabeleireiro.getEmailAniversario().getTitulo());
+            jTextFieldTituloUltimaVisita.setText(cabeleireiro.getEmailUltimaVisita().getTitulo());
+            
+            jComboBoxPeriodo.setSelectedIndex(cabeleireiro.getEmailUltimaVisita().getPeriodoReenvio() - 2);
             
             if(cabeleireiro.getEmailAniversario().getTexto().length() < 2){
                 jTextAreaAniversario.setText("Feliz aniversário <nome>,");
+                jTextAreaUltimaVisita.setText("Caro <nome>,");
             }else{
                 jTextAreaAniversario.setText(cabeleireiro.getEmailAniversario().getTexto().replaceAll("<br>", "\n"));  
+                jTextAreaUltimaVisita.setText(cabeleireiro.getEmailUltimaVisita().getTexto().replaceAll("<br>", "\n"));
             }
-         
+            
+            if(cabeleireiro.getEmailUltimaVisita().getTexto().length() < 2){
+                jTextAreaUltimaVisita.setText("Caro <nome>,");
+
+            }else{
+                jTextAreaUltimaVisita.setText(cabeleireiro.getEmailUltimaVisita().getTexto().replaceAll("<br>", "\n"));
+            }
+            
+            jCheckBoxUltimaVisita.setSelected(cabeleireiro.getEmailUltimaVisita().isEnviar());
             jCheckBoxAniversario.setSelected(cabeleireiro.getEmailAniversario().isEnviar());
             jLabelNomeArquivoAniversario.setText(cabeleireiro.getEmailAniversario().getNomeDoArquivo());
         }
@@ -109,6 +124,20 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jCheckBoxUltimaVisita = new javax.swing.JCheckBox();
+        jLabel15 = new javax.swing.JLabel();
+        jTextFieldTituloUltimaVisita = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextAreaUltimaVisita = new javax.swing.JTextArea();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabelNomeArquivoUltimaVisita = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jComboBoxPeriodo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -179,7 +208,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jLabel4)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -283,7 +312,6 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jTextAreaAniversario.setColumns(20);
         jTextAreaAniversario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jTextAreaAniversario.setRows(5);
-        jTextAreaAniversario.setText("Feliz aniversário <nome>,");
         jTextAreaAniversario.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 jTextAreaAniversarioCaretUpdate(evt);
@@ -376,7 +404,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel13))
                     .addComponent(jScrollPane1))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -402,20 +430,177 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Aniversário", jPanel3);
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("Configure o e-mail padrão de última visita");
+
+        jCheckBoxUltimaVisita.setBackground(new java.awt.Color(255, 255, 255));
+        jCheckBoxUltimaVisita.setText("Enviar automáticamente");
+        jCheckBoxUltimaVisita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxUltimaVisitaActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel15.setText("Título");
+
+        jTextFieldTituloUltimaVisita.setBackground(new java.awt.Color(255, 255, 255));
+
+        jTextAreaUltimaVisita.setBackground(new java.awt.Color(255, 255, 255));
+        jTextAreaUltimaVisita.setColumns(20);
+        jTextAreaUltimaVisita.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextAreaUltimaVisita.setRows(5);
+        jTextAreaUltimaVisita.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                jTextAreaUltimaVisitaCaretUpdate(evt);
+            }
+        });
+        jTextAreaUltimaVisita.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+                jTextAreaUltimaVisitaCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+        jTextAreaUltimaVisita.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextAreaUltimaVisitaKeyPressed(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTextAreaUltimaVisita);
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-anexo.png"))); // NOI18N
+        jLabel16.setText("Inserir Anexo");
+        jLabel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel16.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel16MousePressed(evt);
+            }
+        });
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-excluir.png"))); // NOI18N
+        jLabel17.setText("Excluir Anexo");
+        jLabel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel17.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel17MousePressed(evt);
+            }
+        });
+
+        jLabelNomeArquivoUltimaVisita.setText("Não existem arquivos anexados.");
+
+        jLabel18.setText("Arquivo Anexado:");
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("Salvar");
+        jLabel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabel19.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel19MousePressed(evt);
+            }
+        });
+
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/dica.png"))); // NOI18N
+        jLabel20.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel20MousePressed(evt);
+            }
+        });
+
+        jComboBoxPeriodo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2 Meses", "3 Meses", "4 Meses", "5 meses", "6 meses", "7 Meses", "8 Meses", "9 Meses", "10 Meses" }));
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelNomeArquivoUltimaVisita))
+                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jTextFieldTituloUltimaVisita, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel20))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jComboBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCheckBoxUltimaVisita)))
+                .addContainerGap(71, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckBoxUltimaVisita)
+                    .addComponent(jComboBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldTituloUltimaVisita, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNomeArquivoUltimaVisita))
+                .addGap(19, 19, 19)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 634, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 558, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         jTabbedPane2.addTab("Última Visita", jPanel4);
@@ -428,7 +613,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         );
         jPanelEmailsLayout.setVerticalGroup(
             jPanelEmailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane2)
+            .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 578, Short.MAX_VALUE)
         );
 
         jTabbedPane2.getAccessibleContext().setAccessibleName("");
@@ -623,8 +808,92 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MousePressed
        JOptionPane.showMessageDialog(null, "Digite '<nome>' ao longo do texto, para inserir o \n"
                + "nome do cliente para qual o email será enviado\n\n"
-               + "Ex: Feliz aniversário <nome>!,\nA equipe do Salão[...]");
+               + "Ex: Feliz aniversário <nome>!,\nA equipe do Salão deseja[...]");
     }//GEN-LAST:event_jLabel13MousePressed
+
+    private void jCheckBoxUltimaVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxUltimaVisitaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxUltimaVisitaActionPerformed
+
+    private void jTextAreaUltimaVisitaCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextAreaUltimaVisitaCaretUpdate
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextAreaUltimaVisitaCaretUpdate
+
+    private void jTextAreaUltimaVisitaCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextAreaUltimaVisitaCaretPositionChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextAreaUltimaVisitaCaretPositionChanged
+
+    private void jTextAreaUltimaVisitaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextAreaUltimaVisitaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextAreaUltimaVisitaKeyPressed
+
+    private void jLabel16MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MousePressed
+        FileFilter filter = new FileNameExtensionFilter("Imagem ou Zip", "jpg", "jpeg", "png", "pdf", ".zip", ".7z");
+        jFileChooser.setFileFilter(filter);
+        jFileChooser.addChoosableFileFilter(filter);
+
+        int returnVal = jFileChooser.showOpenDialog(this);
+
+        if (returnVal == jFileChooser.APPROVE_OPTION) {
+            caminhoArquivoUltimaVisita = jFileChooser.getSelectedFile().getAbsolutePath();
+
+            emailUltimaVisita.setDiretorioArquivo(caminhoArquivoUltimaVisita);
+            jLabelNomeArquivoUltimaVisita.setText(emailUltimaVisita.getNomeDoArquivo());
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione uma imagem e tente novamente");
+            jLabelNomeArquivoUltimaVisita.setText("Não existem arquivos anexados.");
+        }
+    }//GEN-LAST:event_jLabel16MousePressed
+
+    private void jLabel17MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel17MousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel17MousePressed
+
+    private void jLabel19MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MousePressed
+       
+        CabeleireiroController cc = new CabeleireiroController();
+        emailUltimaVisita.setTitulo(jTextFieldTituloUltimaVisita.getText());
+        emailUltimaVisita.setTexto(jTextAreaUltimaVisita.getText());
+        emailUltimaVisita.setEnviar(jCheckBoxUltimaVisita.isSelected());
+        
+        if (cc.verificaRegistro() == 1) {
+            if (emailUltimaVisita.getDiretorioArquivo() != null) {
+
+                try {
+                    File file = new File(emailUltimaVisita.getDiretorioArquivo());
+                    byte[] imagem = new byte[(int) file.length()];
+                    DataInputStream dis;
+                    dis = new DataInputStream(new FileInputStream(file));
+                    dis.readFully(imagem);
+                    dis.close();
+
+                    emailUltimaVisita.setAnexo(imagem);
+                    
+                    emailUltimaVisita.setDiretorioArquivo(caminhoArquivoUltimaVisita);
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao ler anexo" + e);
+                }
+
+            }
+            boolean sucesso = cc.cadastrarEmailUltimaVisita(emailUltimaVisita, cc.selecionaCabeleireiro().getCpf(), jComboBoxPeriodo.getSelectedIndex() + 2);
+
+            if (sucesso) {
+                JOptionPane.showMessageDialog(null, "Email padrão de últiima visita atualizado com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao atualizar email de última visita.");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Você não pode cadastrar um email, pois ainda não se cadastrou no sistema.");
+        }
+
+    }//GEN-LAST:event_jLabel19MousePressed
+
+    private void jLabel20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MousePressed
+       JOptionPane.showMessageDialog(null, "Digite '<nome>' ao longo do texto, para inserir o \n"
+               + "nome do cliente para qual o email será enviado\n\n"
+               + "Ex: Caro <nome>!,\nA equipe do Salão notou que[...]");
+    }//GEN-LAST:event_jLabel20MousePressed
 
     /**
      * @param args the command line arguments
@@ -665,6 +934,8 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCadastrar;
     private javax.swing.JCheckBox jCheckBoxAniversario;
+    private javax.swing.JCheckBox jCheckBoxUltimaVisita;
+    private javax.swing.JComboBox<String> jComboBoxPeriodo;
     private javax.swing.JFileChooser jFileChooser;
     private javax.swing.JFormattedTextField jFormattedTextFieldCPF;
     private javax.swing.JLabel jLabel1;
@@ -672,7 +943,14 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -681,19 +959,24 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelNomeArquivoAniversario;
+    private javax.swing.JLabel jLabelNomeArquivoUltimaVisita;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelEmails;
     private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextArea jTextAreaAniversario;
+    private javax.swing.JTextArea jTextAreaUltimaVisita;
     private javax.swing.JTextField jTextFieldEmail;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldTituloAniversario;
+    private javax.swing.JTextField jTextFieldTituloUltimaVisita;
     // End of variables declaration//GEN-END:variables
 
     @Override

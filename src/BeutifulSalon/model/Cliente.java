@@ -17,6 +17,7 @@ public class Cliente {
     private String email;
     private String dataNasc;
     private LocalDate dataDeRegistro; //Data que o cliente foi registrado no sistema
+    private LocalDate ultimaVisita;
     private String cep;
     private String bairro;
     private String rua;
@@ -83,6 +84,16 @@ public class Cliente {
         return deOndeConheceu;
     }
 
+    public LocalDate getUltimaVisita() {
+        return ultimaVisita;
+    }
+
+    public void setUltimaVisita(LocalDate ultimaVisita) {
+        this.ultimaVisita = ultimaVisita;
+    }
+    
+    
+    
     public void setDeOndeConheceu(int deOndeConheceu) {
         this.deOndeConheceu = deOndeConheceu;
     }
@@ -314,5 +325,13 @@ public class Cliente {
     public void atualizarUltimoEnvioEmailAniversario(String cpf) throws ExceptionDAO {
         new clienteDAO().atualizarUltimoEnvioEmailAniversario(cpf);
     }
+
+    public void atualizarUltimoEnvioEmailUltimaVisita(String cpf) throws ExceptionDAO {
+        new clienteDAO().atualizarUltimoEnvioEmailUltimaVisita(cpf);
+    }
+    
+   public List<Cliente> listaClientesEmailUltimaVisita() throws ExceptionDAO{
+      return new clienteDAO().listaClientesEmailUltimaVisita();
+   }
 
 }

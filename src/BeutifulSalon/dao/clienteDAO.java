@@ -8,6 +8,8 @@ package BeutifulSalon.dao;
  */
 
 import BeutifulSalon.Ferramentas.ManipulaData;
+import BeutifulSalon.controller.CabeleireiroController;
+import BeutifulSalon.model.Cabeleireiro;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import BeutifulSalon.model.Cliente;
@@ -118,6 +120,43 @@ public class clienteDAO {
    
     }
     
+    public void atualizarUltimoEnvioEmailUltimaVisita(String cpf){
+        
+        String sql = "UPDATE EMAILULTIMAVISITA SET ULTIMOENVIO = ? WHERE CPF = ?";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        try {
+            
+            connection = new ConnectionMVC().getConnection();
+            
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(2, cpf);
+            pStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+           
+            
+            pStatement.execute(); 
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,"Erro atualizar ultimo envio de email"  + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+           
+        }
+   
+    }
+    
     public List<Cliente> listarAniversariantesDoMes() throws ExceptionDAO{
         
         String sql = "SELECT * FROM CLIENTE " +
@@ -159,6 +198,74 @@ public class clienteDAO {
             
         } catch (SQLException e) {
             throw new ExceptionDAO("Erro ao consultar cliente (classClienteDAO)");
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+                    
+        return clientes;
+        
+    }
+    
+     public List<Cliente> listaClientesEmailUltimaVisita() throws ExceptionDAO{
+        
+        String sql = "SELECT  NOME,SOBRENOME, EMAIL, CLIENTE.CPF FROM CLIENTE" +
+"        INNER JOIN AGENDAMENTO ON AGENDAMENTO.CPF_CLIENTE = CLIENTE.CPF " +
+"        INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.CPF = CLIENTE.CPF AND EMAILULTIMAVISITA.CPF = AGENDAMENTO.CPF_CLIENTE " +
+"        WHERE AGENDAMENTO.DATA NOT BETWEEN ? AND ( SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO) " +
+"        AND (EMAILULTIMAVISITA.ULTIMOENVIO NOT BETWEEN ? AND ( SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO) OR EMAILULTIMAVISITA.ULTIMOENVIO IS NULL)";
+                
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ManipulaData md = new ManipulaData();
+        List<Cliente> clientes = null;
+        Cabeleireiro c = new CabeleireiroController().selecionaCabeleireiro();   
+        
+        try {   
+           
+            connection = new ConnectionMVC().getConnection();
+            
+            pStatement = connection.prepareStatement(sql);
+            
+            
+           
+            pStatement.setLong(1, LocalDate.now().minusMonths(c.getEmailUltimaVisita().getPeriodoReenvio()).toEpochDay() * 24 * 60 * 60 * 1000 );
+            pStatement.setLong(2, LocalDate.now().minusMonths(c.getEmailUltimaVisita().getPeriodoReenvio()).toEpochDay() * 24 * 60 * 60 * 1000 );
+            
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                clientes = new ArrayList<>();
+            
+                while(rs.next()){
+          
+                    Cliente clienteAtual = new Cliente();
+                    clienteAtual.setNome(rs.getString("NOME"));
+                    clienteAtual.setCpf(rs.getString("CPF"));
+                    clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
+                    clienteAtual.setEmail(rs.getString("EMAIL"));
+                    clientes.add(clienteAtual);
+                   
+                }
+                
+                
+            }
+            
+          
+        } catch (SQLException e) {
+            throw new ExceptionDAO("Erro ao listar emails ultimavisita cliente (classClienteDAO)" + e);
         }finally{
             
             try {
@@ -236,7 +343,9 @@ public class clienteDAO {
     
     public List<Cliente> listarClientes() throws ExceptionDAO{
         
-        String sql  = "SELECT CPF, NOME, SOBRENOME, CELULAR, EMAIL FROM CLIENTE ORDER BY DATAREG DESC";
+        String sql  = "SELECT CPF, NOME, SOBRENOME, CELULAR, EMAIL,"
+                + "(SELECT MAX(DATA) FROM AGENDAMENTO WHERE CPF_CLIENTE = CPF AND REALIZADO = TRUE) AS ULTIMAVISITA "
+                + "FROM CLIENTE ORDER BY DATAREG DESC";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -259,6 +368,13 @@ public class clienteDAO {
                     clienteAtual.setCelular(rs.getString("CELULAR"));
                     clienteAtual.setEmail(rs.getString("EMAIL"));
                     clienteAtual.setCpf(rs.getString("CPF"));
+                    
+                    
+                    if(rs.getDate("ULTIMAVISITA") != null){
+                        clienteAtual.setUltimaVisita(rs.getDate("ULTIMAVISITA").toLocalDate());
+                    }
+                        
+                   
                     clientes.add(clienteAtual);
                 }
                 

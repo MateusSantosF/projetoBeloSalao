@@ -9,6 +9,8 @@ import BeutifulSalon.Ferramentas.JavaMail;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.model.Cabeleireiro;
+import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Email;
 import BeutifulSalon.view.modais.NovoRegistro;
 import BeutifulSalon.view.Apresenta.ApresentaFinancas;
@@ -136,7 +138,7 @@ public class MainMenu extends javax.swing.JFrame {
             jPanelServicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelServicosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabelServicos, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                .addComponent(jLabelServicos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanelServicosLayout.setVerticalGroup(
@@ -354,7 +356,13 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGap(27, 27, 27)
                 .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(menuLateralLayout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(71, 71, 71))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuLateralLayout.createSequentialGroup()
                         .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanelServicos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(painelClientes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, menuLateralLayout.createSequentialGroup()
                                 .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -363,15 +371,7 @@ public class MainMenu extends javax.swing.JFrame {
                                 .addGap(1, 1, 1))
                             .addComponent(painelProdutos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
                             .addComponent(painelFinancas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))
-                        .addGap(212, 212, 212))
-                    .addGroup(menuLateralLayout.createSequentialGroup()
-                        .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(menuLateralLayout.createSequentialGroup()
-                                .addGap(278, 278, 278)
-                                .addComponent(filler2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                            .addComponent(jPanelServicos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(212, 212, 212))))
         );
         menuLateralLayout.setVerticalGroup(
             menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -390,13 +390,17 @@ public class MainMenu extends javax.swing.JFrame {
                 .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelFinancas, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanelServicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4)
-                .addGap(103, 103, 103))
+                .addGroup(menuLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(menuLateralLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE)
+                        .addComponent(filler2, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(menuLateralLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanelServicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(97, 97, 97)
+                        .addComponent(jLabel4)
+                        .addContainerGap(132, Short.MAX_VALUE))))
         );
 
         getContentPane().add(menuLateral, java.awt.BorderLayout.LINE_START);
@@ -486,8 +490,8 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelConfiguracoesMousePressed
 
     private void jLabelServicosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelServicosMousePressed
-      new GerenciadorJPanel(painelPrincipal, new ApresentaServico());
-      this.setTitle("Serviços");
+        new GerenciadorJPanel(painelPrincipal, new ApresentaServico());
+        this.setTitle("Serviços");
         trocaCorPainel(jPanelServicos);
     }//GEN-LAST:event_jLabelServicosMousePressed
 
@@ -537,21 +541,51 @@ public class MainMenu extends javax.swing.JFrame {
                 CabeleireiroController cc = new CabeleireiroController();
 
                 if (cc.verificaRegistro() == 1) {
-                    if (cc.selecionaCabeleireiro().getEmailAniversario().isEnviar()) {
-                        new ClienteController().listarAniversariantesDoMes().forEach(c -> {
+                    Cabeleireiro cab = cc.selecionaCabeleireiro();
+                    if (cab.getEmailAniversario().isEnviar()) {
 
-                            try {
-                                new ClienteController().atualizarUltimoEnvioEmailAniversario(c.getCpf());
-                                Email mail = cc.selecionaCabeleireiro().getEmailAniversario();
-                      
-                                mail.setDestinatario(c.getEmail());
-                                mail.setTexto( mail.getTexto().replace("<nome>", c.getNome() ));
-                                mail.sendEmail(JavaMail.EMAIL_ANIVERSARIO);
-                            } catch (MessagingException ex) {
-                                System.out.println(ex);
-                            }
+                        List<Cliente> clientes = new ClienteController().listarAniversariantesDoMes();
+                        if (clientes != null) {
+                            clientes.forEach(c -> {
 
-                        });
+                                try {
+                                    new ClienteController().atualizarUltimoEnvioEmailAniversario(c.getCpf());
+                                    Email mail = cc.selecionaCabeleireiro().getEmailAniversario();
+                                    mail.setTitulo(mail.getTitulo().replace("<nome>", c.getNome()));
+                                    mail.setDestinatario(c.getEmail());
+                                    mail.setTexto(mail.getTexto().replace("<nome>", c.getNome()));
+                                    mail.sendEmail(JavaMail.EMAIL_ANIVERSARIO_ULTIMAVISITA);
+                                } catch (MessagingException ex) {
+                                    System.out.println(ex);
+                                }
+
+                            });
+                        }
+
+                    }
+
+                    if (cab.getEmailUltimaVisita().isEnviar()) {
+                        List<Cliente> clientesUltimoEnvio = new ClienteController().listaClientesEmailUltimaVisita();
+
+                        if (clientesUltimoEnvio != null) {
+                            clientesUltimoEnvio.forEach(c -> {
+
+                                try {
+                                    new ClienteController().atualizarUltimoEnvioEmailUltimaVisita(c.getCpf());
+                                    Email mail = cc.selecionaCabeleireiro().getEmailUltimaVisita();
+                                    mail.setTitulo(mail.getTitulo().replace("<nome>", c.getNome()));
+                                    mail.setDestinatario(c.getEmail());
+                                    mail.setTexto(mail.getTexto().replace("<nome>", c.getNome()));
+                                    mail.sendEmail(JavaMail.EMAIL_ANIVERSARIO_ULTIMAVISITA);
+                                } catch (MessagingException ex) {
+                                    System.out.println(ex);
+                                }
+
+                            });
+                        } else {
+                            System.out.println("veio nulo");
+                        }
+
                     }
 
                 }
@@ -570,8 +604,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelConfiguracoes;
     private javax.swing.JLabel jLabelDashboard;
     private javax.swing.JLabel jLabelFinancas;
-    private javax.swing.JLabel jLabelFinancas1;
-    private javax.swing.JLabel jLabelFinancas2;
     private javax.swing.JLabel jLabelProdutos;
     private javax.swing.JLabel jLabelServicos;
     private javax.swing.JPanel jPanel1;
@@ -582,8 +614,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel painelClientes;
     private javax.swing.JPanel painelDashboard;
     private javax.swing.JPanel painelFinancas;
-    private javax.swing.JPanel painelFinancas1;
-    private javax.swing.JPanel painelFinancas2;
     private javax.swing.JPanel painelPrincipal;
     private javax.swing.JPanel painelProdutos;
     // End of variables declaration//GEN-END:variables

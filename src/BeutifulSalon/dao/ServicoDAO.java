@@ -108,10 +108,10 @@ public class ServicoDAO {
     public ArrayList<Servico> listarServicos(String nome) {
 
  
+        String sql2 = "SELECT ID_SERVICO, NOME, PRECO, TEMPOGASTO, "
+                + "(SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) FROM AGENDAMENTO_SERVICO WHERE "
+                + "AGENDAMENTO_SERVICO.ID_SERVICO = SERVICO.ID_SERVICO) AS QTD FROM SERVICO WHERE SERVICO.NOME LIKE '%" + nome + "%' ORDER BY NOME DESC";
         
-        String sql2 ="SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) AS QTD, AGENDAMENTO_SERVICO.ID_SERVICO AS ID_SERVICO, SERVICO.NOME, SERVICO.PRECO, SERVICO.TEMPOGASTO FROM AGENDAMENTO_SERVICO " +
-                    "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
-                    " WHERE SERVICO.NOME LIKE '%" + nome + "%' GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) ";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -125,7 +125,7 @@ public class ServicoDAO {
 
             if (rs != null) {
                 servicos = new ArrayList<>();
-
+       
                 while (rs.next()) {
                     Servico servicoAtual = new Servico();
                     servicoAtual.setNome(rs.getString("NOME"));
@@ -137,6 +137,7 @@ public class ServicoDAO {
                 }
 
             }
+            return servicos;
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ConnectionMVC: " + e);

@@ -21,6 +21,7 @@ public class Cabeleireiro {
     private String email;
     private String senha;
     private Email emailAniversario;
+    private Email emailUltimaVisita;
     private LocalTime segundaE;
     private LocalTime tercaE;
     private LocalTime quartaE;
@@ -86,6 +87,15 @@ public class Cabeleireiro {
     public String getSenha() {
         return senha;
     }
+
+    public Email getEmailUltimaVisita() {
+        return emailUltimaVisita;
+    }
+
+    public void setEmailUltimaVisita(Email emailUltimaVisita) {
+        this.emailUltimaVisita = emailUltimaVisita;
+    }
+    
 
     public void setSenha(String senha) {
         this.senha = senha;
@@ -241,5 +251,9 @@ public class Cabeleireiro {
 
     public void cadastrarEmailPadraoAniversario(Email email, String cpf) throws ExceptionDAO {
         new CabeleireiroDAO().cadastrarEmailPadraoAniversario(email, cpf);
+    }
+    
+    public void cadastrarEmailUltimaVisita (Email mail, String cpf, int periodo) throws ExceptionDAO{
+        new CabeleireiroDAO().cadastrarEmailUltimaVisita(mail, cpf, periodo);
     }
 }

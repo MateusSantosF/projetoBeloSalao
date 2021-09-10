@@ -6,9 +6,11 @@
 package BeutifulSalon.view.Apresenta;
 
 import BeutifulSalon.Ferramentas.ManipulaFontes;
+import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.Tabelas.ClienteTableModel;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.Cliente;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
@@ -65,26 +67,16 @@ public class ApresentaCliente extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane2.setBorder(null);
-        jScrollPane2.setForeground(new java.awt.Color(34, 34, 34));
-        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        jScrollPane2.setViewportBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane2.setColumnHeaderView(null);
         jScrollPane2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jScrollPane2.setRequestFocusEnabled(false);
+        jScrollPane2.setPreferredSize(new java.awt.Dimension(450, 396));
 
         jTableConsultaCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jTableConsultaCliente.setForeground(new java.awt.Color(25, 25, 25));
         jTableConsultaCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -119,7 +111,9 @@ public class ApresentaCliente extends javax.swing.JPanel {
         jTableConsultaCliente.setGridColor(new java.awt.Color(243, 244, 245));
         jTableConsultaCliente.setRowHeight(22);
         jTableConsultaCliente.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        jTableConsultaCliente.setShowGrid(true);
+        jTableConsultaCliente.setShowGrid(false);
+        jTableConsultaCliente.setShowHorizontalLines(false);
+        jTableConsultaCliente.setShowVerticalLines(false);
         jScrollPane2.setViewportView(jTableConsultaCliente);
 
         jTextFieldNomeCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -244,7 +238,7 @@ public class ApresentaCliente extends javax.swing.JPanel {
                         .addComponent(jLabelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
@@ -267,7 +261,7 @@ public class ApresentaCliente extends javax.swing.JPanel {
                             .addComponent(jLabelExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
                 .addGap(54, 54, 54)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

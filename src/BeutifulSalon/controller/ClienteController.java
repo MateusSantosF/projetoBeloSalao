@@ -32,7 +32,7 @@ public class ClienteController {
             String TELEFONE, String CELULAR, String DATAREG) {
 
         if (NOME != null && NOME.length() > 0 && Valida.isCpf(CPF) && Valida.isEmail(EMAIL) && Valida.isData(DATANASC)
-                && verificaExistenciaCliente(CPF) == false) {
+                && verificaExistenciaCliente(CPF) == false && NUMERO.length() <= 6) {
 
             //Formatador
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
@@ -65,7 +65,6 @@ public class ClienteController {
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
 
             //objeto cliente
-         
             NOME = NOME.replaceAll("\\s", "");
             Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, DATANASC, CEP,
                     BAIRRO, RUA, CIDADE, NUMERO, TELEFONE, CELULAR);
@@ -250,13 +249,30 @@ public class ClienteController {
         }
         return null;
     }
-    
-     public void atualizarUltimoEnvioEmailAniversario(String cpf){
-         try {
-              new Cliente().atualizarUltimoEnvioEmailAniversario(cpf);
-         } catch (ExceptionDAO e) {
-             System.out.println("Erro ao atualizar ultiimo envio de email aniversario");
-         }
-       
-     }
+
+    public void atualizarUltimoEnvioEmailAniversario(String cpf) {
+        try {
+            new Cliente().atualizarUltimoEnvioEmailAniversario(cpf);
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao atualizar ultiimo envio de email aniversario");
+        }
+
+    }
+
+    public List<Cliente> listaClientesEmailUltimaVisita() {
+        try {
+            return new Cliente().listaClientesEmailUltimaVisita();
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao listar emails de ultima visita" + e);
+        }
+        return null;
+    }
+
+    public void atualizarUltimoEnvioEmailUltimaVisita(String cpf) {
+        try {
+            new Cliente().atualizarUltimoEnvioEmailUltimaVisita(cpf);
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao atualizar ultiimo envio de email de ultima visita" + e);
+        }
+    }
 }

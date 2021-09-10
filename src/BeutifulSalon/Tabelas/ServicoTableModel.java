@@ -6,7 +6,6 @@
 package BeutifulSalon.Tabelas;
 
 import BeutifulSalon.controller.ServicoController;
-import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Servico;
 import java.time.format.DateTimeFormatter;
