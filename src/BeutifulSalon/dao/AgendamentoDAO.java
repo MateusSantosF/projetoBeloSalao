@@ -27,7 +27,7 @@ public class AgendamentoDAO {
 
     public void cadastraAgendamento(Agendamento agendamento) throws SQLException, SQLException {
 
-        String insertAgendamento = "INSERT INTO AGENDAMENTO (DATA, HORARIO, CPF_CLIENTE, REALIZADO, DESCONTO, TOTAL) VALUES (?, ?, ?, ?, ?,?)";
+        String insertAgendamento = "INSERT INTO AGENDAMENTO (DATA, HORARIO, ID_CLIENTE, REALIZADO, DESCONTO, TOTAL) VALUES (?, ?, ?, ?, ?,?)";
 
         String insertServicoAgendamento = "INSERT INTO AGENDAMENTO_SERVICO (ID_AGENDAMENTO, ID_SERVICO) "
                 + "VALUES ((SELECT ID_AGENDAMENTO FROM AGENDAMENTO ORDER BY ID_AGENDAMENTO DESC LIMIT 1), ?)";
@@ -43,7 +43,7 @@ public class AgendamentoDAO {
             pStatement = connection.prepareStatement(insertAgendamento);
             pStatement.setDate(1, java.sql.Date.valueOf(agendamento.getData()));
             pStatement.setTime(2, java.sql.Time.valueOf(agendamento.getHorario()));
-            pStatement.setString(3, agendamento.getCpfCliente());
+            pStatement.setLong(3, agendamento.getIdCliente());
             pStatement.setBoolean(4, agendamento.getRealizado() ); 
             pStatement.setLong(5, agendamento.getDesconto());
             pStatement.setLong(6, agendamento.getTotal());
@@ -96,7 +96,7 @@ public class AgendamentoDAO {
     public Agendamento listarAgendamento(long idAgendamento){
         
  
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO,TOTAL, DESCONTO, CPF_CLIENTE FROM AGENDAMENTO WHERE ID_AGENDAMENTO = ? ";
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO,TOTAL, DESCONTO, ID_CLIENTE FROM AGENDAMENTO WHERE ID_AGENDAMENTO = ? ";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -114,10 +114,10 @@ public class AgendamentoDAO {
                 
                 while(rs.next()){
                     agendamento = new Agendamento();
-                    agendamento.setId(rs.getLong("ID_AGENDAMENTO"));
+                    agendamento.setIdAgendamento(rs.getLong("ID_AGENDAMENTO"));
                     agendamento.setData(rs.getDate("DATA").toLocalDate());
                     agendamento.setHorario(rs.getTime("HORARIO").toLocalTime());                    
-                    agendamento.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    agendamento.setIdCliente(rs.getLong("ID_CLIENTE"));
                     agendamento.setRealizado(rs.getBoolean("REALIZADO"));
                     agendamento.setTotal(rs.getLong("TOTAL"));
                     agendamento.setDesconto(rs.getLong("DESCONTO"));
@@ -153,7 +153,7 @@ public class AgendamentoDAO {
     
     public ArrayList<Agendamento> listarAgendamentos(){
         
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO WHERE REALIZADO = TRUE ORDER BY DATA ";
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO WHERE REALIZADO = TRUE ORDER BY DATA ";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -171,10 +171,10 @@ public class AgendamentoDAO {
                 while(rs.next()){
                     Agendamento ag = new Agendamento();
                    
-                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setIdAgendamento(rs.getLong("ID_AGENDAMENTO"));
                     ag.setData(rs.getDate("DATA").toLocalDate());
                     ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
-                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setIdCliente(rs.getLong("ID_CLIENTE"));
                     ag.setRealizado(rs.getBoolean("REALIZADO"));
                     agendamentos.add(ag);         
                 }
@@ -245,7 +245,7 @@ public class AgendamentoDAO {
         ManipulaData datas = new ManipulaData();
         
         
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO"
                 + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.MeiaNoiteAmanha() + " AND REALIZADO = TRUE ORDER BY HORARIO ";
         
         Connection connection = null;
@@ -264,10 +264,10 @@ public class AgendamentoDAO {
                 while(rs.next()){
                     Agendamento ag = new Agendamento();
                    
-                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setIdAgendamento(rs.getLong("ID_AGENDAMENTO"));
                     ag.setData(rs.getDate("DATA").toLocalDate());
                     ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
-                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setIdCliente(rs.getLong("ID_CLIENTE"));
                     ag.setRealizado(rs.getBoolean("REALIZADO"));
                     agendamentos.add(ag);         
                 }
@@ -305,7 +305,7 @@ public class AgendamentoDAO {
         ManipulaData datas = new ManipulaData();
         
         
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO"
                 + " WHERE DATA BETWEEN " + datas.MeiaNoiteAmanha() + " AND " + datas.somaDia(LocalDateTime.now().plusDays(1), 1)
                 + " AND REALIZADO = TRUE ORDER BY HORARIO";
         
@@ -325,10 +325,10 @@ public class AgendamentoDAO {
                 while(rs.next()){
                     Agendamento ag = new Agendamento();
                    
-                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setIdAgendamento(rs.getLong("ID_AGENDAMENTO"));
                     ag.setData(rs.getDate("DATA").toLocalDate());
                     ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
-                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setIdCliente(rs.getLong("ID_CLIENTE"));
                     ag.setRealizado(rs.getBoolean("REALIZADO"));
                     agendamentos.add(ag);         
                 }
@@ -366,7 +366,7 @@ public class AgendamentoDAO {
         ManipulaData datas = new ManipulaData();
         
         
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO"
                 + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.somaDia(LocalDateTime.now(), 5) 
                 +" AND REALIZADO = TRUE ORDER BY DATA";
         
@@ -386,10 +386,10 @@ public class AgendamentoDAO {
                 while(rs.next()){
                     Agendamento ag = new Agendamento();
                    
-                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setIdAgendamento(rs.getLong("ID_AGENDAMENTO"));
                     ag.setData(rs.getDate("DATA").toLocalDate());
                     ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
-                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setIdCliente(rs.getLong("ID_CLIENTE"));
                     ag.setRealizado(rs.getBoolean("REALIZADO"));
                     agendamentos.add(ag);         
                 }
@@ -427,8 +427,8 @@ public class AgendamentoDAO {
     
      public ArrayList<Agendamento> listarAgendamentosNome(String nome){
              
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE, CLIENTE.NOME FROM AGENDAMENTO"
-        + " INNER JOIN CLIENTE ON AGENDAMENTO.CPF_CLIENTE = CLIENTE.CPF AND CLIENTE.NOME LIKE'%" + nome +"%'";
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, CLIENTE.NOME FROM AGENDAMENTO"
+        + " INNER JOIN CLIENTE ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID AND CLIENTE.NOME LIKE'%" + nome +"%'";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -446,10 +446,10 @@ public class AgendamentoDAO {
                 while(rs.next()){
                     Agendamento ag = new Agendamento();
                    
-                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setIdAgendamento(rs.getLong("ID_AGENDAMENTO"));
                     ag.setData(rs.getDate("DATA").toLocalDate());
                     ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
-                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setIdCliente(rs.getLong("ID_CLIENTE"));
                     ag.setRealizado(rs.getBoolean("REALIZADO"));
                     agendamentos.add(ag);         
                 }
@@ -486,7 +486,7 @@ public class AgendamentoDAO {
         
         ManipulaData datas = new ManipulaData();
       
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO"
                 + " WHERE DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data) +" ORDER BY HORARIO";
         
         Connection connection = null;
@@ -505,15 +505,14 @@ public class AgendamentoDAO {
                 while(rs.next()){
                     Agendamento ag = new Agendamento();
                     ServicoController sc = new ServicoController();
-                                    
-                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                     
+                    ag.setServicos(sc.buscarServicoPeloAgendamento(rs.getLong("ID_AGENDAMENTO")));
+                    ag.setIdAgendamento(rs.getLong("ID_AGENDAMENTO"));
                     ag.setData(rs.getDate("DATA").toLocalDate());
                     ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
-                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setIdCliente(rs.getLong("ID_CLIENTE"));
                     ag.setRealizado(rs.getBoolean("REALIZADO"));
-                    
-    
-                       ag.setServicos(sc.buscarServicoPeloAgendamento(rs.getLong("ID_AGENDAMENTO")));
+                  
        
          
                     agendamentos.add(ag);         
@@ -551,7 +550,7 @@ public class AgendamentoDAO {
         
         ManipulaData datas = new ManipulaData();
       
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO"
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO"
                 + " WHERE REALIZADO = TRUE AND DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data) +" ORDER BY HORARIO";
         
         Connection connection = null;
@@ -571,10 +570,10 @@ public class AgendamentoDAO {
                     Agendamento ag = new Agendamento();
                     ServicoController sc = new ServicoController();
                                     
-                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setIdAgendamento(rs.getLong("ID_AGENDAMENTO"));
                     ag.setData(rs.getDate("DATA").toLocalDate());
                     ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
-                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setServicos(sc.buscarServicoPeloAgendamento(rs.getLong("ID_AGENDAMENTO")));
                     ag.setRealizado(rs.getBoolean("REALIZADO"));
                     
 
@@ -614,14 +613,14 @@ public class AgendamentoDAO {
 
     public void atualizarAgendamento(Agendamento agendamento) throws SQLException {
         
-        String insertAgendamento = "UPDATE AGENDAMENTO SET DATA = ?, HORARIO = ? , CPF_CLIENTE = ? ,"
+        String insertAgendamento = "UPDATE AGENDAMENTO SET DATA = ?, HORARIO = ? , ID_CLIENTE = ? ,"
                  + " REALIZADO = ? , DESCONTO = ? , TOTAL = ?  WHERE ID_AGENDAMENTO = ?";
          
         String deletaServicoAgendamentoAntigo = "DELETE FROM AGENDAMENTO_SERVICO WHERE ID_AGENDAMENTO = ?";
         String insertServicoAgendamento = "INSERT INTO AGENDAMENTO_SERVICO (ID_AGENDAMENTO, ID_SERVICO) "
                 + "VALUES (?, ?)";
 
-        System.out.println("ID => " + agendamento.getId());
+ 
         Connection connection = null;
         PreparedStatement pStatement = null;
 
@@ -631,10 +630,10 @@ public class AgendamentoDAO {
             connection.setAutoCommit(false);
 
             pStatement = connection.prepareStatement(insertAgendamento);
-            pStatement.setLong(7, agendamento.getId());
+            pStatement.setLong(7, agendamento.getIdAgendamento());
             pStatement.setDate(1, java.sql.Date.valueOf(agendamento.getData()));
             pStatement.setTime(2, java.sql.Time.valueOf(agendamento.getHorario()));
-            pStatement.setString(3, agendamento.getCpfCliente());
+            pStatement.setLong(3, agendamento.getIdCliente());
             pStatement.setBoolean(4, agendamento.getRealizado() ); 
             pStatement.setLong(5, agendamento.getDesconto());
             pStatement.setLong(6, agendamento.getTotal());
@@ -643,7 +642,7 @@ public class AgendamentoDAO {
             if (firstInsert > 0) {
                 
                 pStatement = connection.prepareStatement(deletaServicoAgendamentoAntigo);
-                pStatement.setLong(1, agendamento.getId());
+                pStatement.setLong(1, agendamento.getIdAgendamento());
                 pStatement.executeUpdate();
                 
                 try {
@@ -652,7 +651,7 @@ public class AgendamentoDAO {
 
                     for (Servico s : servicos) {
                         pStatement = connection.prepareStatement(insertServicoAgendamento);
-                        pStatement.setLong(1, agendamento.getId());
+                        pStatement.setLong(1, agendamento.getIdAgendamento());
                         pStatement.setLong(2, s.getId());
                         pStatement.executeUpdate();
                     }
@@ -694,7 +693,7 @@ public class AgendamentoDAO {
     
     public ArrayList<Agendamento> listarAgendamentosNaoRealizados(){
         
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, CPF_CLIENTE FROM AGENDAMENTO WHERE REALIZADO = FALSE ORDER BY DATA ";
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO WHERE REALIZADO = FALSE ORDER BY DATA ";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -712,10 +711,10 @@ public class AgendamentoDAO {
                 while(rs.next()){
                     Agendamento ag = new Agendamento();
                    
-                    ag.setId(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setIdAgendamento(rs.getLong("ID_AGENDAMENTO"));
                     ag.setData(rs.getDate("DATA").toLocalDate());
                     ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
-                    ag.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    ag.setIdCliente(rs.getLong("ID_CLIENTE"));
                     ag.setRealizado(rs.getBoolean("REALIZADO"));
                     agendamentos.add(ag);         
                 }

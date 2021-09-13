@@ -43,14 +43,9 @@ public class testes {
         Cabeleireiro c = new CabeleireiroController().selecionaCabeleireiro(); 
         
  
-        BigDecimal bigDecimal = new BigDecimal("1627786800000"); // agendamento da mulher
-        BigDecimal bigDecimal2 = new BigDecimal("1625875200000"); // 3 meses atras
-          
-          System.out.println(bigDecimal2.compareTo(bigDecimal));
+        String cpf = "500494768-66";
         
-        System.out.println("Tres meses atras em data " + LocalDate.now().minusMonths(c.getEmailUltimaVisita().getPeriodoReenvio()));
-        System.out.println("Tres meses atras =>" +LocalDate.now().minusMonths(c.getEmailUltimaVisita().getPeriodoReenvio()).toEpochDay() * 24 * 60 * 60 * 1000);
-        System.out.println("Hoje=> " + new ManipulaData().meiaNoiteHoje());
-       
+        System.out.println(cpf.replaceAll("\u00A0", "").length());
+        System.out.println(cpf);
     }
 }

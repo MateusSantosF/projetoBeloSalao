@@ -58,10 +58,10 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
 
         String dataFormatada = "";
 
-            clienteAgendamento = cc.buscarCliente(ag.getCpfCliente());
+        clienteAgendamento = cc.buscarCliente(ag.getIdCliente());
 
         jTextFieldNome.setText(clienteAgendamento.getNome());
-        jTextFieldCPF.setText(clienteAgendamento.getCpf());
+        jTextFieldIdCliente.setText(String.valueOf(clienteAgendamento.getId()));
         jTextFieldTotal.setText(Dinheiro.parseString(ag.getTotal()));
         jTextFieldTotalBruto.setText(Dinheiro.parseString(ag.getTotal() - ag.getDesconto()));
         jTextFieldDesconto.setText(Dinheiro.parseString(ag.getDesconto()));
@@ -81,7 +81,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
             Logger.getLogger(EditarAgendamento.class.getName()).log(Level.SEVERE, null, ex);
         }
      
-        jTableServicosSolicitados.setModel(new ApresentaTabela().apresentaServicosAgendamento(jTableServicosSolicitados, ag.getId()));
+        jTableServicosSolicitados.setModel(new ApresentaTabela().apresentaServicosAgendamento(jTableServicosSolicitados, ag.getIdAgendamento()));
 
     }
 
@@ -120,7 +120,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         jLabel4 = new javax.swing.JLabel();
         jTextFieldNome = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldCPF = new javax.swing.JTextField();
+        jTextFieldIdCliente = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableServicosSolicitados = new javax.swing.JTable();
@@ -276,8 +276,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         jLabel5.setForeground(new java.awt.Color(34, 34, 34));
         jLabel5.setText("CPF");
 
-        jTextFieldCPF.setEditable(false);
-        jTextFieldCPF.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldIdCliente.setEditable(false);
+        jTextFieldIdCliente.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(34, 34, 34));
@@ -327,7 +327,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
                             .addComponent(jLabel4)
                             .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
                         .addGap(47, 47, 47))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -389,7 +389,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextFieldIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -505,12 +505,12 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         try {
             sucesso = ac.atualizarAgendamento(dataFormatada,
                     jTextFieldHorario.getText(),
-                    jTextFieldCPF.getText(),
+                    Long.valueOf(jTextFieldIdCliente.getText()),
                     new RecuperaTabela().recuperaServicos(jTableServicosSolicitados),
                     calculaTotalFinal(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText())),
                     !jCheckBoxClienteVeio.isSelected(),
-                    agendamento.getId());
+                    agendamento.getIdAgendamento());
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -569,7 +569,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
 
     private void limparCampos() {
         jTextFieldNome.setText("");
-        jTextFieldCPF.setText("");
+        jTextFieldIdCliente.setText("");
         jTextFieldDesconto.setText("-R$ 0,00");
         jTextFieldTotalBruto.setText("R$ 0,00");
         jTextFieldTotal.setText("");
@@ -704,9 +704,9 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableServicosSolicitados;
-    private javax.swing.JTextField jTextFieldCPF;
     private javax.swing.JTextField jTextFieldDesconto;
     private javax.swing.JFormattedTextField jTextFieldHorario;
+    private javax.swing.JTextField jTextFieldIdCliente;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldTotal;
     private javax.swing.JTextField jTextFieldTotalBruto;
@@ -742,7 +742,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
     public void update(Cliente cliente) {
 
         jTextFieldNome.setText(cliente.getNome());
-        jTextFieldCPF.setText(cliente.getCpf());
+        jTextFieldIdCliente.setText(String.valueOf(cliente.getId()));
     }
 
     @Override

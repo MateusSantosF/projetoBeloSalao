@@ -741,7 +741,7 @@
                                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="0" pref="28" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="33" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="jLabel3" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                                       <Component id="jLabelUltimaViisita" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -913,7 +913,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="4"/>
-                    <Property name="text" type="java.lang.String" value="Sem informa&#xe7;&#xf5;es"/>
+                    <Property name="text" type="java.lang.String" value="--"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel26">

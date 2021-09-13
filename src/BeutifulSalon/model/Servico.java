@@ -120,8 +120,8 @@ public class Servico {
         return new ServicoDAO().selecionaServicosDoAno(anoReferente);
     }
 
-    public List<Servico> listarServicosDeAgendamentoPorCliente(String cpf) throws ExceptionDAO{
-        return new ServicoDAO().listarServicosDeAgendamentoPorCliente(cpf);
+    public List<Servico> listarServicosDeAgendamentoPorCliente(long id) throws ExceptionDAO{
+        return new ServicoDAO().listarServicosDeAgendamentoPorCliente(id);
     }
      public List<Servico> listarServicosRealizadosAno() throws ExceptionDAO{
         return new ServicoDAO().listarServicosRealizadosAno();

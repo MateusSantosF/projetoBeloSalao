@@ -88,9 +88,9 @@ public class ClienteServicoTableModel extends AbstractTableModel{
         return dados.get(rowCount);
     }
     
-    public void listarServicos(String cpf){     
+    public void listarServicos(long id){     
         dados.clear();
-        addRow(servicoController.listarServicosDeAgendamentoPorCliente(cpf));               
+        addRow(servicoController.listarServicosDeAgendamentoPorCliente(id));               
     }
     
 

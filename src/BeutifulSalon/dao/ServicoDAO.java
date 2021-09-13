@@ -634,12 +634,12 @@ public class ServicoDAO {
         
     }
 
-    public List<Servico> listarServicosDeAgendamentoPorCliente(String cpf) {
+    public List<Servico> listarServicosDeAgendamentoPorCliente(long id) {
         
         String sql = "SELECT SERVICO.ID_SERVICO, SERVICO.NOME, AGENDAMENTO.DATA, AGENDAMENTO.HORARIO FROM AGENDAMENTO_SERVICO " +
         "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
         "INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO " +
-        "WHERE CPF_CLIENTE = ? ORDER BY AGENDAMENTO.DATA DESC LIMIT 20";
+        "WHERE ID_CLIENTE = ? ORDER BY AGENDAMENTO.DATA DESC LIMIT 20";
         ArrayList<Servico> servicos = new ArrayList<>();
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -650,7 +650,7 @@ public class ServicoDAO {
             
             connection = new ConnectionMVC().getConnection();
             pStatement = connection.prepareStatement(sql);
-            pStatement.setString(1, cpf);         
+            pStatement.setLong(1, id);         
             rs = pStatement.executeQuery();
    
             if(rs != null){                

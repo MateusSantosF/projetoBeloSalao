@@ -56,7 +56,7 @@ public class AgendamentoTableModel extends AbstractTableModel {
         
         switch(columnIndex){
             case 0:
-                return clienteController.buscarCliente(dados.get(rowIndex).getCpfCliente()).getNome();
+                return clienteController.buscarCliente(dados.get(rowIndex).getIdCliente()).getNome();
             
             case 1:
                 return dados.get(rowIndex).getData().format(formatterData);
@@ -67,7 +67,7 @@ public class AgendamentoTableModel extends AbstractTableModel {
             case 3:
                 Agendamento g = dados.get(rowIndex);
                 ArrayList<Servico> servicosAgendamento = servicoController.buscarServicoPeloAgendamento(
-                        dados.get(rowIndex).getId());
+                        dados.get(rowIndex).getIdAgendamento());
                 LocalTime inicioAgendamento = g.getHorario();           
                 LocalTime fimAgendamento = inicioAgendamento;
                 

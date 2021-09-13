@@ -36,13 +36,13 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
     /**
      * Creates new form modalFotoPerfil
      */
-    private String cpfCliente;
+    private long idCliente;
     ArrayList<ObservadorCliente> observadores = new ArrayList<>();
     
     public modalFotoPerfil() {
         initComponents();
     }
-    public modalFotoPerfil(String cpf) {
+    public modalFotoPerfil(long idCliente) {
         initComponents();
         
         ManipulaFontes mf = new ManipulaFontes();
@@ -50,7 +50,7 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
         jLabel2.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Nova imagem
         jLabel3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Existente
         
-        this.cpfCliente = cpf;
+        this.idCliente = idCliente;
     }
     
     
@@ -184,7 +184,7 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
                 dis.readFully(imagem);
                 dis.close();
                 
-                boolean sucesso = cc.cadastraImagemPerfil(cpfCliente, imagem);
+                boolean sucesso = cc.cadastraImagemPerfil(idCliente, imagem);
                 notificarObservadores();
                 if(sucesso){
                     JOptionPane.showMessageDialog(null, "Imagem alterada com sucesso!");
@@ -204,7 +204,7 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
     }//GEN-LAST:event_jLabel3MousePressed
 
     private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
-       new modalWebcam(cpfCliente).setVisible(true);
+       new modalWebcam(idCliente).setVisible(true);
        this.dispose();
     }//GEN-LAST:event_jLabel2MousePressed
 
@@ -272,9 +272,9 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
         observadores.forEach(ob -> { 
             
             try {
-                ob.update(mi.redimensionaImg(cc.getImagemPerfil(cpfCliente)));
+                ob.update(mi.redimensionaImg(cc.getImagemPerfil(idCliente)));
             } catch (IOException ex) {
-                Logger.getLogger(modalFotoPerfil.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Erro ao notificar obsevadores da att da foto de perfil");
             }
                 
         });

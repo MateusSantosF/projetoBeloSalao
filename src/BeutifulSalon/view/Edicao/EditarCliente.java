@@ -28,20 +28,20 @@ public class EditarCliente extends javax.swing.JFrame {
      * Creates new form MainMenu
      */
     
+    private Cliente cliente;
     
     public EditarCliente() {
         initComponents();
        
     }
+    
+    
 
     public EditarCliente(Cliente cliente) {
        
         
         initComponents();
-        
-   
-        
-        
+        this.cliente = cliente;
         jTextFieldNome.setText(cliente.getNome());
         jTextFieldSobrenome.setText(cliente.getSobrenome());
         jFormattedTextFieldCPF.setText(cliente.getCpf());
@@ -711,8 +711,7 @@ public class EditarCliente extends javax.swing.JFrame {
                 jTextFieldCidade.getText().toUpperCase(),
                 jTextFieldNumero.getText(),
                 jTextFieldTelefone.getText(),
-                jTextFieldCelular.getText(),
-                df.format(new Date()).toString());  
+                jTextFieldCelular.getText(), cliente.getId());
             
             if(sucessoAoAtualizar){
                 JOptionPane.showMessageDialog(null, "Atualização realizada com sucesso.");

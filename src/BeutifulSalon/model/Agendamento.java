@@ -18,24 +18,24 @@ import java.util.ArrayList;
  */
 public class Agendamento {
     
-    long id;
-    long total;
-    long desconto;
-    LocalDate data;
-    LocalTime horario;
-    String cpfCliente;
-    Boolean realizado;
-    ArrayList<Servico> servicos;
+    private long idAgendamento;
+    private long idCliente;
+    private long total;
+    private long desconto;
+    private LocalDate data;
+    private LocalTime horario;
+    private Boolean realizado;
+    private ArrayList<Servico> servicos;
     
 
     
     public Agendamento(){};
     
-    public Agendamento(LocalDate data, LocalTime horario, String cpfCliente, ArrayList<Servico> servicos) {
+    public Agendamento(LocalDate data, LocalTime horario, long idCliente, ArrayList<Servico> servicos) {
       
         this.data = data;
         this.horario = horario;
-        this.cpfCliente = cpfCliente;
+        this.idCliente = idCliente;
         this.servicos = servicos;
     }
 
@@ -54,7 +54,7 @@ public class Agendamento {
     public void setTotal(long total) {
         this.total = total;
     }
-
+    
     
     public Boolean getRealizado() {
         return realizado;
@@ -64,12 +64,12 @@ public class Agendamento {
         this.realizado = realizado;
     }
       
-    public long getId() {
-        return id;
+    public long getIdAgendamento() {
+        return idAgendamento;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdAgendamento(long idAgendamento) {
+        this.idAgendamento = idAgendamento;
     }
 
     public LocalDate getData() {
@@ -90,13 +90,15 @@ public class Agendamento {
         this.horario = horario;
     }
 
-    public String getCpfCliente() {
-        return cpfCliente;
+    public long getIdCliente() {
+        return idCliente;
     }
 
-    public void setCpfCliente(String cpfCliente) {
-        this.cpfCliente = cpfCliente;
+    public void setIdCliente(long idCliente) {
+        this.idCliente = idCliente;
     }
+
+   
 
     public ArrayList<Servico> getServicos() {
         return servicos;

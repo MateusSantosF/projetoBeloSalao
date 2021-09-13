@@ -97,9 +97,9 @@ public class ServicoController {
         return null;
     }
 
-    public List<Servico> listarServicosDeAgendamentoPorCliente(String cpf) {
+    public List<Servico> listarServicosDeAgendamentoPorCliente(long id) {
         try {
-            return new Servico().listarServicosDeAgendamentoPorCliente(cpf);
+            return new Servico().listarServicosDeAgendamentoPorCliente(id);
         } catch (ExceptionDAO e) {
             System.out.println(e);
         }

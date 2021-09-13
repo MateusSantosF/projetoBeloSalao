@@ -495,7 +495,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                 jTextFieldSobrenome.getText(),
                 jTextFieldEmail.getText().toLowerCase(),
                 jFormattedTextFieldDataNasc.getText(),
-                jFormattedTextFieldCPF.getText(),
+                jFormattedTextFieldCep.getText(),
                 jTextFieldBairro.getText(),
                 jTextFieldRua.getText(),
                 jTextFieldCidade.getText().toUpperCase(),

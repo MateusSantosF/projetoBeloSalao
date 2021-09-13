@@ -11,14 +11,9 @@ import BeutifulSalon.dao.clienteDAO;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.view.Apresenta.DetalhesCliente;
 import BeutifulSalon.view.Edicao.EditarCliente;
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import javax.imageio.stream.ImageInputStream;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,9 +26,28 @@ public class ClienteController {
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR, String DATAREG) {
 
-        if (NOME != null && NOME.length() > 0 && Valida.isCpf(CPF) && Valida.isEmail(EMAIL) && Valida.isData(DATANASC)
-                && verificaExistenciaCliente(CPF) == false && NUMERO.length() <= 6) {
-
+        if (NOME != null && NOME.length() > 0 && SOBRENOME.length() > 0 && NUMERO.length() <= 6) {
+                 
+            
+          
+            if(CPF.replaceAll(" ", "").length() == 14){
+                if(Valida.isCpf(CPF) == false || verificaExistenciaCliente(CPF) == true ){
+                    return false;
+                }
+            }
+            
+            if(DATANASC.replaceAll(" ","").length() == 10){
+                if(Valida.isData(DATANASC) == false){
+                    return false;
+                }
+            }
+            if(EMAIL.length() > 0){
+                if(Valida.isEmail(EMAIL) == false){
+                    return false;
+                }
+            }
+            
+            
             //Formatador
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
             //Convertendo datas de String para Date
@@ -57,10 +71,20 @@ public class ClienteController {
 
     public boolean atualizarCliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC,
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
-            String TELEFONE, String CELULAR, String DATAREG) {
+            String TELEFONE, String CELULAR, long id) {
 
-        if (NOME != null && NOME.length() > 0 && Valida.isCpf(CPF) && Valida.isEmail(EMAIL) && Valida.isData(DATANASC)) {
+        if (NOME != null && NOME.length() > 0 && SOBRENOME.length() > 0 && NUMERO.length() <= 6) {
 
+            if(DATANASC.replaceAll(" ","").length() == 10){
+                if(Valida.isData(DATANASC) == false){
+                    return false;
+                }
+            }
+            if(EMAIL.length() > 0){
+                if(Valida.isEmail(EMAIL) == false){
+                    return false;
+                }
+            }
             //Formatador
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
 
@@ -68,6 +92,7 @@ public class ClienteController {
             NOME = NOME.replaceAll("\\s", "");
             Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, DATANASC, CEP,
                     BAIRRO, RUA, CIDADE, NUMERO, TELEFONE, CELULAR);
+            cliente.setId(id);
             try {
                 //Chamando construtor de Cliente
                 cliente.atualizarCliente(cliente);
@@ -83,18 +108,7 @@ public class ClienteController {
 
     }
 
-    public boolean validarCPF(String cpf) {
 
-        for (int i = 0; i < cpf.length(); i++) {
-            if (!Character.isDigit(cpf.charAt(i))) {
-                if (!(i == 3 || i == 7 || i == 11)) {
-                    JOptionPane.showMessageDialog(null, "CPF Inválido");
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
     public boolean verificaExistenciaCliente(String cpf) {
 
@@ -108,6 +122,7 @@ public class ClienteController {
                 return false;
             }
         } catch (ExceptionDAO e) {
+            System.out.println("Erro ao verificar existencia do cliente");
         }
 
         return false;
@@ -131,20 +146,20 @@ public class ClienteController {
         return null;
     }
 
-    public Cliente buscarCliente(String cpf) {
+    public Cliente buscarCliente(long id) {
         try {
-            return new Cliente().buscarCliente(cpf);
+            return new Cliente().buscarCliente(id);
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, e);
         }
         return null;
     }
 
-    public boolean excluirCliente(String cpf) {
+    public boolean excluirCliente(long id) {
 
         try {
             Cliente c = new Cliente();
-            c.excluirCliente(cpf);
+            c.excluirCliente(id);
 
         } catch (ExceptionDAO e) {
             JOptionPane.showInputDialog(null, "Erro Controller, excluir cliente");
@@ -154,13 +169,13 @@ public class ClienteController {
         return true;
     }
 
-    public boolean editarCliente(String cpf) {
+    public boolean editarCliente(long id) {
 
         try {
             Cliente c = new Cliente();
             Cliente clienteEditado;
 
-            clienteEditado = c.editarCliente(cpf);
+            clienteEditado = c.editarCliente(id);
 
             if (clienteEditado != null) {
                 new EditarCliente(clienteEditado).setVisible(true);
@@ -180,10 +195,10 @@ public class ClienteController {
         new DetalhesCliente(cliente).setVisible(true);
     }
 
-    public LocalDate ultimaVisita(String cpf) {
+    public LocalDate ultimaVisita(long id) {
 
         try {
-            return new Cliente().ultimaVisita(cpf);
+            return new Cliente().ultimaVisita(id);
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, "Erro ao buscar ultima visita do cliente " + e);
         }
@@ -215,10 +230,10 @@ public class ClienteController {
         return null;
     }
 
-    public boolean cadastraImagemPerfil(String cpf, byte[] imagem) {
+    public boolean cadastraImagemPerfil(long id, byte[] imagem) {
 
         try {
-            return new Cliente().cadastraImagemPerfil(cpf, imagem);
+            return new Cliente().cadastraImagemPerfil(id, imagem);
         } catch (ExceptionDAO e) {
             System.out.println("erro ao cadastrar imagem perfil");
         }
@@ -226,13 +241,13 @@ public class ClienteController {
         return false;
     }
 
-    public byte[] getImagemPerfil(String cpf) {
+    public byte[] getImagemPerfil(long id) {
 
         byte[] imgNula = new byte[0];
 
         try {
 
-            return new Cliente().recuperaImagemPerfil(cpf);
+            return new Cliente().recuperaImagemPerfil(id);
 
         } catch (ExceptionDAO e) {
             System.out.println(e);
@@ -250,9 +265,9 @@ public class ClienteController {
         return null;
     }
 
-    public void atualizarUltimoEnvioEmailAniversario(String cpf) {
+    public void atualizarUltimoEnvioEmailAniversario(long id) {
         try {
-            new Cliente().atualizarUltimoEnvioEmailAniversario(cpf);
+            new Cliente().atualizarUltimoEnvioEmailAniversario(id);
         } catch (ExceptionDAO e) {
             System.out.println("Erro ao atualizar ultiimo envio de email aniversario");
         }
@@ -268,9 +283,9 @@ public class ClienteController {
         return null;
     }
 
-    public void atualizarUltimoEnvioEmailUltimaVisita(String cpf) {
+    public void atualizarUltimoEnvioEmailUltimaVisita(long id) {
         try {
-            new Cliente().atualizarUltimoEnvioEmailUltimaVisita(cpf);
+            new Cliente().atualizarUltimoEnvioEmailUltimaVisita(id);
         } catch (ExceptionDAO e) {
             System.out.println("Erro ao atualizar ultiimo envio de email de ultima visita" + e);
         }

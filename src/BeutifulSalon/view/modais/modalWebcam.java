@@ -37,7 +37,7 @@ import javax.swing.JOptionPane;
 public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente {
 
     private Webcam webcam = null;
-    private String cpfCliente = null;
+    private long idCliente;
     private boolean gostouDaFoto = false;
 
     /**
@@ -48,7 +48,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
 
     }
 
-    public modalWebcam(String cpf) {
+    public modalWebcam(long idCliente) {
         initComponents();
         
         ManipulaFontes mf = new ManipulaFontes();
@@ -57,7 +57,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
         jButton2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Fechar Webcam
         
         iniciarWebCam();
-        cpfCliente = cpf;
+        this.idCliente = idCliente;
 
     }
 
@@ -226,7 +226,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
                 modal.setVisible(true);
 
                 if (gostouDaFoto) {
-                    boolean sucesso = cc.cadastraImagemPerfil(cpfCliente, imagemEmBytes);
+                    boolean sucesso = cc.cadastraImagemPerfil(idCliente, imagemEmBytes);
 
                     if (sucesso) {
                         JOptionPane.showMessageDialog(null, "Imagem alterada com sucesso!");

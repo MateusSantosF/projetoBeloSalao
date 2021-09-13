@@ -6,15 +6,14 @@
 package BeutifulSalon.view.modais;
 
 import BeutifulSalon.Ferramentas.ManipulaFontes;
-import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.Tabelas.ModalClienteTableModel;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -27,6 +26,7 @@ public class modalCliente extends javax.swing.JFrame implements Observado {
      */
     
     ArrayList<Observador> observadores = new ArrayList<>();
+    ModalClienteTableModel modelo = new ModalClienteTableModel();
     
     public modalCliente() {
         initComponents();
@@ -38,10 +38,9 @@ public class modalCliente extends javax.swing.JFrame implements Observado {
         jButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Confirmar
         jTableConsultaCliente.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f)); //Tabela
         
-        
-        
-        listarTodosClientes();
-       
+              
+        modelo.getTodosClientes();
+        jTableConsultaCliente.setModel(modelo);       
     }
     
     public Cliente clienteSelecionado(){
@@ -51,12 +50,8 @@ public class modalCliente extends javax.swing.JFrame implements Observado {
         if(indice > -1){  
            
             try {
-                String cpfClienteSelecionado = (String) jTableConsultaCliente.getValueAt(indice, 2);
-                String nome = (String) jTableConsultaCliente.getValueAt(indice, 0) + " " + 
-                        jTableConsultaCliente.getValueAt(indice, 1);
-                return new Cliente(nome, cpfClienteSelecionado);
-      
-                
+                return modelo.getCliente(indice);
+            
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro ao recuperar dados do cliente da tabela.");
                 return null;
@@ -213,65 +208,20 @@ public class modalCliente extends javax.swing.JFrame implements Observado {
 
     private void jTextFieldNomeClienteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNomeClienteKeyPressed
        String nome = jTextFieldNomeCliente.getText(); // nome do TextField
-        DefaultTableModel tabelaClienteModel = (DefaultTableModel) jTableConsultaCliente.getModel(); // tabela
-        tabelaClienteModel.setRowCount(0);
+        
+       modelo.getClientePorNome(nome);
+       jTableConsultaCliente.setModel(modelo);
 
-        ClienteController cc = new ClienteController();
-
-        List<Cliente> clientesConsultados = null;
-  
-            clientesConsultados = cc.listarClientes(nome);
-   
-
-        try {
-            clientesConsultados.forEach( (Cliente cliente) -> {
-                tabelaClienteModel.addRow(new Object[] {
-                    cliente.getNome(),
-                    cliente.getSobrenome(),
-                    cliente.getCpf()});
-
-        });
-
-        jTableConsultaCliente.setModel(tabelaClienteModel);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
-        }
     }//GEN-LAST:event_jTextFieldNomeClienteKeyPressed
 
     private void jTextFieldNomeClienteCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldNomeClienteCaretUpdate
         if(jTextFieldNomeCliente.getText().equals("")){
-            listarTodosClientes();
+            modelo.getTodosClientes();
+            jTableConsultaCliente.setModel(modelo);
         }
     }//GEN-LAST:event_jTextFieldNomeClienteCaretUpdate
      
-    private void listarTodosClientes(){
-          
-        DefaultTableModel tabelaClienteModel = (DefaultTableModel) jTableConsultaCliente.getModel(); // tabela
-        tabelaClienteModel.setRowCount(0);
-       
-        ClienteController cc = new ClienteController();
-        
-       
-        List<Cliente> clientesConsultados = null;
-    
-            clientesConsultados = cc.listarClientes();
-
-            
-            try {
-               clientesConsultados.forEach( (Cliente cliente) -> {
-                 tabelaClienteModel.addRow(new Object[] {cliente.getNome(),
-                                                        cliente.getSobrenome(),
-                                                        cliente.getCpf()});
-            
-               });
-               
-               jTableConsultaCliente.setModel(tabelaClienteModel);
-                
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Erro ao listarClientes" + e);
-            }
-    }
+   
     /**
      * @param args the command line arguments
      */

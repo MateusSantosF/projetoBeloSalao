@@ -83,9 +83,9 @@ public class clienteDAO {
    
                              
     
-    public void atualizarUltimoEnvioEmailAniversario(String cpf){
+    public void atualizarUltimoEnvioEmailAniversario(long id){
         
-        String sql = "UPDATE EMAILANIVERSARIO SET ULTIMOENVIO = ? WHERE CPF = ?";
+        String sql = "UPDATE EMAILANIVERSARIO SET ULTIMOENVIO = ? WHERE ID_CLIENTE = ?";
         Connection connection = null;
         PreparedStatement pStatement = null;
         try {
@@ -93,7 +93,7 @@ public class clienteDAO {
             connection = new ConnectionMVC().getConnection();
             
             pStatement = connection.prepareStatement(sql);
-            pStatement.setString(2, cpf);
+            pStatement.setLong(2, id);
             pStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
            
             
@@ -120,9 +120,9 @@ public class clienteDAO {
    
     }
     
-    public void atualizarUltimoEnvioEmailUltimaVisita(String cpf){
+    public void atualizarUltimoEnvioEmailUltimaVisita(long id){
         
-        String sql = "UPDATE EMAILULTIMAVISITA SET ULTIMOENVIO = ? WHERE CPF = ?";
+        String sql = "UPDATE EMAILULTIMAVISITA SET ULTIMOENVIO = ? WHERE ID_CLIENTE = ?";
         Connection connection = null;
         PreparedStatement pStatement = null;
         try {
@@ -130,7 +130,7 @@ public class clienteDAO {
             connection = new ConnectionMVC().getConnection();
             
             pStatement = connection.prepareStatement(sql);
-            pStatement.setString(2, cpf);
+            pStatement.setLong(2, id);
             pStatement.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
            
             
@@ -160,7 +160,7 @@ public class clienteDAO {
     public List<Cliente> listarAniversariantesDoMes() throws ExceptionDAO{
         
         String sql = "SELECT * FROM CLIENTE " +
-        " INNER JOIN EMAILANIVERSARIO ON EMAILANIVERSARIO.CPF = CLIENTE.CPF " +
+        " INNER JOIN EMAILANIVERSARIO ON EMAILANIVERSARIO.ID_CLIENTE = CLIENTE.ID " +
         " WHERE Substr(Cliente.DATANASC,0, 6) = ? AND (EMAILANIVERSARIO.ULTIMOENVIO NOT BETWEEN ? AND ? OR EMAILANIVERSARIO.ULTIMOENVIO IS NULL)";
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -185,6 +185,7 @@ public class clienteDAO {
                 
                 while(rs.next()){
                     Cliente clienteAtual = new Cliente();
+                    clienteAtual.setId(rs.getLong("ID"));
                     clienteAtual.setNome(rs.getString("NOME"));
                     clienteAtual.setCpf(rs.getString("CPF"));
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
@@ -221,9 +222,9 @@ public class clienteDAO {
     
      public List<Cliente> listaClientesEmailUltimaVisita() throws ExceptionDAO{
         
-        String sql = "SELECT  NOME,SOBRENOME, EMAIL, CLIENTE.CPF FROM CLIENTE" +
-"        INNER JOIN AGENDAMENTO ON AGENDAMENTO.CPF_CLIENTE = CLIENTE.CPF " +
-"        INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.CPF = CLIENTE.CPF AND EMAILULTIMAVISITA.CPF = AGENDAMENTO.CPF_CLIENTE " +
+        String sql = "SELECT  NOME,SOBRENOME, EMAIL, CLIENTE.CPF, CLIENTE.ID FROM CLIENTE" +
+"        INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID " +
+"        INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.ID_CLIENTE = CLIENTE.ID AND EMAILULTIMAVISITA.ID_CLIENTE = AGENDAMENTO.ID_CLIENTE " +
 "        WHERE AGENDAMENTO.DATA NOT BETWEEN ? AND ( SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO) " +
 "        AND (EMAILULTIMAVISITA.ULTIMOENVIO NOT BETWEEN ? AND ( SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO) OR EMAILULTIMAVISITA.ULTIMOENVIO IS NULL)";
                 
@@ -238,9 +239,7 @@ public class clienteDAO {
             connection = new ConnectionMVC().getConnection();
             
             pStatement = connection.prepareStatement(sql);
-            
-            
-           
+        
             pStatement.setLong(1, LocalDate.now().minusMonths(c.getEmailUltimaVisita().getPeriodoReenvio()).toEpochDay() * 24 * 60 * 60 * 1000 );
             pStatement.setLong(2, LocalDate.now().minusMonths(c.getEmailUltimaVisita().getPeriodoReenvio()).toEpochDay() * 24 * 60 * 60 * 1000 );
             
@@ -250,8 +249,9 @@ public class clienteDAO {
                 clientes = new ArrayList<>();
             
                 while(rs.next()){
-          
+                    
                     Cliente clienteAtual = new Cliente();
+                    clienteAtual.setId(rs.getLong("ID"));
                     clienteAtual.setNome(rs.getString("NOME"));
                     clienteAtual.setCpf(rs.getString("CPF"));
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
@@ -290,7 +290,7 @@ public class clienteDAO {
     public List<Cliente> listarClientes(String nome) throws ExceptionDAO{
         
         
-        String sql  = "SELECT NOME,SOBRENOME,CELULAR,EMAIL,CPF FROM CLIENTE WHERE NOME LIKE '%" + nome + "%' ORDER BY DATAREG DESC";
+        String sql  = "SELECT ID,NOME,SOBRENOME,CELULAR,EMAIL,CPF FROM CLIENTE WHERE NOME LIKE '%" + nome + "%' ORDER BY DATAREG DESC";
         Connection connection = null;
         PreparedStatement pStatement = null;
         
@@ -308,6 +308,7 @@ public class clienteDAO {
                 
                 while(rs.next()){
                     Cliente clienteAtual = new Cliente();
+                    clienteAtual.setId(rs.getLong("ID"));
                     clienteAtual.setNome(rs.getString("NOME"));
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
                     clienteAtual.setCelular(rs.getString("CELULAR"));
@@ -343,8 +344,8 @@ public class clienteDAO {
     
     public List<Cliente> listarClientes() throws ExceptionDAO{
         
-        String sql  = "SELECT CPF, NOME, SOBRENOME, CELULAR, EMAIL,"
-                + "(SELECT MAX(DATA) FROM AGENDAMENTO WHERE CPF_CLIENTE = CPF AND REALIZADO = TRUE) AS ULTIMAVISITA "
+        String sql  = "SELECT ID,CPF, NOME, SOBRENOME, CELULAR, EMAIL,"
+                + "(SELECT MAX(DATA) FROM AGENDAMENTO WHERE ID_CLIENTE = ID AND REALIZADO = TRUE) AS ULTIMAVISITA "
                 + "FROM CLIENTE ORDER BY DATAREG DESC";
         
         Connection connection = null;
@@ -363,6 +364,7 @@ public class clienteDAO {
                 
                 while(rs.next()){
                     Cliente clienteAtual = new Cliente();
+                    clienteAtual.setId(rs.getLong("ID"));
                     clienteAtual.setNome(rs.getString("NOME"));
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
                     clienteAtual.setCelular(rs.getString("CELULAR"));
@@ -404,10 +406,10 @@ public class clienteDAO {
         
     }
     
-    public void deletarCliente(String cpf){
+    public void deletarCliente(long id){
         
         
-        String sql  = "DELETE FROM CLIENTE WHERE CPF = ?";
+        String sql  = "DELETE FROM CLIENTE WHERE ID = ?";
         Connection connection = null;
         PreparedStatement pStatement = null;
         
@@ -415,7 +417,7 @@ public class clienteDAO {
             connection = new ConnectionMVC().getConnection();
             
             pStatement = connection.prepareStatement(sql);
-            pStatement.setString(1, cpf);
+            pStatement.setLong(1, id);
             pStatement.executeUpdate();
             
         } catch (SQLException e) {
@@ -440,10 +442,15 @@ public class clienteDAO {
         
     }
     
-    public Cliente editarCliente(String cpf){
+    /**
+     * Retorna um objeto Cliente, para enviar para tela "editarCliente" e apresentar as informações
+     * @param id
+     * @return 
+     */
+    public Cliente editarCliente(long id){
         
         
-        String sqlScript = "SELECT NOME,SOBRENOME,CPF, EMAIL, CELULAR, DATANASC, CEP, BAIRRO, RUA,NUMERO, CIDADE,CELULAR, TELEFONE FROM CLIENTE WHERE CPF = ?";
+        String sqlScript = "SELECT ID,NOME,SOBRENOME,CPF, EMAIL, CELULAR, DATANASC, CEP, BAIRRO, RUA,NUMERO, CIDADE,CELULAR, TELEFONE FROM CLIENTE WHERE ID = ?";
         
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -452,12 +459,13 @@ public class clienteDAO {
         try {
             connection = new ConnectionMVC().getConnection();
             pStatement = connection.prepareStatement(sqlScript);
-            pStatement.setString(1, cpf);
+            pStatement.setLong(1, id);
             rs = pStatement.executeQuery();
             Cliente cliente = new Cliente(); 
       
             if(rs != null){                
                 while(rs.next()){
+                cliente.setId(rs.getLong("ID"));
                 cliente.setNome(rs.getString("NOME"));
                 cliente.setSobrenome(rs.getString("SOBRENOME"));
                 cliente.setCpf(rs.getString("CPF"));
@@ -498,13 +506,13 @@ public class clienteDAO {
         return null;
     }
     
-     public Cliente buscarCliente(String cpf){
+    public Cliente buscarCliente(long id){
         
         
-        String sqlScript = "SELECT NOME,SOBRENOME,CPF, EMAIL, CELULAR, DATANASC,DATAREG, "
+        String sqlScript = "SELECT ID, NOME,SOBRENOME,CPF, EMAIL, CELULAR, DATANASC,DATAREG, "
                 + "CEP, BAIRRO, RUA,NUMERO, CIDADE,CELULAR, TELEFONE,"
                 +" TIPODECABELO, TAMANHOCABELO,CORCABELO, CONHECEU, FACEBOOK,INSTAGRAM, OBSERVACOES"
-                + " FROM CLIENTE WHERE CPF = ?";
+                + " FROM CLIENTE WHERE ID = ?";
         
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -513,12 +521,14 @@ public class clienteDAO {
         try {
             connection = new ConnectionMVC().getConnection();
             pStatement = connection.prepareStatement(sqlScript);
-            pStatement.setString(1, cpf);
+            pStatement.setLong(1, id);
             rs = pStatement.executeQuery();
             Cliente cliente = new Cliente(); 
       
             if(rs != null){                
                 while(rs.next()){
+                
+                cliente.setId(rs.getLong("ID"));
                 cliente.setNome(rs.getString("NOME"));
                 cliente.setSobrenome(rs.getString("SOBRENOME"));
                 cliente.setCpf(rs.getString("CPF"));
@@ -566,11 +576,16 @@ public class clienteDAO {
        
         return null;
     }
+    /**
+     * Recebe um objeto cliente, com as informações inseridas na tela "editarCliente", e realiza o update
+     * @param cliente 
+     */
      
     public void atualizarCliente(Cliente cliente) {
         
         
-        String sqlScript = "UPDATE CLIENTE SET CPF = ? ,NOME = ? , SOBRENOME = ?, EMAIL = ? , DATANASC = ? , CEP = ? , BAIRRO = ? , RUA = ? , CIDADE = ? , TELEFONE = ?, CELULAR = ? , NUMERO = ? WHERE CPF = ? ";
+        String sqlScript = "UPDATE CLIENTE SET CPF = ? ,NOME = ? , SOBRENOME = ?, EMAIL = ? , DATANASC = ? , CEP = ? , BAIRRO = ? , RUA = ? , "
+                + "CIDADE = ? , TELEFONE = ?, CELULAR = ? , NUMERO = ? WHERE ID = ? ";
         
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -580,7 +595,7 @@ public class clienteDAO {
             connection = new ConnectionMVC().getConnection();
             
             pStatement = connection.prepareStatement(sqlScript);
-            pStatement.setString(13, cliente.getCpf());
+            pStatement.setLong(13, cliente.getId());
             pStatement.setString(1, cliente.getCpf());
             pStatement.setString(2, cliente.getNome());
             pStatement.setString(3, cliente.getSobrenome());
@@ -619,7 +634,7 @@ public class clienteDAO {
      
     public void atualizarDetalhesCliente(Cliente cliente) {
     
-        String sqlScript = "UPDATE CLIENTE SET TIPODECABELO = ?, TAMANHOCABELO = ?, CORCABELO = ?, CONHECEU = ? , FACEBOOK = ?, INSTAGRAM = ?, OBSERVACOES = ? WHERE CPF = ? ";
+        String sqlScript = "UPDATE CLIENTE SET TIPODECABELO = ?, TAMANHOCABELO = ?, CORCABELO = ?, CONHECEU = ? , FACEBOOK = ?, INSTAGRAM = ?, OBSERVACOES = ? WHERE ID = ? ";
         
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -629,7 +644,7 @@ public class clienteDAO {
             connection = new ConnectionMVC().getConnection();
             
             pStatement = connection.prepareStatement(sqlScript);
-            pStatement.setString(8, cliente.getCpf());
+            pStatement.setLong(8, cliente.getId());
             pStatement.setInt(1, cliente.getTipoDeCabelo());
             pStatement.setInt(2, cliente.getTamanhoCabelo());
             pStatement.setString(3, cliente.getCorCabelo());
@@ -662,16 +677,16 @@ public class clienteDAO {
     }
     
      
-    public LocalDate ultimaVisita(String cpf) throws ExceptionDAO{
+    public LocalDate ultimaVisita(long id) throws ExceptionDAO{
         
-        String sql = "SELECT MAX(DATA) AS ULTIMAVISITA FROM AGENDAMENTO WHERE CPF_CLIENTE = ? AND REALIZADO = TRUE ";
+        String sql = "SELECT MAX(DATA) AS ULTIMAVISITA FROM AGENDAMENTO WHERE ID_CLIENTE = ? AND REALIZADO = TRUE ";
         Connection connection = null;
         PreparedStatement pStatement = null;
         
         try {
             connection = new ConnectionMVC().getConnection();
             pStatement = connection.prepareStatement(sql);          
-            pStatement.setString(1, cpf);
+            pStatement.setLong(1, id);
             
             ResultSet rs = pStatement.executeQuery();
             
@@ -750,10 +765,10 @@ public class clienteDAO {
     }
     
     public List<Cliente> top5Clientes(int anoReferente){
-         String sql  = "SELECT COUNT(AGENDAMENTO.CPF_CLIENTE) AS QTD, CLIENTE.NOME, CLIENTE.SOBRENOME FROM AGENDAMENTO\n" +
-                "INNER JOIN CLIENTE ON CLIENTE.CPF = AGENDAMENTO.CPF_CLIENTE " +
+         String sql  = "SELECT COUNT(AGENDAMENTO.ID_CLIENTE) AS QTD, CLIENTE.NOME, CLIENTE.SOBRENOME FROM AGENDAMENTO\n" +
+                "INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE " +
                 "WHERE AGENDAMENTO.DATA BETWEEN ? AND ?" +
-                "GROUP BY AGENDAMENTO.CPF_CLIENTE ORDER BY COUNT(AGENDAMENTO.CPF_CLIENTE) DESC LIMIT 5;";
+                "GROUP BY AGENDAMENTO.ID_CLIENTE ORDER BY COUNT(AGENDAMENTO.ID_CLIENTE) DESC LIMIT 5;";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -778,7 +793,7 @@ public class clienteDAO {
                     Cliente clienteAtual = new Cliente();
                     clienteAtual.setNome(rs.getString("NOME"));
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
-                    clienteAtual.setDeOndeConheceu(rs.getInt("QTD"));//gambiarra
+                    clienteAtual.setQtdVisitas(rs.getInt("QTD"));
                     clientes.add(clienteAtual);
                 }
                 
@@ -809,10 +824,10 @@ public class clienteDAO {
       
     
     
-    public boolean cadastraImagemPerfil(String cpf, byte[] imagem){
+    public boolean cadastraImagemPerfil(long id, byte[] imagem){
         
   
-        String sql2 = "UPDATE CLIENTE SET FOTOPERFIL = ? WHERE CLIENTE.CPF = ?";
+        String sql2 = "UPDATE CLIENTE SET FOTOPERFIL = ? WHERE CLIENTE.ID = ?";
 
         
         Connection connection = null;
@@ -822,7 +837,7 @@ public class clienteDAO {
         try {
             connection = new ConnectionMVC().getConnection();  
             pStatement = connection.prepareStatement(sql2);
-            pStatement.setString(2, cpf);
+            pStatement.setLong(2, id);
             pStatement.setObject(1, imagem);
             
             int sucesso = pStatement.executeUpdate();
@@ -849,9 +864,9 @@ public class clienteDAO {
         return false;
     }
 
-    public byte[] recuperaImagemPerfil(String cpf) {
+    public byte[] recuperaImagemPerfil(long id) {
         
-        String sql = "SELECT FOTOPERFIL FROM CLIENTE WHERE CPF = ?";
+        String sql = "SELECT FOTOPERFIL FROM CLIENTE WHERE ID = ?";
 
         
         Connection connection = null;
@@ -861,7 +876,7 @@ public class clienteDAO {
         try {
             connection = new ConnectionMVC().getConnection();  
             pStatement = connection.prepareStatement(sql);
-            pStatement.setString(1, cpf);
+            pStatement.setLong(1, id);
             
             ResultSet rs = pStatement.executeQuery();
             

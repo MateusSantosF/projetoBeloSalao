@@ -114,18 +114,21 @@ public class JavaMail {
                 // Criando a parte que vai tratar a imagem
                 MimeMultipart multipart = new MimeMultipart("related");
 
-                // Corpo da mensagem
-                BodyPart messageBodyPart = new MimeBodyPart();
-                String htmlText = "<p>" + email.getTexto() + "</p>";
-
-                messageBodyPart.setContent(htmlText, "text/html");
-                // Add
-                multipart.addBodyPart(messageBodyPart);
+              
 
                 // Pegando a imagem
               
 
                 if (tipo == EMAIL_PADRAO) {
+                    
+                  // Corpo da mensagem
+                  BodyPart messageBodyPart = new MimeBodyPart();
+                  String htmlText = "<p>" + email.getTexto() + "</p>";
+
+                  messageBodyPart.setContent(htmlText, "text/html");
+                  // Add
+                  multipart.addBodyPart(messageBodyPart);
+                  
                     messageBodyPart = new MimeBodyPart();
                     
                     
@@ -144,7 +147,13 @@ public class JavaMail {
 
                 if (tipo == EMAIL_ANIVERSARIO_ULTIMAVISITA) {
                     
-                    
+                    // Corpo da mensagem
+                    BodyPart messageBodyPart = new MimeBodyPart();
+                    String htmlText = "<p>" + email.getTexto() + "</p>"  + "<img src='cid:image' />";
+
+                    messageBodyPart.setContent(htmlText, "text/html");
+                    // Add
+                    multipart.addBodyPart(messageBodyPart);
                     messageBodyPart = new MimeBodyPart();
                     File file = null;
                     try {
@@ -160,6 +169,7 @@ public class JavaMail {
                         
                         DataSource t = new FileDataSource(file.getAbsolutePath());
                         messageBodyPart.setDataHandler(new DataHandler(t));
+                        messageBodyPart.setHeader( "Content-ID", "<image>" );
                         messageBodyPart.setFileName(email.getNomeDoArquivo());
                         
                     } catch (IOException e) {

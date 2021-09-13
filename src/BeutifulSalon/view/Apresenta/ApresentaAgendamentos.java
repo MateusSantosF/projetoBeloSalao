@@ -377,7 +377,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         boolean sucesso = false;
         
         if(index > -1){
-            long idAgendamento = modelo.getAgendamento(index).getId();
+            long idAgendamento = modelo.getAgendamento(index).getIdAgendamento();
             sucesso = ag.editarAgendamento(idAgendamento);
             
             if(!sucesso){

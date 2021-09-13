@@ -37,7 +37,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
      * Creates new form DetalhesCliente
      */
     
-    private String cpfCliente = null;
+    private long idCliente;
     private modalEmail modEmail = null;  
     private modalFotoPerfil modFotoPerfil = null;
     private ClienteServicoTableModel modeloServicos = new ClienteServicoTableModel();
@@ -101,15 +101,15 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     jTextAreaObservacoes.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Area Observacoes
     
          
-        cpfCliente = cliente.getCpf();
+        idCliente = cliente.getId();
         ClienteController cc = new ClienteController();
         ManipulaImagem mi = new ManipulaImagem();
-        modeloServicos.listarServicos(cliente.getCpf());
+        modeloServicos.listarServicos(cliente.getId());
         modeloCompras.listarItens(cliente.getCpf());
         jTableServicos.setModel(modeloServicos);
         jTableCompras.setModel(modeloCompras);
         
-        byte[] imagemPerfil = cc.getImagemPerfil(cliente.getCpf());
+        byte[] imagemPerfil = cc.getImagemPerfil(cliente.getId());
       
         if(imagemPerfil != null){
             try {
@@ -130,7 +130,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jLabelCelular.setText(cliente.getCelular());
         jLabelCpf.setText(cliente.getCpf());
 
-        LocalDate ultimaVisita = cc.ultimaVisita(cliente.getCpf());
+        LocalDate ultimaVisita = cc.ultimaVisita(cliente.getId());
         LocalDate clienteDesde = cliente.getDataDeRegistro();
 
         if (ultimaVisita != null) {
@@ -447,7 +447,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jLabelUltimaViisita.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelUltimaViisita.setForeground(new java.awt.Color(255, 255, 255));
         jLabelUltimaViisita.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelUltimaViisita.setText("Sem informações");
+        jLabelUltimaViisita.setText("--");
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
@@ -569,7 +569,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
                             .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(35, 35, 35))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 28, Short.MAX_VALUE)
+                        .addGap(0, 33, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelUltimaViisita))))
@@ -813,7 +813,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     private void jLabelAlterarFotoPerfilMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAlterarFotoPerfilMousePressed
         
         if(modFotoPerfil == null){
-            modFotoPerfil = new modalFotoPerfil(cpfCliente);
+            modFotoPerfil = new modalFotoPerfil(idCliente);
             modFotoPerfil.registrarObservador(this);
             modFotoPerfil.setVisible(true);
         }else{

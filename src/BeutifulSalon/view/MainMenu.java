@@ -545,15 +545,17 @@ public class MainMenu extends javax.swing.JFrame {
                     if (cab.getEmailAniversario().isEnviar()) {
 
                         List<Cliente> clientes = new ClienteController().listarAniversariantesDoMes();
+                    
                         if (clientes != null) {
+                            
                             clientes.forEach(c -> {
-
                                 try {
-                                    new ClienteController().atualizarUltimoEnvioEmailAniversario(c.getCpf());
+                                    new ClienteController().atualizarUltimoEnvioEmailAniversario(c.getId());
                                     Email mail = cc.selecionaCabeleireiro().getEmailAniversario();
                                     mail.setTitulo(mail.getTitulo().replace("<nome>", c.getNome()));
                                     mail.setDestinatario(c.getEmail());
                                     mail.setTexto(mail.getTexto().replace("<nome>", c.getNome()));
+                                   
                                     mail.sendEmail(JavaMail.EMAIL_ANIVERSARIO_ULTIMAVISITA);
                                 } catch (MessagingException ex) {
                                     System.out.println(ex);
@@ -566,12 +568,12 @@ public class MainMenu extends javax.swing.JFrame {
 
                     if (cab.getEmailUltimaVisita().isEnviar()) {
                         List<Cliente> clientesUltimoEnvio = new ClienteController().listaClientesEmailUltimaVisita();
-
+            
                         if (clientesUltimoEnvio != null) {
                             clientesUltimoEnvio.forEach(c -> {
 
                                 try {
-                                    new ClienteController().atualizarUltimoEnvioEmailUltimaVisita(c.getCpf());
+                                    new ClienteController().atualizarUltimoEnvioEmailUltimaVisita(c.getId());
                                     Email mail = cc.selecionaCabeleireiro().getEmailUltimaVisita();
                                     mail.setTitulo(mail.getTitulo().replace("<nome>", c.getNome()));
                                     mail.setDestinatario(c.getEmail());

@@ -287,9 +287,9 @@ public class ApresentaCliente extends javax.swing.JPanel {
         if (indice > -1) {
             try {
 
-                String cpfClienteSelecionado = modelo.getCliente(indice).getCpf(); // Retorna CPF
+                long idClienteSelecionado = modelo.getCliente(indice).getId(); // Retorna CPF
                 ClienteController cc = new ClienteController();
-                resultado = cc.editarCliente(cpfClienteSelecionado);
+                resultado = cc.editarCliente(idClienteSelecionado);
 
                 if (!resultado) {
                     JOptionPane.showMessageDialog(null, "Erro ao selecionar PKCliente");
@@ -309,9 +309,9 @@ public class ApresentaCliente extends javax.swing.JPanel {
        
             if (indice > -1) {
                 try {
-                    String cpfCliente = modelo.getCliente(indice).getCpf(); // Retorna CPF
+                    long idCliente = modelo.getCliente(indice).getId(); 
                     ClienteController cc = new ClienteController();
-                    cc.exibirMaisDetalhes(cc.buscarCliente(cpfCliente));
+                    cc.exibirMaisDetalhes(cc.buscarCliente(idCliente));
                   
                 } catch (HeadlessException e) {
                     JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e);
@@ -329,10 +329,10 @@ public class ApresentaCliente extends javax.swing.JPanel {
         if (opc == 0) {
             if (indice > -1) {
                 try {
-                    String cpfClienteSelecionado = modelo.getCliente(indice).getCpf(); // Retorna CPF
+                    long idClienteSelecionado = modelo.getCliente(indice).getId(); // Retorna CPF
                     ClienteController cc = new ClienteController();
 
-                    if (cc.excluirCliente(cpfClienteSelecionado)) {
+                    if (cc.excluirCliente(idClienteSelecionado)) {
                         JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso.");
                         modelo.getTodosClientes();
                         jTableConsultaCliente.setModel(modelo);

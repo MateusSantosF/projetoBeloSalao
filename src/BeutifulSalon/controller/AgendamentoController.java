@@ -26,9 +26,9 @@ import javax.swing.JOptionPane;
  */
 public class AgendamentoController {
 
-    public boolean cadastraAgendamento(String data, String horario, String cpfCliente, ArrayList<Servico> servicos, long total, long desconto, boolean realizado) throws ExceptionDAO {
+    public boolean cadastraAgendamento(String data, String horario, long idCliente, ArrayList<Servico> servicos, long total, long desconto, boolean realizado) throws ExceptionDAO {
 
-        if (Valida.isCpf(cpfCliente) && Valida.isHora(horario) && !servicos.isEmpty()) {
+        if (Valida.isHora(horario) && !servicos.isEmpty()) {
 
             //Formatadores
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
@@ -69,7 +69,7 @@ public class AgendamentoController {
 
             agendamento.setTotal(total);
             agendamento.setDesconto(desconto);
-            agendamento.setCpfCliente(cpfCliente);
+            agendamento.setIdCliente(idCliente);
             agendamento.setData(dataAgendamento);
             agendamento.setHorario(h);
             agendamento.setServicos(servicos);
@@ -89,9 +89,9 @@ public class AgendamentoController {
         return true;
     }
 
-    public boolean atualizarAgendamento(String data, String horario, String cpfCliente, ArrayList<Servico> servicos, long total, long desconto, boolean realizado, long idAgendamento) throws ExceptionDAO {
+    public boolean atualizarAgendamento(String data, String horario,long idCliente, ArrayList<Servico> servicos, long total, long desconto, boolean realizado, long idAgendamento) throws ExceptionDAO {
 
-        if (Valida.isCpf(cpfCliente) && Valida.isHora(horario) && !servicos.isEmpty()) {
+        if (Valida.isHora(horario) && !servicos.isEmpty()) {
 
             //Formatadores
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
@@ -110,10 +110,10 @@ public class AgendamentoController {
             //Passando parametros
 
             Agendamento agendamento = new Agendamento();
-            agendamento.setId(idAgendamento);
+            agendamento.setIdAgendamento(idAgendamento);
             agendamento.setTotal(total);
             agendamento.setDesconto(desconto);
-            agendamento.setCpfCliente(cpfCliente);
+            agendamento.setIdCliente(idCliente);
             agendamento.setData(dataAgendamento);
             agendamento.setHorario(h);
             agendamento.setServicos(servicos);

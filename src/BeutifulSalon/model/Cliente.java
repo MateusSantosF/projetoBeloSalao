@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class Cliente {
 
+    private long id;
     private String cpf;
     private String nome;
     private String sobrenome;
@@ -25,6 +26,7 @@ public class Cliente {
     private String numeroDaCasa;
     private String telefoneResidencial;
     private String celular;
+    private int qtdVisitas;
     private int tipoDeCabelo;
     private int tamanhoCabelo;
     private int deOndeConheceu;
@@ -90,6 +92,14 @@ public class Cliente {
 
     public void setUltimaVisita(LocalDate ultimaVisita) {
         this.ultimaVisita = ultimaVisita;
+    }
+
+    public int getQtdVisitas() {
+        return qtdVisitas;
+    }
+
+    public void setQtdVisitas(int qtdVisitas) {
+        this.qtdVisitas = qtdVisitas;
     }
     
     
@@ -163,6 +173,15 @@ public class Cliente {
         this.numeroDaCasa = numeroDaCasa;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
+    
     public String getCpf() {
         return cpf;
     }
@@ -280,21 +299,21 @@ public class Cliente {
     }
     //Busca cliente por cpf
 
-    public Cliente buscarCliente(String cpf) throws ExceptionDAO {
-        return new clienteDAO().buscarCliente(cpf);
+    public Cliente buscarCliente(long id) throws ExceptionDAO {
+        return new clienteDAO().buscarCliente(id);
     }
 
     //Excluir cliente
-    public void excluirCliente(String cpf) throws ExceptionDAO {
-        new clienteDAO().deletarCliente(cpf);
+    public void excluirCliente(long id) throws ExceptionDAO {
+        new clienteDAO().deletarCliente(id);
     }
 
-    public Cliente editarCliente(String cpf) throws ExceptionDAO {
-        return new clienteDAO().editarCliente(cpf);
+    public Cliente editarCliente(long id) throws ExceptionDAO {
+        return new clienteDAO().editarCliente(id);
     }
 
-    public LocalDate ultimaVisita(String cpf) throws ExceptionDAO {
-        return new clienteDAO().ultimaVisita(cpf);
+    public LocalDate ultimaVisita(long id) throws ExceptionDAO {
+        return new clienteDAO().ultimaVisita(id);
     }
 
     public boolean verificaExistenciaCliente(String cpf) throws ExceptionDAO {
@@ -309,25 +328,25 @@ public class Cliente {
         return new clienteDAO().top5Clientes(anoReferente);
     }
 
-    public boolean cadastraImagemPerfil(String cpf, byte[] imagem) throws ExceptionDAO {
+    public boolean cadastraImagemPerfil(long id, byte[] imagem) throws ExceptionDAO {
 
-        return new clienteDAO().cadastraImagemPerfil(cpf, imagem);
+        return new clienteDAO().cadastraImagemPerfil(id, imagem);
     }
 
-    public byte[] recuperaImagemPerfil(String cpf) throws ExceptionDAO {
-        return new clienteDAO().recuperaImagemPerfil(cpf);
+    public byte[] recuperaImagemPerfil(long id) throws ExceptionDAO {
+        return new clienteDAO().recuperaImagemPerfil(id);
     }
     
     public List<Cliente> listarAniversariantesDoMes() throws ExceptionDAO{
         return new clienteDAO().listarAniversariantesDoMes();
     }
 
-    public void atualizarUltimoEnvioEmailAniversario(String cpf) throws ExceptionDAO {
-        new clienteDAO().atualizarUltimoEnvioEmailAniversario(cpf);
+    public void atualizarUltimoEnvioEmailAniversario(long id) throws ExceptionDAO {
+        new clienteDAO().atualizarUltimoEnvioEmailAniversario(id);
     }
 
-    public void atualizarUltimoEnvioEmailUltimaVisita(String cpf) throws ExceptionDAO {
-        new clienteDAO().atualizarUltimoEnvioEmailUltimaVisita(cpf);
+    public void atualizarUltimoEnvioEmailUltimaVisita(long id) throws ExceptionDAO {
+        new clienteDAO().atualizarUltimoEnvioEmailUltimaVisita(id);
     }
     
    public List<Cliente> listaClientesEmailUltimaVisita() throws ExceptionDAO{
