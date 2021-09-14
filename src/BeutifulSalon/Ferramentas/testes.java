@@ -21,8 +21,11 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.mail.MessagingException;
 import javax.swing.JOptionPane;
@@ -39,13 +42,21 @@ public class testes {
 
     public static void main(String[] args) throws IOException, TimeoutException {
 
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("mm");
+        String horario = "60 min";
+        String formatado = horario.replaceAll(" min", "");
         
-        Cabeleireiro c = new CabeleireiroController().selecionaCabeleireiro(); 
         
- 
-        String cpf = "500494768-66";
+        int minutos = Integer.valueOf(formatado);
+        int horas = (Integer.valueOf(formatado) - minutos)/60;
         
-        System.out.println(cpf.replaceAll("\u00A0", "").length());
-        System.out.println(cpf);
+        LocalTime t = LocalTime.of(horas, minutos);
+        
+        System.out.println(minutos % 60);
+        
+        
+      
+        
+     
     }
 }

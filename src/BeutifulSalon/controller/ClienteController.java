@@ -49,7 +49,8 @@ public class ClienteController {
             
             
             //Formatador
-            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
+            //DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
             //Convertendo datas de String para Date
             LocalDate dataReg = LocalDate.parse(DATAREG, formatterData);
             //objeto cliente
@@ -68,7 +69,15 @@ public class ClienteController {
         }
         return false;
     }
-
+    
+    public boolean cadastrarCliente(Cliente cliente){
+        try {
+            cliente.cadastrarCliente(cliente);
+        } catch (ExceptionDAO e) {
+        }
+        return false;
+    }
+    
     public boolean atualizarCliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC,
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR, long id) {

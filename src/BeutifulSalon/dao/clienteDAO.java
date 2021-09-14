@@ -36,7 +36,8 @@ public class clienteDAO {
         PreparedStatement pStatement = null;
         Connection connection = null;
         
-         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+   
         
         try {
             

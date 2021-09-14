@@ -60,7 +60,17 @@ public class ServicoController {
         }
         return null;
     }
-
+    
+    
+    public boolean cadastrarServico(Servico servico) {
+        try {
+            servico.cadastrarServico(servico);
+        } catch (SQLException e) {
+            return false;
+        }
+        return true;
+    }
+    
     public boolean cadastrarServico(String nome, String preco, String tempoGasto, ArrayList<Produto> produtos) throws SQLException {
 
         if (nome.length() > 0 && preco.length() > 0 && Valida.isHora(tempoGasto)) {
