@@ -16,6 +16,7 @@ import BeutifulSalon.view.modais.modalServicos;
 import java.awt.HeadlessException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -35,27 +36,28 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
      */
     public CadastroOrcamentoPrevisto() {
         initComponents();
-      
-        
-           DecimalFormat decimal = new DecimalFormat("#,###,###.00");
-           NumberFormatter numFormatter = new NumberFormatter(decimal);
-           numFormatter.setFormat(decimal);
-           numFormatter.setAllowsInvalid(false);
-           DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
-           jTextFieldJan.setFormatterFactory(dfFactory);
-           jTextFieldFev.setFormatterFactory(dfFactory);
-           jTextFieldMarc.setFormatterFactory(dfFactory);
-           jTextFieldAbr.setFormatterFactory(dfFactory);
-           jTextFieldMaio.setFormatterFactory(dfFactory);
-           jTextFieldJun.setFormatterFactory(dfFactory);
-           jTextFieldJul.setFormatterFactory(dfFactory);
-           jTextFieldAgo.setFormatterFactory(dfFactory);
-           jTextFieldSet.setFormatterFactory(dfFactory);
-           jTextFieldOut.setFormatterFactory(dfFactory);
-           jTextFieldNov.setFormatterFactory(dfFactory);
-           jTextFieldDez.setFormatterFactory(dfFactory);
-           
-           
+
+        String anoAtual = String.valueOf(LocalDate.now().getYear());
+        jTextFieldAnoOrc.setText(anoAtual);
+        jTextFieldAno.setText(anoAtual);
+        DecimalFormat decimal = new DecimalFormat("#,###,###.00");
+        NumberFormatter numFormatter = new NumberFormatter(decimal);
+        numFormatter.setFormat(decimal);
+        numFormatter.setAllowsInvalid(false);
+        DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
+        jTextFieldJan.setFormatterFactory(dfFactory);
+        jTextFieldFev.setFormatterFactory(dfFactory);
+        jTextFieldMarc.setFormatterFactory(dfFactory);
+        jTextFieldAbr.setFormatterFactory(dfFactory);
+        jTextFieldMaio.setFormatterFactory(dfFactory);
+        jTextFieldJun.setFormatterFactory(dfFactory);
+        jTextFieldJul.setFormatterFactory(dfFactory);
+        jTextFieldAgo.setFormatterFactory(dfFactory);
+        jTextFieldSet.setFormatterFactory(dfFactory);
+        jTextFieldOut.setFormatterFactory(dfFactory);
+        jTextFieldNov.setFormatterFactory(dfFactory);
+        jTextFieldDez.setFormatterFactory(dfFactory);
+
     }
 
     /**
@@ -1137,7 +1139,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
     }//GEN-LAST:event_btnRegOrcServicoActionPerformed
 
     private void limparSpinners() {
-        
+
         long valorNominal = 0;
         jSpinnerJan.setValue(valorNominal);
         jSpinnerFev.setValue(valorNominal);
@@ -1245,20 +1247,20 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
             OrcamentoController co = new OrcamentoController();
 
             sucessoAoCadastrar = co.CadastrarOrcamento(true,
-                JTextFieldNomeDespesa.getText(),
-                Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldJan.getText())),
-                Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldFev.getText())),
-                Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldMarc.getText())),
-                Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldAbr.getText())),
-                Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldMaio.getText())),
-                Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldJun.getText())),
-                Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldJul.getText())),
-                Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldAgo.getText())),
-                Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldSet.getText())),
-                Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldOut.getText())),
-                Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldNov.getText())),
-                Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDez.getText())),
-                jTextFieldAno.getText());
+                    JTextFieldNomeDespesa.getText(),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldJan.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldFev.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldMarc.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldAbr.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldMaio.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldJun.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldJul.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldAgo.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldSet.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldOut.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldNov.getText())),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDez.getText())),
+                    jTextFieldAno.getText());
 
             if (sucessoAoCadastrar) {
                 JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso");
@@ -1432,9 +1434,9 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
     @Override
     public void update(ArrayList<LocalTime> horarios) {
     }
-    
-     @Override
+
+    @Override
     public void update(Orcamento orcamento) {
-    
+
     }
 }

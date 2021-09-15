@@ -166,4 +166,8 @@ public class Despesa {
     public long verificaExistencia(long idOrcamento, long inicioMes, long fimMes, String ano) throws ExceptionDAO {
         return new DespesaDAO().verificaExistencia(idOrcamento, inicioMes, fimMes, ano);
     }
+
+    public boolean excluirDespesa(long idDespesa)throws ExceptionDAO {
+        return new DespesaDAO().excluirDespesa(idDespesa);
+    }
 }

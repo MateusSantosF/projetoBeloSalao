@@ -222,8 +222,8 @@ public class Orcamento {
         return new OrcamentoDAO().somarOrcamento(mes, ano);
     }
 
-    public void excluirOrcamento(long id_orcamento) throws ExceptionDAO {
-        new OrcamentoDAO().excluirOrcamento(id_orcamento);
+    public boolean excluirOrcamento(long id_orcamento) throws ExceptionDAO {
+       return new OrcamentoDAO().excluirOrcamento(id_orcamento);
     }
 
     public void editarOrcamento(long id_orcamento) throws ExceptionDAO {

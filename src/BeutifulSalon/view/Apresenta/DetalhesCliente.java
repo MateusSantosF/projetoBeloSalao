@@ -123,8 +123,13 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jButtonSalvar.setVisible(false);
         jLabelNome.setText(new ManipulaStrings().abreviarNome(cliente.getNome() + " " + cliente.getSobrenome()));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        jLabelIdade.setText(String.valueOf(new ManipulaData().calculaIdade(LocalDate.parse(cliente.getDataNasc(), formatter))) + " Anos");
-        jLabelEmail.setText(cliente.getEmail());
+        if(cliente.getDataNasc().length() >=10){
+           jLabelIdade.setText(String.valueOf(new ManipulaData().calculaIdade(LocalDate.parse(cliente.getDataNasc(), formatter))) + " Anos");
+        }
+        if(cliente.getEmail()!= null){
+           jLabelEmail.setText(cliente.getEmail()); 
+        }
+        
         jLabelEmail.setCaretPosition(0);
         jLabelTelefone.setText(cliente.getTelefoneResidencial());
         jLabelCelular.setText(cliente.getCelular());
@@ -372,6 +377,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jToggleButton1.setBackground(new java.awt.Color(255, 255, 255));
         jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/btnEditar.png"))); // NOI18N
         jToggleButton1.setText("Alterar informações");
+        jToggleButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToggleButton1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jToggleButton1StateChanged(evt);
@@ -380,6 +386,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
 
         jButtonSalvar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonSalvar.setText("Salvar");
+        jButtonSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSalvarActionPerformed(evt);
@@ -411,7 +418,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jLabelIdade.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelIdade.setForeground(new java.awt.Color(255, 255, 255));
         jLabelIdade.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelIdade.setText("19 Anos");
+        jLabelIdade.setText("Idade Não Informada");
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
@@ -466,7 +473,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jLabelEmail.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelEmail.setForeground(new java.awt.Color(255, 255, 255));
         jLabelEmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jLabelEmail.setText("mateusferreira.dev@gmail.com");
+        jLabelEmail.setText("Email não Informado");
         jLabelEmail.setBorder(null);
 
         jLabelClienteDesde.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

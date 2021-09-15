@@ -15,6 +15,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalField;
 import java.util.ArrayList;
@@ -42,8 +43,11 @@ public class ManipulaData {
     }
 
     public int calculaIdade(LocalDate dataNascimento) {
-
-        return Period.between(dataNascimento, LocalDate.now()).getYears();
+        try {
+            return Period.between(dataNascimento, LocalDate.now()).getYears();
+        } catch (DateTimeParseException e) {
+        }
+      return 0;
     }
 
     public long meiaNoite(LocalDate dia) {

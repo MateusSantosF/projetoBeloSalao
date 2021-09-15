@@ -344,4 +344,16 @@ public class DespesaController {
         }
         return null;
     }
+
+    public boolean excluirDespesa(long idDespesa) {
+
+        try {
+            return new Despesa().excluirDespesa(idDespesa);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showConfirmDialog(null, "Erro ao excluir despesa" + e);
+            return false;
+            
+        }
+      
+    }
 }

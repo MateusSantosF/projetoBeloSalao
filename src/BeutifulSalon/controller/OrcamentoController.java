@@ -10,6 +10,7 @@ import BeutifulSalon.dao.OrcamentoServicoDAO;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.OrcamentoServico;
 import BeutifulSalon.model.Servico;
+import BeutifulSalon.view.Edicao.EditarOrcamentoServico;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -48,8 +49,8 @@ public class OrcamentoController {
     public boolean cadastraOrcamentoServico(boolean previsto, String nomeServico, long Idservico, long jan, long fev, long mar,
             long abr, long mai, long jun, long jul, long ago, long set, long out, long nov, long dez, String ano) {
 
-        if (ano.length() > 0 && nomeServico.length() > 0 && Idservico > 0 && jan >=0 && fev >= 0 && mar >= 0 && abr >= 0 && mai >= 0 && jun >= 0 && jul >= 0 &&
-                ago >= 0 && set >= 0 && out >= 0 && nov >= 0 && dez >= 0 ) {
+        if (ano.length() > 0 && nomeServico.length() > 0 && Idservico > 0 && jan >= 0 && fev >= 0 && mar >= 0 && abr >= 0 && mai >= 0 && jun >= 0 && jul >= 0
+                && ago >= 0 && set >= 0 && out >= 0 && nov >= 0 && dez >= 0) {
 
             try {
                 OrcamentoServico orcamentoServico;
@@ -74,36 +75,46 @@ public class OrcamentoController {
     public boolean excluirOrcamento(long id_orcamento) {
 
         try {
-            new Orcamento().excluirOrcamento(id_orcamento);
+            return new Orcamento().excluirOrcamento(id_orcamento);
 
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, "Erro ao excluir orçamento " + e);
             return false;
         }
 
-        return true;
+    }
+
+    public boolean excluirOrcamentoServico(long id_orcamento) {
+
+        try {
+            return new OrcamentoServico().excluirOrcamento(id_orcamento);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir orçamento serviço " + e);
+            return false;
+        }
+
     }
 
     public ArrayList<Orcamento> listarOrcamentos() throws ExceptionDAO {
         return new Orcamento().listarOrcamentos();
     }
-    
+
     public ArrayList<Orcamento> listarOrcamentosPorNome(String nome) {
         try {
             return new Orcamento().listarOrcamentoPorNome(nome);
         } catch (Exception e) {
             System.out.println("Erro ao listar orçamentos por nome " + e);
         }
-          return null;
+        return null;
     }
 
     public ArrayList<Orcamento> listarOrcamentos(String anoReferente) {
         try {
-            return new Orcamento().listarOrcamentos(anoReferente); 
+            return new Orcamento().listarOrcamentos(anoReferente);
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, "Erro ao Listar orçamentos " + e);
         }
-       return null;
+        return null;
     }
 
     public long somarOrcamento(String mes, String ano) throws ExceptionDAO {
@@ -163,7 +174,7 @@ public class OrcamentoController {
 
     public long somaTotalGanhoServicoMensal(long inicio, long fim, long idServico) {
         try {
-                return new OrcamentoServico().somaTotalGanhoServicoMensal(inicio, fim, idServico);
+            return new OrcamentoServico().somaTotalGanhoServicoMensal(inicio, fim, idServico);
         } catch (ExceptionDAO e) {
             System.out.println("Erro ao somar ganhos de serviço mensalmente");
         }
@@ -181,6 +192,57 @@ public class OrcamentoController {
 
     public Orcamento buscarOrcamento(long idOrcamento) {
         return new Orcamento().buscarOrcamento(idOrcamento);
+    }
+
+    public void editarOrcamentoServico(OrcamentoServico ocs) {
+
+        new EditarOrcamentoServico(ocs).setVisible(true);
+    }
+
+    public boolean atualizarOrcamentoServico(boolean b, String nome, long idServico, long jan, long fev, long mar,
+            long abr, long mai, long jun, long jul, long ago, long set, long out, long nov,
+            long dez, String anoReferente, long idOrcamento) {
+
+        if (anoReferente.replaceAll(" ", "").length() == 4) {
+            try {
+                OrcamentoServico sc = new OrcamentoServico();
+                sc.setNome(nome);
+                sc.setId_orcamento(idOrcamento);
+                sc.setPrevisto(b);
+                sc.setJan(jan);
+                sc.setFev(fev);
+                sc.setMar(mar);
+                sc.setAbr(abr);
+                sc.setMai(mai);
+                sc.setJun(jun);
+                sc.setJul(jul);
+                sc.setAgo(ago);
+                sc.setSet(set);
+                sc.setOut(out);
+                sc.setNov(nov);
+                sc.setDez(dez);
+                sc.setAno(anoReferente);
+
+                return sc.atualizarOrcamentoServico(sc);
+
+            } catch (ExceptionDAO e) {
+                System.out.println("Erro ao editar orcamento " + e);
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
+
+    public OrcamentoServico buscarOrcamentoServico(long id) {
+        
+        try {
+            return new OrcamentoServico().buscarOrcamentoServico(id);
+        } catch (ExceptionDAO e) {
+            System.out.println("erro ao buscar orçamento serviço");
+            return null;
+        }
     }
 
 }

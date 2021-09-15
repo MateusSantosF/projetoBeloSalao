@@ -10,10 +10,8 @@ import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.OrcamentoServico;
 import BeutifulSalon.model.Servico;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -29,6 +27,8 @@ public class ServicoPrevistoTableModel extends AbstractTableModel {
     public ServicoPrevistoTableModel() {
         this.dados = new ArrayList<>();
     }
+    
+    
 
     @Override
     public int getRowCount() {
@@ -96,10 +96,15 @@ public class ServicoPrevistoTableModel extends AbstractTableModel {
         this.fireTableDataChanged();
     }
 
+    public OrcamentoServico getOrcamentoServico(int rowIndex){
+        return dados.get(rowIndex);
+    }
+    
     public void addRow(List<OrcamentoServico> orcamentoServico) {
         orcamentoServico.forEach(orcS -> dados.add(orcS));
         this.fireTableDataChanged();
     }
+    
     public void getServicoPrevisto(String anoReferente){
          
         dados.clear();
@@ -115,6 +120,8 @@ public class ServicoPrevistoTableModel extends AbstractTableModel {
                 Servico servicoAtual = sc.buscarServico(orcamento.getId_servico());
                 long preco = servicoAtual.getPreco();
                 OrcamentoServico orcamentoServicoAtual = new OrcamentoServico();
+                
+                orcamentoServicoAtual.setId_orcamento(orcamento.getId_orcamento());
                 orcamentoServicoAtual.setNome(orcamento.getNome());
                 orcamentoServicoAtual.setJan(orcamento.getJan() * preco);
                 orcamentoServicoAtual.setFev(orcamento.getFev() * preco);

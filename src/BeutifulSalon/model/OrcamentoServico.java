@@ -260,5 +260,17 @@ public class OrcamentoServico {
     public Servico listarOrcamentoServicorRealizado(LocalDate ano, Month mes, long idServico) throws ExceptionDAO {
         return new OrcamentoServicoDAO().listarOrcamentoServicorRealizado(ano, mes, idServico);
     }
+
+    public boolean excluirOrcamento(long id_orcamento) throws ExceptionDAO{
+        return new OrcamentoServicoDAO().excluirOrcamento(id_orcamento);
+    }
+
+    public boolean atualizarOrcamentoServico(OrcamentoServico sc)throws ExceptionDAO {
+        return new OrcamentoServicoDAO().atualizarOrcamentoServico(sc);
+    }
+
+    public OrcamentoServico buscarOrcamentoServico(long id) throws ExceptionDAO {
+        return new OrcamentoServicoDAO().buscarOrcamentoServico(id);
+    }
    
 }

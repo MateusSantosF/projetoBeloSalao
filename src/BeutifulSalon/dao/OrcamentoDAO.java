@@ -301,9 +301,10 @@ public class OrcamentoDAO {
         return somatoria;
     }
 
-    public void excluirOrcamento(long id_orcamento) {
+    public boolean excluirOrcamento(long id_orcamento) {
         
         String sql  = "DELETE FROM ORCAMENTO WHERE ID_ORCAMENTO = ?";
+        String sql2 = "DELETE FROM DESPESAMENSAL WHERE ID_ORCAMENTO = ?";
         Connection connection = null;
         PreparedStatement pStatement = null;
         
@@ -312,7 +313,12 @@ public class OrcamentoDAO {
             
             pStatement = connection.prepareStatement(sql);
             pStatement.setLong(1, id_orcamento);
-            pStatement.executeUpdate();
+            int orcamento = pStatement.executeUpdate();
+            pStatement = connection.prepareStatement(sql2);
+            pStatement.setLong(1, id_orcamento);
+            int despesas = pStatement.executeUpdate();
+            
+            return orcamento == 1;
             
         } catch (SQLException e) {
             
@@ -333,6 +339,7 @@ public class OrcamentoDAO {
             }
             
         }
+        return false;
     }
     
     public Orcamento buscarOrcamento(long id_orcamento){

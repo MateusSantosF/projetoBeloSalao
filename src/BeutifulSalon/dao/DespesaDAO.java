@@ -649,6 +649,7 @@ public class DespesaDAO {
                 pStatement.executeUpdate();
             }
         }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "ERRO despesaDAO" + e);
             
         }finally {
             
@@ -672,7 +673,48 @@ public class DespesaDAO {
         
     
     }
-    
+
+    public boolean excluirDespesa(long idDespesa) {
+
+        String sql = "DELETE FROM DESPESAMENSAL WHERE ID_DESPESA = ?";
+        Connection connection = null;
+        PreparedStatement ps = null;
+        
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            
+            ps = connection.prepareStatement(sql);
+            
+            ps.setLong(1, idDespesa);
+            
+            return ps.executeUpdate() == 1;
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "ERRO despesaDAO" + e);
+        }finally {
+            
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        return false;
+    }
+
+   
     
     
 }
