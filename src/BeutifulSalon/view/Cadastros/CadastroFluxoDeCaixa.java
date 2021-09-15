@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.Cadastros;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.view.modais.modalCliente;
@@ -19,6 +20,7 @@ import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalInputMonetarios;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -38,6 +40,22 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
     public CadastroFluxoDeCaixa() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes(); ;
+        
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f)); //Fluxo de caixa
+        jRadioButtonCliente.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Cliente
+        jRadioButtonCabelereiro.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Cabelereiro
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome do Cliente
+        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CPF
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Produtos Comprados
+        jTableProdutosComprados.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Tabela 
+        jCheckBoxDesconto2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Desconto
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Total Bruto: 
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Valor Desconto:
+        jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //TOTAL
+        jButtonFinalizarCompra.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Finalizar Compra
+
 
     }
 

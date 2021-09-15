@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.Cadastros;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Cliente;
@@ -12,6 +13,7 @@ import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalProdutosUtilizados;
+import java.awt.Font;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.time.LocalTime;
@@ -32,6 +34,18 @@ public class CadastroServico extends javax.swing.JFrame implements Observador {
      */
     public CadastroServico() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes(); ;
+        
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f)); //Cadastro Serviço
+        jLabelNome2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome Serviço
+        jLabelPreco.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Preço
+        jLabelTempoGasto.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Tempo gasto
+        jLabelProdutos.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Produtos Utilizados
+        jTableMostraProdutos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
+
+        jButton3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cadastrar
+        jButton4.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cancelar
         
         DecimalFormat decimal = new DecimalFormat("#,###,###.00");
         NumberFormatter numFormatter = new NumberFormatter(decimal);

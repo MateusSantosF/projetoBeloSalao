@@ -5,8 +5,10 @@
  */
 package BeutifulSalon.view.Edicao;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.model.OrcamentoServico;
+import java.awt.Font;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +24,32 @@ public class EditarOrcamentoServico extends javax.swing.JFrame {
          
     public EditarOrcamentoServico() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes(); 
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f)); //Editar Orçamento Previsto de Serviço
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Identificador
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome do Serviço
+        jLabel32.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Exercício (AAAA)
+
+        jCheckBoxFixo1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Repete
+        jLabel31.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Informe a quantidade do serviço selecionado que acredita realizar mensalmente
+
+        jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Jan
+        jLabel10.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Fev
+        jLabel11.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Mar
+        jLabel13.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Abril
+        jLabel25.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Maio
+        jLabel26.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Jun
+        jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Jul
+        jLabel28.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Ago
+        jLabel29.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Set
+        jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Out
+        jLabel27.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nov
+        jLabel30.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Dez
+
+
+        btnRegOrcServico.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Registrar
+        btnCanc1.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cancelar
     }
     
     public EditarOrcamentoServico(OrcamentoServico orcamentoServico) {
@@ -354,7 +382,7 @@ public class EditarOrcamentoServico extends javax.swing.JFrame {
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(34, 34, 34));
-        jLabel31.setText("Informe a quantidade do serviço selecionado, que acredita realizar mensalmente.");
+        jLabel31.setText("Informe a quantidade do serviço selecionado que acredita realizar mensalmente");
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(34, 34, 34));
@@ -457,7 +485,7 @@ public class EditarOrcamentoServico extends javax.swing.JFrame {
                                         .addComponent(jCheckBoxFixo1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jLabel31)
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(149, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanelServicosLayout.setVerticalGroup(
             jPanelServicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -476,7 +504,7 @@ public class EditarOrcamentoServico extends javax.swing.JFrame {
                     .addComponent(jCheckBoxFixo1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel31)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelServicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

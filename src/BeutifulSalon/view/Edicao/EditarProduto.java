@@ -1,8 +1,10 @@
 package BeutifulSalon.view.Edicao;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.controller.ProdutoController;
 import BeutifulSalon.model.Dinheiro;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -25,6 +27,17 @@ public class EditarProduto extends javax.swing.JFrame {
 
         initComponents();
 
+        ManipulaFontes mf = new ManipulaFontes(); 
+
+        jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f)); //Editar Produto
+        jLabel20.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //ID
+        jLabel18.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Nome Produto
+        jCheckBox1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //É vendido
+        jLabel26.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Preço de Venda 
+        jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Marca
+
+        jButtonAtualizar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Atualizar
+        jButtonCancelar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cancelar
 
         
         
@@ -127,6 +140,11 @@ public class EditarProduto extends javax.swing.JFrame {
         jCheckBox1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jCheckBox1StateChanged(evt);
+            }
+        });
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
             }
         });
 
@@ -319,6 +337,10 @@ public class EditarProduto extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jCheckBox1StateChanged
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     /**
      * @param args the command line arguments

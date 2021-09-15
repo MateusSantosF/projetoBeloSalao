@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.Cadastros;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cabeleireiro;
@@ -14,6 +15,7 @@ import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalExpediente;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.io.DataInputStream;
@@ -45,6 +47,19 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
 
     public CadastroCabeleireiro() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes(); ;
+        
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Informe seus dados pessoais
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Primeiro Nome 
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CPF
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //E-mail
+        jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Senha E-mail
+        
+        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Configurar Expediente
+        jButton1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Abrir grade 
+        
+        jButtonCadastrar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Confirmar
 
         CabeleireiroController cc = new CabeleireiroController();
 
