@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.Cadastros;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
@@ -13,6 +14,7 @@ import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalServicoUnico;
 import BeutifulSalon.view.modais.modalServicos;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -36,6 +38,60 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
      */
     public CadastroOrcamentoPrevisto() {
         initComponents();
+        
+        //SERVICOS
+        ManipulaFontes mf = new ManipulaFontes(); 
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f)); //Novo Orçamento Previsto de Serviços
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Identificador
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome do Serviço
+        jLabel32.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Exercício (AAAA)
+
+        jCheckBoxFixo1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Repete
+        jLabel31.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Informe a quantidade do serviço selecionado, que acredita realizar mensalmente.
+
+        jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Jan
+        jLabel10.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Fev
+        jLabel11.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Mar
+        jLabel13.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Abril
+        jLabel25.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Maio
+        jLabel26.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Jun
+        jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Jul
+        jLabel28.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Ago
+        jLabel29.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Set
+        jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Out
+        jLabel27.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nov
+        jLabel30.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Dez
+
+
+        btnRegOrcServico.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Registrar
+        btnCanc1.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cancelar
+
+        //DESPESAS
+
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f)); //Nova Despesa Prevista
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome da despesa
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Exercício (AAAA)
+
+        jCheckBoxFixo.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Fixo
+        jLabel31.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Informe a quantidade do serviço selecionado, que acredita realizar mensalmente.
+
+        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Jan
+        jLabel6.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Fev
+        jLabel15.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Mar
+        jLabel16.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Abril
+        jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Maio
+        jLabel18.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Jun
+
+        jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Jul
+        jLabel20.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Ago
+        jLabel21.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Set
+        jLabel22.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Out
+        jLabel23.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nov
+        jLabel24.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Dez
+
+
+        btnReg.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Registrar
+        btnCanc.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cancelar
 
         String anoAtual = String.valueOf(LocalDate.now().getYear());
         jTextFieldAnoOrc.setText(anoAtual);
@@ -421,13 +477,12 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
 
         jLabel31.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel31.setForeground(new java.awt.Color(34, 34, 34));
-        jLabel31.setText("Informe a quantidade do serviço selecionado, que acredita realizar mensalmente.");
+        jLabel31.setText("Informe a quantidade do serviço selecionado que acredita realizar mensalmente");
 
         jLabel32.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel32.setForeground(new java.awt.Color(34, 34, 34));
         jLabel32.setText("Exercício (AAAA)");
 
-        jTextFieldAnoOrc.setBackground(new java.awt.Color(255, 255, 255));
         jTextFieldAnoOrc.setForeground(new java.awt.Color(34, 34, 34));
         try {
             jTextFieldAnoOrc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));

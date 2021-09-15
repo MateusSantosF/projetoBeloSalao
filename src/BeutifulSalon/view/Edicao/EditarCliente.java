@@ -5,8 +5,10 @@
  */
 package BeutifulSalon.view.Edicao;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.Cliente;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -41,6 +43,27 @@ public class EditarCliente extends javax.swing.JFrame {
        
         
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes(); ;
+        
+        jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Novo Cliente
+        jLabel18.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome 
+        jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Sobrenome
+        jLabel20.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CPF
+        jLabel21.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Email
+        jLabel22.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data de Nasc.
+        jLabel24.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Telefone 
+        jLabel23.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Celular 
+        jLabel27.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Bairro 
+        jLabel26.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Rua 
+        jLabel29.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Número 
+        jLabel25.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CEP 
+        jLabel28.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //UF 
+        
+        
+        jButtonAtualizar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Att
+        jButtonCancelar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cancelar
+        
         this.cliente = cliente;
         jTextFieldNome.setText(cliente.getNome());
         jTextFieldSobrenome.setText(cliente.getSobrenome());
@@ -584,7 +607,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel17.setBackground(new java.awt.Color(34, 34, 34));
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setText("Editar dados Cadastrais");
+        jLabel17.setText("Editar Dados Cadastrais");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-clientes-48.png"))); // NOI18N
         jLabel1.setText("jLabel1");

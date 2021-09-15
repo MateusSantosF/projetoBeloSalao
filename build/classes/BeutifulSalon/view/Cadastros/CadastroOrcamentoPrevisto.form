@@ -675,7 +675,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="22" green="22" red="22" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Informe a quantidade do servi&#xe7;o selecionado, que acredita realizar mensalmente."/>
+                <Property name="text" type="java.lang.String" value="Informe a quantidade do servi&#xe7;o selecionado que acredita realizar mensalmente"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel32">

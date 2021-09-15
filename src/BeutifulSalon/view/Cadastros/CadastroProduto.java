@@ -1,6 +1,8 @@
 package BeutifulSalon.view.Cadastros;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.ProdutoController;
+import java.awt.Font;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
@@ -17,6 +19,18 @@ public class CadastroProduto extends javax.swing.JFrame {
     
     public CadastroProduto() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes(); ;
+        
+        jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f)); //Novo Produto
+        jLabel18.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Nome Produto
+
+        jCheckBox1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //É Vendido?
+        jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Marca
+        jLabel26.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Preço de Venda 
+        jLabel18.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //
+        jButton3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cadastrar
+        jButton4.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cancelar
         
         
         DecimalFormat decimal = new DecimalFormat("#,###,###.00");
@@ -143,6 +157,11 @@ public class CadastroProduto extends javax.swing.JFrame {
                 jCheckBox1StateChanged(evt);
             }
         });
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout JPCadastroClientes1Layout = new javax.swing.GroupLayout(JPCadastroClientes1);
         JPCadastroClientes1.setLayout(JPCadastroClientes1Layout);
@@ -249,6 +268,10 @@ public class CadastroProduto extends javax.swing.JFrame {
             jFormattedTextFieldPreco.setEnabled(false);
         }
     }//GEN-LAST:event_jCheckBox1StateChanged
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
 
     /**
      * @param args the command line arguments

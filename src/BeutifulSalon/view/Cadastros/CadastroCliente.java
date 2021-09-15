@@ -5,7 +5,9 @@
  */
 package BeutifulSalon.view.Cadastros;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.ClienteController;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,6 +30,26 @@ public class CadastroCliente extends javax.swing.JFrame {
      */
     public CadastroCliente() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes(); ;
+        
+        jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Novo Cliente
+        jLabel18.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome 
+        jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Sobrenome
+        jLabel20.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CPF
+        jLabel21.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Email
+        jLabel22.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data de Nasc.
+        jLabel24.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Telefone 
+        jLabel23.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Celular 
+        jLabel27.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Bairro 
+        jLabel26.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Rua 
+        jLabel29.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Número 
+        jLabel25.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CEP 
+        jLabel28.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //UF 
+        
+        
+        jButtonCadastrar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cadastrar
+        jButtonCancelar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cancelar
      
     }
 
@@ -145,9 +167,9 @@ public class CadastroCliente extends javax.swing.JFrame {
         jTextFieldCidade.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel29.setText("Numero");
+        jLabel29.setText("Número");
 
-        jPanel22.setBackground(new java.awt.Color(243, 244, 245));
+        jPanel22.setBackground(new java.awt.Color(255, 255, 255));
 
         jButtonCancelar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCancelar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N

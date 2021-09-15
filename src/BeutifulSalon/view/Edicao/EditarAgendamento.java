@@ -3,6 +3,7 @@ package BeutifulSalon.view.Edicao;
 import BeutifulSalon.Ferramentas.ApresentaTabela;
 import BeutifulSalon.view.Cadastros.*;
 import BeutifulSalon.Ferramentas.ManipulaData;
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.controller.AgendamentoController;
@@ -17,6 +18,7 @@ import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalInputMonetarios;
 import BeutifulSalon.view.modais.modalServicos;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -50,6 +52,26 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
     public EditarAgendamento(Agendamento ag) {
 
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes(); ;
+        
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Cadastro de Agendamento
+        jCheckBoxClienteVeio.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Cliente veio?
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome do Cliente
+        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CPF
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Serviços Solicitados
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Total Bruto: 
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Valor Desconto:
+        jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //TOTAL :
+        jLabel10.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Horários disponíveis
+        jLabel11.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Horário
+        jTableServicosSolicitados.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Tabela Serviços Solicitados
+        jListHorarios.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //ListaHorarios
+        jCheckBoxDesconto.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Desconto 
+        jButtonFinalizarEdicao.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Finalizar Edição
+        
+        
         this.agendamento = ag;
         ClienteController cc = new ClienteController();
         Cliente clienteAgendamento = null;
@@ -329,7 +351,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
                             .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jTextFieldIdCliente, javax.swing.GroupLayout.Alignment.LEADING)))
                         .addGap(47, 47, 47))
                     .addGroup(jPanel3Layout.createSequentialGroup()

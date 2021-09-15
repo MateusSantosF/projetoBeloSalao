@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.Cadastros;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.DespesaController;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Observador;
@@ -13,6 +14,7 @@ import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.modalOrcamentoPrevisto;
 import java.awt.Color;
 import java.awt.Dialog;
+import java.awt.Font;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -36,6 +38,22 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
     public CadastroDespesa() {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes(); ;
+        
+        jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f)); //Pagamento de Despesa
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //ID
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome da Despesa
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data de Lançamento
+        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data de Vencimento
+        jLabel6.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Forma de Pagamento
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data de pagamento
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Valor Pago 
+        jLabel10.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Anotação / Lembrete 
+
+        jToggleButton.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Pagamento Pendente 
+        jButtonCadastrar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cadastrar
+        
         DecimalFormat decimal = new DecimalFormat("#,###,###.00");
         NumberFormatter numFormatter = new NumberFormatter(decimal);
         numFormatter.setFormat(decimal);

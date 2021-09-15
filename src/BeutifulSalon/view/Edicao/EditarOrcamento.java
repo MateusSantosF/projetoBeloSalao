@@ -6,9 +6,11 @@
 package BeutifulSalon.view.Edicao;
 
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Orcamento;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -29,6 +31,32 @@ public class EditarOrcamento extends javax.swing.JFrame {
     
     public EditarOrcamento(Orcamento orcamento){
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f)); //Editar Orçamento Previsto
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome da despesa
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Exercício (AAAA)
+
+        jCheckBoxFixo.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Fixo
+    
+        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Jan
+        jLabel6.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Fev
+        jLabel15.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Mar
+        jLabel16.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Abril
+        jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Maio
+        jLabel18.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Jun
+
+        jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Jul
+        jLabel20.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Ago
+        jLabel21.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Set
+        jLabel22.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Out
+        jLabel23.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nov
+        jLabel24.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Dez
+
+
+        btnReg.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Registrar
+        btnCanc.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cancelar
         
         JTextFieldNomeDespesa.setText(orcamento.getNome());
         jTextFieldAno.setText(orcamento.getAno());
