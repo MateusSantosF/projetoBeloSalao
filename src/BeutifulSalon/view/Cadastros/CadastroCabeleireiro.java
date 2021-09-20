@@ -50,6 +50,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         
         ManipulaFontes mf = new ManipulaFontes(); ;
         
+        //Fontes
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Informe seus dados pessoais
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Primeiro Nome 
         jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CPF
@@ -60,7 +61,10 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jButton1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Abrir grade 
         
         jButtonCadastrar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Confirmar
-
+        
+        
+        
+        // ===================================================//
         CabeleireiroController cc = new CabeleireiroController();
 
         if (cc.verificaRegistro() == 1) {

@@ -30,8 +30,8 @@ public class clienteDAO {
     public void cadastrarCliente(Cliente cliente) throws ExceptionDAO{
         
         
-        String sqlScript = "INSERT INTO CLIENTE (CPF ,NOME, SOBRENOME, EMAIL, DATANASC, CEP, BAIRRO, RUA, CIDADE, TELEFONE, CELULAR, DATAREG, NUMERO)"
-                +"VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sqlScript = "INSERT INTO CLIENTE (NOME, SOBRENOME, EMAIL, DATANASC, CEP, BAIRRO, RUA, CIDADE, TELEFONE, CELULAR, DATAREG, NUMERO)"
+                +"VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
         
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -44,20 +44,19 @@ public class clienteDAO {
             connection = new ConnectionMVC().getConnection();
             
             pStatement = connection.prepareStatement(sqlScript);
-            pStatement.setString(1, cliente.getCpf());
    
-            pStatement.setString(2, cliente.getNome());
-            pStatement.setString(3, cliente.getSobrenome());
-            pStatement.setString(4, cliente.getEmail());
-            pStatement.setString(5,  cliente.getDataNasc());
-            pStatement.setString(6, cliente.getCep());
-            pStatement.setString(7, cliente.getBairro());
-            pStatement.setString(8, cliente.getRua());
-            pStatement.setString(9, cliente.getCidade());
-            pStatement.setString(10, cliente.getTelefoneResidencial());
-            pStatement.setString(11, cliente.getCelular());
-            pStatement.setDate(12, java.sql.Date.valueOf(cliente.getDataDeRegistro()));
-            pStatement.setString(13, cliente.getNumeroDaCasa());
+            pStatement.setString(1, cliente.getNome());
+            pStatement.setString(2, cliente.getSobrenome());
+            pStatement.setString(3, cliente.getEmail());
+            pStatement.setString(4,  cliente.getDataNasc());
+            pStatement.setString(5, cliente.getCep());
+            pStatement.setString(6, cliente.getBairro());
+            pStatement.setString(7, cliente.getRua());
+            pStatement.setString(8, cliente.getCidade());
+            pStatement.setString(9, cliente.getTelefoneResidencial());
+            pStatement.setString(10, cliente.getCelular());
+            pStatement.setDate(11, java.sql.Date.valueOf(cliente.getDataDeRegistro()));
+            pStatement.setString(12, cliente.getNumeroDaCasa());
             pStatement.execute(); 
             
         } catch (SQLException e) {
@@ -188,7 +187,6 @@ public class clienteDAO {
                     Cliente clienteAtual = new Cliente();
                     clienteAtual.setId(rs.getLong("ID"));
                     clienteAtual.setNome(rs.getString("NOME"));
-                    clienteAtual.setCpf(rs.getString("CPF"));
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
                     clienteAtual.setEmail(rs.getString("EMAIL"));
                     clientes.add(clienteAtual);
@@ -223,7 +221,7 @@ public class clienteDAO {
     
      public List<Cliente> listaClientesEmailUltimaVisita() throws ExceptionDAO{
         
-        String sql = "SELECT  NOME,SOBRENOME, EMAIL, CLIENTE.CPF, CLIENTE.ID FROM CLIENTE" +
+        String sql = "SELECT  NOME,SOBRENOME, EMAIL, CLIENTE.ID FROM CLIENTE" +
 "        INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID " +
 "        INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.ID_CLIENTE = CLIENTE.ID AND EMAILULTIMAVISITA.ID_CLIENTE = AGENDAMENTO.ID_CLIENTE " +
 "        WHERE AGENDAMENTO.DATA NOT BETWEEN ? AND ( SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO) " +
@@ -254,7 +252,6 @@ public class clienteDAO {
                     Cliente clienteAtual = new Cliente();
                     clienteAtual.setId(rs.getLong("ID"));
                     clienteAtual.setNome(rs.getString("NOME"));
-                    clienteAtual.setCpf(rs.getString("CPF"));
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
                     clienteAtual.setEmail(rs.getString("EMAIL"));
                     clientes.add(clienteAtual);
@@ -291,7 +288,7 @@ public class clienteDAO {
     public List<Cliente> listarClientes(String nome) throws ExceptionDAO{
         
         
-        String sql  = "SELECT ID,NOME,SOBRENOME,CELULAR,EMAIL,CPF FROM CLIENTE WHERE NOME LIKE '%" + nome + "%' ORDER BY DATAREG DESC";
+        String sql  = "SELECT ID,NOME,SOBRENOME,CELULAR,EMAIL FROM CLIENTE WHERE NOME LIKE '%" + nome + "' ORDER BY DATAREG DESC";
         Connection connection = null;
         PreparedStatement pStatement = null;
         
@@ -314,7 +311,6 @@ public class clienteDAO {
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
                     clienteAtual.setCelular(rs.getString("CELULAR"));
                     clienteAtual.setEmail(rs.getString("EMAIL"));
-                    clienteAtual.setCpf(rs.getString("CPF"));
                     clientes.add(clienteAtual);
                 }
             }
@@ -345,7 +341,7 @@ public class clienteDAO {
     
     public List<Cliente> listarClientes() throws ExceptionDAO{
         
-        String sql  = "SELECT ID,CPF, NOME, SOBRENOME, CELULAR, EMAIL,"
+        String sql  = "SELECT ID, NOME, SOBRENOME, CELULAR, EMAIL,"
                 + "(SELECT MAX(DATA) FROM AGENDAMENTO WHERE ID_CLIENTE = ID AND REALIZADO = TRUE) AS ULTIMAVISITA "
                 + "FROM CLIENTE ORDER BY DATAREG DESC";
         
@@ -370,9 +366,8 @@ public class clienteDAO {
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
                     clienteAtual.setCelular(rs.getString("CELULAR"));
                     clienteAtual.setEmail(rs.getString("EMAIL"));
-                    clienteAtual.setCpf(rs.getString("CPF"));
                     
-                    
+                   
                     if(rs.getDate("ULTIMAVISITA") != null){
                         clienteAtual.setUltimaVisita(rs.getDate("ULTIMAVISITA").toLocalDate());
                     }
@@ -451,7 +446,7 @@ public class clienteDAO {
     public Cliente editarCliente(long id){
         
         
-        String sqlScript = "SELECT ID,NOME,SOBRENOME,CPF, EMAIL, CELULAR, DATANASC, CEP, BAIRRO, RUA,NUMERO, CIDADE,CELULAR, TELEFONE FROM CLIENTE WHERE ID = ?";
+        String sqlScript = "SELECT ID,NOME,SOBRENOME, EMAIL, CELULAR, DATANASC, CEP, BAIRRO, RUA,NUMERO, CIDADE,CELULAR, TELEFONE FROM CLIENTE WHERE ID = ?";
         
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -469,7 +464,6 @@ public class clienteDAO {
                 cliente.setId(rs.getLong("ID"));
                 cliente.setNome(rs.getString("NOME"));
                 cliente.setSobrenome(rs.getString("SOBRENOME"));
-                cliente.setCpf(rs.getString("CPF"));
                 cliente.setEmail(rs.getString("EMAIL"));
                 cliente.setCelular(rs.getString("CELULAR"));
                 cliente.setDataNasc(rs.getString("DATANASC"));
@@ -510,7 +504,7 @@ public class clienteDAO {
     public Cliente buscarCliente(long id){
         
         
-        String sqlScript = "SELECT ID, NOME,SOBRENOME,CPF, EMAIL, CELULAR, DATANASC,DATAREG, "
+        String sqlScript = "SELECT ID, NOME,SOBRENOME, EMAIL, CELULAR, DATANASC,DATAREG, "
                 + "CEP, BAIRRO, RUA,NUMERO, CIDADE,CELULAR, TELEFONE,"
                 +" TIPODECABELO, TAMANHOCABELO,CORCABELO, CONHECEU, FACEBOOK,INSTAGRAM, OBSERVACOES"
                 + " FROM CLIENTE WHERE ID = ?";
@@ -532,7 +526,6 @@ public class clienteDAO {
                 cliente.setId(rs.getLong("ID"));
                 cliente.setNome(rs.getString("NOME"));
                 cliente.setSobrenome(rs.getString("SOBRENOME"));
-                cliente.setCpf(rs.getString("CPF"));
                 cliente.setEmail(rs.getString("EMAIL"));
                 cliente.setCelular(rs.getString("CELULAR"));
                 cliente.setDataNasc(rs.getString("DATANASC"));
@@ -585,7 +578,7 @@ public class clienteDAO {
     public void atualizarCliente(Cliente cliente) {
         
         
-        String sqlScript = "UPDATE CLIENTE SET CPF = ? ,NOME = ? , SOBRENOME = ?, EMAIL = ? , DATANASC = ? , CEP = ? , BAIRRO = ? , RUA = ? , "
+        String sqlScript = "UPDATE CLIENTE SET NOME = ? , SOBRENOME = ?, EMAIL = ? , DATANASC = ? , CEP = ? , BAIRRO = ? , RUA = ? , "
                 + "CIDADE = ? , TELEFONE = ?, CELULAR = ? , NUMERO = ? WHERE ID = ? ";
         
         PreparedStatement pStatement = null;
@@ -596,19 +589,18 @@ public class clienteDAO {
             connection = new ConnectionMVC().getConnection();
             
             pStatement = connection.prepareStatement(sqlScript);
-            pStatement.setLong(13, cliente.getId());
-            pStatement.setString(1, cliente.getCpf());
-            pStatement.setString(2, cliente.getNome());
-            pStatement.setString(3, cliente.getSobrenome());
-            pStatement.setString(4, cliente.getEmail());
-            pStatement.setString(5, cliente.getDataNasc());
-            pStatement.setString(6, cliente.getCep());
-            pStatement.setString(7, cliente.getBairro());
-            pStatement.setString(8, cliente.getRua());
-            pStatement.setString(9, cliente.getCidade());
-            pStatement.setString(10, cliente.getTelefoneResidencial());
-            pStatement.setString(11, cliente.getCelular());
-            pStatement.setString(12, cliente.getNumeroDaCasa());
+            pStatement.setLong(12, cliente.getId());
+            pStatement.setString(1, cliente.getNome());
+            pStatement.setString(2, cliente.getSobrenome());
+            pStatement.setString(3, cliente.getEmail());
+            pStatement.setString(4, cliente.getDataNasc());
+            pStatement.setString(5, cliente.getCep());
+            pStatement.setString(6, cliente.getBairro());
+            pStatement.setString(7, cliente.getRua());
+            pStatement.setString(8, cliente.getCidade());
+            pStatement.setString(9, cliente.getTelefoneResidencial());
+            pStatement.setString(10, cliente.getCelular());
+            pStatement.setString(11, cliente.getNumeroDaCasa());
             
             pStatement.execute(); 
             

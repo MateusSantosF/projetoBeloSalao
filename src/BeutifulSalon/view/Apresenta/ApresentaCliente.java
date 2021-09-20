@@ -13,6 +13,7 @@ import BeutifulSalon.model.Cliente;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -38,6 +39,7 @@ public class ApresentaCliente extends javax.swing.JPanel {
         
         modelo.getTodosClientes();
         jTableConsultaCliente.setModel(modelo);
+        
      
 
     }
@@ -66,6 +68,11 @@ public class ApresentaCliente extends javax.swing.JPanel {
         jLabelExcluir = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+        });
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -89,7 +96,7 @@ public class ApresentaCliente extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Sobrenome", "Celular", "Email", "CPF", "ult. Visita"
+                "Nome", "Sobrenome", "Celular", "Telefone", "Email", "ult. Visita"
             }
         ) {
             Class[] types = new Class [] {
@@ -112,9 +119,11 @@ public class ApresentaCliente extends javax.swing.JPanel {
         jTableConsultaCliente.setRowHeight(22);
         jTableConsultaCliente.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaCliente.setShowGrid(false);
-        jTableConsultaCliente.setShowHorizontalLines(false);
-        jTableConsultaCliente.setShowVerticalLines(false);
         jScrollPane2.setViewportView(jTableConsultaCliente);
+        if (jTableConsultaCliente.getColumnModel().getColumnCount() > 0) {
+            jTableConsultaCliente.getColumnModel().getColumn(0).setPreferredWidth(80);
+            jTableConsultaCliente.getColumnModel().getColumn(1).setPreferredWidth(120);
+        }
 
         jTextFieldNomeCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -167,6 +176,14 @@ public class ApresentaCliente extends javax.swing.JPanel {
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel4ConsultarCliente(evt);
+            }
+        });
+        jLabel4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jLabel4KeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jLabel4KeyReleased(evt);
             }
         });
 
@@ -230,9 +247,9 @@ public class ApresentaCliente extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE))
+                                .addComponent(jLabel4))
                             .addComponent(jLabel3))
-                        .addGap(346, 346, 346)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 418, Short.MAX_VALUE)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,6 +362,21 @@ public class ApresentaCliente extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jLabelExcluirMousePressed
+
+    private void jLabel4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel4KeyPressed
+          
+    
+       
+    }//GEN-LAST:event_jLabel4KeyPressed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+      
+    }//GEN-LAST:event_formKeyPressed
+
+    private void jLabel4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jLabel4KeyReleased
+   
+     
+    }//GEN-LAST:event_jLabel4KeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

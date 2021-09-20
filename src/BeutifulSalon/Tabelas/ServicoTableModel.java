@@ -21,7 +21,7 @@ public class ServicoTableModel extends AbstractTableModel {
      
     private final DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
     private final List<Servico> dados;
-    private final String[] columns = {"Nome", "Valor", "Tempo Gasto", "Qtd. Realizada Anual"};
+    private final String[] columns = {"Nome", "Valor", "Tempo Gasto", "Qtd. Anual Realizada"};
     private final ServicoController servicoController;
 
     public ServicoTableModel() {

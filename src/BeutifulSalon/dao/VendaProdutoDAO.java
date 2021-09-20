@@ -248,12 +248,12 @@ public class VendaProdutoDAO {
         return vendas;
     }
 
-    public List<Item> retornaItemsCompra(String cpf) {
+    public List<Item> retornaItemsCompra(long idCliente) {
         
         String sql = "SELECT PRODUTO.NOME, PRODUTO.MARCA, ITEM_VENDA.QUANTIDADE, VENDA.DATA, PRODUTO.PRECO FROM ITEM_VENDA " 
         + "INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO " 
         + "INNER JOIN VENDA ON VENDA.ID_VENDA = ITEM_VENDA.ID_VENDA "
-        + "WHERE VENDA.CPF_CLIENTE = ? ORDER BY VENDA.DATA DESC LIMIT 20";
+        + "WHERE VENDA.ID_CLIENTE = ? ORDER BY VENDA.DATA DESC LIMIT 20";
         
         List<Item> items = new ArrayList<>();
         Connection connection = null;
@@ -264,7 +264,7 @@ public class VendaProdutoDAO {
             connection = new ConnectionMVC().getConnection();
             pStatement = connection.prepareStatement(sql);
 
-            pStatement.setString(1, cpf);
+            pStatement.setLong(1, idCliente);
   
 
             rs = pStatement.executeQuery();

@@ -85,7 +85,6 @@ public class PopulaBanco {
         String telefone = "";
         String dataNascimento = ""; 
         String email = "";
-        String cpf = "";
         
         if(dados[0] != "" && dados[0] != " " && dados[0] != null){
             
@@ -121,18 +120,13 @@ public class PopulaBanco {
             }      
         }
         
-        if(dados.length >= 6){
-           if(dados[5] != "" && dados[5] != " " && dados[5] != null){
-                cpf = dados[5];
-            }      
-        }
+
      
         cliente.setNome(nome);
         cliente.setSobrenome(sobrenome);
         cliente.setCelular(celular);
         cliente.setTelefoneResidencial(telefone);
         cliente.setDataNasc(dataNascimento);
-        cliente.setCpf(cpf);
         cliente.setEmail(email);
         cliente.setDataDeRegistro(LocalDate.now());
        

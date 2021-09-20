@@ -312,7 +312,7 @@ public class CadastroServico extends javax.swing.JFrame implements Observador {
 
         boolean sucesso;
 
-        ServicoController sv = new ServicoController(); //instanciar o controlador, que recebe um novo controlador
+        ServicoController sv = new ServicoController(); 
         try {
             sucesso = sv.cadastrarServico(
                 jTextFieldNomeServico.getText(),

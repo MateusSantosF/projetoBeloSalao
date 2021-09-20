@@ -297,15 +297,15 @@ public class ApresentaServico extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabel4ConsultarCliente
 
     private void jLabelEditarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEditarMousePressed
-         boolean resultado;
+        boolean resultado;
         int indice = jTableServicos.getSelectedRow();
 
         if (indice > -1) {
             try {
 
                 long id = modelo.getServico(indice).getId();
-                ClienteController cc = new ClienteController();
-                //resultado = cc.editarCliente(cpfClienteSelecionado);
+                ServicoController sc = new ServicoController();
+                resultado = sc.editarServico(id);
 
 
             } catch (HeadlessException e) {

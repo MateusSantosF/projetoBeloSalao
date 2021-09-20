@@ -126,6 +126,10 @@ public class Servico {
      public List<Servico> listarServicosRealizadosAno() throws ExceptionDAO{
         return new ServicoDAO().listarServicosRealizadosAno();
      }
+
+    public void atualizarServico(Servico servico) throws ExceptionDAO{
+        new ServicoDAO().atualizarServico(servico);
+    }
     
     
     

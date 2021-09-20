@@ -21,7 +21,7 @@ import javax.swing.table.AbstractTableModel;
 public class ClienteTableModel extends AbstractTableModel {
 
     private final List<Cliente> dados;
-    private final String[] columns = {"Nome", "Sobrenome", "Celular", "Email", "CPF", "Última Vísita"};
+    private final String[] columns = {"Nome", "Sobrenome", "Celular", "Telefone", "Email", "Última Vísita"};
     private final ClienteController clienteController;
 
     public ClienteTableModel() {
@@ -55,13 +55,10 @@ public class ClienteTableModel extends AbstractTableModel {
             
             case 2:
                 return dados.get(rowIndex).getCelular();
-            
             case 3:
-               return dados.get(rowIndex).getEmail();
-                    
+                return dados.get(rowIndex).getTelefoneResidencial();
             case 4:
-                return dados.get(rowIndex).getCpf();
-            
+               return dados.get(rowIndex).getEmail();         
             case 5 :
                 LocalDate ultimaVisita = dados.get(rowIndex).getUltimaVisita();
                 

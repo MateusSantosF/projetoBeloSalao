@@ -10,6 +10,8 @@ import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
+import BeutifulSalon.view.Edicao.EditarServico;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -137,6 +139,50 @@ public class ServicoController {
         }
 
         return null;
+    }
+
+    public boolean editarServico(long id) {
+        
+        
+        Servico servico = buscarServico(id);
+        
+        if(servico != null){
+            
+            new EditarServico(servico).setVisible(true);
+            return true;
+        }
+        
+        return false;
+    }
+
+    public boolean atualizarServico(long idServico, String nomeServico, String preco, String tempoGasto, ArrayList<Produto> Produtos) {
+        
+        if(nomeServico.length() > 0 && preco.length() > 0 && Valida.isHora(tempoGasto)){
+            
+            
+            DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
+            LocalTime horario = LocalTime.parse(tempoGasto, formatterHora);
+            Servico servico = new Servico();
+            
+            servico.setId(idServico);
+            servico.setNome(nomeServico);
+            servico.setPreco(Dinheiro.parseCent(Dinheiro.retiraCaracteres(preco)));
+            servico.setTempoGasto(horario);
+            servico.setProdutos(Produtos);
+            
+            try {
+                servico.atualizarServico(servico);
+               
+            } catch (ExceptionDAO e) {
+                System.out.println("Erro ao atualizar servico" + e);
+                return false;
+            }
+            return true;
+        }else{
+            
+            return false;
+        }
+
     }
 
 }

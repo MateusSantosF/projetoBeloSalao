@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class ClienteController {
 
-    public boolean cadastrarCliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC,
+    public boolean cadastrarCliente(String NOME, String SOBRENOME, String EMAIL, String DATANASC,
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR) {
 
@@ -30,10 +30,9 @@ public class ClienteController {
                  
             
           
-            if(CPF.replaceAll(" ", "").length() == 14){
-                if(Valida.isCpf(CPF) == false || verificaExistenciaCliente(CPF) == true ){
-                    return false;
-                }
+            
+             if(CELULAR.replaceAll(" ", "").length() != 14){
+                CELULAR = null;
             }
             
             if(DATANASC.replaceAll(" ","").length() == 10){
@@ -56,7 +55,7 @@ public class ClienteController {
             //Convertendo datas de String para Date
             LocalDate dataReg = LocalDate.now();
             //objeto cliente
-            Cliente cliente = new Cliente(CPF, NOME.trim(), SOBRENOME.trim(), EMAIL.trim(), DATANASC, CEP,
+            Cliente cliente = new Cliente(NOME.trim(), SOBRENOME.trim(), EMAIL.trim(), DATANASC, CEP,
                     BAIRRO, RUA.trim(), CIDADE.trim(), NUMERO.trim(), TELEFONE, CELULAR, dataReg);
             try {
                 //Chamando construtor de Cliente
@@ -79,7 +78,7 @@ public class ClienteController {
         return false;
     }
     
-    public boolean atualizarCliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC,
+    public boolean atualizarCliente(String NOME, String SOBRENOME, String EMAIL, String DATANASC,
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR, long id) {
 
@@ -92,17 +91,24 @@ public class ClienteController {
             }else{
                 DATANASC = null;
             }
+            if(CELULAR.replaceAll(" ", "").length() != 14){
+                CELULAR = null;
+            }
+            
             if(EMAIL.length() > 0){
                 if(Valida.isEmail(EMAIL) == false){
                     return false;
                 }
             }
+            
+      
+             
             //Formatador
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
 
             //objeto cliente
             
-            Cliente cliente = new Cliente(CPF, NOME.trim(), SOBRENOME.trim(), EMAIL.trim(), DATANASC, CEP,
+            Cliente cliente = new Cliente(NOME.trim(), SOBRENOME.trim(), EMAIL.trim(), DATANASC, CEP,
                     BAIRRO.trim(), RUA.trim(), CIDADE.trim(), NUMERO, TELEFONE, CELULAR);
             cliente.setId(id);
             try {

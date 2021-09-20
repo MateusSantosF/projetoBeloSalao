@@ -36,7 +36,6 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Novo Cliente
         jLabel18.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome 
         jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Sobrenome
-        jLabel20.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CPF
         jLabel21.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Email
         jLabel22.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data de Nasc.
         jLabel24.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Telefone 
@@ -117,12 +116,10 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         jTextFieldTelefone = new javax.swing.JFormattedTextField();
         jLabel24 = new javax.swing.JLabel();
-        jFormattedTextFieldCPF = new javax.swing.JFormattedTextField();
         jTextFieldSobrenome = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jTextFieldNome = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -268,21 +265,6 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel24.setText("Telefone");
 
-        jFormattedTextFieldCPF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
-        try {
-            jFormattedTextFieldCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFormattedTextFieldCPF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFormattedTextFieldCPF.setToolTipText("Informe o CPF");
-        jFormattedTextFieldCPF.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jFormattedTextFieldCPF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFormattedTextFieldCPFActionPerformed(evt);
-            }
-        });
-
         jTextFieldSobrenome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextFieldSobrenome.setToolTipText("Sobrenome");
         jTextFieldSobrenome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
@@ -296,9 +278,6 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel18.setText("*Nome");
-
-        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel20.setText("CPF");
 
         jPanel1.setBackground(new java.awt.Color(36, 46, 65));
 
@@ -392,13 +371,11 @@ public class CadastroCliente extends javax.swing.JFrame {
                                     .addGap(0, 0, Short.MAX_VALUE))
                                 .addComponent(jTextFieldNome))
                             .addGap(18, 18, 18)
-                            .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel19))
-                            .addGap(18, 18, 18)
-                            .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel20)
-                                .addComponent(jFormattedTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
+                                    .addComponent(jLabel19)
+                                    .addGap(327, 327, 327))
+                                .addComponent(jTextFieldSobrenome)))
                         .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
                             .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPCadastroClientes1Layout.createSequentialGroup()
@@ -424,13 +401,11 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
-                    .addComponent(jLabel19)
-                    .addComponent(jLabel20))
+                    .addComponent(jLabel19))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
@@ -463,7 +438,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                     .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
                 .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         getContentPane().add(JPCadastroClientes1, java.awt.BorderLayout.LINE_END);
@@ -475,10 +450,6 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void jTextFieldNumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNumeroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNumeroActionPerformed
-
-    private void jFormattedTextFieldCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCPFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldCPFActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
 
@@ -512,7 +483,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             ClienteController cc = new ClienteController();
 
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            sucessoAoCadastrar = cc.cadastrarCliente(jFormattedTextFieldCPF.getText(),
+            sucessoAoCadastrar = cc.cadastrarCliente(
                 jTextFieldNome.getText(),
                 jTextFieldSobrenome.getText(),
                 jTextFieldEmail.getText().toLowerCase(),
@@ -538,7 +509,6 @@ public class CadastroCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrar
 
     public void limparTelaCadastroCliente() {
-        jFormattedTextFieldCPF.setText("");
         jTextFieldNome.setText("");
         jTextFieldSobrenome.setText("");
         jTextFieldEmail.setText("");
@@ -594,14 +564,12 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JPanel JPCadastroClientes1;
     private javax.swing.JButton jButtonCadastrar;
     private javax.swing.JButton jButtonCancelar;
-    private javax.swing.JFormattedTextField jFormattedTextFieldCPF;
     private javax.swing.JFormattedTextField jFormattedTextFieldCep;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataNasc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;

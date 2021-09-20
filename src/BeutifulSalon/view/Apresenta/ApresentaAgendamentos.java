@@ -372,7 +372,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
-         int index = jTableAgendamentos.getSelectedRow();
+        int index = jTableAgendamentos.getSelectedRow();
         AgendamentoController ag = new AgendamentoController();
         boolean sucesso = false;
         

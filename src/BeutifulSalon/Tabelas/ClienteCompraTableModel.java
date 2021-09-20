@@ -85,9 +85,9 @@ public class ClienteCompraTableModel extends AbstractTableModel {
         return dados.get(rowCount);
     }
     
-    public void listarItens(String cpf){
+    public void listarItens(long idCliente){
         dados.clear();
-        addRow(vendaController.retornaItemsCompra(cpf));               
+        addRow(vendaController.retornaItemsCompra(idCliente));               
     }
     
 }

@@ -22,6 +22,9 @@ import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
@@ -37,6 +40,7 @@ import javax.swing.JOptionPane;
 public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente {
 
     private Webcam webcam = null;
+    private List<Webcam> webcams = null;
     private long idCliente;
     private boolean gostouDaFoto = false;
 
@@ -50,13 +54,23 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
 
     public modalWebcam(long idCliente) {
         initComponents();
-        
+
         ManipulaFontes mf = new ManipulaFontes();
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Sorria!
         jButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Tirar foto
         jButton2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Fechar Webcam
-        
-        iniciarWebCam();
+        try {
+            webcams = Webcam.getWebcams(8000, TimeUnit.MILLISECONDS);
+        } catch (WebcamException e) {
+            System.out.println("ERRO =>" + e);
+        } catch (TimeoutException ex) {
+            System.out.println("ERRO =>" + ex);
+        }
+        webcams.forEach(webcam -> {
+            jComboBoxWebcams.addItem(webcam.getName());
+        });
+       
+ 
         this.idCliente = idCliente;
 
     }
@@ -64,12 +78,9 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
     public void iniciarWebCam() {
 
         try {
-            webcam = Webcam.getDefault(30000, TimeUnit.MILLISECONDS);
-        } catch (WebcamException e) {
-            System.out.println(e);
-        } catch (TimeoutException ex) {
-            Logger.getLogger(modalWebcam.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+            webcam = Webcam.getWebcamByName(jComboBoxWebcams.getSelectedItem().toString());
+        } catch (Exception e) {
+        }
 
         if (webcam != null) {
             webcam.setViewSize(WebcamResolution.VGA.getSize());
@@ -79,6 +90,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
             painel.setImageSizeDisplayed(true);
             painel.setMirrored(true);
             jPanel1.add(painel);
+
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possível detectar sua Webcam.");
         }
@@ -100,8 +112,11 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jComboBoxWebcams = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -122,7 +137,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(55, 55, 55)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,6 +149,23 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -147,7 +179,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setText("Fechar Webcam");
+        jButton2.setText("Fechar");
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,45 +187,60 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(72, 72, 72)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(jButton2))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(83, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 12, Short.MAX_VALUE))
-        );
+        jLabel2.setText("Escolha a WebCam");
+
+        jComboBoxWebcams.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "selecione" }));
+        jComboBoxWebcams.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxWebcamsItemStateChanged(evt);
+            }
+        });
+        jComboBoxWebcams.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxWebcamsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxWebcams, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(74, 74, 74))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxWebcams, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -202,8 +249,10 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (webcam != null) {
             webcam.close();
+            this.dispose();
+        } else {
+            this.dispose();
         }
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -217,7 +266,6 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
 
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 ImageIO.write(image, "PNG", baos);
-                
 
                 byte[] imagemEmBytes = baos.toByteArray();
 
@@ -236,7 +284,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
 
                 }
 
-            }catch(IOException e){
+            } catch (IOException e) {
                 JOptionPane.showMessageDialog(null, "Erro ao alterar imagem. Tente novamente" + e);
             }
         }
@@ -248,9 +296,23 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
 
         if (webcam != null) {
             webcam.close();
+        
         }
 
     }//GEN-LAST:event_formWindowClosing
+
+    private void jComboBoxWebcamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxWebcamsActionPerformed
+        
+    }//GEN-LAST:event_jComboBoxWebcamsActionPerformed
+
+    private void jComboBoxWebcamsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxWebcamsItemStateChanged
+        if (webcam != null) {
+            webcam.close();
+            webcam = null;
+        }
+        System.out.println("mudou");
+        iniciarWebCam();
+    }//GEN-LAST:event_jComboBoxWebcamsItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -290,7 +352,9 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBoxWebcams;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

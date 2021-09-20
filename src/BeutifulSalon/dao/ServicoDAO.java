@@ -335,7 +335,8 @@ public class ServicoDAO {
 
         try {
             connection = new ConnectionMVC().getConnection();
-
+    
+           
             pStatement = connection.prepareStatement(sql);
             pStatement.setLong(1, id);
 
@@ -358,7 +359,7 @@ public class ServicoDAO {
                     ArrayList<Produto> produtos = new ArrayList<>();
 
                     while (rs2.next()) {
-                        System.out.println("teste");
+                    
                         Produto p = new ProdutoController().buscarProduto(rs2.getLong("ID_PRODUTO"));
                         p.setRendimento(rs2.getInt("RENDIMENTO"));
                         produtos.add(p);
@@ -370,6 +371,8 @@ public class ServicoDAO {
                 servicos = servicoAtual;
 
             }
+            
+            
             return servicos;
 
         } catch (SQLException e) {
@@ -686,6 +689,88 @@ public class ServicoDAO {
         }
 
         return null;
+    }
+
+    public void atualizarServico(Servico servico) throws ExceptionDAO {
+        
+        String deleteServico = "DELETE FROM PRODUTO_SERVICO WHERE ID_SERVICO = ?";
+        String atualizaServico = "UPDATE SERVICO SET NOME = ?, PRECO = ?, TEMPOGASTO = ?  WHERE ID_SERVICO = ?";
+        String cadastraProdutosServicos = "INSERT INTO PRODUTO_SERVICO (ID_PRODUTO, RENDIMENTO, ID_SERVICO) VALUES (? ,?, "+ servico.getId()+")";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            connection.setAutoCommit(false);
+            
+            pStatement = connection.prepareStatement(atualizaServico);         
+            pStatement.setLong(4, servico.getId());
+            pStatement.setString(1, servico.getNome());
+            pStatement.setLong(2, servico.getPreco());
+            pStatement.setTime(3, java.sql.Time.valueOf(servico.getTempoGasto()));
+            pStatement.executeUpdate();
+            
+     
+            pStatement = connection.prepareStatement(deleteServico);
+            pStatement.setLong(1, servico.getId());
+
+            int firstDelete = pStatement.executeUpdate();
+
+            if (firstDelete > 0) {
+                try {
+
+                    ArrayList<Produto> produtos = servico.getProdutos();
+                    
+                    if(!produtos.isEmpty()){
+                      for (Produto p : produtos) {
+                        pStatement = connection.prepareStatement(cadastraProdutosServicos);
+                        pStatement.setLong(1, p.getId_produto());
+                        pStatement.setInt(2, p.getRendimento());
+                        pStatement.executeUpdate();
+                       }  
+                    }
+                    
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Erro registrar Produto_Servico" + e);
+                    connection.rollback();
+                }
+            }
+
+            connection.commit();
+            connection.setAutoCommit(true);
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+
+
     }
     
     

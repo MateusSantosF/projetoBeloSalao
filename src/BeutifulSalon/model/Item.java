@@ -58,8 +58,8 @@ public class Item extends Produto {
         this.id_compra = id_compra;
     }
 
-    public List<Item> retornaItemsCompra(String cpf) throws ExceptionDAO {
-        return new VendaProdutoDAO().retornaItemsCompra(cpf);
+    public List<Item> retornaItemsCompra(long idCliente) throws ExceptionDAO {
+        return new VendaProdutoDAO().retornaItemsCompra(idCliente);
     }
     
     

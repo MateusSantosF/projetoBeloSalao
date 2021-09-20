@@ -12,7 +12,6 @@ import java.util.List;
 public class Cliente {
 
     private long id;
-    private String cpf;
     private String nome;
     private String sobrenome;
     private String email;
@@ -40,10 +39,9 @@ public class Cliente {
     }
 
     //Construtor não padrão
-    public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC,
+    public Cliente( String NOME, String SOBRENOME, String EMAIL, String DATANASC,
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR, LocalDate DATAREG) {
-        this.cpf = CPF;
         this.nome = NOME;
         this.sobrenome = SOBRENOME;
         this.email = EMAIL;
@@ -58,10 +56,9 @@ public class Cliente {
         this.dataDeRegistro = DATAREG;
     }
 
-    public Cliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC,
+    public Cliente( String NOME, String SOBRENOME, String EMAIL, String DATANASC,
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR) {
-        this.cpf = CPF;
         this.nome = NOME;
         this.sobrenome = SOBRENOME;
         this.email = EMAIL;
@@ -76,11 +73,6 @@ public class Cliente {
 
     }
 
-    //Cosntrutor para a tela de FluxoDeCaixa
-    public Cliente(String nome, String CPF) {
-        this.nome = nome;
-        this.cpf = CPF;
-    }
 
     public int getDeOndeConheceu() {
         return deOndeConheceu;
@@ -182,13 +174,6 @@ public class Cliente {
     }
     
     
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
 
     public String getNome() {
         return nome;

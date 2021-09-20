@@ -92,7 +92,6 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
 
     jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Celular
     jLabelCelular.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Cel2
-    jLabelCpf.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //CPF
     jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Última Visita
     jLabelUltimaViisita.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Sem informações
     jLabelClienteDesde.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
@@ -105,7 +104,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         ClienteController cc = new ClienteController();
         ManipulaImagem mi = new ManipulaImagem();
         modeloServicos.listarServicos(cliente.getId());
-        modeloCompras.listarItens(cliente.getCpf());
+        modeloCompras.listarItens(idCliente);
         jTableServicos.setModel(modeloServicos);
         jTableCompras.setModel(modeloCompras);
         
@@ -133,7 +132,6 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jLabelEmail.setCaretPosition(0);
         jLabelTelefone.setText(cliente.getTelefoneResidencial());
         jLabelCelular.setText(cliente.getCelular());
-        jLabelCpf.setText(cliente.getCpf());
 
         LocalDate ultimaVisita = cc.ultimaVisita(cliente.getId());
         LocalDate clienteDesde = cliente.getDataDeRegistro();
@@ -212,8 +210,6 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jLabelTelefone = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabelCelular = new javax.swing.JLabel();
-        jLabelCpf = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabelUltimaViisita = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
@@ -438,15 +434,6 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jLabelCelular.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelCelular.setText("991700362");
 
-        jLabelCpf.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabelCpf.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelCpf.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelCpf.setText("500.494.768.66");
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("CPF:");
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Última Visita:");
@@ -498,7 +485,6 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -508,10 +494,11 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
                                             .addComponent(jLabel19)
                                             .addComponent(jLabel9)
                                             .addComponent(jLabel26)
-                                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabelEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(2, 2, 2)))
-                                .addGap(18, 18, 18))
+                                        .addGap(20, 20, 20))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18))))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -520,7 +507,6 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                             .addComponent(jLabelTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabelCelular)))
-                                    .addComponent(jLabelCpf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabelUltimaViisita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(25, 25, 25))
                             .addComponent(jLabelNome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -568,18 +554,10 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelCelular)
                     .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelCpf, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(35, 35, 35))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 33, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelUltimaViisita))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelUltimaViisita))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelClienteDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -775,7 +753,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         if (opc == 0) {
             Cliente cliente = new Cliente();
             ClienteController cc = new ClienteController();
-            cliente.setCpf(jLabelCpf.getText());
+            cliente.setId(this.idCliente);
             cliente.setFacebook(jTextFieldFacebook.getText());
             cliente.setInstagram(jTextFieldInstagram.getText());
             cliente.setCorCabelo(jTextFieldCorCabelo.getText());
@@ -870,7 +848,6 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     private javax.swing.JComboBox<String> jComboBoxComoNosConheceu;
     private javax.swing.JComboBox<String> jComboBoxTamanhoCabelo;
     private javax.swing.JComboBox<String> jComboBoxTipoCabelo;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -892,7 +869,6 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     private javax.swing.JLabel jLabelAlterarFotoPerfil;
     private javax.swing.JLabel jLabelCelular;
     private javax.swing.JLabel jLabelClienteDesde;
-    private javax.swing.JLabel jLabelCpf;
     private javax.swing.JLabel jLabelDataClienteDesde;
     private javax.swing.JTextField jLabelEmail;
     private javax.swing.JLabel jLabelFotoPerfil;

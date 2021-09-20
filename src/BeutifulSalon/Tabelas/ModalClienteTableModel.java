@@ -19,7 +19,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ModalClienteTableModel extends AbstractTableModel {
     private final List<Cliente> dados;
-    private final String[] columns = {"Nome", "Sobrenome","CPF"};
+    private final String[] columns = {"Nome", "Sobrenome"};
     private final ClienteController clienteController;
 
     public ModalClienteTableModel() {
@@ -50,8 +50,6 @@ public class ModalClienteTableModel extends AbstractTableModel {
             
             case 1:
                 return dados.get(rowIndex).getSobrenome();
-            case 2:
-                return dados.get(rowIndex).getCpf();                        
         }
         
         return null;

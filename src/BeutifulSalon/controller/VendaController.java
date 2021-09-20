@@ -70,10 +70,10 @@ public class VendaController {
 
     }
 
-    public List<Item> retornaItemsCompra(String cpf) {
+    public List<Item> retornaItemsCompra(long idCliente) {
 
         try {
-            return new Item().retornaItemsCompra(cpf);
+            return new Item().retornaItemsCompra(idCliente);
         } catch (ExceptionDAO e) {
             System.out.println(e);
         }

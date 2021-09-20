@@ -49,7 +49,6 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Novo Cliente
         jLabel18.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome 
         jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Sobrenome
-        jLabel20.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CPF
         jLabel21.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Email
         jLabel22.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data de Nasc.
         jLabel24.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Telefone 
@@ -67,7 +66,6 @@ public class EditarCliente extends javax.swing.JFrame {
         this.cliente = cliente;
         jTextFieldNome.setText(cliente.getNome());
         jTextFieldSobrenome.setText(cliente.getSobrenome());
-        jFormattedTextFieldCPF.setText(cliente.getCpf());
         jTextFieldEmail.setText(cliente.getEmail());
         jFormattedTextFieldDataNasc.setText(cliente.getDataNasc());
         jTextFieldCelular.setText(cliente.getCelular());
@@ -136,12 +134,8 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanel15 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
         jTextFieldNome = new javax.swing.JTextField();
-        jPanel16 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jTextFieldSobrenome = new javax.swing.JTextField();
-        jPanel17 = new javax.swing.JPanel();
-        jLabel20 = new javax.swing.JLabel();
-        jFormattedTextFieldCPF = new javax.swing.JFormattedTextField();
         jPanelEmail1 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
         jTextFieldEmail = new javax.swing.JTextField();
@@ -184,8 +178,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         JPCadastroClientes1.setBackground(new java.awt.Color(255, 255, 255));
 
-        JPanelNome1.setBackground(new java.awt.Color(243, 244, 245));
-        JPanelNome1.setLayout(new java.awt.GridLayout(1, 3));
+        JPanelNome1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -196,31 +189,6 @@ public class EditarCliente extends javax.swing.JFrame {
         jTextFieldNome.setToolTipText("Nome");
         jTextFieldNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
-        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
-        jPanel15.setLayout(jPanel15Layout);
-        jPanel15Layout.setHorizontalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
-                    .addComponent(jLabel18))
-                .addGap(22, 22, 22))
-        );
-        jPanel15Layout.setVerticalGroup(
-            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel15Layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
-                .addComponent(jLabel18)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        JPanelNome1.add(jPanel15);
-
-        jPanel16.setBackground(new java.awt.Color(255, 255, 255));
-
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel19.setText("*Sobrenome");
 
@@ -228,66 +196,54 @@ public class EditarCliente extends javax.swing.JFrame {
         jTextFieldSobrenome.setToolTipText("Sobrenome");
         jTextFieldSobrenome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
-        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
-        jPanel16.setLayout(jPanel16Layout);
-        jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel15Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel18)
+                        .addGap(255, 255, 255))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel19)
-                    .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))
-                .addGap(50, 50, 50))
+                    .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel16Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel19)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                .addContainerGap(40, Short.MAX_VALUE)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                        .addComponent(jLabel19)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel15Layout.createSequentialGroup()
+                        .addComponent(jLabel18)
+                        .addGap(3, 3, 3)))
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        JPanelNome1.add(jPanel16);
-
-        jPanel17.setBackground(new java.awt.Color(255, 255, 255));
-
-        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel20.setText("CPF");
-
-        jFormattedTextFieldCPF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
-        try {
-            jFormattedTextFieldCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFormattedTextFieldCPF.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFormattedTextFieldCPF.setToolTipText("Informe o CPF");
-        jFormattedTextFieldCPF.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
-        jPanel17.setLayout(jPanel17Layout);
-        jPanel17Layout.setHorizontalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel20)
-                    .addComponent(jFormattedTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(142, Short.MAX_VALUE))
+        javax.swing.GroupLayout JPanelNome1Layout = new javax.swing.GroupLayout(JPanelNome1);
+        JPanelNome1.setLayout(JPanelNome1Layout);
+        JPanelNome1Layout.setHorizontalGroup(
+            JPanelNome1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JPanelNome1Layout.createSequentialGroup()
+                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(369, 369, 369))
         );
-        jPanel17Layout.setVerticalGroup(
-            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel17Layout.createSequentialGroup()
-                .addContainerGap(18, Short.MAX_VALUE)
-                .addComponent(jLabel20)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jFormattedTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+        JPanelNome1Layout.setVerticalGroup(
+            JPanelNome1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-
-        JPanelNome1.add(jPanel17);
 
         jPanelEmail1.setBackground(new java.awt.Color(243, 244, 245));
         jPanelEmail1.setLayout(new java.awt.GridLayout(1, 0));
@@ -308,7 +264,7 @@ public class EditarCliente extends javax.swing.JFrame {
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
                     .addComponent(jLabel21))
                 .addContainerGap())
         );
@@ -343,7 +299,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jTextFieldCelular.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         try {
-            jTextFieldCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
+            jTextFieldCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -359,9 +315,9 @@ public class EditarCliente extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel19Layout.createSequentialGroup()
-                        .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
+                        .addComponent(jLabel22, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                         .addGap(24, 24, 24)
-                        .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE))
+                        .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
                     .addGroup(jPanel19Layout.createSequentialGroup()
                         .addComponent(jFormattedTextFieldDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -405,7 +361,7 @@ public class EditarCliente extends javax.swing.JFrame {
             .addGroup(jPanel20Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                    .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
                     .addGroup(jPanel20Layout.createSequentialGroup()
                         .addComponent(jTextFieldTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -469,7 +425,7 @@ public class EditarCliente extends javax.swing.JFrame {
                     .addGroup(jPanel21Layout.createSequentialGroup()
                         .addComponent(jLabel26)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextFieldRua, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
+                    .addComponent(jTextFieldRua, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel21Layout.setVerticalGroup(
@@ -517,7 +473,7 @@ public class EditarCliente extends javax.swing.JFrame {
                 .addGroup(jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel28))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -558,7 +514,7 @@ public class EditarCliente extends javax.swing.JFrame {
                 .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel29)
                     .addComponent(jTextFieldNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         jPanel24Layout.setVerticalGroup(
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -573,7 +529,6 @@ public class EditarCliente extends javax.swing.JFrame {
         jPanelCep1.add(jPanel24);
 
         jPanel26.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel26.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 5));
 
         jButtonAtualizar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonAtualizar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -587,7 +542,6 @@ public class EditarCliente extends javax.swing.JFrame {
                 jButtonAtualizarActionPerformed(evt);
             }
         });
-        jPanel26.add(jButtonAtualizar);
 
         jButtonCancelar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCancelar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -600,7 +554,25 @@ public class EditarCliente extends javax.swing.JFrame {
                 jButtonCancelarActionPerformed(evt);
             }
         });
-        jPanel26.add(jButtonCancelar);
+
+        javax.swing.GroupLayout jPanel26Layout = new javax.swing.GroupLayout(jPanel26);
+        jPanel26.setLayout(jPanel26Layout);
+        jPanel26Layout.setHorizontalGroup(
+            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel26Layout.createSequentialGroup()
+                .addGap(352, 352, 352)
+                .addComponent(jButtonAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel26Layout.setVerticalGroup(
+            jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel26Layout.createSequentialGroup()
+                .addGap(5, 5, 5)
+                .addGroup(jPanel26Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         jPanel1.setBackground(new java.awt.Color(36, 46, 65));
 
@@ -620,7 +592,7 @@ public class EditarCliente extends javax.swing.JFrame {
                 .addGap(51, 51, 51)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(67, 67, 67))
         );
         jPanel1Layout.setVerticalGroup(
@@ -640,9 +612,11 @@ public class EditarCliente extends javax.swing.JFrame {
             .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
                 .addGap(118, 118, 118)
                 .addGroup(JPCadastroClientes1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JPanelNome1, javax.swing.GroupLayout.DEFAULT_SIZE, 874, Short.MAX_VALUE)
-                    .addComponent(jPanelEmail1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jPanelCep1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanelEmail1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelCep1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
+                        .addComponent(JPanelNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 794, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JPCadastroClientes1Layout.createSequentialGroup()
@@ -655,13 +629,13 @@ public class EditarCliente extends javax.swing.JFrame {
             .addGroup(JPCadastroClientes1Layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JPanelNome1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JPanelNome1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelEmail1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelCep1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34)
-                .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, 81, Short.MAX_VALUE)
+                .addComponent(jPanel26, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(29, 29, 29))
         );
 
@@ -723,7 +697,7 @@ public class EditarCliente extends javax.swing.JFrame {
             
             SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
             
-            sucessoAoAtualizar = cc.atualizarCliente(jFormattedTextFieldCPF.getText(),
+            sucessoAoAtualizar = cc.atualizarCliente(
                 jTextFieldNome.getText(), 
                 jTextFieldSobrenome.getText(), 
                 jTextFieldEmail.getText(), 
@@ -750,7 +724,6 @@ public class EditarCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAtualizarActionPerformed
   
     public void limparTelaEditarCliente(){
-                jFormattedTextFieldCPF.setText("");
                 jTextFieldNome.setText("");
                 jTextFieldSobrenome.setText("");
                 jTextFieldEmail.setText("");
@@ -810,13 +783,11 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JPanel JPanelNome1;
     private javax.swing.JButton jButtonAtualizar;
     private javax.swing.JButton jButtonCancelar;
-    private javax.swing.JFormattedTextField jFormattedTextFieldCPF;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataNasc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -830,8 +801,6 @@ public class EditarCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel20;
