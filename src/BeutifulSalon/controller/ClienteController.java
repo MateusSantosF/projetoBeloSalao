@@ -24,7 +24,7 @@ public class ClienteController {
 
     public boolean cadastrarCliente(String CPF, String NOME, String SOBRENOME, String EMAIL, String DATANASC,
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
-            String TELEFONE, String CELULAR, String DATAREG) {
+            String TELEFONE, String CELULAR) {
 
         if (NOME != null && NOME.length() > 0 && SOBRENOME.length() > 0 && NUMERO.length() <= 6) {
                  
@@ -40,6 +40,8 @@ public class ClienteController {
                 if(Valida.isData(DATANASC) == false){
                     return false;
                 }
+            }else{
+                DATANASC = null;
             }
             if(EMAIL.length() > 0){
                 if(Valida.isEmail(EMAIL) == false){
@@ -52,11 +54,10 @@ public class ClienteController {
             //DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
             //Convertendo datas de String para Date
-            LocalDate dataReg = LocalDate.parse(DATAREG, formatterData);
+            LocalDate dataReg = LocalDate.now();
             //objeto cliente
-            NOME = NOME.replaceAll("\\s", "");
-            Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, DATANASC, CEP,
-                    BAIRRO, RUA, CIDADE, NUMERO, TELEFONE, CELULAR, dataReg);
+            Cliente cliente = new Cliente(CPF, NOME.trim(), SOBRENOME.trim(), EMAIL.trim(), DATANASC, CEP,
+                    BAIRRO, RUA.trim(), CIDADE.trim(), NUMERO.trim(), TELEFONE, CELULAR, dataReg);
             try {
                 //Chamando construtor de Cliente
                 cliente.cadastrarCliente(cliente);
@@ -88,6 +89,8 @@ public class ClienteController {
                 if(Valida.isData(DATANASC) == false){
                     return false;
                 }
+            }else{
+                DATANASC = null;
             }
             if(EMAIL.length() > 0){
                 if(Valida.isEmail(EMAIL) == false){
@@ -98,9 +101,9 @@ public class ClienteController {
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
 
             //objeto cliente
-            NOME = NOME.replaceAll("\\s", "");
-            Cliente cliente = new Cliente(CPF, NOME, SOBRENOME, EMAIL, DATANASC, CEP,
-                    BAIRRO, RUA, CIDADE, NUMERO, TELEFONE, CELULAR);
+            
+            Cliente cliente = new Cliente(CPF, NOME.trim(), SOBRENOME.trim(), EMAIL.trim(), DATANASC, CEP,
+                    BAIRRO.trim(), RUA.trim(), CIDADE.trim(), NUMERO, TELEFONE, CELULAR);
             cliente.setId(id);
             try {
                 //Chamando construtor de Cliente

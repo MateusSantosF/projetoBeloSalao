@@ -523,8 +523,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                 jTextFieldCidade.getText().toUpperCase(),
                 jTextFieldNumero.getText(),
                 jTextFieldTelefone.getText(),
-                jTextFieldCelular.getText(),
-                df.format(new Date()));
+                jTextFieldCelular.getText());
 
             if (sucessoAoCadastrar) {
                 JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso.");

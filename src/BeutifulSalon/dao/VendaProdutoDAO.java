@@ -30,7 +30,7 @@ public class VendaProdutoDAO {
     public void cadastrarVenda(Venda venda) {
         
         
-        String insertCompra = "INSERT INTO VENDA (DATA, VALORTOTAL, VALORDESCONTO, CPF_CLIENTE) "
+        String insertCompra = "INSERT INTO VENDA (DATA, VALORTOTAL, VALORDESCONTO, ID_CLIENTE) "
                 + "VALUES (?, ?, ? , ?)";
 
         String insertItemCompra = "INSERT INTO ITEM_VENDA (PRECOUNITARIO, QUANTIDADE, PRECOTOTAL, ID_PRODUTO, ID_VENDA) "
@@ -49,7 +49,7 @@ public class VendaProdutoDAO {
             pStatement.setDate(1, java.sql.Date.valueOf(venda.getData()));
             pStatement.setLong(2, venda.getValorTotal());
             pStatement.setLong(3, venda.getValorDesconto());
-            pStatement.setString(4, venda.getCpfCliente());
+            pStatement.setLong(4, venda.getIdCliente());
 
             int firstInsert = pStatement.executeUpdate();
 

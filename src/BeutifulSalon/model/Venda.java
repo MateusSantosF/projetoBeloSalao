@@ -22,6 +22,7 @@ public class Venda{
     LocalDate data;
     long valorTotal;
     long valorDesconto;
+    long idCliente;
     String cpfCliente;
     ArrayList<Item> itensVenda;
 
@@ -53,6 +54,24 @@ public class Venda{
         
         return valorTotalSomado;
     }
+
+    public long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(long idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public ArrayList<Item> getItensVenda() {
+        return itensVenda;
+    }
+
+    public void setItensVenda(ArrayList<Item> itensVenda) {
+        this.itensVenda = itensVenda;
+    }
+    
+    
 
     public long getIdVenda() {
         return idVenda;

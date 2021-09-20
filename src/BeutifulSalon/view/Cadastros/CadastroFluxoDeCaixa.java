@@ -71,7 +71,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jLabel4 = new javax.swing.JLabel();
         jTextFieldNome2 = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldCPF2 = new javax.swing.JTextField();
+        jTextFieldIdCliente = new javax.swing.JTextField();
         jLabelAddCliente = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabelAddProdutos = new javax.swing.JLabel();
@@ -110,9 +110,9 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jTextFieldNome2.setEditable(false);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel5.setText("CPF");
+        jLabel5.setText("ID");
 
-        jTextFieldCPF2.setEditable(false);
+        jTextFieldIdCliente.setEditable(false);
 
         jLabelAddCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-add.png"))); // NOI18N
         jLabelAddCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -247,17 +247,21 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabelAddProdutos))
-                    .addComponent(jLabel5)
-                    .addComponent(jTextFieldCPF2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
                     .addGroup(jPanelProdutoLayout.createSequentialGroup()
-                        .addComponent(jTextFieldNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelAddCliente))
-                    .addGroup(jPanelProdutoLayout.createSequentialGroup()
-                        .addComponent(jRadioButtonCliente)
+                        .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioButtonCliente)
+                            .addComponent(jLabel5))
                         .addGap(9, 9, 9)
-                        .addComponent(jRadioButtonCabelereiro)))
+                        .addComponent(jRadioButtonCabelereiro))
+                    .addGroup(jPanelProdutoLayout.createSequentialGroup()
+                        .addComponent(jTextFieldIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addGroup(jPanelProdutoLayout.createSequentialGroup()
+                                .addComponent(jTextFieldNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabelAddCliente)))))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,50 +289,48 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jPanelProdutoLayout.setVerticalGroup(
             jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelProdutoLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
                 .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelProdutoLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
                         .addComponent(jCheckBoxDesconto2)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jTextFieldTotalBruto2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jTextFieldDesconto2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(jTextFieldTotal2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(93, 93, 93)
+                        .addComponent(jButtonFinalizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelProdutoLayout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRadioButtonCliente)
+                            .addComponent(jRadioButtonCabelereiro))
+                        .addGap(18, 18, 18)
                         .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelProdutoLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jTextFieldTotalBruto2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(27, 27, 27)
-                                .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jTextFieldDesconto2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(48, 48, 48)
-                                .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jTextFieldTotal2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(93, 93, 93)
-                                .addComponent(jButtonFinalizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanelProdutoLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jRadioButtonCliente)
-                                    .addComponent(jRadioButtonCabelereiro))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jTextFieldNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelAddCliente))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jLabelAddCliente)))
+                            .addGroup(jPanelProdutoLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFieldCPF2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelAddProdutos)))))
-                    .addGroup(jPanelProdutoLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jTextFieldIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(111, 111, 111)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelAddProdutos))))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -379,23 +381,20 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             VendaController vc = new VendaController();
             CabeleireiroController cabc = new CabeleireiroController();
             boolean isClienteComprando = jRadioButtonCliente.isSelected();
-            String cpf = "";
 
             //retorna o CPF de acordo com o RadioButton
             if (isClienteComprando) {
-                cpf = jTextFieldCPF2.getText();
                  sucesso = vc.RegistraVenda(
                         LocalDate.now(),
                         Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
-                        cpf,
+                        Long.valueOf(jTextFieldIdCliente.getText()),
                         new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
             } else {
-                    System.out.println("chegou");
-                cpf = cabc.selecionaCabeleireiro().getCpf();
+                    
                 sucesso = cc.RegistraCompra(
                     LocalDate.now(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
-                    cpf,
+                    cabc.selecionaCabeleireiro().getCpf(),
                     new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
             }
             
@@ -454,10 +453,10 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     private void jRadioButtonClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonClienteActionPerformed
         if (jRadioButtonCliente.isSelected()) {
             jTextFieldNome2.setEnabled(true);
-            jTextFieldCPF2.setEnabled(true);
+            jTextFieldIdCliente.setEnabled(true);
             jLabelAddCliente.setEnabled(true);
             jTextFieldNome2.setEditable(false);
-            jTextFieldCPF2.setEditable(false);
+            jTextFieldIdCliente.setEditable(false);
             limparTodosCampos();
         }
     }//GEN-LAST:event_jRadioButtonClienteActionPerformed
@@ -465,14 +464,14 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     private void jRadioButtonCabelereiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonCabelereiroActionPerformed
         if (jRadioButtonCabelereiro.isSelected()) {
             jTextFieldNome2.setEnabled(false);
-            jTextFieldCPF2.setEnabled(false);
+            jTextFieldIdCliente.setEnabled(false);
             jLabelAddCliente.setEnabled(false);
             limparTodosCampos();
         }
     }//GEN-LAST:event_jRadioButtonCabelereiroActionPerformed
 
     void limparTodosCampos() {
-        jTextFieldCPF2.setText("");
+        jTextFieldIdCliente.setText("");
         jTextFieldDesconto2.setText("-R$ 0,00");
         jTextFieldNome2.setText("");
         jTextFieldTotal2.setText("");
@@ -550,12 +549,9 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     @Override
     public void update(Cliente cliente) {
 
-        //int tabSelecionada = jTabbedPane.getSelectedIndex();
-        //se for compra de produto
-        // if (tabSelecionada == 2) {} 
         Cliente clienteSelecionado = cliente;
         jTextFieldNome2.setText(clienteSelecionado.getNome());
-        jTextFieldCPF2.setText(clienteSelecionado.getCpf());
+        jTextFieldIdCliente.setText(String.valueOf(clienteSelecionado.getId()));
 
     }
 
@@ -644,8 +640,8 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTableProdutosComprados;
-    private javax.swing.JTextField jTextFieldCPF2;
     private javax.swing.JTextField jTextFieldDesconto2;
+    private javax.swing.JTextField jTextFieldIdCliente;
     private javax.swing.JTextField jTextFieldNome2;
     private javax.swing.JTextField jTextFieldTotal2;
     private javax.swing.JTextField jTextFieldTotalBruto2;

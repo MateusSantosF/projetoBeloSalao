@@ -21,13 +21,13 @@ import javax.swing.JOptionPane;
  */
 public class VendaController {
 
-    public boolean RegistraVenda(LocalDate data, long valorDesconto, String cpfCliente, ArrayList<Item> itensCompra) {
+    public boolean RegistraVenda(LocalDate data, long valorDesconto, long idCliente, ArrayList<Item> itensCompra) {
 
-        if (Valida.isCpf(cpfCliente) && validaQuantidadeProduto(itensCompra)) {
+        if (validaQuantidadeProduto(itensCompra)) {
 
             Venda vendaAtual = new Venda();
 
-            vendaAtual.setCpfCliente(cpfCliente);
+            vendaAtual.setIdCliente(idCliente);
             vendaAtual.setValorDesconto(valorDesconto);
             vendaAtual.setData(data);
             vendaAtual.setItensCompra(itensCompra);
