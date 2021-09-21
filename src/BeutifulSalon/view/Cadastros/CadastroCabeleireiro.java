@@ -62,7 +62,29 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         
         jButtonCadastrar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Confirmar
         
+        //Fontes email aniversario
+        jLabel6.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
+        jCheckBoxAniversario.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jTextAreaAniversario.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel10.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabelNomeArquivoAniversario.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel11.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         
+        //Fontes email visita
+        jLabel14.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
+        jComboBoxPeriodo.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jCheckBoxUltimaVisita.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel15.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jTextFieldTituloUltimaVisita.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jTextAreaUltimaVisita.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel18.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabelNomeArquivoUltimaVisita.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel16.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         
         // ===================================================//
         CabeleireiroController cc = new CabeleireiroController();

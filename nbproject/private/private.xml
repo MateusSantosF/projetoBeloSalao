@@ -3,25 +3,29 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/controller/ServicoController.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/dao/ServicoDAO.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Apresenta/ApresentaServico.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Tabelas/AgendamentoTableModel.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/model/Agendamento.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/model/Servico.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/controller/ClienteController.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Ferramentas/RecuperaTabela.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Edicao/EditarCliente.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Edicao/EditarServico.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/dao/clienteDAO.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/controller/AgendamentoController.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Cadastros/CadastroServico.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Tabelas/ModalClienteTableModel.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Cadastros/CadastroCabeleireiro.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Apresenta/ApresentaAgendamentos.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Edicao/EditarAgendamento.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Apresenta/ApresentaCliente.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/model/Cliente.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/DialogValorProduto.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/modalInputMonetarios.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/modalOrcamentoPrevisto.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/modalExpediente.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/Edicao/EditarCliente.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/modalProdutosUtilizados.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/dao/CabeleireiroDAO.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/modalCliente.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/Apresenta/ApresentaAgendamentos.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/MainMenu.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/Apresenta/DetalhesCliente.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/modalEmail.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/modalServicos.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/modalProdutos.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/Cadastros/CadastroCabeleireiro.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/NovoRegistro.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/modalServicoUnico.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/Edicao/EditarDespesa.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/Cadastros/CadastroDespesa.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/modalFotoPerfil.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/Edicao/EditarAgendamento.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/Dashboard.java</file>
+            <file>file:/C:/Users/Visitante/Documents/IF_BeautifulSalon/pNovo/projetoBeloSalao/src/BeutifulSalon/view/modais/modalWebcam.java</file>
         </group>
     </open-files>
 </project-private>
