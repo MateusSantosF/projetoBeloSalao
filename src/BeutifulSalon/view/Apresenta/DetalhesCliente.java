@@ -65,7 +65,8 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     jLabel13.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //UF
 
     jLabel21.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 25f)); //+ Informações
-    jToggleButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Alterar informações
+    jToggleButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 10f)); //Alterar informações
+    jButtonSalvar.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 11f)); //Salvar
     jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Tipo do Cabelo
     jComboBoxTipoCabelo.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Tipo do Cabelo
     jLabel22.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Tamanho
