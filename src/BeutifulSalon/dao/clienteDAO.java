@@ -161,7 +161,8 @@ public class clienteDAO {
         
         String sql = "SELECT * FROM CLIENTE " +
         " INNER JOIN EMAILANIVERSARIO ON EMAILANIVERSARIO.ID_CLIENTE = CLIENTE.ID " +
-        " WHERE Substr(Cliente.DATANASC,0, 6) = ? AND (EMAILANIVERSARIO.ULTIMOENVIO NOT BETWEEN ? AND ? OR EMAILANIVERSARIO.ULTIMOENVIO IS NULL)";
+        " WHERE Substr(Cliente.DATANASC,0, 6) = ? AND (EMAILANIVERSARIO.ULTIMOENVIO NOT BETWEEN ? AND ? OR EMAILANIVERSARIO.ULTIMOENVIO IS NULL)"
+                + " AND CLIENTE.EXCLUIDO = FALSE";
         Connection connection = null;
         PreparedStatement pStatement = null;
    
@@ -225,7 +226,8 @@ public class clienteDAO {
 "        INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID " +
 "        INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.ID_CLIENTE = CLIENTE.ID AND EMAILULTIMAVISITA.ID_CLIENTE = AGENDAMENTO.ID_CLIENTE " +
 "        WHERE AGENDAMENTO.DATA NOT BETWEEN ? AND ( SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO) " +
-"        AND (EMAILULTIMAVISITA.ULTIMOENVIO NOT BETWEEN ? AND ( SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO) OR EMAILULTIMAVISITA.ULTIMOENVIO IS NULL)";
+"        AND (EMAILULTIMAVISITA.ULTIMOENVIO NOT BETWEEN ? AND ( SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO) OR EMAILULTIMAVISITA.ULTIMOENVIO IS NULL)"
+                + " AND CLIENTE.EXCLUIDO = FALSE";
                 
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -288,7 +290,7 @@ public class clienteDAO {
     public List<Cliente> listarClientes(String nome) throws ExceptionDAO{
         
         
-        String sql  = "SELECT ID,NOME,SOBRENOME,CELULAR,EMAIL FROM CLIENTE WHERE NOME LIKE '%" + nome + "' ORDER BY DATAREG DESC";
+        String sql  = "SELECT ID,NOME,SOBRENOME,CELULAR,EMAIL FROM CLIENTE WHERE NOME LIKE '%" + nome + "' AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATAREG DESC";
         Connection connection = null;
         PreparedStatement pStatement = null;
         
@@ -343,7 +345,7 @@ public class clienteDAO {
         
         String sql  = "SELECT ID, NOME, SOBRENOME, CELULAR, EMAIL,"
                 + "(SELECT MAX(DATA) FROM AGENDAMENTO WHERE ID_CLIENTE = ID AND REALIZADO = TRUE) AS ULTIMAVISITA "
-                + "FROM CLIENTE ORDER BY DATAREG DESC";
+                + "FROM CLIENTE  WHERE CLIENTE.EXCLUIDO = FALSE ORDER BY DATAREG DESC";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -405,7 +407,7 @@ public class clienteDAO {
     public void deletarCliente(long id){
         
         
-        String sql  = "DELETE FROM CLIENTE WHERE ID = ?";
+        String sql  = "UPDATE CLIENTE SET EXCLUIDO = TRUE WHERE ID = ?";
         Connection connection = null;
         PreparedStatement pStatement = null;
         
@@ -717,7 +719,7 @@ public class clienteDAO {
 
     public boolean verificaExistenciaCliente(String cpf) {
         
-        String sql = "SELECT COUNT(*) AS QTD FROM CLIENTE WHERE CLIENTE.CPF = ?";
+        String sql = "SELECT COUNT(*) AS QTD FROM CLIENTE WHERE CLIENTE.CPF = ? AND CLIENTE.EXCLUIDO = FALSE";
         Connection connection = null;
         PreparedStatement pStatement = null;
         
@@ -760,7 +762,7 @@ public class clienteDAO {
     public List<Cliente> top5Clientes(int anoReferente){
          String sql  = "SELECT COUNT(AGENDAMENTO.ID_CLIENTE) AS QTD, CLIENTE.NOME, CLIENTE.SOBRENOME FROM AGENDAMENTO\n" +
                 "INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE " +
-                "WHERE AGENDAMENTO.DATA BETWEEN ? AND ?" +
+                "WHERE AGENDAMENTO.DATA BETWEEN ? AND ? AND CLIENTE.EXCLUIDO = FALSE " +
                 "GROUP BY AGENDAMENTO.ID_CLIENTE ORDER BY COUNT(AGENDAMENTO.ID_CLIENTE) DESC LIMIT 5;";
         
         Connection connection = null;

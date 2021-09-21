@@ -153,7 +153,10 @@ public class AgendamentoDAO {
     
     public ArrayList<Agendamento> listarAgendamentos(){
         
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO WHERE REALIZADO = TRUE ORDER BY DATA ";
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, "
+                + "ID_CLIENTE FROM AGENDAMENTO "
+                + "INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
+                + " WHERE REALIZADO = TRUE AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATA ";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -246,7 +249,9 @@ public class AgendamentoDAO {
         
         
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO"
-                + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.MeiaNoiteAmanha() + " AND REALIZADO = TRUE ORDER BY HORARIO ";
+                + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE "
+                + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.MeiaNoiteAmanha() + " AND REALIZADO = TRUE "
+                + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO ";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -306,8 +311,9 @@ public class AgendamentoDAO {
         
         
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO"
+                + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE "
                 + " WHERE DATA BETWEEN " + datas.MeiaNoiteAmanha() + " AND " + datas.somaDia(LocalDateTime.now().plusDays(1), 1)
-                + " AND REALIZADO = TRUE ORDER BY HORARIO";
+                + " AND REALIZADO = TRUE AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -367,8 +373,9 @@ public class AgendamentoDAO {
         
         
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO"
+                + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
                 + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.somaDia(LocalDateTime.now(), 5) 
-                +" AND REALIZADO = TRUE ORDER BY DATA";
+                +" AND REALIZADO = TRUE AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATA";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -428,7 +435,8 @@ public class AgendamentoDAO {
      public ArrayList<Agendamento> listarAgendamentosNome(String nome){
              
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, CLIENTE.NOME FROM AGENDAMENTO"
-        + " INNER JOIN CLIENTE ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID AND CLIENTE.NOME LIKE'%" + nome +"%'";
+        + " INNER JOIN CLIENTE ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID AND CLIENTE.NOME LIKE'%" + nome +"%'"
+                + " WHERE CLIENTE.EXCLUIDO = FALSE";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -487,7 +495,9 @@ public class AgendamentoDAO {
         ManipulaData datas = new ManipulaData();
       
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO"
-                + " WHERE DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data) +" ORDER BY HORARIO";
+                + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
+                + " WHERE DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data) +" "
+                + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -551,7 +561,9 @@ public class AgendamentoDAO {
         ManipulaData datas = new ManipulaData();
       
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE FROM AGENDAMENTO"
-                + " WHERE REALIZADO = TRUE AND DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data) +" ORDER BY HORARIO";
+                + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
+                + " WHERE REALIZADO = TRUE AND DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data)  
+                + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO";
         
         Connection connection = null;
         PreparedStatement pStatement = null;

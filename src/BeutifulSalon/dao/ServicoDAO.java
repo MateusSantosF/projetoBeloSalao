@@ -29,7 +29,89 @@ public class ServicoDAO {
 
     public List<Servico> listarServicos() throws ExceptionDAO {
 
-        String sql = "SELECT ID_SERVICO, NOME, PRECO, TEMPOGASTO, (SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) FROM AGENDAMENTO_SERVICO WHERE AGENDAMENTO_SERVICO.ID_SERVICO = SERVICO.ID_SERVICO) AS QTD FROM SERVICO ORDER BY NOME DESC";
+        String sql = "SELECT ID_SERVICO, NOME, PRECO, TEMPOGASTO, (SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) FROM AGENDAMENTO_SERVICO WHERE AGENDAMENTO_SERVICO.ID_SERVICO = SERVICO.ID_SERVICO) AS QTD FROM SERVICO "
+                + " WHERE SERVICO.EXCLUIDO = FALSE ORDER BY NOME DESC";
+        String sql2 = "SELECT * FROM PRODUTO_SERVICO WHERE ID_SERVICO = ?";
+
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        List<Servico> servicos = null;
+
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+
+            ResultSet rs = pStatement.executeQuery();
+
+            if (rs != null) {
+                servicos = new ArrayList<>();
+
+                while (rs.next()) {
+                    Servico servicoAtual = new Servico();
+                    servicoAtual.setNome(rs.getString("NOME"));
+                    servicoAtual.setPreco(rs.getLong("PRECO"));
+                    servicoAtual.setTempoGasto(rs.getTime("TEMPOGASTO").toLocalTime());
+                    servicoAtual.setId(rs.getLong("ID_SERVICO"));
+                    servicoAtual.setQuantidadeRealizada(rs.getLong("QTD"));
+                    
+                    pStatement = connection.prepareStatement(sql2);
+        
+                    pStatement.setLong(1, servicoAtual.getId());
+                    ResultSet rs2 = pStatement.executeQuery();
+                    
+                    if(rs2 != null){
+                        ArrayList<Produto> produtos = new ArrayList<>();                
+                        while(rs2.next()){
+                            Produto p = new ProdutoController().buscarProduto(rs2.getLong("ID_PRODUTO"));
+                            p.setRendimento(rs2.getInt("RENDIMENTO"));
+                            produtos.add(p);                          
+                        }
+                        servicoAtual.setProdutos(produtos);
+                    }
+                servicos.add(servicoAtual);
+                }
+
+            }
+
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                Logger.getLogger(CompraProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return servicos;
+
+    }
+    
+    public List<Servico> listarServicosIndependenteDeExclusao() throws ExceptionDAO {
+
+        String sql = "SELECT ID_SERVICO, NOME, PRECO, TEMPOGASTO, (SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) FROM AGENDAMENTO_SERVICO"
+                + " WHERE AGENDAMENTO_SERVICO.ID_SERVICO = SERVICO.ID_SERVICO) AS QTD FROM SERVICO "
+                + ""
+                + " ORDER BY NOME DESC";
         String sql2 = "SELECT * FROM PRODUTO_SERVICO WHERE ID_SERVICO = ?";
 
         Connection connection = null;
@@ -110,7 +192,8 @@ public class ServicoDAO {
  
         String sql2 = "SELECT ID_SERVICO, NOME, PRECO, TEMPOGASTO, "
                 + "(SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) FROM AGENDAMENTO_SERVICO WHERE "
-                + "AGENDAMENTO_SERVICO.ID_SERVICO = SERVICO.ID_SERVICO) AS QTD FROM SERVICO WHERE SERVICO.NOME LIKE '%" + nome + "%' ORDER BY NOME DESC";
+                + "AGENDAMENTO_SERVICO.ID_SERVICO = SERVICO.ID_SERVICO) AS QTD FROM SERVICO WHERE SERVICO.NOME LIKE '%" + nome + "%' "
+                + " AND SERVICO.EXCLUIDO = FALSE ORDER BY NOME DESC";
         
         
         Connection connection = null;
@@ -171,7 +254,7 @@ public class ServicoDAO {
         String sql ="SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) AS QTD, AGENDAMENTO_SERVICO.ID_SERVICO AS ID_SERVICO, SERVICO.NOME FROM AGENDAMENTO_SERVICO " +
                     "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
                     "INNER JOIN AGENDAMENTO ON AGENDAMENTO.DATA BETWEEN ? AND ? AND AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO " +
-                    "GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) DESC LIMIT 5";
+                    " AND SERVICO.EXCLUIDO = FALSE GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) DESC LIMIT 5";
         Connection connection = null;
         PreparedStatement pStatement = null;
         ResultSet rs = null;
@@ -239,7 +322,7 @@ public class ServicoDAO {
         String sql ="SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) AS QTD, AGENDAMENTO_SERVICO.ID_SERVICO AS ID, SERVICO.NOME, SERVICO.PRECO, SERVICO.TEMPOGASTO FROM AGENDAMENTO_SERVICO " +
                     "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
                     "INNER JOIN AGENDAMENTO ON AGENDAMENTO.DATA BETWEEN ? AND ? AND AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO " +
-                    "GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO)";
+                    " GROUP BY AGENDAMENTO_SERVICO.ID_SERVICO ORDER BY COUNT(AGENDAMENTO_SERVICO.ID_SERVICO)";
         
         String sql2 = "SELECT * FROM PRODUTO_SERVICO WHERE ID_SERVICO = ?";
 
@@ -576,6 +659,7 @@ public class ServicoDAO {
     
     public List<Servico> selecionaServicosDoAno(int anoReferente) throws ExceptionDAO{
        
+        //ignora se o serviço está excluido ou não
         String sql = "SELECT AGENDAMENTO.DATA AS DATA, SERVICO.ID_SERVICO, SERVICO.NOME, SERVICO.PRECO FROM SERVICO " +
         "    INNER JOIN AGENDAMENTO_SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
         "    INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO " +
@@ -642,7 +726,7 @@ public class ServicoDAO {
         String sql = "SELECT SERVICO.ID_SERVICO, SERVICO.NOME, AGENDAMENTO.DATA, AGENDAMENTO.HORARIO FROM AGENDAMENTO_SERVICO " +
         "INNER JOIN SERVICO ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO " +
         "INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO " +
-        "WHERE ID_CLIENTE = ? ORDER BY AGENDAMENTO.DATA DESC LIMIT 20";
+        "WHERE ID_CLIENTE = ? ORDER BY AGENDAMENTO.DATA DESC";
         ArrayList<Servico> servicos = new ArrayList<>();
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -770,6 +854,40 @@ public class ServicoDAO {
             }
         }
 
+
+    }
+
+    public void excluirServico(long id) {
+        
+        String sql = "UPDATE SERVICO SET EXCLUIDO = TRUE WHERE ID_SERVICO = ?";
+        ArrayList<Servico> servicos = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+      
+        try{
+            
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setLong(1, id);         
+            pStatement.executeUpdate();
+      
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) " + e);
+        }finally{
+              try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
 
     }
     

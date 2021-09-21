@@ -55,7 +55,7 @@ public class ProdutoDAO {
 
     public ArrayList<Produto> listarProdutos() {
  
-     String sql  = "SELECT IDPRODUTO, NOME, MARCA, PRECO, DATAREG FROM PRODUTO ORDER BY DATAREG DESC";
+     String sql  = "SELECT IDPRODUTO, NOME, MARCA, PRECO, DATAREG FROM PRODUTO WHERE PRODUTO.EXCLUIDO = FALSE ORDER BY DATAREG DESC";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -109,7 +109,7 @@ public class ProdutoDAO {
     public ArrayList<Produto> listarProdutos(String nome) throws ExceptionDAO{
         
         String sql  = "SELECT IDPRODUTO, NOME, MARCA, PRECO, DATAREG FROM "
-                + "PRODUTO WHERE NOME LIKE '%"+nome+"%' ORDER BY DATAREG DESC";
+                + "PRODUTO WHERE NOME LIKE '%"+nome+"%' AND PRODUTO.EXCLUIDO = FALSE ORDER BY DATAREG DESC";
    
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -165,7 +165,7 @@ public class ProdutoDAO {
 
     public void deletarProduto(long idProdutoSelecionado) throws ExceptionDAO {
         
-        String sql  = "DELETE FROM PRODUTO WHERE IDPRODUTO = ?";
+        String sql  = "UPDATE PRODUTO SET EXCLUIDO = TRUE WHERE IDPRODUTO = ?";
         Connection connection = null;
         PreparedStatement pStatement = null;
         
@@ -350,7 +350,7 @@ public class ProdutoDAO {
         " FROM ITEM_VENDA " +
         " INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO " +
         " INNER JOIN VENDA ON VENDA.ID_VENDA = ITEM_VENDA.ID_VENDA " +
-        " WHERE VENDA.DATA BETWEEN ? AND ? " +
+        " WHERE VENDA.DATA BETWEEN ? AND ? AND PRODUTO.EXCLUIDO = FALSE " +
         " GROUP BY ITEM_VENDA.ID_PRODUTO ORDER BY SUM(ITEM_VENDA.QUANTIDADE) DESC LIMIT 5";
 
         List<Produto> produtos = new ArrayList<>();

@@ -100,6 +100,9 @@ public class Servico {
     public ArrayList<Servico> listarServicos(String nome) throws ExceptionDAO{
         return new ServicoDAO().listarServicos(nome);
     }
+     public List<Servico> listarServicosIndependenteDeExclusao() throws ExceptionDAO {
+         return new ServicoDAO().listarServicosIndependenteDeExclusao();
+     }
     
     public Servico buscarServico(long idServicoBuscado) throws ExceptionDAO{
         return new ServicoDAO().buscarServico(idServicoBuscado);
@@ -129,6 +132,10 @@ public class Servico {
 
     public void atualizarServico(Servico servico) throws ExceptionDAO{
         new ServicoDAO().atualizarServico(servico);
+    }
+
+    public void excluirServico(long id) throws ExceptionDAO{
+        new ServicoDAO().excluirServico(id);
     }
     
     

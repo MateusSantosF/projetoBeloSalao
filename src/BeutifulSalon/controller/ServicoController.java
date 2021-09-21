@@ -42,6 +42,13 @@ public class ServicoController {
         }
        return null;
     }
+     public List<Servico> listarServicosIndependenteDeExclusao()  {
+        try {
+            return new Servico().listarServicosIndependenteDeExclusao();
+        } catch (ExceptionDAO e) {
+        }
+       return null;  
+     }
 
     public Servico buscarServico(long idServicoBuscado) {
 
@@ -183,6 +190,21 @@ public class ServicoController {
             return false;
         }
 
+    }
+
+    public boolean excluirServico(long id) {
+        
+        try {
+            new Servico().excluirServico(id);
+            return true;
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao excluir serviço" + e);
+            return false;
+        }
+    }
+
+    public List<Servico> listarServicosPorAno(String anoReferente) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

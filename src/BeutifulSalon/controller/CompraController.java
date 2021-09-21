@@ -22,7 +22,7 @@ public class CompraController {
     
      public boolean RegistraCompra(LocalDate data, long valorDesconto, String cpfCabeleireiro, ArrayList<Item> itensCompra) {
          
-         if(Valida.isCpf(cpfCabeleireiro) && !itensCompra.isEmpty()){
+         if(!itensCompra.isEmpty()){
              
             Compra compraAtual = new Compra();
              

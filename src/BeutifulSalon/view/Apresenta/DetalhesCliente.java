@@ -123,7 +123,10 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jLabelNome.setText(new ManipulaStrings().abreviarNome(cliente.getNome() + " " + cliente.getSobrenome()));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         if(cliente.getDataNasc() != null){
-           jLabelIdade.setText(String.valueOf(new ManipulaData().calculaIdade(LocalDate.parse(cliente.getDataNasc(), formatter))) + " Anos");
+            try {
+            jLabelIdade.setText(String.valueOf(new ManipulaData().calculaIdade(LocalDate.parse(cliente.getDataNasc(), formatter))) + " Anos");
+            } catch (Exception e) {
+            }
         }
         if(cliente.getEmail()!= null){
            jLabelEmail.setText(cliente.getEmail()); 

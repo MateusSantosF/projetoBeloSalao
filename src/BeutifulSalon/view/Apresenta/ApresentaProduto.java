@@ -294,7 +294,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
 
         int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o produto:\nNome: "
                 + jTableConsultaProdutos.getValueAt(indice, 0) + "\nMarca: " + jTableConsultaProdutos.getValueAt(indice, 1)
-                + "\nExclui-lo significa apagar todos registros de vendas e compras dele.", "Excluir Produto", JOptionPane.YES_NO_OPTION);
+                , "Excluir Produto", JOptionPane.YES_NO_OPTION);
 
         if (opc == 0) {
             if (indice > -1) {

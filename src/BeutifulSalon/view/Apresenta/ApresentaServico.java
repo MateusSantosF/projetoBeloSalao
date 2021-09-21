@@ -334,25 +334,20 @@ public class ApresentaServico extends javax.swing.JPanel {
     private void jLabelExcluirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExcluirMousePressed
         int indice = jTableServicos.getSelectedRow();
 
-        int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir Servico "
+        int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o Servico:\n"
                 + jTableServicos.getValueAt(indice, 0), "Excluir Serviço", JOptionPane.YES_NO_OPTION);
 
         if (opc == 0) {
             if (indice > -1) {
-                try {
-//                    String cpfClienteSelecionado = modelo.getCliente(indice).getCpf(); // Retorna CPF
-//                    ClienteController cc = new ClienteController();
-//
-//                    if (cc.excluirCliente(cpfClienteSelecionado)) {
-//                        JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso.");
-//                        modelo.getTodosClientes();
-//                        jTableServicos.setModel(modelo);
-//                    } else {
-//                        JOptionPane.showMessageDialog(null, "Não foi possível excluir o cliente. Selecione um índice válido na tabela");
-//                    }
-                } catch (HeadlessException e) {
-                    JOptionPane.showMessageDialog(null, "Erro ao excluir cliente: " + e);
-                }
+              
+                  boolean sucesso = new ServicoController().excluirServico(modelo.getServico(indice).getId());
+                  
+                  if(sucesso){
+                      JOptionPane.showMessageDialog(null, "Serviço excluído com sucesso!");
+                  }else{
+                       JOptionPane.showMessageDialog(null, "ERRO ao excluir serviço. Tente novamente!");
+                  }
+              
             }
         }
     }//GEN-LAST:event_jLabelExcluirMousePressed

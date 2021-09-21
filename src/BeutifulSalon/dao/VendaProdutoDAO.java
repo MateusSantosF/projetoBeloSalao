@@ -14,7 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -147,7 +146,7 @@ public class VendaProdutoDAO {
                     vendaAtual.setData(rs.getDate("DATA").toLocalDate());
                     vendaAtual.setValorTotal(rs.getLong("VALORTOTAL"));
                     vendaAtual.setValorDesconto(rs.getLong("VALORDESCONTO"));
-                    vendaAtual.setCpfCliente(rs.getString("CPF_CLIENTE"));
+                    vendaAtual.setIdCliente(rs.getLong("ID_CLIENTE"));
                     vendaAtual.setIdVenda(rs.getLong("ID_VENDA"));
                     vendas.add(vendaAtual);
                 }

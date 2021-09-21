@@ -120,7 +120,8 @@ public class ServicoRealizadoTableModel extends AbstractTableModel {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Erro ao retornar ano" + e);
         }
-        servicos = sc.listarServicos();
+        servicos = sc.selecionaServicosDoAno(Integer.valueOf(anoReferente));
+       
 
         if (servicos != null) {
 
