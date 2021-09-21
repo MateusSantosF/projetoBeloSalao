@@ -528,10 +528,8 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     @Override
     public void update(Cliente cliente) {
 
-        Cliente clienteSelecionado = cliente;
-        jTextFieldNome2.setText(clienteSelecionado.getNome() + " " + cliente.getSobrenome());
- 
-
+        jTextFieldNome2.setText(cliente.getNome() + " " + cliente.getSobrenome());
+        id_Cliente = cliente.getId();
     }
 
     @Override
