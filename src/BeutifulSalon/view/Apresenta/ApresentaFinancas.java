@@ -312,7 +312,6 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
         jTableConsultaServicoRealizado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableConsultaServicoRealizado.setGridColor(new java.awt.Color(255, 255, 255));
-        jTableConsultaServicoRealizado.setRowHeight(20);
         jTableConsultaServicoRealizado.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaServicoRealizado.setShowGrid(true);
         jScrollPane5.setViewportView(jTableConsultaServicoRealizado);
@@ -328,6 +327,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         }
 
         jTextFieldAno2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y"))));
+        jTextFieldAno2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         buscaPorAnoServicoRealizado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconLupa.png"))); // NOI18N
         buscaPorAnoServicoRealizado.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -499,7 +499,6 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
         jTableConsultaOrcamentoServico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableConsultaOrcamentoServico.setGridColor(new java.awt.Color(255, 255, 255));
-        jTableConsultaOrcamentoServico.setRowHeight(20);
         jTableConsultaOrcamentoServico.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaOrcamentoServico.setShowGrid(true);
         jScrollPane3.setViewportView(jTableConsultaOrcamentoServico);
@@ -524,6 +523,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jLabel6.setText("Buscar por Ano");
 
         jTextFieldAno1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y"))));
+        jTextFieldAno1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jPanel7.setBackground(new java.awt.Color(48, 63, 79));
 
@@ -607,7 +607,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6))
                 .addGap(25, 25, 25))
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1081, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
         );
         ServicoPrevistoLayout.setVerticalGroup(
             ServicoPrevistoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -706,7 +706,6 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
         jTableServicoComparado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableServicoComparado.setGridColor(new java.awt.Color(255, 255, 255));
-        jTableServicoComparado.setRowHeight(20);
         jTableServicoComparado.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableServicoComparado.setShowGrid(true);
         jScrollPane7.setViewportView(jTableServicoComparado);
@@ -731,6 +730,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jLabel27.setText("Buscar por Ano");
 
         jTextFieldAno3.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y"))));
+        jTextFieldAno3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jPanel14.setBackground(new java.awt.Color(48, 63, 79));
 
@@ -791,7 +791,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                             .addComponent(jLabel27))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(25, 25, 25))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1081, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
         );
         ServicoComparadoLayout.setVerticalGroup(
             ServicoComparadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -886,7 +886,6 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
         jTableLancamentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableLancamentos.setGridColor(new java.awt.Color(255, 255, 255));
-        jTableLancamentos.setRowHeight(20);
         jTableLancamentos.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableLancamentos.setShowGrid(true);
         jScrollPane4.setViewportView(jTableLancamentos);
@@ -940,6 +939,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
+        jComboBoxLancamento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jComboBoxLancamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
         jComboBoxLancamento.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -955,6 +955,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel15.setText("Lançamento em:");
 
+        jComboBoxVencimento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jComboBoxVencimento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
         jComboBoxVencimento.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -994,6 +995,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
 
         jTextFieldAno4.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y"))));
+        jTextFieldAno4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel13.setText("Busca por Ano");
@@ -1020,14 +1022,11 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(lançamentosLayout.createSequentialGroup()
                         .addGroup(lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(lançamentosLayout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel13)
                             .addGroup(lançamentosLayout.createSequentialGroup()
                                 .addComponent(jTextFieldAno4, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnBuscaPorAno4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(btnBuscaPorAno4)))
                         .addGap(244, 244, 244)
                         .addGroup(lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15)
@@ -1041,7 +1040,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                         .addGap(45, 45, 45)
                         .addComponent(jLabelExcluir3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(25, 25, 25))
-            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1081, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1086, Short.MAX_VALUE)
         );
         lançamentosLayout.setVerticalGroup(
             lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1129,7 +1128,6 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
         jTableConsultaOrcamento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableConsultaOrcamento.setGridColor(new java.awt.Color(255, 255, 255));
-        jTableConsultaOrcamento.setRowHeight(20);
         jTableConsultaOrcamento.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaOrcamento.setShowGrid(true);
         jScrollPane8.setViewportView(jTableConsultaOrcamento);
@@ -1198,6 +1196,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         );
 
         jTextFieldAno6.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y"))));
+        jTextFieldAno6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel10.setText("Busca por Ano");
@@ -1334,7 +1333,6 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
         jTableComparativoDespesas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableComparativoDespesas.setGridColor(new java.awt.Color(255, 255, 255));
-        jTableComparativoDespesas.setRowHeight(20);
         jTableComparativoDespesas.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableComparativoDespesas.setShowGrid(true);
         jScrollPane9.setViewportView(jTableComparativoDespesas);
@@ -1403,6 +1401,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         );
 
         jTextFieldAno7.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y"))));
+        jTextFieldAno7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel22.setText("Busca por Ano");

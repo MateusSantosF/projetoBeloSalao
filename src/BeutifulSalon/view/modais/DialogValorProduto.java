@@ -66,6 +66,8 @@ public class DialogValorProduto extends javax.swing.JDialog implements Observado
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Insira o valor pago por unidade");
 
+        jFormattedTextFieldValor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("Confirmar");

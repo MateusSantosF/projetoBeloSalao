@@ -108,18 +108,19 @@ public class CadastroProduto extends javax.swing.JFrame {
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
-        jTextFieldProduto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel18.setText("*Nome Produto");
 
-        jTextFieldMarca.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldMarca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel19.setText("*Marca");
 
         jFormattedTextFieldPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jFormattedTextFieldPreco.setEnabled(false);
+        jFormattedTextFieldPreco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel26.setText("*Preço de Venda ");

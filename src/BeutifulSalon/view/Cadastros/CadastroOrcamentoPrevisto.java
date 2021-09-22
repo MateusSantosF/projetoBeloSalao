@@ -489,6 +489,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jTextFieldAnoOrc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jCheckBoxFixo1.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBoxFixo1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -828,6 +829,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
 
         jTextFieldAno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y"))));
         jTextFieldAno.setToolTipText("Exercicio(AAAA)");
+        jTextFieldAno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(34, 34, 34));
@@ -1101,7 +1103,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
                 .addGroup(jPanelDespesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnReg, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                     .addComponent(btnCanc, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Despesas", jPanelDespesas);

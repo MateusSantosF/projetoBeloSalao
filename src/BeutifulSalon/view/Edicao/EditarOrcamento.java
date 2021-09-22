@@ -488,6 +488,7 @@ public class EditarOrcamento extends javax.swing.JFrame {
 
         jTextFieldAno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("y"))));
         jTextFieldAno.setToolTipText("Exercicio(AAAA)");
+        jTextFieldAno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(34, 34, 34));

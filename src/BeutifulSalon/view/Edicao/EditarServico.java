@@ -123,7 +123,7 @@ public class EditarServico extends javax.swing.JFrame implements Observador {
         jLabelPreco.setForeground(new java.awt.Color(34, 34, 34));
         jLabelPreco.setText("Preço");
 
-        jTextFieldNomeServico.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
+        jTextFieldNomeServico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldNomeServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldNomeServicoActionPerformed(evt);
@@ -140,6 +140,7 @@ public class EditarServico extends javax.swing.JFrame implements Observador {
             ex.printStackTrace();
         }
         jFormattedTextFieldTempoGasto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFormattedTextFieldTempoGasto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jFormattedTextFieldTempoGasto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextFieldTempoGastoActionPerformed(evt);
@@ -193,6 +194,7 @@ public class EditarServico extends javax.swing.JFrame implements Observador {
         jLabelNome2.setText("Nome Serviço");
 
         jFormattedTextFieldPreco1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
+        jFormattedTextFieldPreco1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jFormattedTextFieldPreco1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jFormattedTextFieldPreco1ActionPerformed(evt);

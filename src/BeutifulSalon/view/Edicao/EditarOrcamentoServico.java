@@ -138,6 +138,7 @@ public class EditarOrcamentoServico extends javax.swing.JFrame {
 
         jTextFieldNomeServico.setEditable(false);
         jTextFieldNomeServico.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldNomeServico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(34, 34, 34));
@@ -394,6 +395,7 @@ public class EditarOrcamentoServico extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jTextFieldAnoOrc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jCheckBoxFixo1.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBoxFixo1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N

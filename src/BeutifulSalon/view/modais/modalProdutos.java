@@ -162,6 +162,7 @@ public class modalProdutos extends javax.swing.JFrame implements Observado, Obse
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel3.setText("Produtos Comprados");
 
+        jTextFieldNomeProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldNomeProduto.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 jTextFieldNomeProdutoCaretUpdate(evt);

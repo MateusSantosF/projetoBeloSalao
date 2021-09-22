@@ -129,6 +129,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jComboBoxFormaPagamento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jComboBoxFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Boleto", "Crédito", "Débito", "Dinheiro" }));
         jComboBoxFormaPagamento.setEnabled(false);
         jComboBoxFormaPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -147,11 +148,14 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         jLabel8.setText("Valor Pago");
 
         jFormattedTextFieldValorPago.setEnabled(false);
+        jFormattedTextFieldValorPago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jDateChooserDataPagamento.setDateFormatString("dd/MM/yyyy");
         jDateChooserDataPagamento.setEnabled(false);
+        jDateChooserDataPagamento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jTextAreaAnotacao.setColumns(20);
+        jTextAreaAnotacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextAreaAnotacao.setLineWrap(true);
         jTextAreaAnotacao.setRows(5);
         jTextAreaAnotacao.setEnabled(false);
@@ -208,6 +212,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
         jTextFieldIdDespesa.setEditable(false);
         jTextFieldIdDespesa.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldIdDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldIdDespesa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldIdDespesa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextFieldIdDespesa.setEnabled(false);
@@ -215,6 +220,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
         jTextFieldNomeDespesa.setEditable(false);
         jTextFieldNomeDespesa.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldNomeDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldNomeDespesa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextFieldNomeDespesa.setEnabled(false);
         jTextFieldNomeDespesa.addActionListener(new java.awt.event.ActionListener() {
@@ -235,11 +241,13 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         jLabel4.setText("Data de Lançamento");
 
         jDateChooserLacamento.setDateFormatString("dd/MM/yyyy");
+        jDateChooserLacamento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Data de Vencimento");
 
         jDateChooserVencimento.setDateFormatString("dd/MM/yyyy");
+        jDateChooserVencimento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jButtonCadastrar.setBackground(new java.awt.Color(255, 255, 255));
         jButtonCadastrar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
