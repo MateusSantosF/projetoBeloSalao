@@ -145,14 +145,14 @@ public class CadastroCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         jFormattedTextFieldCep.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFormattedTextFieldCep.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jFormattedTextFieldCep.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jFormattedTextFieldCep.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 jFormattedTextFieldCepKeyReleased(evt);
             }
         });
 
-        jTextFieldRua.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldRua.setToolTipText("Preencha o CEP");
         jTextFieldRua.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
@@ -160,7 +160,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jTextFieldBairro.setToolTipText("");
         jTextFieldBairro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
-        jTextFieldCidade.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldCidade.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -224,7 +224,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel25.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel25.setText("CEP");
 
-        jTextFieldEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldEmail.setToolTipText("Informe o email do cliente");
         jTextFieldEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
@@ -238,7 +238,7 @@ public class CadastroCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         jFormattedTextFieldDataNasc.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFormattedTextFieldDataNasc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jFormattedTextFieldDataNasc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jTextFieldCelular.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         try {
@@ -248,7 +248,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         }
         jTextFieldCelular.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextFieldCelular.setToolTipText("Digite o celular");
-        jTextFieldCelular.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldCelular.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel23.setText("Celular");
@@ -260,19 +260,19 @@ public class CadastroCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         jTextFieldTelefone.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextFieldTelefone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel24.setText("Telefone");
 
-        jTextFieldSobrenome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldSobrenome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldSobrenome.setToolTipText("Sobrenome");
         jTextFieldSobrenome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel19.setText("*Sobrenome");
 
-        jTextFieldNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldNome.setToolTipText("Nome");
         jTextFieldNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
@@ -316,7 +316,7 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel28.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel28.setText("UF");
 
-        jTextFieldNumero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldNumero.setToolTipText("Informe o numero da Residência");
         jTextFieldNumero.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         jTextFieldNumero.addActionListener(new java.awt.event.ActionListener() {
@@ -438,7 +438,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                     .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
                 .addComponent(jPanel22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         getContentPane().add(JPCadastroClientes1, java.awt.BorderLayout.LINE_END);

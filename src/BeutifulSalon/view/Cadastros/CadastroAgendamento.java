@@ -101,7 +101,6 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setMaximumSize(new java.awt.Dimension(938, 774));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -145,6 +144,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
         jTextFieldNome.setEditable(false);
         jTextFieldNome.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldNomeActionPerformed(evt);
@@ -184,7 +184,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
         jTextFieldTotal.setEditable(false);
         jTextFieldTotal.setBackground(new java.awt.Color(255, 255, 255));
-        jTextFieldTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextFieldTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldTotal.setForeground(new java.awt.Color(34, 34, 34));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N

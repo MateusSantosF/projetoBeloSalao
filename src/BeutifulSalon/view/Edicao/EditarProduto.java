@@ -151,13 +151,14 @@ public class EditarProduto extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel20.setText("ID");
 
+        jTextFieldID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldID.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextFieldID.setEnabled(false);
         jTextFieldID.setFocusable(false);
         jTextFieldID.setPreferredSize(new java.awt.Dimension(1, 1));
 
-        jTextFieldNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel18.setText("*Nome Produto");
@@ -167,8 +168,9 @@ public class EditarProduto extends javax.swing.JFrame {
 
         jTextFieldPreco.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         jTextFieldPreco.setEnabled(false);
+        jTextFieldPreco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jTextFieldMarca.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldMarca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel19.setText("Marca");

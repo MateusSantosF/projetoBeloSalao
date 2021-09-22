@@ -135,10 +135,15 @@ public class modalEmail extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Destinatário");
 
+        jTextFieldEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jTextFieldTitulo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Titulo");
 
         jTextArea.setColumns(20);
+        jTextArea.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextArea.setLineWrap(true);
         jTextArea.setRows(5);
         jTextArea.setTabSize(2);

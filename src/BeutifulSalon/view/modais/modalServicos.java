@@ -70,6 +70,7 @@ public class modalServicos extends javax.swing.JFrame implements Observado {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Busca por Nome");
 
+        jTextFieldNomeServico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldNomeServico.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 jTextFieldNomeServicoCaretUpdate(evt);

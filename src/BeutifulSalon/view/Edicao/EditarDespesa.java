@@ -199,6 +199,7 @@ public class EditarDespesa extends javax.swing.JFrame implements Observador {
         jDateChooserDataPagamento.setEnabled(false);
 
         jTextAreaAnotacao.setColumns(20);
+        jTextAreaAnotacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextAreaAnotacao.setLineWrap(true);
         jTextAreaAnotacao.setRows(5);
         jTextAreaAnotacao.setEnabled(false);
@@ -378,7 +379,7 @@ public class EditarDespesa extends javax.swing.JFrame implements Observador {
                         .addGap(29, 29, 29)
                         .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 28, Short.MAX_VALUE))
+                .addGap(0, 23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -101,6 +101,7 @@ public class modalServicoUnico extends javax.swing.JFrame implements Observado {
             }
         });
 
+        jTextFieldNomeServico.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldNomeServico.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 jTextFieldNomeServicoCaretUpdate(evt);

@@ -90,6 +90,7 @@ public class modalCliente extends javax.swing.JFrame implements Observado {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Busca por Nome:");
 
+        jTextFieldNomeCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldNomeCliente.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 jTextFieldNomeClienteCaretUpdate(evt);

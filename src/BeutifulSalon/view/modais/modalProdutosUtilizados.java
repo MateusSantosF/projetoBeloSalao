@@ -78,6 +78,7 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
         jLabelBuscaNome.setText("Busca por nome");
         jLabelBuscaNome.setToolTipText("");
 
+        jTextFieldBuscaPorNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldBuscaPorNome.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
                 jTextFieldBuscaPorNomeCaretUpdate(evt);

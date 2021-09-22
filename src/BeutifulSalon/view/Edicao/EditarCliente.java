@@ -185,14 +185,14 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel18.setText("*Nome");
 
-        jTextFieldNome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldNome.setToolTipText("Nome");
         jTextFieldNome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel19.setText("*Sobrenome");
 
-        jTextFieldSobrenome.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldSobrenome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldSobrenome.setToolTipText("Sobrenome");
         jTextFieldSobrenome.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
@@ -250,7 +250,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jPanel18.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextFieldEmail.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldEmail.setToolTipText("Informe o email do cliente");
         jTextFieldEmail.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
@@ -295,7 +295,7 @@ public class EditarCliente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         jFormattedTextFieldDataNasc.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFormattedTextFieldDataNasc.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jFormattedTextFieldDataNasc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jTextFieldCelular.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         try {
@@ -305,7 +305,7 @@ public class EditarCliente extends javax.swing.JFrame {
         }
         jTextFieldCelular.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         jTextFieldCelular.setToolTipText("Digite o celular");
-        jTextFieldCelular.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldCelular.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
         jPanel19.setLayout(jPanel19Layout);
@@ -352,7 +352,7 @@ public class EditarCliente extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jTextFieldTelefone.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
@@ -384,7 +384,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jPanel21.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextFieldCep.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldCep.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldCep.setToolTipText("Informe o CEP");
         jTextFieldCep.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         jTextFieldCep.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -404,7 +404,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel25.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel25.setText("CEP");
 
-        jTextFieldRua.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldRua.setToolTipText("Preencha o CEP");
         jTextFieldRua.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
@@ -446,7 +446,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jPanel22.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextFieldCidade.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldCidade.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextFieldCidade.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
@@ -456,7 +456,7 @@ public class EditarCliente extends javax.swing.JFrame {
         jLabel27.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel27.setText("Bairro");
 
-        jTextFieldBairro.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldBairro.setToolTipText("");
         jTextFieldBairro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
 
@@ -493,7 +493,7 @@ public class EditarCliente extends javax.swing.JFrame {
 
         jPanel24.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextFieldNumero.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextFieldNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTextFieldNumero.setToolTipText("Informe o numero da Residência");
         jTextFieldNumero.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(34, 34, 34)));
         jTextFieldNumero.addActionListener(new java.awt.event.ActionListener() {

@@ -247,7 +247,6 @@
                     <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="rowHeight" type="int" value="20"/>
                     <Property name="selectionMode" type="int" value="2"/>
                     <Property name="showGrid" type="boolean" value="true"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -261,6 +260,9 @@
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                   <Format format="y" subtype="-1" type="1"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -420,7 +422,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jPanel1" alignment="0" pref="1081" max="32767" attributes="0"/>
+                  <Component id="jPanel1" alignment="0" pref="1086" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -618,7 +620,6 @@
                     <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="rowHeight" type="int" value="20"/>
                     <Property name="selectionMode" type="int" value="2"/>
                     <Property name="showGrid" type="boolean" value="true"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -650,6 +651,9 @@
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                   <Format format="y" subtype="-1" type="1"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -810,7 +814,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jPanel2" alignment="0" pref="1081" max="32767" attributes="0"/>
+                  <Component id="jPanel2" alignment="0" pref="1086" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -1004,7 +1008,6 @@
                     <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="rowHeight" type="int" value="20"/>
                     <Property name="selectionMode" type="int" value="2"/>
                     <Property name="showGrid" type="boolean" value="true"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -1036,6 +1039,9 @@
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                   <Format format="y" subtype="-1" type="1"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -1144,15 +1150,11 @@
                           <Component id="jScrollPane4" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jTextFieldAno4" min="-2" pref="129" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="btnBuscaPorAno4" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="78" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="244" max="-2" attributes="0"/>
@@ -1173,7 +1175,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="jPanel5" alignment="0" pref="1081" max="32767" attributes="0"/>
+                  <Component id="jPanel5" alignment="0" pref="1086" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -1375,7 +1377,6 @@
                     <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="rowHeight" type="int" value="20"/>
                     <Property name="selectionMode" type="int" value="2"/>
                     <Property name="showGrid" type="boolean" value="true"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -1462,6 +1463,9 @@
             </Container>
             <Component class="javax.swing.JComboBox" name="jComboBoxLancamento">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
+                </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="12">
                     <StringItem index="0" value="Janeiro"/>
@@ -1497,6 +1501,9 @@
             </Component>
             <Component class="javax.swing.JComboBox" name="jComboBoxVencimento">
               <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
+                </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="12">
                     <StringItem index="0" value="Janeiro"/>
@@ -1573,6 +1580,9 @@
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                   <Format format="y" subtype="-1" type="1"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -1820,7 +1830,6 @@
                     <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="rowHeight" type="int" value="20"/>
                     <Property name="selectionMode" type="int" value="2"/>
                     <Property name="showGrid" type="boolean" value="true"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -1927,6 +1936,9 @@
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                   <Format format="y" subtype="-1" type="1"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
             </Component>
@@ -2198,7 +2210,6 @@
                     <Property name="gridColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
-                    <Property name="rowHeight" type="int" value="20"/>
                     <Property name="selectionMode" type="int" value="2"/>
                     <Property name="showGrid" type="boolean" value="true"/>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
@@ -2305,6 +2316,9 @@
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
                   <Format format="y" subtype="-1" type="1"/>
+                </Property>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
             </Component>
