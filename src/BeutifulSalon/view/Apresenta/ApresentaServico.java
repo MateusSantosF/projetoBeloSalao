@@ -28,7 +28,7 @@ public class ApresentaServico extends javax.swing.JPanel {
 
     public ApresentaServico() {
         initComponents();
-        
+       
         ManipulaFontes mf = new ManipulaFontes();
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Clientes
         jLabel2.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f)); //Confira os clientes cadastrados em seu salão!
@@ -39,14 +39,11 @@ public class ApresentaServico extends javax.swing.JPanel {
         jScrollPane2.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
         jTableServicos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); // tabela
         
-        
         CentralizaElementosTabela render = new CentralizaElementosTabela();
         ((DefaultTableCellRenderer)jTableServicos.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         jTableServicos.setDefaultRenderer(Object.class, render);
         modelo.getTodosServicos();
         jTableServicos.setModel(modelo);
-     
-
     }
 
     /**

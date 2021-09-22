@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.Apresenta;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.controller.EstoqueController;
@@ -15,6 +16,7 @@ import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import java.awt.Color;
+import java.awt.Font;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -37,6 +39,24 @@ public class DetalhesServico extends javax.swing.JFrame {
     
     public DetalhesServico(Servico servico) {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes(); ;
+        
+        //Fontes
+        jLabelNomeServico.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 30f));
+        jLabelPreco.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 30f));
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); 
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); 
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); 
+        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); 
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); 
+        jTableProdutosUtilizados.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela   
+        
+        //Numeros
+        jLabelTempoDuracao.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
+        jLabelMargemContribuicao.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
+        jLabelPontoDeEquilíbrio.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
+        jLabelMeta.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
         
         EstoqueController ec = new EstoqueController();
         ((DefaultTableCellRenderer)jTableProdutosUtilizados.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
