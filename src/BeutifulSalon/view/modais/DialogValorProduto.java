@@ -34,11 +34,8 @@ public class DialogValorProduto extends javax.swing.JDialog implements Observado
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Insira o valor pago por unidade
         jFormattedTextFieldValor.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Box Insira o valor
         jButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Confirmar
-        
-        
-        
-        
-        
+
+       
         DecimalFormat decimal = new DecimalFormat("#,###,###.00");
                 NumberFormatter numFormatter = new NumberFormatter(decimal);
                 numFormatter.setFormat(decimal);
