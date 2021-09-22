@@ -70,7 +70,14 @@ public class ServicoController {
         return null;
     }
     
-    
+    public int somaQtdServicosRegistrados(){
+         try {
+            return new Servico().somaQtdServicosRegistrados();
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return 0;
+    }
     public boolean cadastrarServico(Servico servico) {
         try {
             servico.cadastrarServico(servico);

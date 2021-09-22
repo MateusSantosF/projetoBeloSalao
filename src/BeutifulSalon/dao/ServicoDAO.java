@@ -106,6 +106,54 @@ public class ServicoDAO {
 
     }
     
+     public int somaQtdServicosRegistrados() throws ExceptionDAO {
+
+
+        String sql = "SELECT COUNT(*) AS QTD FROM SERVICO WHERE EXCLUIDO = FALSE";
+
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        int servicos = 0;
+
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+
+            ResultSet rs = pStatement.executeQuery();
+
+            if (rs != null) {
+                
+                servicos = rs.getInt("QTD");
+            }
+
+            return servicos;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return servicos;
+
+    }
+    
     public List<Servico> listarServicosIndependenteDeExclusao() throws ExceptionDAO {
 
         String sql = "SELECT ID_SERVICO, NOME, PRECO, TEMPOGASTO, (SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) FROM AGENDAMENTO_SERVICO"

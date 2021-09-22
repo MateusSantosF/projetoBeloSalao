@@ -24,8 +24,8 @@ public class CabeleireiroDAO {
     public void cadastrarCabeleireiro(Cabeleireiro cabeleireiro) {
         String sqlScript = "INSERT INTO CABELEIREIRO (CPF ,EMAIL, NOME"
                 + ", SEGUNDAE, TERCAE, QUARTAE, QUINTAE, SEXTAE, SABADOE, DOMINGOE,"
-                + "SEGUNDAS, TERCAS, QUARTAS, QUINTAS, SEXTAS,SABADOS,DOMINGOS, SENHA) "
-                + "VALUES( ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ? , ? ,? ,? ,? ,?, ?)";
+                + "SEGUNDAS, TERCAS, QUARTAS, QUINTAS, SEXTAS,SABADOS,DOMINGOS, SENHA, METADELUCRO) "
+                + "VALUES( ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ? , ? ,? ,? ,? ,?, ?, ?)";
 
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -54,6 +54,7 @@ public class CabeleireiroDAO {
             pStatement.setTime(16, java.sql.Time.valueOf(cabeleireiro.getSabadoS()));
             pStatement.setTime(17, java.sql.Time.valueOf(cabeleireiro.getDomingoS()));
             pStatement.setString(18, cabeleireiro.getSenha());
+            pStatement.setLong(19, cabeleireiro.getMetaDeLucro());
 
             pStatement.execute();
 
@@ -192,6 +193,7 @@ public class CabeleireiroDAO {
                     cabeleireiro.setEmailUltimaVisita(emailUltimaVisita);
                     cabeleireiro.setEmailAniversario(emailAniversario);
                     cabeleireiro.setSenha(rs.getString("SENHA"));
+                    cabeleireiro.setMetaDeLucro(rs.getLong("METADELUCRO"));
 
                 }
             }
@@ -317,7 +319,7 @@ public class CabeleireiroDAO {
         
         String sqlScript = "UPDATE CABELEIREIRO SET CPF = ? ,EMAIL = ? , NOME = ? ,"
                 + " SEGUNDAE = ?, TERCAE = ?, QUARTAE = ?, QUINTAE = ?, SEXTAE = ?, SABADOE = ?, DOMINGOE = ?,"
-                + " SEGUNDAS = ?, TERCAS = ?, QUARTAS =?, QUINTAS = ?, SEXTAS = ? , SABADOS = ?, DOMINGOS = ?, SENHA = ? WHERE CPF = ?";
+                + " SEGUNDAS = ?, TERCAS = ?, QUARTAS =?, QUINTAS = ?, SEXTAS = ? , SABADOS = ?, DOMINGOS = ?, SENHA = ?, METADELUCRO = ? WHERE CPF = ?";
   
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -328,7 +330,7 @@ public class CabeleireiroDAO {
             pStatement = connection.prepareStatement(sqlScript);
             
          
-            pStatement.setString(19, cabeleireiro.getCpf());
+            pStatement.setString(20, cabeleireiro.getCpf());
             pStatement.setString(1, cabeleireiro.getCpf());
             pStatement.setString(2, cabeleireiro.getEmail());
             pStatement.setString(3, cabeleireiro.getNome());
@@ -348,6 +350,7 @@ public class CabeleireiroDAO {
             pStatement.setTime(16, java.sql.Time.valueOf(cabeleireiro.getSabadoS()));
             pStatement.setTime(17, java.sql.Time.valueOf(cabeleireiro.getDomingoS()));
             pStatement.setString(18, cabeleireiro.getSenha());
+            pStatement.setLong(19, cabeleireiro.getMetaDeLucro());
 
             
             pStatement.execute();

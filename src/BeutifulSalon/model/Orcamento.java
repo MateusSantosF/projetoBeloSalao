@@ -102,7 +102,11 @@ public class Orcamento {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
+    
+    public long getSomaTotalAnual(){
+        return getJan()+getFev()+getMar()+getAbr()+getMai()+getJun()+getJul()+getAgo()+getSet()+getOut()+getNov()+getDez();
+    }
+    
     public long getJan() {
         return jan;
     }

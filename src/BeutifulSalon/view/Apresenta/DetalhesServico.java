@@ -6,12 +6,18 @@
 package BeutifulSalon.view.Apresenta;
 
 import BeutifulSalon.Tabelas.CentralizaElementosTabela;
+import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.controller.EstoqueController;
+import BeutifulSalon.controller.OrcamentoController;
+import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Dinheiro;
+import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import java.awt.Color;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -62,6 +68,43 @@ public class DetalhesServico extends javax.swing.JFrame {
         }
         jLabelMargemContribuicao.setText(Dinheiro.parseString(margemContribuicao));
         
+        
+      
+        //CALCULANDO PONTO DE EQUILÍBRIO  (Custos Fixos/qtdServiços)/margemContribuição
+        
+        int qtdServicos = new ServicoController().somaQtdServicosRegistrados();
+        long valorTotalOrc = 0;
+        double meta = new CabeleireiroController().selecionaCabeleireiro().getMetaDeLucro();
+        double pontoDeEquilibrio = 0.0;
+        
+        if(qtdServicos > 0){
+            List<Orcamento> ocs = new OrcamentoController().listarOrcamentos(String.valueOf(LocalDate.now().getYear()));
+            for(Orcamento o: ocs){
+                valorTotalOrc += o.getSomaTotalAnual();
+            }       
+            valorTotalOrc /= qtdServicos;
+            pontoDeEquilibrio = (double)valorTotalOrc/margemContribuicao;
+
+            //Ponto de Equilbrio economico (meta/qtdServiço)/MargemContribuoção
+        
+            meta /= qtdServicos;    
+            meta = (double) meta/ margemContribuicao;
+        
+            jLabelMeta.setText(String.valueOf((int)Math.ceil(meta)));
+            jLabelPontoDeEquilíbrio.setText(String.valueOf((int)Math.ceil(pontoDeEquilibrio)));
+        }
+       
+        if(servico.getQuantidadeRealizada() < pontoDeEquilibrio){
+            jLabelPontoDeEquilíbrio.setForeground(Color.red);
+        }else{
+            jLabelPontoDeEquilíbrio.setForeground(Color.green);
+        }
+        
+        if(servico.getQuantidadeRealizada() >= ((int)(Math.ceil(meta)))){
+            jLabelMeta.setForeground(Color.green);
+        }
+        
+        
         DefaultTableModel model = (DefaultTableModel) jTableProdutosUtilizados.getModel();
         model.setRowCount(0);
         servico.getProdutos().forEach(p -> {
@@ -87,9 +130,6 @@ public class DetalhesServico extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabelNomeServico = new javax.swing.JLabel();
-        jLabelPreco = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         painelNumeroAgendamentos = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -100,9 +140,137 @@ public class DetalhesServico extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableProdutosUtilizados = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        painelPontoEquilibrio = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabelPontoDeEquilíbrio = new javax.swing.JLabel();
+        painelPontoEquilibrio1 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabelMeta = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabelNomeServico = new javax.swing.JLabel();
+        jLabelPreco = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        painelNumeroAgendamentos.setBackground(new java.awt.Color(255, 255, 255));
+        painelNumeroAgendamentos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        painelNumeroAgendamentos.setLayout(new java.awt.GridBagLayout());
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Tempo de Duração");
+        jLabel3.setIconTextGap(40);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 50, 0);
+        painelNumeroAgendamentos.add(jLabel3, gridBagConstraints);
+
+        jLabelTempoDuracao.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelTempoDuracao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTempoDuracao.setText("0");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        painelNumeroAgendamentos.add(jLabelTempoDuracao, gridBagConstraints);
+
+        painelNumeroAgendamentos3.setBackground(new java.awt.Color(255, 255, 255));
+        painelNumeroAgendamentos3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        painelNumeroAgendamentos3.setToolTipText("Valor real ganho pela realização do serviço.");
+        painelNumeroAgendamentos3.setLayout(new java.awt.GridBagLayout());
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Margem Contribuição");
+        jLabel8.setIconTextGap(40);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 50, 0);
+        painelNumeroAgendamentos3.add(jLabel8, gridBagConstraints);
+
+        jLabelMargemContribuicao.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelMargemContribuicao.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelMargemContribuicao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelMargemContribuicao.setText("0");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        painelNumeroAgendamentos3.add(jLabelMargemContribuicao, gridBagConstraints);
+
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        jTableProdutosUtilizados.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Nome", "Marca", "Último Valor Pago", "Rendimento"
+            }
+        ));
+        jScrollPane1.setViewportView(jTableProdutosUtilizados);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("Produtos Utilizados");
+
+        painelPontoEquilibrio.setBackground(new java.awt.Color(255, 255, 255));
+        painelPontoEquilibrio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        painelPontoEquilibrio.setToolTipText("Quantidade Mínima necessária para não ter prejuízo.");
+        painelPontoEquilibrio.setLayout(new java.awt.GridBagLayout());
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Ponto de Equilíbrio");
+        jLabel4.setIconTextGap(40);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 50, 0);
+        painelPontoEquilibrio.add(jLabel4, gridBagConstraints);
+
+        jLabelPontoDeEquilíbrio.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelPontoDeEquilíbrio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelPontoDeEquilíbrio.setText("0");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        painelPontoEquilibrio.add(jLabelPontoDeEquilíbrio, gridBagConstraints);
+
+        painelPontoEquilibrio1.setBackground(new java.awt.Color(255, 255, 255));
+        painelPontoEquilibrio1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        painelPontoEquilibrio1.setToolTipText("Quantidade mínima para alcançar a meta.");
+        painelPontoEquilibrio1.setLayout(new java.awt.GridBagLayout());
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Meta");
+        jLabel5.setIconTextGap(40);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 50, 0);
+        painelPontoEquilibrio1.add(jLabel5, gridBagConstraints);
+
+        jLabelMeta.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabelMeta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelMeta.setText("0");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
+        painelPontoEquilibrio1.add(jLabelMeta, gridBagConstraints);
 
         jPanel1.setBackground(new java.awt.Color(36, 46, 66));
 
@@ -123,130 +291,69 @@ public class DetalhesServico extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelPreco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelNomeServico, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE))
+                    .addComponent(jLabelNomeServico, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                    .addComponent(jLabelPreco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabelNomeServico, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jLabelNomeServico, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelPreco, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jLabelPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-
-        painelNumeroAgendamentos.setBackground(new java.awt.Color(255, 255, 255));
-        painelNumeroAgendamentos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        painelNumeroAgendamentos.setLayout(new java.awt.GridBagLayout());
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Tempo Duração");
-        jLabel3.setIconTextGap(40);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 50, 0);
-        painelNumeroAgendamentos.add(jLabel3, gridBagConstraints);
-
-        jLabelTempoDuracao.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabelTempoDuracao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelTempoDuracao.setText("0");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
-        painelNumeroAgendamentos.add(jLabelTempoDuracao, gridBagConstraints);
-
-        painelNumeroAgendamentos3.setBackground(new java.awt.Color(255, 255, 255));
-        painelNumeroAgendamentos3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        painelNumeroAgendamentos3.setLayout(new java.awt.GridBagLayout());
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Margem. Contribuição");
-        jLabel8.setIconTextGap(40);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTH;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 50, 0);
-        painelNumeroAgendamentos3.add(jLabel8, gridBagConstraints);
-
-        jLabelMargemContribuicao.setBackground(new java.awt.Color(255, 255, 255));
-        jLabelMargemContribuicao.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabelMargemContribuicao.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelMargemContribuicao.setText("0");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
-        painelNumeroAgendamentos3.add(jLabelMargemContribuicao, gridBagConstraints);
-
-        jTableProdutosUtilizados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nome", "Marca", "Último Valor Pago", "Rendimento"
-            }
-        ));
-        jScrollPane1.setViewportView(jTableProdutosUtilizados);
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Produtos Utilizados");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(painelPontoEquilibrio, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(painelPontoEquilibrio1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(painelNumeroAgendamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                        .addComponent(painelNumeroAgendamentos3, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(painelNumeroAgendamentos3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(40, 40, 40))
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(painelNumeroAgendamentos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                    .addComponent(painelNumeroAgendamentos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
                     .addComponent(painelNumeroAgendamentos3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(60, 60, 60)
+                .addGap(16, 16, 16)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(painelPontoEquilibrio, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                    .addComponent(painelPontoEquilibrio1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -292,9 +399,13 @@ public class DetalhesServico extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelMargemContribuicao;
+    private javax.swing.JLabel jLabelMeta;
     private javax.swing.JLabel jLabelNomeServico;
+    private javax.swing.JLabel jLabelPontoDeEquilíbrio;
     private javax.swing.JLabel jLabelPreco;
     private javax.swing.JLabel jLabelTempoDuracao;
     private javax.swing.JPanel jPanel1;
@@ -303,5 +414,7 @@ public class DetalhesServico extends javax.swing.JFrame {
     private javax.swing.JTable jTableProdutosUtilizados;
     private javax.swing.JPanel painelNumeroAgendamentos;
     private javax.swing.JPanel painelNumeroAgendamentos3;
+    private javax.swing.JPanel painelPontoEquilibrio;
+    private javax.swing.JPanel painelPontoEquilibrio1;
     // End of variables declaration//GEN-END:variables
 }

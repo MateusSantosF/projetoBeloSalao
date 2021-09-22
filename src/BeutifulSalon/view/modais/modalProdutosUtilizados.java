@@ -164,7 +164,7 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
         button1.setBackground(new java.awt.Color(255, 255, 255));
         button1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         button1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        button1.setForeground(new java.awt.Color(187, 187, 187));
+        button1.setForeground(new java.awt.Color(0, 0, 0));
         button1.setLabel("Concluir");
         button1.setName(""); // NOI18N
         button1.addActionListener(new java.awt.event.ActionListener() {
@@ -232,6 +232,7 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldBuscaPorNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscaPorNomeActionPerformed

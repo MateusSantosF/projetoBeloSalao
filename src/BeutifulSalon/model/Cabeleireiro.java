@@ -22,6 +22,7 @@ public class Cabeleireiro {
     private String senha;
     private Email emailAniversario;
     private Email emailUltimaVisita;
+    private long metaDeLucro;
     private LocalTime segundaE;
     private LocalTime tercaE;
     private LocalTime quartaE;
@@ -38,9 +39,9 @@ public class Cabeleireiro {
     private LocalTime domingoS;
 
     public Cabeleireiro() {
-    }
+    };
 
-    ;
+
 
     public Cabeleireiro(String cpf, String nome, String email, ArrayList<LocalTime> expediente) {
         this.cpf = cpf;
@@ -75,6 +76,16 @@ public class Cabeleireiro {
     public void setEmailAniversario(Email emailAniversario) {
         this.emailAniversario = emailAniversario;
     }
+
+    public long getMetaDeLucro() {
+        return metaDeLucro;
+    }
+
+    public void setMetaDeLucro(long metaDeLucro) {
+        this.metaDeLucro = metaDeLucro;
+    }
+    
+    
 
     public String getCpf() {
         return cpf;

@@ -7,8 +7,10 @@ package BeutifulSalon.Ferramentas;
 
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Cabeleireiro;
+import BeutifulSalon.model.Orcamento;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamDiscoveryService;
 import java.awt.image.BufferedImage;
@@ -42,20 +44,17 @@ public class testes {
 
     public static void main(String[] args) throws IOException, TimeoutException {
 
-        DateTimeFormatter df = DateTimeFormatter.ofPattern("mm");
-        String horario = "60 min";
-        String formatado = horario.replaceAll(" min", "");
-        
-        
-        int minutos = Integer.valueOf(formatado);
-        int horas = (Integer.valueOf(formatado) - minutos)/60;
-        
-        LocalTime t = LocalTime.of(horas, minutos);
-        
-        System.out.println(minutos % 60);
-        
-        
+       
+       List<Orcamento> ocs = new OrcamentoController().listarOrcamentos("2021");
+       
+       
+      long valorTotalOrc = 0;
       
+      for(Orcamento o: ocs){
+          valorTotalOrc += o.getSomaTotalAnual();
+      }
+      
+        System.out.println("Ponto de equilibrio =>"+ Math.floor((valorTotalOrc/15)/126.38));
         
      
     }

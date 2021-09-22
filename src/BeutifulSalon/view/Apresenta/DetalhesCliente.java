@@ -291,9 +291,10 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jComboBoxTipoCabelo.setEnabled(false);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setText("Cor");
+        jLabel8.setText("Cor do Cabelo");
 
         jTextFieldCorCabelo.setText("Não Informado");
+        jTextFieldCorCabelo.setCaretPosition(0);
         jTextFieldCorCabelo.setDisabledTextColor(new java.awt.Color(0, 0, 0));
         jTextFieldCorCabelo.setEnabled(false);
 
@@ -558,7 +559,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelCelular)
                     .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelUltimaViisita))
@@ -603,10 +604,10 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
                             .addComponent(jComboBoxTamanhoCabelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(28, 28, 28)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldCorCabelo)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(100, 100, 100))
-                            .addComponent(jTextFieldCorCabelo)))
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -726,7 +727,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     private void jToggleButton1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButton1StateChanged
 
         if (jToggleButton1.isSelected()) {
-            jToggleButton1.setText("Salvar");
+            jToggleButton1.setText("Sair da Edição");
             jComboBoxTipoCabelo.setEnabled(true);
             jComboBoxTamanhoCabelo.setEnabled(true);
             jComboBoxComoNosConheceu.setEnabled(true);

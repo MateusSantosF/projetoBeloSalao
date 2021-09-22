@@ -137,6 +137,10 @@ public class Servico {
     public void excluirServico(long id) throws ExceptionDAO{
         new ServicoDAO().excluirServico(id);
     }
+
+    public int somaQtdServicosRegistrados() throws ExceptionDAO{
+        return new ServicoDAO().somaQtdServicosRegistrados();
+    }
     
     
     

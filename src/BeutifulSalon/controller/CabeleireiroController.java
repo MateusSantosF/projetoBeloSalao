@@ -8,6 +8,7 @@ package BeutifulSalon.controller;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cabeleireiro;
+import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Email;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -19,13 +20,14 @@ import javax.swing.JOptionPane;
  */
 public class CabeleireiroController {
 
-    public boolean cadastrarCabeleireiro(String nome, String cpf, String email, ArrayList<LocalTime> expediente, char[] senha) {
+    public boolean cadastrarCabeleireiro(String nome, String cpf, String email, ArrayList<LocalTime> expediente, char[] senha, String metaDeLucro) {
 
         if (nome.length() > 0 && Valida.isCpf(cpf) && Valida.isEmail(email) && !expediente.isEmpty() && expediente.size() == 14) {
 
             try {
                 Cabeleireiro cabeleireiro = new Cabeleireiro(cpf, nome.trim(), email.trim(), expediente);
                 cabeleireiro.setSenha(String.copyValueOf(senha));
+                cabeleireiro.setMetaDeLucro(Dinheiro.parseCent(Dinheiro.retiraCaracteres(metaDeLucro)));
 
                 cabeleireiro.cadastrarCabeleireiro(cabeleireiro);
             } catch (ExceptionDAO e) {
@@ -39,14 +41,14 @@ public class CabeleireiroController {
         return true;
     }
 
-    public boolean atualizarCabeleireiro(String nome, String cpf, String email, ArrayList<LocalTime> expediente,  char[] senha) {
+    public boolean atualizarCabeleireiro(String nome, String cpf, String email, ArrayList<LocalTime> expediente,  char[] senha, String metaDeLucro) {
 
         if (nome.length() > 0 && Valida.isCpf(cpf) && Valida.isEmail(email) && !expediente.isEmpty() && expediente.size() == 14) {
 
             try {
                 Cabeleireiro cabeleireiro = new Cabeleireiro(cpf, nome, email, expediente);
                 cabeleireiro.setSenha(String.copyValueOf(senha));
-               
+                cabeleireiro.setMetaDeLucro(Dinheiro.parseCent(Dinheiro.retiraCaracteres(metaDeLucro)));
                 cabeleireiro.atualizarCabeleireiro(cabeleireiro);
                 
             } catch (ExceptionDAO e) {
