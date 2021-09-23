@@ -249,8 +249,8 @@ public class ModalProdutosUtilizados extends javax.swing.JFrame implements Obser
                 DefaultTableModel tabelaProdutosComprados = (DefaultTableModel) jTableProdutosSelecionados.getModel();
                 int rendimento = Integer.parseInt(JOptionPane.showInputDialog("Digite quantas utilizações o produto rende: "));
                 long idProdutoBuscado = (long) jTablePesquisaProdutos.getValueAt(i, 2);
-
-                //acessa o banco 
+                if(rendimento > 0){
+                     //acessa o banco 
                 ProdutoController po = new ProdutoController();
                 produtoBuscado = po.buscarProduto(idProdutoBuscado);
 
@@ -262,6 +262,10 @@ public class ModalProdutosUtilizados extends javax.swing.JFrame implements Obser
                 });
                 //em cima modificou, e aqui embaixo inseriu de volta na tabela
                 jTableProdutosSelecionados.setModel(tabelaProdutosComprados);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Rendimento inválido.");
+                }
+               
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um produto antes");

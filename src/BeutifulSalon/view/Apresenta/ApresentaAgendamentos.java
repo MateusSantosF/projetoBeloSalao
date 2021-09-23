@@ -294,7 +294,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         jRadioButtonNaoPago.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButtonNaoPago);
         jRadioButtonNaoPago.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jRadioButtonNaoPago.setText("Não Pago");
+        jRadioButtonNaoPago.setText("Não Pagos");
         jRadioButtonNaoPago.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButtonNaoPagoActionPerformed(evt);
