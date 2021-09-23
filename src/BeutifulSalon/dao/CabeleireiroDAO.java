@@ -319,7 +319,10 @@ public class CabeleireiroDAO {
         
         String sqlScript = "UPDATE CABELEIREIRO SET CPF = ? ,EMAIL = ? , NOME = ? ,"
                 + " SEGUNDAE = ?, TERCAE = ?, QUARTAE = ?, QUINTAE = ?, SEXTAE = ?, SABADOE = ?, DOMINGOE = ?,"
-                + " SEGUNDAS = ?, TERCAS = ?, QUARTAS =?, QUINTAS = ?, SEXTAS = ? , SABADOS = ?, DOMINGOS = ?, SENHA = ?, METADELUCRO = ? WHERE CPF = ?";
+                + " SEGUNDAS = ?, TERCAS = ?, QUARTAS =?, QUINTAS = ?, SEXTAS = ? , SABADOS = ?, DOMINGOS = ?, SENHA = ?, METADELUCRO = ? "
+                + "WHERE ID = (SELECT MAX(ID) FROM CABELEIREIRO)";
+        
+        String updateCompras = "UPDATE COMPRA SET CPF_CABELEIREIRO = ?";
   
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -329,8 +332,7 @@ public class CabeleireiroDAO {
 
             pStatement = connection.prepareStatement(sqlScript);
             
-         
-            pStatement.setString(20, cabeleireiro.getCpf());
+           
             pStatement.setString(1, cabeleireiro.getCpf());
             pStatement.setString(2, cabeleireiro.getEmail());
             pStatement.setString(3, cabeleireiro.getNome());
@@ -354,6 +356,10 @@ public class CabeleireiroDAO {
 
             
             pStatement.execute();
+            
+            pStatement = connection.prepareStatement(updateCompras);
+            
+            pStatement.executeUpdate();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);

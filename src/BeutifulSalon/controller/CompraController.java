@@ -20,13 +20,13 @@ import javax.swing.JOptionPane;
 public class CompraController {
     
     
-     public boolean RegistraCompra(LocalDate data, long valorDesconto, String cpfCabeleireiro, ArrayList<Item> itensCompra) {
+     public boolean RegistraCompra(LocalDate data, long valorDesconto, ArrayList<Item> itensCompra) {
          
          if(!itensCompra.isEmpty()){
              
             Compra compraAtual = new Compra();
              
-            compraAtual.setCpfCabeleireiro(cpfCabeleireiro);
+     
             compraAtual.setValorDesconto(valorDesconto);
             compraAtual.setData(data);
             compraAtual.setItensCompra(itensCompra);

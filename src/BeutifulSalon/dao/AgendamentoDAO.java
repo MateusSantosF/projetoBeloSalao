@@ -463,8 +463,8 @@ public class AgendamentoDAO {
      public ArrayList<Agendamento> listarAgendamentosNome(String nome){
              
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, CLIENTE.NOME, TOTAL, DESCONTO, VALORADICIONAL,"
-                + " PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO"
-        + " INNER JOIN CLIENTE ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID AND CLIENTE.NOME LIKE'%" + nome +"%'"
+                + " PAGO, FORMADEPAGAMENTO, CLIENTE.NOME  ||' '|| CLIENTE.SOBRENOME AS NOMECOMPLETO FROM AGENDAMENTO"
+        + " INNER JOIN CLIENTE ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID AND NOMECOMPLETO LIKE'%" + nome +"%'"
                 + " WHERE CLIENTE.EXCLUIDO = FALSE";
         
         Connection connection = null;

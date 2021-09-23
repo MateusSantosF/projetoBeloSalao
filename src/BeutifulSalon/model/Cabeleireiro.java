@@ -15,7 +15,8 @@ import java.util.ArrayList;
  * @author mateus
  */
 public class Cabeleireiro {
-
+    
+    private long id;
     private String cpf;
     private String nome;
     private String email;
@@ -84,6 +85,15 @@ public class Cabeleireiro {
     public void setMetaDeLucro(long metaDeLucro) {
         this.metaDeLucro = metaDeLucro;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
     
     
 

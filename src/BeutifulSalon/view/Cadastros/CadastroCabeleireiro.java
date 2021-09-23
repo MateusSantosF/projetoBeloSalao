@@ -107,7 +107,6 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
 
             jTextFieldNome.setText(cabeleireiro.getNome());
             jFormattedTextFieldCPF.setText(cabeleireiro.getCpf());
-            jFormattedTextFieldCPF.setEnabled(false);
             jTextFieldEmail.setText(cabeleireiro.getEmail());
             
             jTextFieldTituloAniversario.setText(cabeleireiro.getEmailAniversario().getTitulo());

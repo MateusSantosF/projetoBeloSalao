@@ -417,7 +417,6 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                 sucesso = cc.RegistraCompra(
                     LocalDate.parse(dataFormatada, formatterData),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
-                    cabc.selecionaCabeleireiro().getCpf(),
                     new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
             }
             

@@ -24,8 +24,8 @@ public class CompraProdutoDAO {
 
     public void cadastraCompra(Compra compra) {
 
-        String insertCompra = "INSERT INTO COMPRA (DATA, VALORTOTAL, VALORDESCONTO, CPF_CABELEIREIRO) "
-                + "VALUES (?, ?, ? , ?)";
+        String insertCompra = "INSERT INTO COMPRA (DATA, VALORTOTAL, VALORDESCONTO) "
+                + "VALUES (?, ?, ?)";
 
         String insertItemCompra = "INSERT INTO ITEM_COMPRA (PRECOUNITARIO, QUANTIDADE, PRECOTOTAL, ID_PRODUTO, ID_COMPRA) "
                 + "VALUES (?,?,?,?,(SELECT ID_COMPRA  FROM COMPRA ORDER BY ID_COMPRA DESC LIMIT 1))";
@@ -43,7 +43,7 @@ public class CompraProdutoDAO {
             pStatement.setDate(1, java.sql.Date.valueOf(compra.getData()));
             pStatement.setLong(2, compra.getValorTotal());
             pStatement.setLong(3, compra.getValorDesconto());
-            pStatement.setString(4, compra.getCpfCabeleireiro());
+;
 
             int firstInsert = pStatement.executeUpdate();
 

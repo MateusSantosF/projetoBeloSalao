@@ -290,7 +290,8 @@ public class clienteDAO {
     public List<Cliente> listarClientes(String nome) throws ExceptionDAO{
         
         
-        String sql  = "SELECT ID,NOME,SOBRENOME,CELULAR,EMAIL FROM CLIENTE WHERE NOME LIKE '%" + nome + "' AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATAREG DESC";
+        String sql  = "SELECT ID, NOME  ||' '|| SOBRENOME AS NOMECOMPLETO,NOME,SOBRENOME, CELULAR,EMAIL FROM CLIENTE WHERE "
+                + " NOMECOMPLETO LIKE '%" + nome + "%' AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATAREG DESC";
         Connection connection = null;
         PreparedStatement pStatement = null;
         

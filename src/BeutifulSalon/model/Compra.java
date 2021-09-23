@@ -15,23 +15,20 @@ import java.util.ArrayList;
  * @author mateus
  */
 public class Compra {
-    
+
     LocalDate data;
     long valorTotal;
     long valorDesconto;
-    String cpfCabeleireiro;
     ArrayList<Item> itensCompra;
 
-    
-    public Compra() { }
-    
+    public Compra() {
+    }
+
     public Compra(LocalDate data, long valorDesconto, String cpfCabeleireiro, ArrayList<Item> itensCompra) {
         this.data = data;
         this.valorDesconto = valorDesconto;
-        this.cpfCabeleireiro = cpfCabeleireiro;
         this.itensCompra = itensCompra;
     }
-    
 
     public LocalDate getData() {
         return data;
@@ -42,13 +39,13 @@ public class Compra {
     }
 
     public long getValorTotal() {
-        
+
         long valorTotalSomado = 0;
-        
-        for(Item it : getItensCompra()){
+
+        for (Item it : getItensCompra()) {
             valorTotalSomado += it.getPrecoTotal();
         }
-        
+
         return valorTotalSomado;
     }
 
@@ -64,14 +61,6 @@ public class Compra {
         this.valorDesconto = valorDesconto;
     }
 
-    public String getCpfCabeleireiro() {
-        return cpfCabeleireiro;
-    }
-
-    public void setCpfCabeleireiro(String cpfCabeleireiro) {
-        this.cpfCabeleireiro = cpfCabeleireiro;
-    }
-
     public ArrayList<Item> getItensCompra() {
         return itensCompra;
     }
@@ -80,10 +69,8 @@ public class Compra {
         this.itensCompra = itensCompra;
     }
 
-    public void cadastraCompra(Compra compra) throws ExceptionDAO{
+    public void cadastraCompra(Compra compra) throws ExceptionDAO {
         new CompraProdutoDAO().cadastraCompra(compra);
     }
-    
-    
-    
+
 }

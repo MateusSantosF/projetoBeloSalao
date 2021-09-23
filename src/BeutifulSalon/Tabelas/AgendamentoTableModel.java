@@ -5,10 +5,12 @@
  */
 package BeutifulSalon.Tabelas;
 
+import BeutifulSalon.Ferramentas.ManipulaStrings;
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Agendamento;
+import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Servico;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -57,7 +59,8 @@ public class AgendamentoTableModel extends AbstractTableModel {
         
         switch(columnIndex){
             case 0:
-                return clienteController.buscarCliente(dados.get(rowIndex).getIdCliente()).getNome();
+                Cliente cliente = clienteController.buscarCliente(dados.get(rowIndex).getIdCliente());
+                return new ManipulaStrings().abreviarNome(cliente.getNome() + " " + cliente.getSobrenome());
             
             case 1:
                 return dados.get(rowIndex).getData().format(formatterData);
