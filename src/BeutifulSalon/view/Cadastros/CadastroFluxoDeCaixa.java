@@ -5,11 +5,12 @@
  */
 package BeutifulSalon.view.Cadastros;
 
+import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.controller.CabeleireiroController;
-import BeutifulSalon.view.modais.modalCliente;
-import BeutifulSalon.view.modais.modalProdutos;
+import BeutifulSalon.view.modais.ModalCliente;
+import BeutifulSalon.view.modais.ModalProdutos;
 import BeutifulSalon.controller.CompraController;
 import BeutifulSalon.controller.VendaController;
 import BeutifulSalon.dao.ExceptionDAO;
@@ -19,12 +20,16 @@ import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
-import BeutifulSalon.view.modais.modalInputMonetarios;
+import BeutifulSalon.view.modais.ModalInputMonetarios;
 import java.awt.Font;
 import java.awt.HeadlessException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -37,6 +42,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     public static String nomeCliente;
     public static String CPF;
     public static long id_Cliente;
+    private ModalInputMonetarios modalInputMonetarios;
 
     public CadastroFluxoDeCaixa() {
         initComponents();
@@ -54,6 +60,8 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Valor Desconto:
         jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //TOTAL
         jButtonFinalizarCompra.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Finalizar Compra
+        
+        jDateChooser1.setDate(new ManipulaData().localDateToDate(LocalDate.now()));
 
 
     }
@@ -85,10 +93,17 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jButtonFinalizarCompra = new javax.swing.JButton();
         jRadioButtonCliente = new javax.swing.JRadioButton();
         jRadioButtonCabelereiro = new javax.swing.JRadioButton();
+        jLabel10 = new javax.swing.JLabel();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(243, 244, 245));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(36, 46, 65));
 
@@ -227,6 +242,12 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             }
         });
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel10.setText("Data");
+
+        jDateChooser1.setForeground(new java.awt.Color(255, 255, 255));
+        jDateChooser1.setDateFormatString("dd/MM/yyyy");
+
         javax.swing.GroupLayout jPanelProdutoLayout = new javax.swing.GroupLayout(jPanelProduto);
         jPanelProduto.setLayout(jPanelProdutoLayout);
         jPanelProdutoLayout.setHorizontalGroup(
@@ -234,21 +255,27 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             .addGroup(jPanelProdutoLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
                     .addGroup(jPanelProdutoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelAddProdutos))
+                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(107, 107, 107))
                     .addGroup(jPanelProdutoLayout.createSequentialGroup()
-                        .addComponent(jRadioButtonCliente)
-                        .addGap(9, 9, 9)
-                        .addComponent(jRadioButtonCabelereiro))
-                    .addGroup(jPanelProdutoLayout.createSequentialGroup()
-                        .addComponent(jTextFieldNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelAddCliente))
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18)
+                        .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addGroup(jPanelProdutoLayout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabelAddProdutos))
+                            .addGroup(jPanelProdutoLayout.createSequentialGroup()
+                                .addComponent(jRadioButtonCliente)
+                                .addGap(9, 9, 9)
+                                .addComponent(jRadioButtonCabelereiro))
+                            .addGroup(jPanelProdutoLayout.createSequentialGroup()
+                                .addComponent(jTextFieldNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabelAddCliente))
+                            .addComponent(jLabel4)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelProdutoLayout.createSequentialGroup()
@@ -270,7 +297,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                     .addGroup(jPanelProdutoLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(jButtonFinalizarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanelProdutoLayout.setVerticalGroup(
             jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,7 +332,11 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                         .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jTextFieldNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelAddCliente))
-                        .addGap(111, 111, 111)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelProdutoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,6 +344,9 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                             .addComponent(jLabelAddProdutos))))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
+
+        jDateChooser1.setLocale(new Locale("pt", "BR"));
+        jDateChooser1.setDateFormatString("dd/MM/yyyy");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -361,18 +395,27 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             VendaController vc = new VendaController();
             CabeleireiroController cabc = new CabeleireiroController();
             boolean isClienteComprando = jRadioButtonCliente.isSelected();
+            
+            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
+            String dataFormatada = "";
+            try {
+                dataFormatada = formater.format(jDateChooser1.getDate());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao converter data");
+            }
 
             //retorna o CPF de acordo com o RadioButton
             if (isClienteComprando) {
                  sucesso = vc.RegistraVenda(
-                        LocalDate.now(),
+                        LocalDate.parse(dataFormatada, formatterData),
                         Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
                         id_Cliente,
                         new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
             } else {
                     
                 sucesso = cc.RegistraCompra(
-                    LocalDate.now(),
+                    LocalDate.parse(dataFormatada, formatterData),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
                     cabc.selecionaCabeleireiro().getCpf(),
                     new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
@@ -380,7 +423,8 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             
             if (sucesso) {
                 if (isClienteComprando) {
-                    JOptionPane.showMessageDialog(null, "Venda registrada com sucesso.");            
+                    JOptionPane.showMessageDialog(null, "Venda registrada com sucesso.");
+                    modalInputMonetarios = null;
                 } else {
                     JOptionPane.showMessageDialog(null, "Compra registrada com sucesso.");
                 }
@@ -401,21 +445,28 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
         if (!jCheckBoxDesconto2.isSelected()) {
             jCheckBoxDesconto2.setSelected(true);
-            modalInputMonetarios modalMonetarario = new modalInputMonetarios("Insira o valor do desconto");
-            modalMonetarario.registrarObservador(this);
-            modalMonetarario.setVisible(true);
+            
+            if(modalInputMonetarios == null){
+                modalInputMonetarios = new ModalInputMonetarios("Insira o valor do desconto");
+                modalInputMonetarios.registrarObservador(this);
+                modalInputMonetarios.setVisible(true);
+            }else{
+                modalInputMonetarios.setVisible(true);
+            }
+            
+            
         }
     }//GEN-LAST:event_jCheckBoxDesconto2MousePressed
 
     private void jLabelAddProdutosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddProdutosMousePressed
 
-        modalProdutos modal;
+        ModalProdutos modal;
 
         //diferencia se quem comprou foi o cliente ou o cabeleireiro, para aplicar lógicas no modal.
         if (jRadioButtonCabelereiro.isSelected()) {
-            modal = new modalProdutos(true);
+            modal = new ModalProdutos(true);
         } else {
-            modal = new modalProdutos(false);
+            modal = new ModalProdutos(false);
         }
         modal.registrarObservador(this);
         modal.setVisible(true);
@@ -424,7 +475,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     private void jLabelAddClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddClienteMousePressed
 
         if (jRadioButtonCliente.isSelected()) {
-            modalCliente modal = new modalCliente();
+            ModalCliente modal = new ModalCliente();
             modal.registrarObservador(this);
             modal.setVisible(true);
         }
@@ -449,6 +500,10 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             limparTodosCampos();
         }
     }//GEN-LAST:event_jRadioButtonCabelereiroActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+      modalInputMonetarios = null;
+    }//GEN-LAST:event_formWindowClosing
 
     void limparTodosCampos() {
         jTextFieldDesconto2.setText("-R$ 0,00");
@@ -600,7 +655,9 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     private javax.swing.ButtonGroup buttonGroupCompraProduto;
     private javax.swing.JButton jButtonFinalizarCompra;
     private javax.swing.JCheckBox jCheckBoxDesconto2;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

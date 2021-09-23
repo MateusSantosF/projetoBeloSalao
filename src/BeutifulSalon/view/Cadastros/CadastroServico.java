@@ -12,7 +12,7 @@ import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
-import BeutifulSalon.view.modais.modalProdutosUtilizados;
+import BeutifulSalon.view.modais.ModalProdutosUtilizados;
 import java.awt.Font;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -339,7 +339,7 @@ public class CadastroServico extends javax.swing.JFrame implements Observador {
     }//GEN-LAST:event_jFormattedTextFieldPreco1ActionPerformed
 
     private void jLabelBotaoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBotaoMousePressed
-        modalProdutosUtilizados produtoNovo = new modalProdutosUtilizados();
+        ModalProdutosUtilizados produtoNovo = new ModalProdutosUtilizados();
         produtoNovo.registrarObservador(this);
         produtoNovo.setVisible(true);
     }//GEN-LAST:event_jLabelBotaoMousePressed

@@ -15,7 +15,7 @@ import BeutifulSalon.model.Email;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
-import BeutifulSalon.view.modais.modalExpediente;
+import BeutifulSalon.view.modais.ModalExpediente;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
@@ -43,7 +43,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
      * Creates new form CadastroCabeleireiro
      */
     private ArrayList<LocalTime> expediente = null;
-    private modalExpediente modalExpediente = null;
+    private ModalExpediente modalExpediente = null;
     private String caminhoArquivo;
     private String caminhoArquivoUltimaVisita;
     private Email emailUltimaVisita = new Email();
@@ -60,6 +60,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CPF
         jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //E-mail
         jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Senha E-mail
+        jLabel21.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); // meta de lucro
         
         jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Configurar Expediente
         jButton1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Abrir grade 
@@ -788,7 +789,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if (modalExpediente == null) {
-            modalExpediente = new modalExpediente();
+            modalExpediente = new ModalExpediente();
             modalExpediente.registrarObservador(this);
             modalExpediente.setVisible(true);
         } else {

@@ -11,7 +11,7 @@ import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
-import BeutifulSalon.view.modais.modalOrcamentoPrevisto;
+import BeutifulSalon.view.modais.ModalOrcamentoPrevisto;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.Font;
@@ -34,7 +34,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
     /**
      * Creates new form CadastroDespesa
      */
-    private modalOrcamentoPrevisto modal = null;
+    private ModalOrcamentoPrevisto modal = null;
 
     public CadastroDespesa() {
         initComponents();
@@ -60,6 +60,14 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         numFormatter.setAllowsInvalid(false);
         DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
         jFormattedTextFieldValorPago.setFormatterFactory(dfFactory);
+        
+        jToggleButton.setText("Pagamento Pendente");
+      
+        jComboBoxFormaPagamento.setEnabled(false);
+        Color vermelho = new Color(248, 67, 69);
+        jToggleButton.setBackground(vermelho);
+        
+    
     }
 
     /**
@@ -386,7 +394,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
     private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
 
         if (modal == null) {
-            modal = new modalOrcamentoPrevisto();
+            modal = new ModalOrcamentoPrevisto();
             modal.registrarObservador(this);
             modal.setVisible(true);
         } else {
@@ -404,19 +412,8 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
     }//GEN-LAST:event_jToggleButtonPropertyChange
 
     private void jToggleButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButtonMousePressed
-
-
-    }//GEN-LAST:event_jToggleButtonMousePressed
-    
-    private void limparCampos(){
-        jTextAreaAnotacao.setText("");
-        jTextFieldIdDespesa.setText("");
-        jTextFieldNomeDespesa.setText("");
-        jFormattedTextFieldValorPago.setText("");
-    }
-    private void jToggleButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButtonStateChanged
- 
-        if (jToggleButton.isSelected()) {
+        
+        if (!jToggleButton.isSelected()) {
             jToggleButton.setText("Pagamento Realizado");
             jTextAreaAnotacao.setEnabled(true);
             jDateChooserDataPagamento.setEnabled(true);
@@ -433,6 +430,17 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
             Color vermelho = new Color(248, 67, 69);
             jToggleButton.setBackground(vermelho);
         }
+
+    }//GEN-LAST:event_jToggleButtonMousePressed
+    
+    private void limparCampos(){
+        jTextAreaAnotacao.setText("");
+        jTextFieldIdDespesa.setText("");
+        jTextFieldNomeDespesa.setText("");
+        jFormattedTextFieldValorPago.setText("");
+    }
+    private void jToggleButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButtonStateChanged
+ 
     }//GEN-LAST:event_jToggleButtonStateChanged
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed

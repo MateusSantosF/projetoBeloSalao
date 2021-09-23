@@ -22,14 +22,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Melissa
  */
-public class modalProdutosUtilizados extends javax.swing.JFrame implements Observado {
+public class ModalProdutosUtilizados extends javax.swing.JFrame implements Observado {
 
     /**
-     * Creates new form modalProdutosUtilizados
+     * Creates new form ModalProdutosUtilizados
      */
     ArrayList<Observador> observadores = new ArrayList<>();
 
-    public modalProdutosUtilizados() {
+    public ModalProdutosUtilizados() {
         initComponents();
         
         ManipulaFontes mf = new ManipulaFontes();
@@ -327,20 +327,21 @@ public class modalProdutosUtilizados extends javax.swing.JFrame implements Obser
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(modalProdutosUtilizados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalProdutosUtilizados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(modalProdutosUtilizados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalProdutosUtilizados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(modalProdutosUtilizados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalProdutosUtilizados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(modalProdutosUtilizados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalProdutosUtilizados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new modalProdutosUtilizados().setVisible(true);
+                new ModalProdutosUtilizados().setVisible(true);
             }
         });
     }

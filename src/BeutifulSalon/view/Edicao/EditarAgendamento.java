@@ -16,8 +16,9 @@ import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
-import BeutifulSalon.view.modais.modalInputMonetarios;
-import BeutifulSalon.view.modais.modalServicos;
+import BeutifulSalon.view.modais.ModalInputMonetarios;
+import BeutifulSalon.view.modais.ModalServicos;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.text.ParseException;
@@ -45,6 +46,10 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
     
     private Agendamento agendamento;
     private String idCliente;
+    private boolean isDesconto;
+     private ModalInputMonetarios modalDesconto;
+    private ModalInputMonetarios modalValorAdicional;
+   
     
     public EditarAgendamento() {
         initComponents();
@@ -66,9 +71,11 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         jLabel10.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data
         jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Horários disponíveis
         jLabel11.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Horário
+        jLabel13.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Valor Adicional
         jTableServicosSolicitados.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Tabela Serviços Solicitados
         jListHorarios.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //ListaHorarios
         jCheckBoxDesconto.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Desconto 
+        jCheckValorAdicional.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //valor Adicional
         jButtonFinalizarEdicao.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Finalizar Edição
         
         
@@ -83,16 +90,24 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         jTextFieldNome.setText(clienteAgendamento.getNome());
         this.idCliente = String.valueOf(clienteAgendamento.getId());
         jTextFieldTotal.setText(Dinheiro.parseString(ag.getTotal()));
-        jTextFieldTotalBruto.setText(Dinheiro.parseString(ag.getTotal() - ag.getDesconto()));
-        jTextFieldDesconto.setText(Dinheiro.parseString(ag.getDesconto()));
+        jTextFieldTotalBruto.setText(Dinheiro.parseString(ag.getTotal() + ag.getDesconto() - ag.getValorAdicional()));
+       
+       
         jTextFieldHorario.setValue(ag.getHorario().toString());
         
         if(ag.getDesconto() > 0){
             jCheckBoxDesconto.setSelected(true);
+            jTextFieldDesconto.setText("-"+Dinheiro.parseString(ag.getDesconto()));
+        }
+        
+        if(ag.getValorAdicional() >0){
+            jTextFieldValorAdicional.setText(Dinheiro.parseString(ag.getValorAdicional()));
+            jCheckValorAdicional.setSelected(true);
         }
         if(!ag.getRealizado()){
             jCheckBoxClienteVeio.setSelected(true);  
         }
+        
  
 
         try {
@@ -100,7 +115,22 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         } catch (ParseException ex) {
             Logger.getLogger(EditarAgendamento.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
+        
+        if(agendamento.isPago()){
+            
+            jToggleButton.setText("Pagamento Realizado");  
+            jComboBoxFormaPagamento.setEnabled(true);
+            jComboBoxFormaPagamento.setSelectedItem(agendamento.getFormaDePagamento());
+            Color verde = new Color(57, 201, 114);
+            jToggleButton.setBackground(verde);
+        }else{
+            jToggleButton.setText("Pagamento Pendente");
+            jComboBoxFormaPagamento.setEnabled(false);
+            Color vermelho = new Color(248, 67, 69);
+            jToggleButton.setBackground(vermelho);
+        }
+        
+        
         jTableServicosSolicitados.setModel(new ApresentaTabela().apresentaServicosAgendamento(jTableServicosSolicitados, ag.getIdAgendamento()));
 
     }
@@ -143,6 +173,12 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableServicosSolicitados = new javax.swing.JTable();
         jLabelAddServicos = new javax.swing.JLabel();
+        jCheckValorAdicional = new javax.swing.JCheckBox();
+        jLabel13 = new javax.swing.JLabel();
+        jTextFieldValorAdicional = new javax.swing.JTextField();
+        jToggleButton = new javax.swing.JToggleButton();
+        jLabel14 = new javax.swing.JLabel();
+        jComboBoxFormaPagamento = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -328,6 +364,74 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
             }
         });
 
+        jCheckValorAdicional.setBackground(new java.awt.Color(243, 244, 245));
+        jCheckValorAdicional.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jCheckValorAdicional.setForeground(new java.awt.Color(34, 34, 34));
+        jCheckValorAdicional.setText("Valor Adicional");
+        jCheckValorAdicional.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jCheckValorAdicional.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jCheckValorAdicionalMousePressed(evt);
+            }
+        });
+        jCheckValorAdicional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckValorAdicionalActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel13.setText("Valor Adicional: ");
+
+        jTextFieldValorAdicional.setEditable(false);
+        jTextFieldValorAdicional.setBackground(new java.awt.Color(255, 255, 255));
+        jTextFieldValorAdicional.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTextFieldValorAdicional.setForeground(new java.awt.Color(34, 34, 34));
+        jTextFieldValorAdicional.setText("R$ 0,00");
+        jTextFieldValorAdicional.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldValorAdicionalActionPerformed(evt);
+            }
+        });
+
+        jToggleButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jToggleButton.setText("Pagamento Realizado");
+        jToggleButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jToggleButton.setFocusable(false);
+        jToggleButton.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jToggleButtonStateChanged(evt);
+            }
+        });
+        jToggleButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jToggleButtonMousePressed(evt);
+            }
+        });
+        jToggleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonActionPerformed(evt);
+            }
+        });
+        jToggleButton.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jToggleButtonPropertyChange(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setText("Forma de Pagamento");
+
+        jComboBoxFormaPagamento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jComboBoxFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Crédito", "Débito" }));
+        jComboBoxFormaPagamento.setEnabled(false);
+        jComboBoxFormaPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jComboBoxFormaPagamentoMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -336,78 +440,87 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(0, 208, Short.MAX_VALUE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelAddServicos))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))))
-                .addGap(18, 18, 18)
+                            .addComponent(jLabel4))
+                        .addGap(58, 58, 58))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jToggleButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBoxFormaPagamento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jLabelAddServicos))))
+                        .addGap(18, 18, 18)))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jTextFieldHorario)
+                                .addGap(45, 45, 45)))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jCheckBoxDesconto, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addComponent(jButtonFinalizarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jCheckBoxDesconto)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jCheckValorAdicional, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addComponent(jLabel10)
-                                            .addGap(121, 121, 121))
-                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addGap(3, 3, 3)
-                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jTextFieldHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addComponent(jLabel11))
-                                    .addGap(58, 58, 58)
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2)
-                                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(jLabel6))))
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel7)
-                                        .addComponent(jLabel8)
-                                        .addComponent(jLabel9))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jTextFieldTotalBruto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jButtonFinalizarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(104, 104, 104))))
-                    .addComponent(jCheckBoxClienteVeio))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldValorAdicional, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldTotalBruto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jCheckBoxClienteVeio, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel8))
+                        .addGap(324, 324, 324)))
+                .addGap(9, 9, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jCheckBoxClienteVeio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(53, 53, 53)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(43, 43, 43)
+                                .addGap(18, 18, 18)
+                                .addComponent(jToggleButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jComboBoxFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,44 +528,52 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(54, 54, 54))
-                                    .addComponent(jLabel8))
-                                .addGap(32, 32, 32)
-                                .addComponent(jLabel9))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jTextFieldTotalBruto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBoxDesconto)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(jLabel6))
+                                .addGap(71, 71, 71)
+                                .addComponent(jLabel7)
+                                .addGap(23, 23, 23)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(jLabel8)
+                                .addGap(32, 32, 32)
+                                .addComponent(jLabel9)
+                                .addGap(62, 62, 62))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jCheckBoxClienteVeio)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldTotalBruto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldValorAdicional, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(13, 13, 13)
+                                .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jCheckBoxDesconto)
+                                    .addComponent(jCheckValorAdicional))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(24, 24, 24)
-                                        .addComponent(jLabel11)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(24, 24, 24)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addComponent(jButtonFinalizarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 36, Short.MAX_VALUE))
+                .addGap(0, 22, Short.MAX_VALUE))
         );
 
         jDateChooser1.setLocale(new Locale("pt", "BR"));
@@ -464,13 +585,11 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 946, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -478,18 +597,28 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabelAddServicosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddServicosMousePressed
-        modalServicos modal = new modalServicos();
+        ModalServicos modal = new ModalServicos();
         modal.registrarObservador(this);
         modal.setVisible(true);
     }//GEN-LAST:event_jLabelAddServicosMousePressed
 
     private void jCheckBoxDescontoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckBoxDescontoMousePressed
-
+        jTextFieldDesconto.setText("R$ 0,00");
+        isDesconto = true;
+        calculaTotalBruto();
+        calculaTotal();
+        
         if (!jCheckBoxDesconto.isSelected()) {
             jCheckBoxDesconto.setSelected(true);
-            modalInputMonetarios modalMonetarario = new modalInputMonetarios("Insira o valor do desconto");
-            modalMonetarario.registrarObservador(this);
-            modalMonetarario.setVisible(true);
+            
+            if( modalDesconto == null){
+                modalDesconto = new ModalInputMonetarios("Insira o valor do desconto");
+                modalDesconto.registrarObservador(this);
+                modalDesconto.setVisible(true); 
+            }else{
+                modalDesconto.setVisible(true); 
+            }
+            
         }
     }//GEN-LAST:event_jCheckBoxDescontoMousePressed
 
@@ -505,22 +634,37 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
 
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
         String dataFormatada = "";
+        String formaDePagamento ="";
+            boolean pago;
+            
+         
         try {
             dataFormatada = formater.format(jDateChooser1.getDate());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao converter data");
         }
+           if(!jToggleButton.isSelected()){
+                pago = true;
+                formaDePagamento = String.valueOf(jComboBoxFormaPagamento.getSelectedItem());
+            }else{
+                pago = false;
+                formaDePagamento = "--";
+            }
         
         //editar
         try {
-            sucesso = ac.atualizarAgendamento(dataFormatada,
+            sucesso = ac.atualizarAgendamento(
+                    dataFormatada,
                     jTextFieldHorario.getText(),
                     Long.valueOf(this.idCliente),
                     new RecuperaTabela().recuperaServicos(jTableServicosSolicitados),
                     calculaTotalFinal(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText())),
                     !jCheckBoxClienteVeio.isSelected(),
-                    agendamento.getIdAgendamento());
+                    agendamento.getIdAgendamento(),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText())),
+                    pago,
+                    formaDePagamento);
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -577,10 +721,69 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldHorarioActionPerformed
 
+    private void jCheckValorAdicionalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckValorAdicionalMousePressed
+        isDesconto = false;
+        jTextFieldValorAdicional.setText("R$ 0,00");
+        calculaTotalBruto();
+        calculaTotal();
+        if (!jCheckValorAdicional.isSelected()) {
+            jCheckValorAdicional.setSelected(true);
+
+            if( modalValorAdicional == null){
+                modalValorAdicional = new ModalInputMonetarios("Insira o valor Adicional");
+                modalValorAdicional.registrarObservador(this);
+                modalValorAdicional.setVisible(true);
+            }else{
+                modalValorAdicional.setVisible(true);
+            }
+
+        }
+    }//GEN-LAST:event_jCheckValorAdicionalMousePressed
+
+    private void jCheckValorAdicionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckValorAdicionalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckValorAdicionalActionPerformed
+
+    private void jTextFieldValorAdicionalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldValorAdicionalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldValorAdicionalActionPerformed
+
+    private void jToggleButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButtonStateChanged
+
+    }//GEN-LAST:event_jToggleButtonStateChanged
+
+    private void jToggleButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButtonMousePressed
+
+        if (jToggleButton.isSelected()) {
+            jToggleButton.setText("Pagamento Realizado");
+            jComboBoxFormaPagamento.setEnabled(true);
+            Color verde = new Color(57, 201, 114);
+            jToggleButton.setBackground(verde);
+        } else {
+            jToggleButton.setText("Pagamento Pendente");
+            jComboBoxFormaPagamento.setEnabled(false);
+            Color vermelho = new Color(248, 67, 69);
+            jToggleButton.setBackground(vermelho);
+        }
+    }//GEN-LAST:event_jToggleButtonMousePressed
+
+    private void jToggleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonActionPerformed
+
+    }//GEN-LAST:event_jToggleButtonActionPerformed
+
+    private void jToggleButtonPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jToggleButtonPropertyChange
+
+    }//GEN-LAST:event_jToggleButtonPropertyChange
+
+    private void jComboBoxFormaPagamentoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBoxFormaPagamentoMousePressed
+
+    }//GEN-LAST:event_jComboBoxFormaPagamentoMousePressed
+
     private void limparCampos() {
         jTextFieldNome.setText("");
         jTextFieldDesconto.setText("-R$ 0,00");
         jTextFieldTotalBruto.setText("R$ 0,00");
+        jTextFieldValorAdicional.setText("R$ 0,00");
         jTextFieldTotal.setText("");
         jTextFieldHorario.setText("");
 
@@ -615,13 +818,17 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         try {
 
             long valorDesconto = 0;
+            long valorAdicional = 0;
 
             if (!jTextFieldDesconto.getText().equals("")) {
                 valorDesconto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText()));
             }
+             if (!jTextFieldValorAdicional.getText().equals("")) {
+               valorAdicional = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText()));
+            }
 
             long valorTotalBruto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldTotalBruto.getText()));
-            long valorTotal = valorTotalBruto - valorDesconto;
+            long valorTotal = valorTotalBruto - valorDesconto + valorAdicional;
             jTextFieldTotal.setText(Dinheiro.parseString(valorTotal));
 
         } catch (Exception e) {
@@ -631,17 +838,21 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
 
     private long calculaTotalFinal() {
 
-        long valorTotal = 0;
+         long valorTotal = 0;
         try {
 
             long valorDesconto = 0;
+            long valorAdicional = 0;
 
             if (!jTextFieldDesconto.getText().equals("")) {
                 valorDesconto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText()));
             }
+            if (!jTextFieldValorAdicional.getText().equals("")) {
+               valorAdicional = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText()));
+            }
 
             long valorTotalBruto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldTotalBruto.getText()));
-            valorTotal = valorTotalBruto - valorDesconto;
+            valorTotal = valorTotalBruto - valorDesconto + valorAdicional;
             jTextFieldTotal.setText(Dinheiro.parseString(valorTotal));
 
         } catch (Exception e) {
@@ -691,11 +902,15 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
     private javax.swing.JButton jButtonFinalizarEdicao;
     private javax.swing.JCheckBox jCheckBoxClienteVeio;
     private javax.swing.JCheckBox jCheckBoxDesconto;
+    private javax.swing.JCheckBox jCheckValorAdicional;
+    private javax.swing.JComboBox<String> jComboBoxFormaPagamento;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -717,6 +932,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldTotal;
     private javax.swing.JTextField jTextFieldTotalBruto;
+    private javax.swing.JTextField jTextFieldValorAdicional;
+    private javax.swing.JToggleButton jToggleButton;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -740,9 +957,16 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
 
     @Override
     public void update(String valorDesconto) {
-        jTextFieldDesconto.setText("-" + Dinheiro.parseString(Dinheiro.retiraCaracteres(valorDesconto)));
+       if(isDesconto){
+           jTextFieldDesconto.setText("-" + Dinheiro.parseString(Dinheiro.retiraCaracteres(valorDesconto)));
+           jCheckBoxDesconto.setSelected(true);
+ 
+        }else{
+            jTextFieldValorAdicional.setText(Dinheiro.parseString(Dinheiro.retiraCaracteres(valorDesconto)));
+            jCheckValorAdicional.setSelected(true);
+        }
+        calculaTotalBruto();
         calculaTotal();
-        jCheckBoxDesconto.setSelected(true);
     }
 
     @Override

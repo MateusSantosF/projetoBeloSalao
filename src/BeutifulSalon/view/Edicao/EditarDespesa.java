@@ -15,7 +15,7 @@ import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
-import BeutifulSalon.view.modais.modalOrcamentoPrevisto;
+import BeutifulSalon.view.modais.ModalOrcamentoPrevisto;
 import java.awt.Color;
 import java.awt.Font;
 import java.text.DecimalFormat;
@@ -37,7 +37,7 @@ public class EditarDespesa extends javax.swing.JFrame implements Observador {
     /**
      * Creates new form CadastroDespesa
      */
-    private modalOrcamentoPrevisto modal = null;
+    private ModalOrcamentoPrevisto modal = null;
     private Despesa despesa;
 
     public EditarDespesa() {
@@ -400,7 +400,7 @@ public class EditarDespesa extends javax.swing.JFrame implements Observador {
     private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
 
         if (modal == null) {
-            modal = new modalOrcamentoPrevisto();
+            modal = new ModalOrcamentoPrevisto();
             modal.registrarObservador(this);
             modal.setVisible(true);
         } else {

@@ -12,8 +12,8 @@ import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
-import BeutifulSalon.view.modais.modalServicoUnico;
-import BeutifulSalon.view.modais.modalServicos;
+import BeutifulSalon.view.modais.ModalServicoUnico;
+import BeutifulSalon.view.modais.ModalServicos;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.text.DecimalFormat;
@@ -1149,7 +1149,7 @@ public class CadastroOrcamentoPrevisto extends javax.swing.JFrame implements Obs
         }
     }
     private void jLabelAddServicoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAddServicoMousePressed
-        modalServicoUnico modal = new modalServicoUnico();
+        ModalServicoUnico modal = new ModalServicoUnico();
         modal.registrarObservador(this);
         modal.setVisible(true);
     }//GEN-LAST:event_jLabelAddServicoMousePressed

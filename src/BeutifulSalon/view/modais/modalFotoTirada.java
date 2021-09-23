@@ -20,15 +20,15 @@ import javax.swing.ImageIcon;
  *
  * @author Mateus
  */
-public class modalFotoTirada extends javax.swing.JDialog implements ObservadoCliente {
+public class ModalFotoTirada extends javax.swing.JDialog implements ObservadoCliente {
 
     /**
-     * Creates new form modalFotoTirada
+     * Creates new form ModalFotoTirada
      */
     ArrayList<ObservadorCliente> observadores = new ArrayList<>();
     
     
-   public modalFotoTirada(java.awt.Frame parent, boolean modal) {
+   public ModalFotoTirada(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
@@ -39,13 +39,13 @@ public class modalFotoTirada extends javax.swing.JDialog implements ObservadoCli
         
     }
    
-   public modalFotoTirada(java.awt.Frame parent, boolean modal, byte [] foto) {
+   public ModalFotoTirada(java.awt.Frame parent, boolean modal, byte [] foto) {
         super(parent, modal);
         initComponents();
         try {
             jLabelFotoTirada.setIcon(new ManipulaImagem().redimensionaImg(foto));
         } catch (IOException ex) {
-            Logger.getLogger(modalFotoTirada.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ModalFotoTirada.class.getName()).log(Level.SEVERE, null, ex);
         }
    
     }
@@ -65,6 +65,7 @@ public class modalFotoTirada extends javax.swing.JDialog implements ObservadoCli
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(36, 46, 65));
 
         jLabelFotoTirada.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -148,20 +149,21 @@ public class modalFotoTirada extends javax.swing.JDialog implements ObservadoCli
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(modalFotoTirada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalFotoTirada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(modalFotoTirada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalFotoTirada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(modalFotoTirada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalFotoTirada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(modalFotoTirada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalFotoTirada.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                modalFotoTirada dialog = new modalFotoTirada(new javax.swing.JFrame(), true);
+                ModalFotoTirada dialog = new ModalFotoTirada(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

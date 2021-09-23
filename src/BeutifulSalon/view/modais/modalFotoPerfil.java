@@ -31,18 +31,18 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author Mateus
  */
-public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoCliente{
+public class ModalFotoPerfil extends javax.swing.JFrame implements ObservadoCliente{
 
     /**
-     * Creates new form modalFotoPerfil
+     * Creates new form ModalFotoPerfil
      */
     private long idCliente;
     ArrayList<ObservadorCliente> observadores = new ArrayList<>();
     
-    public modalFotoPerfil() {
+    public ModalFotoPerfil() {
         initComponents();
     }
-    public modalFotoPerfil(long idCliente) {
+    public ModalFotoPerfil(long idCliente) {
         initComponents();
         
         ManipulaFontes mf = new ManipulaFontes();
@@ -204,7 +204,7 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
     }//GEN-LAST:event_jLabel3MousePressed
 
     private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
-       new modalWebcam(idCliente).setVisible(true);
+       new ModalWebcam(idCliente).setVisible(true);
        this.dispose();
     }//GEN-LAST:event_jLabel2MousePressed
 
@@ -225,20 +225,21 @@ public class modalFotoPerfil extends javax.swing.JFrame implements ObservadoClie
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(modalFotoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalFotoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(modalFotoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalFotoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(modalFotoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalFotoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(modalFotoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalFotoPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new modalFotoPerfil().setVisible(true);
+                new ModalFotoPerfil().setVisible(true);
             }
         });
     }

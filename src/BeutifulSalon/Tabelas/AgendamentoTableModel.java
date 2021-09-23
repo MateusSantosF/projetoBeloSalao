@@ -103,6 +103,7 @@ public class AgendamentoTableModel extends AbstractTableModel {
     }
     
     public Agendamento getAgendamento(int rowCount){
+        getTodosAgendamentos();
         return dados.get(rowCount);
     }
     

@@ -111,7 +111,13 @@ public class Valida {
     
     public static boolean isEmail(String email){
         Matcher matcher = patternEmail.matcher(email);        
-        return matcher.matches();
+        boolean sucesso = matcher.matches();
+        
+        if(!sucesso){
+            JOptionPane.showMessageDialog(null, "Email inválido!");
+        }
+        
+        return sucesso;
     }
     
     public static boolean isHora(String hora){
@@ -121,6 +127,7 @@ public class Valida {
             LocalTime d = LocalTime.parse(hora, formatador);
             return true;
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Horário inválido.");
             return false;
         }
         

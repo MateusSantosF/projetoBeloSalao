@@ -15,8 +15,8 @@ import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.ObservadorCliente;
-import BeutifulSalon.view.modais.modalEmail;
-import BeutifulSalon.view.modais.modalFotoPerfil;
+import BeutifulSalon.view.modais.ModalEmail;
+import BeutifulSalon.view.modais.ModalFotoPerfil;
 import java.awt.Font;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -38,8 +38,8 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
      */
     
     private long idCliente;
-    private modalEmail modEmail = null;  
-    private modalFotoPerfil modFotoPerfil = null;
+    private ModalEmail modEmail = null;  
+    private ModalFotoPerfil modFotoPerfil = null;
     private ClienteServicoTableModel modeloServicos = new ClienteServicoTableModel();
     private ClienteCompraTableModel modeloCompras = new ClienteCompraTableModel();
     
@@ -793,7 +793,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     private void jLabel29MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel29MousePressed
        
         if(modEmail == null){
-            new modalEmail(jLabelEmail.getText()).setVisible(true);
+            new ModalEmail(jLabelEmail.getText()).setVisible(true);
         }else{
             modEmail.setVisible(true);
         }
@@ -803,7 +803,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     private void jLabelAlterarFotoPerfilMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAlterarFotoPerfilMousePressed
         
         if(modFotoPerfil == null){
-            modFotoPerfil = new modalFotoPerfil(idCliente);
+            modFotoPerfil = new ModalFotoPerfil(idCliente);
             modFotoPerfil.registrarObservador(this);
             modFotoPerfil.setVisible(true);
         }else{

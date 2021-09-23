@@ -37,7 +37,7 @@ import javax.swing.JOptionPane;
  *
  * @author mateu
  */
-public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente {
+public class ModalWebcam extends javax.swing.JFrame implements ObservadorCliente {
 
     private Webcam webcam = null;
     private List<Webcam> webcams = null;
@@ -47,12 +47,12 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
     /**
      * Creates new form modalWebcam
      */
-    public modalWebcam() {
+    public ModalWebcam() {
         initComponents();
 
     }
 
-    public modalWebcam(long idCliente) {
+    public ModalWebcam(long idCliente) {
         initComponents();
 
         ManipulaFontes mf = new ManipulaFontes();
@@ -269,7 +269,7 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
 
                 byte[] imagemEmBytes = baos.toByteArray();
 
-                modalFotoTirada modal = new modalFotoTirada(this, true, imagemEmBytes);
+                ModalFotoTirada modal = new ModalFotoTirada(this, true, imagemEmBytes);
                 modal.registrarObservador(this);
                 modal.setVisible(true);
 
@@ -331,20 +331,21 @@ public class modalWebcam extends javax.swing.JFrame implements ObservadorCliente
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(modalWebcam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalWebcam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(modalWebcam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalWebcam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(modalWebcam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalWebcam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(modalWebcam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalWebcam.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new modalWebcam().setVisible(true);
+                new ModalWebcam().setVisible(true);
             }
         });
     }

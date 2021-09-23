@@ -22,6 +22,9 @@ public class Agendamento {
     private long idCliente;
     private long total;
     private long desconto;
+    private long valorAdicional;
+    private boolean pago;
+    private String formaDePagamento;
     private LocalDate data;
     private LocalTime horario;
     private Boolean realizado;
@@ -68,6 +71,15 @@ public class Agendamento {
         return idAgendamento;
     }
 
+    public long getValorAdicional() {
+        return valorAdicional;
+    }
+
+    public void setValorAdicional(long valorAdicional) {
+        this.valorAdicional = valorAdicional;
+    }
+    
+    
     public void setIdAgendamento(long idAgendamento) {
         this.idAgendamento = idAgendamento;
     }
@@ -80,6 +92,23 @@ public class Agendamento {
         this.data = data;
     }
 
+    public boolean isPago() {
+        return pago;
+    }
+
+    public void setPago(boolean pago) {
+        this.pago = pago;
+    }
+
+    public String getFormaDePagamento() {
+        return formaDePagamento;
+    }
+
+    public void setFormaDePagamento(String formaDePagamento) {
+        this.formaDePagamento = formaDePagamento;
+    }
+    
+    
    
 
     public LocalTime getHorario() {
@@ -158,6 +187,10 @@ public class Agendamento {
 
     public long retornaSomaDeAgendamentosMensal() throws ExceptionDAO {
         return new AgendamentoDAO().retornaSomaDeAgendamentosMensal();
+    }
+
+    public boolean excluirAgendamento(Agendamento agendamento) throws ExceptionDAO{
+       return new AgendamentoDAO().excluirAgendamento(agendamento);
     }
     
     

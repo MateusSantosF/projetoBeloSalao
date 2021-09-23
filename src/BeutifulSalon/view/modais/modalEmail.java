@@ -24,21 +24,21 @@ import javax.swing.text.PlainDocument;
  *
  * @author Mateus
  */
-public class modalEmail extends javax.swing.JFrame {
+public class ModalEmail extends javax.swing.JFrame {
 
     /**
-     * Creates new form modalEmail
+     * Creates new form ModalEmail
      */
    
     private String caminhoArquivo;
     
-    public modalEmail() {
+    public ModalEmail() {
         initComponents();
 
         
     }
     
-    public modalEmail(String email) {
+    public ModalEmail(String email) {
         initComponents();
         
         ManipulaFontes mf = new ManipulaFontes();
@@ -342,20 +342,21 @@ public class modalEmail extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(modalEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(modalEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(modalEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(modalEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalEmail.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new modalEmail().setVisible(true);
+                new ModalEmail().setVisible(true);
             }
         });
     }

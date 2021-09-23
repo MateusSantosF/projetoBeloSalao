@@ -19,14 +19,14 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author mateu
  */
-public class modalOrcamentoPrevisto extends javax.swing.JFrame implements Observado {
+public class ModalOrcamentoPrevisto extends javax.swing.JFrame implements Observado {
     
     
     ArrayList<Observador> observadores = new ArrayList<>();
     /**
      * Creates new form modalOrcamentoPrevisto
      */
-    public modalOrcamentoPrevisto() {
+    public ModalOrcamentoPrevisto() {
         initComponents();
         
         ManipulaFontes mf = new ManipulaFontes();
@@ -201,8 +201,8 @@ public class modalOrcamentoPrevisto extends javax.swing.JFrame implements Observ
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
@@ -259,20 +259,21 @@ public class modalOrcamentoPrevisto extends javax.swing.JFrame implements Observ
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(modalOrcamentoPrevisto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalOrcamentoPrevisto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(modalOrcamentoPrevisto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalOrcamentoPrevisto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(modalOrcamentoPrevisto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalOrcamentoPrevisto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(modalOrcamentoPrevisto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ModalOrcamentoPrevisto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new modalOrcamentoPrevisto().setVisible(true);
+                new ModalOrcamentoPrevisto().setVisible(true);
             }
         });
     }

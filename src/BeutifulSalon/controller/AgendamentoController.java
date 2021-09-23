@@ -26,10 +26,15 @@ import javax.swing.JOptionPane;
  */
 public class AgendamentoController {
 
-    public boolean cadastraAgendamento(String data, String horario, long idCliente, ArrayList<Servico> servicos, long total, long desconto, boolean realizado) throws ExceptionDAO {
+    public boolean cadastraAgendamento(String data, String horario, long idCliente, ArrayList<Servico> servicos, long total, 
+            long desconto,long valorAdicional ,boolean realizado, boolean pago, String FormaDePagamento) throws ExceptionDAO {
 
         if (Valida.isHora(horario) && !servicos.isEmpty()) {
-
+            
+             if( total < 0 ){
+                JOptionPane.showMessageDialog(null, "Você não pode registrar um agendamento com valores negativos.");
+                return false;
+            }
             //Formatadores
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
             DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
@@ -63,10 +68,9 @@ public class AgendamentoController {
                 return false;
             }
             
-            //Passando parametros
+        
 
             Agendamento agendamento = new Agendamento();
-
             agendamento.setTotal(total);
             agendamento.setDesconto(desconto);
             agendamento.setIdCliente(idCliente);
@@ -74,6 +78,9 @@ public class AgendamentoController {
             agendamento.setHorario(h);
             agendamento.setServicos(servicos);
             agendamento.setRealizado(realizado);
+            agendamento.setValorAdicional(valorAdicional);
+            agendamento.setPago(pago);
+            agendamento.setFormaDePagamento(FormaDePagamento);
 
             try {
                 agendamento.cadastraAgendamento(agendamento);
@@ -89,10 +96,15 @@ public class AgendamentoController {
         return true;
     }
 
-    public boolean atualizarAgendamento(String data, String horario,long idCliente, ArrayList<Servico> servicos, long total, long desconto, boolean realizado, long idAgendamento) throws ExceptionDAO {
+    public boolean atualizarAgendamento(String data, String horario,long idCliente, ArrayList<Servico> servicos, long total, 
+            long desconto, boolean realizado, long idAgendamento, long valorAdicional, boolean pago, String formaDePagamento) throws ExceptionDAO {
 
         if (Valida.isHora(horario) && !servicos.isEmpty()) {
-
+            
+            if( total < 0 ){
+                JOptionPane.showMessageDialog(null, "Você não pode registrar um agendamento com valores negativos.");
+                return false;
+            }
             //Formatadores
             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
             DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
@@ -118,6 +130,9 @@ public class AgendamentoController {
             agendamento.setHorario(h);
             agendamento.setServicos(servicos);
             agendamento.setRealizado(realizado);
+            agendamento.setValorAdicional(valorAdicional);
+            agendamento.setPago(pago);
+            agendamento.setFormaDePagamento(formaDePagamento);
 
             try {
                 agendamento.atualizarAgendamento(agendamento);
@@ -135,7 +150,7 @@ public class AgendamentoController {
 
     public boolean editarAgendamento(long idAgendamento) {
 
-        try {
+  
 
             Agendamento ag = listarAgendamento(idAgendamento);
 
@@ -145,14 +160,17 @@ public class AgendamentoController {
                 return false;
             }
 
-        } catch (ExceptionDAO e) {
-            JOptionPane.showMessageDialog(null, "Erro ao criar objeto agendamento" + e);
-        }
         return true;
     }
 
-    public Agendamento listarAgendamento(long idAgendamento) throws ExceptionDAO {
-        return new Agendamento().listarAgendamento(idAgendamento);
+    public Agendamento listarAgendamento(long idAgendamento)  {
+        
+        try {
+            return new Agendamento().listarAgendamento(idAgendamento);
+        } catch (Exception e) {
+            return null;
+        }
+       
     }
 
     public ArrayList<Servico> listarServicosAgendamento(long idAgendamento) {
@@ -234,5 +252,15 @@ public class AgendamentoController {
          }
          return 0L;
      }
+
+    public boolean excluirAgendamento(Agendamento agendamento) {
+        
+        try {
+            return agendamento.excluirAgendamento(agendamento);
+        } catch (ExceptionDAO e) {
+            return false;
+        }
+       
+    }
 
 }

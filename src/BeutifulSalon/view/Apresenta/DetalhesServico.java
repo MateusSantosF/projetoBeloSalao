@@ -33,6 +33,8 @@ public class DetalhesServico extends javax.swing.JFrame {
     /**
      * Creates new form DetalhesServico
      */
+    private Color verde = new Color(57, 201, 114);
+    private Color vermelho = new Color(248, 67, 69);
     public DetalhesServico() {
         initComponents();
     }
@@ -84,7 +86,7 @@ public class DetalhesServico extends javax.swing.JFrame {
         margemContribuicao -= subtracao;
         
         if(margemContribuicao <= 0 ){
-            jLabelMargemContribuicao.setForeground(Color.red);
+            jLabelMargemContribuicao.setForeground(vermelho);
         }
         jLabelMargemContribuicao.setText(Dinheiro.parseString(margemContribuicao));
         
@@ -115,13 +117,13 @@ public class DetalhesServico extends javax.swing.JFrame {
         }
        
         if(servico.getQuantidadeRealizada() < pontoDeEquilibrio){
-            jLabelPontoDeEquilíbrio.setForeground(Color.red);
+            jLabelPontoDeEquilíbrio.setForeground(vermelho);
         }else{
-            jLabelPontoDeEquilíbrio.setForeground(Color.green);
+            jLabelPontoDeEquilíbrio.setForeground(verde);
         }
         
         if(servico.getQuantidadeRealizada() >= ((int)(Math.ceil(meta)))){
-            jLabelMeta.setForeground(Color.green);
+            jLabelMeta.setForeground(verde);
         }
         
         
