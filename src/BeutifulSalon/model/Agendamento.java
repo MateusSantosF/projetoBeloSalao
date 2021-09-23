@@ -192,6 +192,10 @@ public class Agendamento {
     public boolean excluirAgendamento(Agendamento agendamento) throws ExceptionDAO{
        return new AgendamentoDAO().excluirAgendamento(agendamento);
     }
+
+    public ArrayList<Agendamento> listarAgendamentosNaoPagos() throws ExceptionDAO{
+        return new AgendamentoDAO().listarAgendamentosNaoPagos();
+    }
     
     
 }

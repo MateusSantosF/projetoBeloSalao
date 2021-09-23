@@ -9,14 +9,9 @@ import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Tabelas.AgendamentoTableModel;
 import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.controller.AgendamentoController;
-import BeutifulSalon.controller.ServicoController;
-import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.view.modais.ModalDetalhesAgendamento;
 import java.awt.Font;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -48,6 +43,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         jRadioButtonHoje.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
         jRadioButtonAmanha.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
         jRadioButtonSemana.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
+        jRadioButtonNaoPago.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
         jRadioButton1.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
         jRadioButtonTodos.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
         jTableAgendamentos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f));
@@ -89,6 +85,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabelExcluir = new javax.swing.JLabel();
+        jRadioButtonNaoPago = new javax.swing.JRadioButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(new java.awt.Color(243, 244, 255));
@@ -294,6 +291,16 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
             }
         });
 
+        jRadioButtonNaoPago.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(jRadioButtonNaoPago);
+        jRadioButtonNaoPago.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jRadioButtonNaoPago.setText("Não Pago");
+        jRadioButtonNaoPago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonNaoPagoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -310,26 +317,29 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
                             .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabelBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(99, 99, 99)
-                                .addComponent(jRadioButtonHoje, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButtonAmanha, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButtonSemana, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButtonTodos))
-                            .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(13, 13, 13)
-                                .addComponent(jLabelExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(36, 36, 36)))
+                                .addComponent(jLabelExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButtonHoje, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButtonAmanha, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButtonSemana, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jRadioButtonNaoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(17, 17, 17)
+                                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jRadioButtonTodos)
+                                .addGap(6, 6, 6)))))
                 .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
@@ -349,6 +359,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
                         .addComponent(jRadioButtonHoje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jRadioButtonAmanha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jRadioButtonSemana)
+                        .addComponent(jRadioButtonNaoPago)
                         .addComponent(jRadioButton1)
                         .addComponent(jRadioButtonTodos))
                     .addComponent(jLabelBuscarCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -452,6 +463,11 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
             new ModalDetalhesAgendamento(agendamento).setVisible(true);
         }
     }//GEN-LAST:event_jLabel6MousePressed
+
+    private void jRadioButtonNaoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonNaoPagoActionPerformed
+       modelo.getAgendamentosNaPagos();
+       jTableAgendamentos.setModel(modelo);
+    }//GEN-LAST:event_jRadioButtonNaoPagoActionPerformed
     
     
  
@@ -470,6 +486,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButtonAmanha;
     private javax.swing.JRadioButton jRadioButtonHoje;
+    private javax.swing.JRadioButton jRadioButtonNaoPago;
     private javax.swing.JRadioButton jRadioButtonSemana;
     private javax.swing.JRadioButton jRadioButtonTodos;
     private javax.swing.JScrollPane jScrollPane1;

@@ -263,7 +263,7 @@ public class OrcamentoServicoDAO {
                 " ON AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO" +
                 " INNER JOIN SERVICO " +
                 " ON SERVICO.ID_SERVICO = AGENDAMENTO_SERVICO.ID_SERVICO" +
-                " WHERE AGENDAMENTO.REALIZADO = TRUE AND AGENDAMENTO.DATA BETWEEN ? AND ? AND SERVICO.ID_SERVICO = ?";
+                " WHERE AGENDAMENTO.REALIZADO = TRUE AND AGENDAMENTO.PAGO = TRUE AND AGENDAMENTO.DATA BETWEEN ? AND ? AND SERVICO.ID_SERVICO = ?";
               
         Connection connection = null;
         PreparedStatement pStatement = null;

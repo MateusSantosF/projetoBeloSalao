@@ -51,6 +51,7 @@ public class AgendamentoTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
         
@@ -103,7 +104,6 @@ public class AgendamentoTableModel extends AbstractTableModel {
     }
     
     public Agendamento getAgendamento(int rowCount){
-        getTodosAgendamentos();
         return dados.get(rowCount);
     }
     
@@ -128,6 +128,11 @@ public class AgendamentoTableModel extends AbstractTableModel {
     public void getAgendamentosNaoRealizados(){
         dados.clear();
         addRow(agendamentoController.listarAgendamentosNaoRealizados());
+    }
+    
+     public void getAgendamentosNaPagos(){
+        dados.clear();
+        addRow(agendamentoController.listarAgendamentosNaoPagos());
     }
     
     public void getAgendamentosPorNomeCliente(String nome){

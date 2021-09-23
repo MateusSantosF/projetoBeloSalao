@@ -263,4 +263,13 @@ public class AgendamentoController {
        
     }
 
+    public ArrayList<Agendamento> listarAgendamentosNaoPagos() {
+         try {
+            return new Agendamento().listarAgendamentosNaoPagos();
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return null;
+    }
+
 }
