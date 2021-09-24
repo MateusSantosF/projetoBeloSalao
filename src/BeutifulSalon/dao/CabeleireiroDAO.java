@@ -322,7 +322,7 @@ public class CabeleireiroDAO {
                 + " SEGUNDAS = ?, TERCAS = ?, QUARTAS =?, QUINTAS = ?, SEXTAS = ? , SABADOS = ?, DOMINGOS = ?, SENHA = ?, METADELUCRO = ? "
                 + "WHERE ID = (SELECT MAX(ID) FROM CABELEIREIRO)";
         
-        String updateCompras = "UPDATE COMPRA SET CPF_CABELEIREIRO = ?";
+  
   
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -356,11 +356,6 @@ public class CabeleireiroDAO {
 
             
             pStatement.execute();
-            
-            pStatement = connection.prepareStatement(updateCompras);
-            
-            pStatement.executeUpdate();
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);
         } finally {

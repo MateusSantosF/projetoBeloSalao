@@ -11,6 +11,7 @@ import BeutifulSalon.dao.VendaProdutoDAO;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Venda;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -68,6 +69,24 @@ public class VendaController {
             return null;
         }
 
+    }
+    
+    public List<Venda> selecionaVendasPorMes(Month mes){
+        try {
+            return new Venda().selecionaVendasPorMes(mes);
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao listar vendas por mes"  + e);
+        }
+        return null;
+    }
+    
+    public List<Venda> selecionaTodasVendas(){
+        try {
+            return new Venda().selecionaTodasVendas();
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao listar todas vendas"  + e);
+        }
+        return null;
     }
 
     public List<Item> retornaItemsCompra(long idCliente) {

@@ -8,6 +8,7 @@ package BeutifulSalon.model;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.dao.VendaProdutoDAO;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -23,7 +24,10 @@ public class Venda{
     long valorTotal;
     long valorDesconto;
     long idCliente;
-    String cpfCliente;
+    String nomeCliente;
+    String sobrenomeCliente;
+    String nomeProduto;
+  
     ArrayList<Item> itensVenda;
 
     
@@ -32,7 +36,6 @@ public class Venda{
     public Venda(LocalDate data, long valorDesconto, String cpfCliente, ArrayList<Item> itensCompra) {
         this.data = data;
         this.valorDesconto = valorDesconto;
-        this.cpfCliente = cpfCliente;
         this.itensVenda = itensCompra;
     }
     
@@ -70,6 +73,34 @@ public class Venda{
     public void setItensVenda(ArrayList<Item> itensVenda) {
         this.itensVenda = itensVenda;
     }
+
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+
+    public String getSobrenomeCliente() {
+        return sobrenomeCliente;
+    }
+
+    public void setSobrenomeCliente(String sobrenomeCliente) {
+        this.sobrenomeCliente = sobrenomeCliente;
+    }
+
+    public String getNomeProduto() {
+        return nomeProduto;
+    }
+
+    public void setNomeProduto(String nomeProduto) {
+        this.nomeProduto = nomeProduto;
+    }
+    
+    public long getTotal(){
+        return this.valorTotal;
+    }
     
     
 
@@ -93,13 +124,7 @@ public class Venda{
         this.valorDesconto = valorDesconto;
     }
 
-    public String getCpfCliente() {
-        return cpfCliente;
-    }
 
-    public void setCpfCliente(String cpfCliente) {
-        this.cpfCliente = cpfCliente;
-    }
 
     public ArrayList<Item> getItensCompra() {
         return itensVenda;
@@ -115,6 +140,14 @@ public class Venda{
 
     public List<Venda> selecionaVendasDoAno(int anoReferente) throws ExceptionDAO{
         return new VendaProdutoDAO().selecionaVendasDoAno(anoReferente);
+    }
+    
+    public List<Venda> selecionaVendasPorMes(Month mes) throws ExceptionDAO{
+        return new VendaProdutoDAO().selecionaVendasPorMes(mes);
+    }
+    
+    public List<Venda> selecionaTodasVendas() throws ExceptionDAO{
+        return new VendaProdutoDAO().selecionaTodasVendas();
     }
 
     public int retornaQuantidadeDeVendasHoje() throws ExceptionDAO {

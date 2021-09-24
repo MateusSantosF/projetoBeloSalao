@@ -763,7 +763,7 @@ public class clienteDAO {
     public List<Cliente> top5Clientes(int anoReferente){
          String sql  = "SELECT COUNT(AGENDAMENTO.ID_CLIENTE) AS QTD, CLIENTE.NOME, CLIENTE.SOBRENOME FROM AGENDAMENTO\n" +
                 "INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE " +
-                "WHERE AGENDAMENTO.DATA BETWEEN ? AND ? AND CLIENTE.EXCLUIDO = FALSE " +
+                "WHERE AGENDAMENTO.DATA BETWEEN ? AND ? AND CLIENTE.EXCLUIDO = FALSE AND AGENDAMENTO.REALIZADO = TRUE " +
                 "GROUP BY AGENDAMENTO.ID_CLIENTE ORDER BY COUNT(AGENDAMENTO.ID_CLIENTE) DESC LIMIT 5;";
         
         Connection connection = null;
@@ -790,6 +790,7 @@ public class clienteDAO {
                     clienteAtual.setNome(rs.getString("NOME"));
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
                     clienteAtual.setQtdVisitas(rs.getInt("QTD"));
+        
                     clientes.add(clienteAtual);
                 }
                 
