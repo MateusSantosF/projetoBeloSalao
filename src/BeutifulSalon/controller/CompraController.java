@@ -10,6 +10,7 @@ import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.Item;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -44,4 +45,13 @@ public class CompraController {
          
          return true;
     }
+     
+     public long retornaSomaDeComprasMensais(Month mes){
+         try {
+            return new Compra().retornaSomaDeComprasMensais(mes);
+         } catch (ExceptionDAO e) {
+         }
+         
+         return 0L;
+     }
 }

@@ -76,6 +76,10 @@
         <fileset dir="src/BancoDeDados"/>
     </copy>
     
+    <copy todir="${dist.dir}/Fontes">
+        <fileset dir="src/Fontes"/>
+    </copy>
+    
     
 </target>
 

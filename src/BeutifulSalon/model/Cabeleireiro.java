@@ -21,6 +21,7 @@ public class Cabeleireiro {
     private String nome;
     private String email;
     private String senha;
+    private String postit;
     private Email emailAniversario;
     private Email emailUltimaVisita;
     private long metaDeLucro;
@@ -92,6 +93,14 @@ public class Cabeleireiro {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getPostit() {
+        return postit;
+    }
+
+    public void setPostit(String postit) {
+        this.postit = postit;
     }
     
     

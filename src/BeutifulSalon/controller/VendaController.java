@@ -71,13 +71,13 @@ public class VendaController {
 
     }
     
-    public List<Venda> selecionaVendasPorMes(Month mes){
+    public long selecionaVendasPorMes(Month mes){
         try {
             return new Venda().selecionaVendasPorMes(mes);
         } catch (ExceptionDAO e) {
             System.out.println("Erro ao listar vendas por mes"  + e);
         }
-        return null;
+        return 0;
     }
     
     public List<Venda> selecionaTodasVendas(){

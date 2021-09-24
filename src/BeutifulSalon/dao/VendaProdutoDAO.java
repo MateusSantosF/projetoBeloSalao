@@ -376,6 +376,10 @@ public class VendaProdutoDAO {
         
         return items;
     }
+    /**
+     * Passivel de exclusão. Retorna soma de vendas do mes atual
+     * @return 
+     */
     
     public long retornaSomaDeVendasMensal(){
          
@@ -429,8 +433,14 @@ public class VendaProdutoDAO {
         
         return vendas;
     }
-
-    public List<Venda> selecionaVendasPorMes(Month mes)throws ExceptionDAO {
+    
+    /**
+     * Retorna a soma de vendas mensais
+     * @param mes
+     * @return
+     * @throws ExceptionDAO 
+     */
+    public long selecionaVendasPorMes(Month mes)throws ExceptionDAO {
         
         
         String sql = "SELECT CLIENTE.NOME AS NOME, CLIENTE.SOBRENOME AS SOBRENOME, VENDA.DATA, VENDA.VALORTOTAL, PRODUTO.NOME AS NOMEPRODUTO "
@@ -439,8 +449,11 @@ public class VendaProdutoDAO {
         "    INNER JOIN ITEM_VENDA ON VENDA.ID_VENDA  = ITEM_VENDA.ID_VENDA " +
         "    INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO"
         + "  WHERE VENDA.DATA BETWEEN ? AND ?";
+        
+        String sql2 = "SELECT SUM(VENDA.VALORTOTAL) AS RENDAMENSAL FROM VENDA WHERE VENDA.DATA BETWEEN ? AND ?";
+        long vendas = 0;
 
-        List<Venda> vendas = new ArrayList<>();
+        //List<Venda> vendas = new ArrayList<>();
         Connection connection = null;
         PreparedStatement pStatement = null;
         ResultSet rs = null;
@@ -448,26 +461,21 @@ public class VendaProdutoDAO {
         try {
 
             connection = new ConnectionMVC().getConnection();
-            pStatement = connection.prepareStatement(sql);
+            pStatement = connection.prepareStatement(sql2);
             
 
             inicio = new ManipulaData().inicioDoMes(LocalDate.now(), mes);
             fim = new ManipulaData().fimDoMes(LocalDate.now(), mes);
             
             pStatement.setLong(1, inicio);// Inicio do mes
-            pStatement.setLong(2, fim);
+            pStatement.setLong(2, fim); // fim
 
             rs = pStatement.executeQuery();
             
             if(rs != null){
                 while(rs.next()){
-                    Venda vendaAtual = new Venda();
-                    vendaAtual.setData(rs.getDate("DATA").toLocalDate());
-                    vendaAtual.setValorTotal(rs.getLong("VALORTOTAL"));
-                    vendaAtual.setNomeCliente(rs.getString("NOME"));
-                    vendaAtual.setSobrenomeCliente(rs.getString("SOBRENOME"));
-                    vendaAtual.setNomeProduto(rs.getString("NOMEPRODUTO"));
-                    vendas.add(vendaAtual);
+                    
+                    vendas += rs.getLong("RENDAMENSAL");
                 }
             }
             

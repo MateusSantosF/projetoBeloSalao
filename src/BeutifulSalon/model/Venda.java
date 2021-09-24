@@ -142,7 +142,7 @@ public class Venda{
         return new VendaProdutoDAO().selecionaVendasDoAno(anoReferente);
     }
     
-    public List<Venda> selecionaVendasPorMes(Month mes) throws ExceptionDAO{
+    public long selecionaVendasPorMes(Month mes) throws ExceptionDAO{
         return new VendaProdutoDAO().selecionaVendasPorMes(mes);
     }
     

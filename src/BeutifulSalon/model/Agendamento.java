@@ -10,6 +10,7 @@ import BeutifulSalon.dao.ExceptionDAO;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.ArrayList;
 
 /**
@@ -188,6 +189,9 @@ public class Agendamento {
     public long retornaSomaDeAgendamentosMensal() throws ExceptionDAO {
         return new AgendamentoDAO().retornaSomaDeAgendamentosMensal();
     }
+     public long retornaSomaDeAgendamentosMensal(Month mes) throws ExceptionDAO{
+        return new AgendamentoDAO().retornaSomaDeAgendamentosMensal(mes);
+     }
 
     public boolean excluirAgendamento(Agendamento agendamento) throws ExceptionDAO{
        return new AgendamentoDAO().excluirAgendamento(agendamento);

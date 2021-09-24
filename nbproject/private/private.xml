@@ -3,13 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/modais/ModalDetalhesAgendamento.java</file>
             <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Tabelas/AgendamentoTableModel.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/controller/AgendamentoController.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Cadastros/CadastroServico.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/model/Agendamento.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/dao/VendaProdutoDAO.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Dashboard.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Ferramentas/GraficoDeBarras.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/controller/ClienteController.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/model/Venda.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/dao/OrcamentoDAO.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Ferramentas/GraficoDePizza.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/controller/VendaController.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/dao/clienteDAO.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Ferramentas/GraficoXY.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/Tabelas/VendaTableModel.java</file>
             <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Apresenta/ApresentaAgendamentos.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/modais/ModalProdutosUtilizados.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/view/Apresenta/ApresentaCliente.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/model/Cliente.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalao/projetoBeloSalao/src/BeutifulSalon/dao/OrcamentoServicoDAO.java</file>
         </group>
     </open-files>
 </project-private>

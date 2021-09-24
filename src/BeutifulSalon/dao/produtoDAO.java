@@ -345,6 +345,166 @@ public class ProdutoDAO {
         return null;
     }
     
+    public Produto buscarUltimoProdutoCadastrado() {
+
+        String sql = "SELECT NOME, MARCA, PRECO, IDPRODUTO FROM PRODUTO WHERE IDPRODUTO = (SELECT MAX(IDPRODUTO) FROM PRODUTO)";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+      
+        
+        try{
+            
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+                 
+            rs = pStatement.executeQuery();
+            
+            Produto produtoBuscado = new Produto();
+   
+            if(rs != null){                
+                while(rs.next()){  
+             
+                produtoBuscado.setNome(rs.getString("NOME"));
+                produtoBuscado.setMarca(rs.getString("MARCA"));
+                produtoBuscado.setPreco(rs.getLong("PRECO"));
+                produtoBuscado.setId_produto(rs.getLong("IDPRODUTO"));
+  
+                }
+            }
+            
+            return produtoBuscado;
+       
+            
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) " + e);
+        }finally{
+              try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+
+        return null;
+    }
+    
+    public Produto buscarProdutoNomeEMarca(String nome, String marca) {
+
+        String sql = "SELECT NOME, MARCA, PRECO, IDPRODUTO FROM PRODUTO WHERE "
+                + "NOME = ? AND MARCA = ?";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+      
+        
+        try{
+            
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1, nome);
+            pStatement.setString(2, marca);
+            rs = pStatement.executeQuery();
+            
+            Produto produtoBuscado = new Produto();
+   
+            if(rs != null){                
+                while(rs.next()){  
+             
+                produtoBuscado.setNome(rs.getString("NOME"));
+                produtoBuscado.setMarca(rs.getString("MARCA"));
+                produtoBuscado.setPreco(rs.getLong("PRECO"));
+                produtoBuscado.setId_produto(rs.getLong("IDPRODUTO"));
+  
+                }
+            }
+            
+            return produtoBuscado;
+       
+            
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) busca por nomeemarca" + e);
+        }finally{
+              try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+
+        return null;
+    }
+    
+     public int verificaExistenciaProduto(String nome, String marca) {
+
+        String sql = "SELECT NOME, MARCA FROM PRODUTO WHERE NOME = ? AND MARCA = ?";
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+        int existe = 0;
+      
+        
+        try{
+            
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setString(1, nome);
+            pStatement.setString(2, marca);
+                  
+            rs = pStatement.executeQuery();
+            
+            Produto produtoBuscado = new Produto();
+   
+            if(rs != null){                
+                while(rs.next()){  
+             
+                existe++;
+  
+                }
+            }
+            System.out.println("EXISTE=>" + existe);
+            return existe;
+       
+            
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) existencia " + e);
+        }finally{
+              try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+
+        return existe;
+    }
+    
+    
+    
     public List<Produto> produtosMaisVendidosDoAno(int anoReferente){
         String sql = "SELECT SUM(ITEM_VENDA.QUANTIDADE) AS QTD , PRODUTO.NOME " +
         " FROM ITEM_VENDA " +

@@ -83,6 +83,47 @@ public class CabeleireiroDAO {
 
     }
     
+    public void cadastrarPostIt(String texto)throws ExceptionDAO{
+        
+        String sql = "UPDATE CABELEIREIRO SET POSTIT = ?";
+        
+        Connection connection = null;
+        PreparedStatement ps = null;
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, texto);
+            
+            ps.execute();
+           
+            
+        }  catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO " + e);
+        } finally {
+
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+
+        }
+        
+       
+    }
+    
     public int verificaRegistro(){
         
         
@@ -194,6 +235,7 @@ public class CabeleireiroDAO {
                     cabeleireiro.setEmailAniversario(emailAniversario);
                     cabeleireiro.setSenha(rs.getString("SENHA"));
                     cabeleireiro.setMetaDeLucro(rs.getLong("METADELUCRO"));
+                    cabeleireiro.setPostit(rs.getString("POSTIT"));
 
                 }
             }

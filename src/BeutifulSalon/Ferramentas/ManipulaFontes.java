@@ -8,7 +8,11 @@ package BeutifulSalon.Ferramentas;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
+import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
+import javax.swing.JOptionPane;
+import org.bridj.Platform;
 
 /**
  *
@@ -17,22 +21,34 @@ import java.io.IOException;
 public class ManipulaFontes {
 
     private Font font;
-   
     public String REGULAR = "Quicksand-Regular.ttf";
     public String BOLD = "Quicksand-Bold.ttf";
     public String LIGHT = "Quicksand-Light.ttf";
     public String MEDIUM = "Quicksand-Medium.ttf";
     public String SEMIBOLD = "Quicksand-SemiBold.ttf";
+    private static File file;
 
+    public ManipulaFontes() {
+        
+    }
+    
 
     public Font getFont(String nome ,int estilo, float tamanho) {
         try {
-        
+            
+            //Para compilar na dist
+            //String path =this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+            //String decodedPath = URLDecoder.decode(path, "UTF-8");
+            //String caminhoFonte = decodedPath.replace("BeutifulSalon.jar", "Fontes/"+nome);
+            //font = Font.createFont( Font.TRUETYPE_FONT,new File(caminhoFonte));
+            //para usar no netbeans
             font = Font.createFont( Font.TRUETYPE_FONT,getClass().getClassLoader().getResourceAsStream("\\Fontes\\"+nome));
+            
+           
                    
             
         } catch (IOException | FontFormatException e) {
-            System.out.println("Merda " + e);
+            System.out.println(e);
             font = new Font("Arial", Font.PLAIN, 14);
         }
         font = font.deriveFont(estilo, tamanho);

@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.dao;
 
+import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.controller.EstoqueController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +14,9 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.Item;
+import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -106,6 +110,59 @@ public class CompraProdutoDAO {
             }
         }
 
+    }
+    
+    public long retornaSomaDeComprasMensais(Month mes){
+        
+        String sql = "SELECT SUM(COMPRA.VALORTOTAL) AS RENDAMENSAL FROM COMPRA WHERE COMPRA.DATA BETWEEN ? AND ?";
+        long compras = 0;
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+        
+            pStatement.setLong(1, new ManipulaData().inicioDoMes(LocalDate.now(), mes));
+            pStatement.setLong(2, new ManipulaData().fimDoMes(LocalDate.now(), mes));
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                    compras = rs.getInt("RENDAMENSAL");
+                }
+            }
+            
+            return compras;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+   
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return compras;
     }
 
 }

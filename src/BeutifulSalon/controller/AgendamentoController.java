@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -247,6 +248,15 @@ public class AgendamentoController {
      public long retornaSomaDeAgendamentosMensal(){
          try {
             return new Agendamento().retornaSomaDeAgendamentosMensal(); 
+         } catch (ExceptionDAO e) {
+            System.out.println("erro ao retornar soma mensal de agemdamentos");
+         }
+         return 0L;
+     }
+     
+      public long retornaSomaDeAgendamentosMensal(Month mes){
+         try {
+            return new Agendamento().retornaSomaDeAgendamentosMensal(mes); 
          } catch (ExceptionDAO e) {
             System.out.println("erro ao retornar soma mensal de agemdamentos");
          }

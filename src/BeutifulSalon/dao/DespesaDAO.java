@@ -714,6 +714,58 @@ public class DespesaDAO {
         return false;
     }
 
+    public long retornaSomaDeDespesasMensais(Month mes) {
+        String sql = "SELECT SUM(VALORPAGO) AS DESPESAMENSAL FROM DESPESAMENSAL WHERE DATALANCAMENTO BETWEEN ? AND ?";
+        long despesas = 0;
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+        
+            pStatement.setLong(1, new ManipulaData().inicioDoMes(LocalDate.now(), mes));
+            pStatement.setLong(2, new ManipulaData().fimDoMes(LocalDate.now(), mes));
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                   despesas = rs.getInt("DESPESAMENSAL");
+                }
+            }
+            
+            return despesas;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+   
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return despesas;
+    }
+
    
     
     

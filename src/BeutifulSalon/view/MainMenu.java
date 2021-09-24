@@ -111,6 +111,11 @@ public class MainMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Dashboard");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         menuLateral.setBackground(new java.awt.Color(36, 46, 66));
         menuLateral.setPreferredSize(new java.awt.Dimension(300, 500));
@@ -493,6 +498,10 @@ public class MainMenu extends javax.swing.JFrame {
         this.setTitle("Serviços");
         trocaCorPainel(jPanelServicos);
     }//GEN-LAST:event_jLabelServicosMousePressed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+       
+    }//GEN-LAST:event_formWindowClosed
 
     private void trocaCorPainel(JPanel painelAtivo) {
 

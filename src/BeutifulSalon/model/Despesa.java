@@ -170,4 +170,8 @@ public class Despesa {
     public boolean excluirDespesa(long idDespesa)throws ExceptionDAO {
         return new DespesaDAO().excluirDespesa(idDespesa);
     }
+
+    public long retornaSomaDeDespesasMensais(Month mes) throws ExceptionDAO {
+        return new DespesaDAO().retornaSomaDeDespesasMensais(mes);
+    }
 }

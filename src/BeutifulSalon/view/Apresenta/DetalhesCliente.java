@@ -287,7 +287,6 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
 
         jComboBoxTipoCabelo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jComboBoxTipoCabelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Liso 1A", "Liso 1B", "Liso 1C", "Ondulado 2A", "Ondulado 2B", "Ondulado 2C", "Cacheado 3A", "Cacheado 3B", "Cacheado 3C", "Crespo 4A", "Crespo 4B", "Crespo 4C", "Não Informado" }));
-        jComboBoxTipoCabelo.setSelectedIndex(12);
         jComboBoxTipoCabelo.setEnabled(false);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N

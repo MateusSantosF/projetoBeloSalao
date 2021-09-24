@@ -203,8 +203,8 @@ public class Orcamento {
         this.dez = dez;
     }
 
-    public void cadastrarOrcamento(Orcamento orcamento) throws ExceptionDAO {
-        new OrcamentoDAO().cadastrarOrcamento(orcamento);
+    public void cadastrarOrcamento(Orcamento orcamento)throws ExceptionDAO {
+        new OrcamentoDAO().cadastrarOrcamento(orcamento);    
     }
 
     public ArrayList<Orcamento> listarOrcamentos() throws ExceptionDAO {

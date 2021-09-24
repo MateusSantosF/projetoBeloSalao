@@ -364,7 +364,6 @@
                     <StringItem index="12" value="N&#xe3;o Informado"/>
                   </StringArray>
                 </Property>
-                <Property name="selectedIndex" type="int" value="12"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <AuxValues>

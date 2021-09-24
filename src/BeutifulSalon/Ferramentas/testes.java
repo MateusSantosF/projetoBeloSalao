@@ -10,13 +10,13 @@ import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Cabeleireiro;
+import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Orcamento;
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamDiscoveryService;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -44,18 +44,9 @@ public class testes {
 
     public static void main(String[] args) throws IOException, TimeoutException {
 
-       
-       List<Orcamento> ocs = new OrcamentoController().listarOrcamentos("2021");
-       
-       
-      long valorTotalOrc = 0;
       
-      for(Orcamento o: ocs){
-          valorTotalOrc += o.getSomaTotalAnual();
-      }
-      
-        System.out.println("Ponto de equilibrio =>"+ Math.floor((valorTotalOrc/15)/126.38));
-        
-     
+       
+            
+            System.out.println(Dinheiro.parseCent(Dinheiro.retiraCaracteres("R$ 180,00")));
     }
 }

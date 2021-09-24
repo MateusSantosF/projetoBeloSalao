@@ -507,7 +507,7 @@ public class EditarCliente extends javax.swing.JFrame {
         });
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel29.setText("Numero");
+        jLabel29.setText("Número");
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);

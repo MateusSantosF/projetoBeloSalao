@@ -8,6 +8,7 @@ package BeutifulSalon.model;
 import BeutifulSalon.dao.CompraProdutoDAO;
 import BeutifulSalon.dao.ExceptionDAO;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 
 /**
@@ -71,6 +72,10 @@ public class Compra {
 
     public void cadastraCompra(Compra compra) throws ExceptionDAO {
         new CompraProdutoDAO().cadastraCompra(compra);
+    }
+
+    public long retornaSomaDeComprasMensais(Month mes) throws ExceptionDAO {
+        return new CompraProdutoDAO().retornaSomaDeComprasMensais(mes);
     }
 
 }

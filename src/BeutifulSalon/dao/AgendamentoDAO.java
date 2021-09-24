@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -457,6 +458,72 @@ public class AgendamentoDAO {
         return agendamentos;
     }
     
+     public ArrayList<Agendamento> listarAgendamentosPorMes(Month mes) throws ExceptionDAO{
+        
+        ManipulaData datas = new ManipulaData();
+        
+        
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO"
+                + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
+                + " WHERE DATA BETWEEN " + datas.inicioDoMes(LocalDate.now(), mes) + " AND " + datas.fimDoMes(LocalDate.now(), mes) 
+                +" AND REALIZADO = TRUE AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATA DESC";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ArrayList<Agendamento> agendamentos = null;
+
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                
+                agendamentos = new ArrayList<>();
+                while(rs.next()){
+                    Agendamento ag = new Agendamento();
+                   
+                    ag.setIdAgendamento(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setData(rs.getDate("DATA").toLocalDate());
+                    ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
+                    ag.setIdCliente(rs.getLong("ID_CLIENTE"));
+                    ag.setRealizado(rs.getBoolean("REALIZADO"));
+                    ag.setTotal(rs.getLong("TOTAL"));
+                    ag.setDesconto(rs.getLong("DESCONTO"));
+                    ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
+                    ag.setPago(rs.getBoolean("PAGO"));
+                    ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                    agendamentos.add(ag);         
+                }
+            }
+           
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro agendamentoDAO" + e);
+        }finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        
+        return agendamentos;
+    }
     
     
     
@@ -811,7 +878,10 @@ public class AgendamentoDAO {
         
         return agendamentos;
     }
-    
+    /**
+     * Passivel de exclusão. Retorna soma de agendamentos mensal apenas do mes atual
+     * @return 
+     */
      public long retornaSomaDeAgendamentosMensal(){
         
          String sql = "SELECT SUM(AGENDAMENTO.TOTAL) AS RENDAMENSAL FROM AGENDAMENTO WHERE AGENDAMENTO.DATA BETWEEN ? AND ?";
@@ -827,6 +897,59 @@ public class AgendamentoDAO {
         
             pStatement.setLong(1, new ManipulaData().inicioDoMes(LocalDate.now(), LocalDate.now().getMonth()));
             pStatement.setLong(2, new ManipulaData().fimDoMes(LocalDate.now(), LocalDate.now().getMonth()));
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                    agendamentos = rs.getInt("RENDAMENSAL");
+                }
+            }
+            
+            return agendamentos;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+   
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return agendamentos;
+     }
+     
+    public long retornaSomaDeAgendamentosMensal(Month mes){
+        
+         String sql = "SELECT SUM(AGENDAMENTO.TOTAL) AS RENDAMENSAL FROM AGENDAMENTO WHERE AGENDAMENTO.DATA BETWEEN ? AND ?";
+        long agendamentos = 0;
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+        
+            pStatement.setLong(1, new ManipulaData().inicioDoMes(LocalDate.now(),mes));
+            pStatement.setLong(2, new ManipulaData().fimDoMes(LocalDate.now(), mes));
 
             rs = pStatement.executeQuery();
             

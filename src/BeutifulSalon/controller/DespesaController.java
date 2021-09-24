@@ -356,4 +356,14 @@ public class DespesaController {
         }
       
     }
+    
+    public long retornaSomaDeDespesasMensais(Month mes){
+        try {
+            return new Despesa().retornaSomaDeDespesasMensais(mes);
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao retornar soma de despesas mensais");
+        }
+        
+        return 0L;
+    }
 }
