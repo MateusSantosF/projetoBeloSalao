@@ -140,8 +140,8 @@
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="jLabel11" min="-2" pref="53" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel9" min="-2" pref="319" max="-2" attributes="0"/>
-                      <EmptySpace pref="324" max="32767" attributes="0"/>
+                      <Component id="jLabel9" min="-2" pref="628" max="-2" attributes="0"/>
+                      <EmptySpace pref="15" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

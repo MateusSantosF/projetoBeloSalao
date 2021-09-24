@@ -774,7 +774,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                         jFormattedTextFieldPreco.getText());
 
                 if (sucesso) {
-                    JOptionPane.showMessageDialog(null, "Atualização realizado com sucesso");
+                    JOptionPane.showMessageDialog(null, "Atualização realizada com sucesso");
                 } else {
                     JOptionPane.showMessageDialog(null, "Erro! verifique as informações e tente novamente");
                 }
@@ -954,7 +954,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
             boolean sucesso = cc.cadastrarEmailUltimaVisita(emailUltimaVisita, cc.selecionaCabeleireiro().getCpf(), jComboBoxPeriodo.getSelectedIndex() + 2);
 
             if (sucesso) {
-                JOptionPane.showMessageDialog(null, "Email padrão de últiima visita atualizado com sucesso!");
+                JOptionPane.showMessageDialog(null, "Email padrão de última visita atualizado com sucesso!");
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao atualizar email de última visita.");
             }

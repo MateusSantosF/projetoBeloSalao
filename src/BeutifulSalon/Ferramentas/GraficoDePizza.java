@@ -90,7 +90,7 @@ public class GraficoDePizza {
         JFreeChart chart = new JFreeChart("", new Font("Arial", 0, 28), plot, true);
      
         chart.setBackgroundPaint(Color.WHITE);
-        chart.setPadding(new RectangleInsets(-50, 0, 70, 0));
+        chart.setPadding(new RectangleInsets(-10, 0, 0, 0));
 
         return chart;
     }

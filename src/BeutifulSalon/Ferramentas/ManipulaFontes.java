@@ -37,10 +37,10 @@ public class ManipulaFontes {
         try {
             
             //Para compilar na dist
-            //String path =this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-            //String decodedPath = URLDecoder.decode(path, "UTF-8");
+           //String path =this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
+           //String decodedPath = URLDecoder.decode(path, "UTF-8");
             //String caminhoFonte = decodedPath.replace("BeutifulSalon.jar", "Fontes/"+nome);
-            //font = Font.createFont( Font.TRUETYPE_FONT,new File(caminhoFonte));
+           // font = Font.createFont( Font.TRUETYPE_FONT,new File(caminhoFonte));
             //para usar no netbeans
             font = Font.createFont( Font.TRUETYPE_FONT,getClass().getClassLoader().getResourceAsStream("\\Fontes\\"+nome));
             
