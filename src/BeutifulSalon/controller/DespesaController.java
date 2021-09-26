@@ -65,7 +65,7 @@ public class DespesaController {
                         despesa.setPagamento(dataPagamento);
                         despesa.setValorPago(Dinheiro.parseCent(Dinheiro.retiraCaracteres(valorPago)));
                         despesa.setFormaPagamento(formaPagamento);
-                        despesa.setAno(ano);
+                        despesa.setAno(ano.trim());
                         despesa.setStatus(status);
 
                         despesa.cadastrarDespesa(despesa);

@@ -95,7 +95,7 @@ public class ServicoController {
             LocalTime horario = LocalTime.parse(tempoGasto, formatterHora);
 
             Servico servico = new Servico();
-            servico.setNome(nome);
+            servico.setNome(nome.trim());
             servico.setPreco(Dinheiro.parseCent(Dinheiro.retiraCaracteres(preco)));
             servico.setTempoGasto(horario);
             servico.setProdutos(produtos);

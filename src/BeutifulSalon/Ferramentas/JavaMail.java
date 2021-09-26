@@ -51,7 +51,7 @@ public class JavaMail {
         this.tipo = tipo;
     }
 
-    public void sendMail() throws MessagingException {
+    public boolean sendMail() throws MessagingException {
 
         Properties properties = new Properties();
         CabeleireiroController cc = new CabeleireiroController();
@@ -84,8 +84,10 @@ public class JavaMail {
         try {
 
             Transport.send(message);
+            return true;
         } catch (MessagingException e) {
             System.out.println("tranport => " + e);
+            return false;
         }
 
     }
@@ -100,23 +102,20 @@ public class JavaMail {
         try {
 
             Message message = new MimeMessage(session);
+         
             message.setFrom(new InternetAddress(myAccountEmail));
 
             message.setRecipient(
                     Message.RecipientType.TO,
                     new InternetAddress(recepient));
 
-            message.setSubject(email.getTitulo());
+            message.setSubject( email.getTitulo() );
 
             if (email.getDiretorioArquivo() != null && email.getDiretorioArquivo().length() > 0) {
                 
 
                 // Criando a parte que vai tratar a imagem
                 MimeMultipart multipart = new MimeMultipart("related");
-
-              
-
-                // Pegando a imagem
               
 
                 if (tipo == EMAIL_PADRAO) {
@@ -124,8 +123,10 @@ public class JavaMail {
                   // Corpo da mensagem
                   BodyPart messageBodyPart = new MimeBodyPart();
                   String htmlText = "<p>" + email.getTexto() + "</p>";
-
-                  messageBodyPart.setContent(htmlText, "text/html");
+                  
+                  
+                  messageBodyPart.setContent(email.getTexto(), "text/html; charset=utf-8");
+                  
                   // Add
                   multipart.addBodyPart(messageBodyPart);
                   
@@ -142,7 +143,7 @@ public class JavaMail {
                     multipart.addBodyPart(messageBodyPart);
                     
                     // Juntando tudo
-                    message.setContent(multipart);
+                    message.setContent(multipart, "charset=UTF-8");
                 }
 
                 if (tipo == EMAIL_ANIVERSARIO_ULTIMAVISITA) {
@@ -151,7 +152,7 @@ public class JavaMail {
                     BodyPart messageBodyPart = new MimeBodyPart();
                     String htmlText = "<p>" + email.getTexto() + "</p>"  + "<img src='cid:image' />";
 
-                    messageBodyPart.setContent(htmlText, "text/html");
+                    messageBodyPart.setContent(htmlText, "text/html; charset=utf-8");
                     // Add
                     multipart.addBodyPart(messageBodyPart);
                     messageBodyPart = new MimeBodyPart();
@@ -183,15 +184,17 @@ public class JavaMail {
                     multipart.addBodyPart(messageBodyPart);
     
                     // Juntando tudo
-                    message.setContent(multipart);
+                    message.setContent(multipart, "text/html; charset=utf-8");
                 }
 
             } else {
+                System.out.println("AQUII");
                 MimeMultipart multipart = new MimeMultipart("related");
+                
                 BodyPart messageBodyPart = new MimeBodyPart();
                 String htmlText = "<p>" + email.getTexto() + "</p>";
 
-                messageBodyPart.setContent(htmlText, "text/html");
+                messageBodyPart.setContent(htmlText, "text/html; charset=utf-8");
 
                 multipart.addBodyPart(messageBodyPart);
                 message.setContent(multipart);

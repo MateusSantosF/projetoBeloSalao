@@ -46,7 +46,7 @@ public class CabeleireiroController {
         if (nome.length() > 0 && Valida.isCpf(cpf) && Valida.isEmail(email) && !expediente.isEmpty() && expediente.size() == 14) {
 
             try {
-                Cabeleireiro cabeleireiro = new Cabeleireiro(cpf, nome, email, expediente);
+                Cabeleireiro cabeleireiro = new Cabeleireiro(cpf, nome.trim(), email.trim(), expediente);
                 cabeleireiro.setSenha(String.copyValueOf(senha));
                 cabeleireiro.setMetaDeLucro(Dinheiro.parseCent(Dinheiro.retiraCaracteres(metaDeLucro)));
                 cabeleireiro.atualizarCabeleireiro(cabeleireiro);

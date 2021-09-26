@@ -129,8 +129,8 @@ public class Email {
         this.Texto = Texto;
     }
 
-    public void sendEmail(int tipo) throws MessagingException {
-        new JavaMail(this, tipo).sendMail();
+    public boolean sendEmail(int tipo) throws MessagingException {
+        return new JavaMail(this, tipo).sendMail();
     }
 
     //gmail, outlook, hotmail?
@@ -156,9 +156,9 @@ public class Email {
         if (host.contains("gmail")) {
             return "587";
         } else if (host.contains("outlook")) {
-            return "25";
+            return "587";
         } else if (host.contains("hotmail")) {
-            return "25";
+            return "587";
         }
 
         return null;

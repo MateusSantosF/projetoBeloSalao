@@ -258,6 +258,7 @@ public class ModalEmail extends javax.swing.JFrame {
 
     private void jLabel7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MousePressed
        
+        boolean sucesso = false;
         if(Valida.isEmail(jTextFieldEmail.getText())){
             
             if(jTextFieldTitulo.getText().length() > 0){
@@ -275,11 +276,17 @@ public class ModalEmail extends javax.swing.JFrame {
                   
                     
                     try {
-                        email.sendEmail(JavaMail.EMAIL_PADRAO);
+                        sucesso = email.sendEmail(JavaMail.EMAIL_PADRAO);
                     } catch (MessagingException e) {
                         JOptionPane.showMessageDialog(null, "ERRO ao enviar email" + e);
                     }
-                    JOptionPane.showMessageDialog(null, "Enviado com sucesso!");
+                    
+                    if(sucesso){
+                        JOptionPane.showMessageDialog(null, "Enviado com sucesso!");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Não conseguimos enviar seu email. Tente novamente");
+                    }
+                    
                     
                 }else{
                     JOptionPane.showMessageDialog(null, "Insira uma mensagem antes de enviar.");

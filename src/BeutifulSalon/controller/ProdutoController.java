@@ -28,7 +28,7 @@ public class ProdutoController {
                     return false;
                 }
             }
-            Produto produto = new Produto(nome, marca, valorDeVenda, dataReg);
+            Produto produto = new Produto(nome.trim(), marca.trim(), valorDeVenda, dataReg);
             try {
                 produto.cadastrarProduto(produto);
             } catch (ExceptionDAO e) {
@@ -111,7 +111,7 @@ public class ProdutoController {
                     return false;
                 }
             }
-            Produto produto = new Produto(nome, marca, valorDeVenda, idProduto);
+            Produto produto = new Produto(nome.trim(), marca.trim(), valorDeVenda, idProduto);
             try {
                 produto.atualizarProduto(produto);
             } catch (ExceptionDAO e) {

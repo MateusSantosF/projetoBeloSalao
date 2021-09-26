@@ -55,7 +55,7 @@ public class OrcamentoController {
             try {
                 OrcamentoServico orcamentoServico;
                 orcamentoServico = new OrcamentoServico(previsto,
-                        nomeServico, Idservico, jan, fev, mar, abr, mai, jun, jul, ago, set, out, nov, dez, ano);
+                        nomeServico.trim(), Idservico, jan, fev, mar, abr, mai, jun, jul, ago, set, out, nov, dez, ano.trim());
 
                 orcamentoServico.cadastrarOrcamentoServico(orcamentoServico);
 
