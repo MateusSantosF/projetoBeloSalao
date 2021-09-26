@@ -28,20 +28,16 @@ public class ManipulaFontes {
     public String SEMIBOLD = "Quicksand-SemiBold.ttf";
     private static File file;
 
-    public ManipulaFontes() {
-
-    }
+    public ManipulaFontes() {}
 
     public Font getFont(String nome, int estilo, float tamanho) {
         try {
 
-            //Para compilar na dist
-            //String path =this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath();
-            //String decodedPath = URLDecoder.decode(path, "UTF-8");
-            //String caminhoFonte = decodedPath.replace("BeutifulSalon.jar", "Fontes/"+nome);
-            //font = Font.createFont( Font.TRUETYPE_FONT,new File(caminhoFonte));
-            //para usar no netbeans
-            font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("\\Fontes\\" + nome));
+        //Para compilar na dist
+       
+            //font = Font.createFont( Font.TRUETYPE_FONT,new File("Fontes\\" + nome));
+        //para usar no netbeans
+           font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("\\Fontes\\" + nome));
 
         } catch (IOException | FontFormatException e) {
             System.out.println(e);

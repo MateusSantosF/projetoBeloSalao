@@ -72,15 +72,21 @@
     -->
     
     <target name="-post-compile">
-    <copy todir="${dist.dir}/BancoDeDados">
-        <fileset dir="src/BancoDeDados"/>
-    </copy>
+        <copy todir="${dist.dir}/BancoDeDados">
+           <fileset dir="src/BancoDeDados"/>      
+        </copy>
+        <copy todir="${dist.dir}/Fontes">      
+            <fileset dir="src/Fontes"/>
+        </copy>
+
+  
+    </target>
     
-    <copy todir="${dist.dir}/Fontes">
-        <fileset dir="src/Fontes"/>
-    </copy>
+    <target name="-post-jar">
+        <move file="${dist.dir}/BeutifulSalon.jar" tofile="${dist.dir}/BeautySalon.jar"/>
+    </target>
     
     
-</target>
+
 
 </project>

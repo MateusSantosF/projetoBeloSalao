@@ -44,9 +44,8 @@ public class testes {
 
     public static void main(String[] args) throws IOException, TimeoutException {
 
-      
-       
-            
-            System.out.println(Dinheiro.parseCent(Dinheiro.retiraCaracteres("R$ 180,00")));
+        String caminhoFonte = new File("Fontes/").getAbsolutePath();
+        
+        System.out.println(caminhoFonte);
     }
 }

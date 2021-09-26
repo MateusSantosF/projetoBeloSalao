@@ -7,7 +7,6 @@ package BeutifulSalon.view;
 
 import BeutifulSalon.Ferramentas.GraficoDeBarras;
 import BeutifulSalon.Ferramentas.GraficoDePizza;
-import BeutifulSalon.Ferramentas.GraficoXY;
 import BeutifulSalon.Ferramentas.JavaMail;
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
