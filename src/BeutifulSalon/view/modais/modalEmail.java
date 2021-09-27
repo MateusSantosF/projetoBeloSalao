@@ -38,7 +38,8 @@ public class ModalEmail extends javax.swing.JFrame {
     public ModalEmail() {
         initComponents();
         
-         ManipulaFontes mf = new ManipulaFontes();
+        jLabelDicaEmail.setVisible(false);
+        ManipulaFontes mf = new ManipulaFontes();
         jLabel6.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Envie um Email
         jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Destinatário
         jTextFieldEmail.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Box Destinatário
@@ -54,7 +55,7 @@ public class ModalEmail extends javax.swing.JFrame {
         jLabel8.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Inserir anexo
         jLabel9.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Excluir anexo
 
-        jTextFieldTitulo.requestFocus();
+        jTextFieldEmail.requestFocus();
 
         
     }
@@ -63,6 +64,7 @@ public class ModalEmail extends javax.swing.JFrame {
         initComponents();
         
         ManipulaFontes mf = new ManipulaFontes();
+        jLabelDicaEmail.setVisible(true);
         jLabel6.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Envie um Email
         jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Destinatário
         jTextFieldEmail.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Box Destinatário
@@ -112,6 +114,7 @@ public class ModalEmail extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabelDicaEmail = new javax.swing.JLabel();
 
         jFileChooser.setDialogTitle("");
 
@@ -213,6 +216,15 @@ public class ModalEmail extends javax.swing.JFrame {
             }
         });
 
+        jLabelDicaEmail.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelDicaEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/dica.png"))); // NOI18N
+        jLabelDicaEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelDicaEmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabelDicaEmailMousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -228,14 +240,18 @@ public class ModalEmail extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTextFieldEmail)
-                    .addComponent(jTextFieldTitulo)
                     .addComponent(jLabel1)
                     .addComponent(jLabel3)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabelNomeArquivo))
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane2)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(jTextFieldTitulo)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabelDicaEmail)
+                        .addGap(17, 17, 17)))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -249,19 +265,24 @@ public class ModalEmail extends javax.swing.JFrame {
                 .addGap(8, 8, 8)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelNomeArquivo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(21, 21, 21))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jTextFieldTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelNomeArquivo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(21, 21, 21))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabelDicaEmail)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -357,6 +378,12 @@ public class ModalEmail extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jLabel9MousePressed
 
+    private void jLabelDicaEmailMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDicaEmailMousePressed
+        JOptionPane.showMessageDialog(null, "Digite '<nome>' ao longo do texto ou no título, para inserir o \n"
+            + "nome do cliente para qual o email será enviado\n\n"
+            + "Ex: Olá <nome>!,\nNão se esqueça do seu agendamento hoje.");
+    }//GEN-LAST:event_jLabelDicaEmailMousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -404,6 +431,7 @@ public class ModalEmail extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelDicaEmail;
     private javax.swing.JLabel jLabelNomeArquivo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

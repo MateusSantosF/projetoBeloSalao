@@ -882,7 +882,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     }//GEN-LAST:event_jTextAreaAniversarioCaretPositionChanged
 
     private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MousePressed
-       JOptionPane.showMessageDialog(null, "Digite '<nome>' ao longo do texto, para inserir o \n"
+       JOptionPane.showMessageDialog(null, "Digite '<nome>' ao longo do texto ou do título, para inserir o \n"
                + "nome do cliente para qual o email será enviado\n\n"
                + "Ex: Feliz aniversário <nome>!,\nA equipe do Salão deseja[...]");
     }//GEN-LAST:event_jLabel13MousePressed
@@ -966,7 +966,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     }//GEN-LAST:event_jLabel19MousePressed
 
     private void jLabel20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MousePressed
-       JOptionPane.showMessageDialog(null, "Digite '<nome>' ao longo do texto, para inserir o \n"
+       JOptionPane.showMessageDialog(null, "Digite '<nome>' ao longo do texto ou do título, para inserir o \n"
                + "nome do cliente para qual o email será enviado\n\n"
                + "Ex: Caro <nome>!,\nA equipe do Salão notou que[...]");
     }//GEN-LAST:event_jLabel20MousePressed
