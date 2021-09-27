@@ -9,6 +9,7 @@ import BeutifulSalon.Ferramentas.JavaMail;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.controller.CabeleireiroController;
+import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Email;
 import java.awt.Font;
 import java.io.File;
@@ -31,14 +32,34 @@ public class ModalEmail extends javax.swing.JFrame {
      */
    
     private String caminhoArquivo;
+    private boolean isDetalheCliente;
+    private Cliente cliente;
     
     public ModalEmail() {
         initComponents();
+        
+         ManipulaFontes mf = new ManipulaFontes();
+        jLabel6.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Envie um Email
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Destinatário
+        jTextFieldEmail.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Box Destinatário
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Titulo
+        jTextFieldTitulo.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Box Titulo
+        
+        jTextArea.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Corpo Email
+        
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 10f)); //Arquivo Anexado
+        jLabelNomeArquivo.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 10f)); //Não existem arquivos anexados
+        
+        jLabel7.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Enviar
+        jLabel8.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Inserir anexo
+        jLabel9.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Excluir anexo
+
+        jTextFieldTitulo.requestFocus();
 
         
     }
     
-    public ModalEmail(String email) {
+    public ModalEmail(Cliente cliente) {
         initComponents();
         
         ManipulaFontes mf = new ManipulaFontes();
@@ -57,7 +78,9 @@ public class ModalEmail extends javax.swing.JFrame {
         jLabel8.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Inserir anexo
         jLabel9.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Excluir anexo
         
-        jTextFieldEmail.setText(email);
+        this.cliente = cliente;
+        jTextFieldEmail.setText(cliente.getEmail());
+        isDetalheCliente = true;
         jTextFieldTitulo.requestFocus();
   
         
@@ -272,6 +295,11 @@ public class ModalEmail extends javax.swing.JFrame {
    
                     email.setTexto(jTextArea.getText());
                     email.setTitulo(jTextFieldTitulo.getText());
+                    
+                    if(isDetalheCliente){
+                        email.setTexto(email.getTexto().replace("<nome>", cliente.getNome()));
+                        email.setTitulo(email.getTitulo().replace("<nome>", cliente.getNome()));
+                    }
                     email.setDestinatario(jTextFieldEmail.getText());
                   
                     

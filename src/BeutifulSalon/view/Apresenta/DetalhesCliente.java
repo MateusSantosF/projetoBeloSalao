@@ -38,6 +38,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
      */
     
     private long idCliente;
+    private Cliente cliente;
     private ModalEmail modEmail = null;  
     private ModalFotoPerfil modFotoPerfil = null;
     private ClienteServicoTableModel modeloServicos = new ClienteServicoTableModel();
@@ -101,6 +102,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     jTextAreaObservacoes.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Area Observacoes
     
          
+        this.cliente = cliente;
         idCliente = cliente.getId();
         ClienteController cc = new ClienteController();
         ManipulaImagem mi = new ManipulaImagem();
@@ -792,7 +794,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     private void jLabel29MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel29MousePressed
        
         if(modEmail == null){
-            new ModalEmail(jLabelEmail.getText()).setVisible(true);
+            new ModalEmail(cliente).setVisible(true);
         }else{
             modEmail.setVisible(true);
         }
