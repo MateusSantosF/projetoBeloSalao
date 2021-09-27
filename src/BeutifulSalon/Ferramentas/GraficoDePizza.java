@@ -17,7 +17,9 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.RingPlot;
+import org.jfree.chart.ui.HorizontalAlignment;
 import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.VerticalAlignment;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
@@ -80,18 +82,20 @@ public class GraficoDePizza {
         plot.setLabelBackgroundPaint(null);
         //plot.setSimpleLabels(true); // Labeis simples ficam em cima das seções ao invez de criar aquela risquinha
         plot.setSectionPaint(dataset.getKey(0), new Color(0, 172, 178)); //Altera cores das seções com base na primeira cor passada
-
-        Font font = new Font("Arial", 0, 13);
+        
+        ManipulaFontes mp = new ManipulaFontes();
+        Font font = mp.getFont(mp.BOLD, Font.BOLD, 12);
+        Font fontLegend = mp.getFont(mp.BOLD, Font.BOLD, 14);
         plot.setLabelFont(font);
         plot.setLabelBackgroundPaint(new Color(36, 46, 66));
         plot.setLabelPaint(Color.WHITE);
-        
-      
-        JFreeChart chart = new JFreeChart("", new Font("Arial", 0, 28), plot, true);
+           
+        JFreeChart chart = new JFreeChart("", font, plot, true);
      
         chart.setBackgroundPaint(Color.WHITE);
         chart.setPadding(new RectangleInsets(-10, 0, 0, 0));
-
+        chart.getLegend().setItemFont(fontLegend);
+ 
         return chart;
     }
 

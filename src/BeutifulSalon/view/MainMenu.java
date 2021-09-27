@@ -48,6 +48,7 @@ public class MainMenu extends javax.swing.JFrame {
         jLabelDashboard.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Envie um Email
         jLabelAgendamento.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Agendamentos
         jLabelClientes.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Clientes
+        jLabelServicos.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Clientes
         jLabelProdutos.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Produtos
         jLabelFinancas.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Finanças
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Novo Registro
