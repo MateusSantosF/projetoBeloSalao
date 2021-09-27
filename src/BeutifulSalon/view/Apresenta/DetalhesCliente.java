@@ -26,82 +26,75 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-
 /**
  *
  * @author Mateus
  */
-public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCliente{
+public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCliente {
 
     /**
      * Creates new form DetalhesCliente
      */
-    
     private long idCliente;
     private Cliente cliente;
-    private ModalEmail modEmail = null;  
+    private ModalEmail modEmail = null;
     private ModalFotoPerfil modFotoPerfil = null;
     private ClienteServicoTableModel modeloServicos = new ClienteServicoTableModel();
     private ClienteCompraTableModel modeloCompras = new ClienteCompraTableModel();
-    
-    
+
     public DetalhesCliente() {
         initComponents();
-        
-     
+
     }
 
     public DetalhesCliente(Cliente cliente) {
         initComponents();
-        
+
         ManipulaFontes mf = new ManipulaFontes();
-		
-    jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 30f)); //Endereço
-    jLabel29.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 20f)); //Enviar Email
+        jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 30f)); //Endereço
+        jLabel29.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 20f)); //Enviar Email
 
-    jLabel15.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Rua
-    jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Número
-    jLabel14.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Bairro
-    jLabel16.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //CEP
-    jLabel13.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //UF
+        jLabel15.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Rua
+        jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Número
+        jLabel14.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Bairro
+        jLabel16.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //CEP
+        jLabel13.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //UF
 
-    jLabel21.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 25f)); //+ Informações
-    jToggleButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 10f)); //Alterar informações
-    jButtonSalvar.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 11f)); //Salvar
-    jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Tipo do Cabelo
-    jComboBoxTipoCabelo.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Tipo do Cabelo
-    jLabel22.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Tamanho
-    jComboBoxTamanhoCabelo.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Tamanho
-    jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Cor
-    jTextFieldCorCabelo.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Cor
-    jLabel23.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Como nos conheceu?
-    jComboBoxComoNosConheceu.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Como nos conheceu?
-    jLabel27.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Instagram
-    jTextFieldInstagram.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Instagram
-    jLabel28.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Facebook
-    jTextFieldFacebook.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Facebook
-    jTableCompras.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
-    jTableServicos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
+        jLabel21.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 25f)); //+ Informações
+        jToggleButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 10f)); //Alterar informações
+        jButtonSalvar.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 11f)); //Salvar
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Tipo do Cabelo
+        jComboBoxTipoCabelo.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Tipo do Cabelo
+        jLabel22.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Tamanho
+        jComboBoxTamanhoCabelo.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Tamanho
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Cor
+        jTextFieldCorCabelo.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Cor
+        jLabel23.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Como nos conheceu?
+        jComboBoxComoNosConheceu.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Como nos conheceu?
+        jLabel27.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Instagram
+        jTextFieldInstagram.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Instagram
+        jLabel28.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Facebook
+        jTextFieldFacebook.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Facebook
+        jTableCompras.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
+        jTableServicos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
 
-    //MENU LATERAL
+        //MENU LATERAL
+        jLabelAlterarFotoPerfil.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 10f)); //Alterar
+        jLabelNome.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //NomeUsuario
+        jLabelIdade.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Idade
+        jLabelEmail.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Email
+        jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Telefone
+        jLabelTelefone.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Tel2
 
-    jLabelAlterarFotoPerfil.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 10f)); //Alterar
-    jLabelNome.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //NomeUsuario
-    jLabelIdade.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Idade
-    jLabelEmail.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Email
-    jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Telefone
-    jLabelTelefone.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Tel2
+        jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Celular
+        jLabelCelular.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Cel2
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Última Visita
+        jLabelUltimaViisita.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Sem informações
+        jLabelClienteDesde.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jLabelDataClienteDesde.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jLabel26.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Observações
+        jTextAreaObservacoes.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Area Observacoes
 
-    jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Celular
-    jLabelCelular.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Cel2
-    jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Última Visita
-    jLabelUltimaViisita.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Sem informações
-    jLabelClienteDesde.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
-    jLabelDataClienteDesde.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
-    jLabel26.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Observações
-    jTextAreaObservacoes.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Area Observacoes
-    
-         
         this.cliente = cliente;
         idCliente = cliente.getId();
         ClienteController cc = new ClienteController();
@@ -110,31 +103,31 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         modeloCompras.listarItens(idCliente);
         jTableServicos.setModel(modeloServicos);
         jTableCompras.setModel(modeloCompras);
-        
+
         byte[] imagemPerfil = cc.getImagemPerfil(cliente.getId());
-      
-        if(imagemPerfil != null){
+
+        if (imagemPerfil != null) {
             try {
                 jLabelFotoPerfil.setIcon(mi.redimensionaImg(imagemPerfil));
             } catch (IOException ex) {
                 Logger.getLogger(DetalhesCliente.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-       
 
         jButtonSalvar.setVisible(false);
         jLabelNome.setText(new ManipulaStrings().abreviarNome(cliente.getNome() + " " + cliente.getSobrenome()));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        if(cliente.getDataNasc() != null){
+        if (cliente.getDataNasc() != null) {
             try {
-            jLabelIdade.setText(String.valueOf(new ManipulaData().calculaIdade(LocalDate.parse(cliente.getDataNasc(), formatter))) + " Anos");
+                jLabelIdade.setText(String.valueOf(new ManipulaData().calculaIdade(LocalDate.parse(cliente.getDataNasc(), formatter))) + " Anos");
             } catch (Exception e) {
+
             }
         }
-        if(cliente.getEmail()!= null){
-           jLabelEmail.setText(cliente.getEmail()); 
+        if (cliente.getEmail() != null) {
+            jLabelEmail.setText(cliente.getEmail());
         }
-        
+
         jLabelEmail.setCaretPosition(0);
         jLabelTelefone.setText(cliente.getTelefoneResidencial());
         jLabelCelular.setText(cliente.getCelular());
@@ -145,8 +138,8 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         if (ultimaVisita != null) {
             jLabelUltimaViisita.setText(ultimaVisita.format(formatter));
         }
-        
-        if(clienteDesde != null){
+
+        if (clienteDesde != null) {
             jLabelDataClienteDesde.setText(clienteDesde.format(formatter));
         }
 
@@ -792,22 +785,22 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
     }//GEN-LAST:event_jComboBoxTamanhoCabeloActionPerformed
 
     private void jLabel29MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel29MousePressed
-       
-        if(modEmail == null){
+
+        if (modEmail == null) {
             new ModalEmail(cliente).setVisible(true);
-        }else{
+        } else {
             modEmail.setVisible(true);
         }
-        
+
     }//GEN-LAST:event_jLabel29MousePressed
 
     private void jLabelAlterarFotoPerfilMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelAlterarFotoPerfilMousePressed
-        
-        if(modFotoPerfil == null){
+
+        if (modFotoPerfil == null) {
             modFotoPerfil = new ModalFotoPerfil(idCliente);
             modFotoPerfil.registrarObservador(this);
             modFotoPerfil.setVisible(true);
-        }else{
+        } else {
             modFotoPerfil.setVisible(true);
         }
     }//GEN-LAST:event_jLabelAlterarFotoPerfilMousePressed

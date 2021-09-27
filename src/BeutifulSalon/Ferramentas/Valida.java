@@ -120,6 +120,13 @@ public class Valida {
         return sucesso;
     }
     
+    public static boolean isEmailSemNotificar(String email){
+        Matcher matcher = patternEmail.matcher(email);        
+  
+        
+        return  matcher.matches();
+    }
+    
     public static boolean isHora(String hora){
         
         DateTimeFormatter formatador = DateTimeFormatter.ofPattern("HH:mm").withResolverStyle(ResolverStyle.STRICT);

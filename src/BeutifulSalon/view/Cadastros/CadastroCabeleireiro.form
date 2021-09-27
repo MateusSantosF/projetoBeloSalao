@@ -400,8 +400,8 @@
                                   <Component id="jLabel7" min="-2" pref="243" max="-2" attributes="0"/>
                                   <Component id="jCheckBoxAniversario" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel6" pref="541" max="32767" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jTextFieldTituloAniversario" min="-2" pref="434" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Component id="jTextFieldTituloAniversario" min="-2" pref="441" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                                   </Group>
