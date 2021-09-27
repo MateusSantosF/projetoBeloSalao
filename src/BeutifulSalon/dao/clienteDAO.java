@@ -222,48 +222,73 @@ public class clienteDAO {
     
      public List<Cliente> listaClientesEmailUltimaVisita() throws ExceptionDAO{
         
-        String sql = "SELECT  NOME,SOBRENOME, EMAIL, CLIENTE.ID FROM CLIENTE" +
-"        INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID " +
-"        INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.ID_CLIENTE = CLIENTE.ID AND EMAILULTIMAVISITA.ID_CLIENTE = AGENDAMENTO.ID_CLIENTE " +
-"        WHERE AGENDAMENTO.DATA NOT BETWEEN ? AND ( SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO) " +
-"        AND (EMAILULTIMAVISITA.ULTIMOENVIO NOT BETWEEN ? AND ( SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO) OR EMAILULTIMAVISITA.ULTIMOENVIO IS NULL)"
-                + " AND CLIENTE.EXCLUIDO = FALSE";
-                
         Connection connection = null;
         PreparedStatement pStatement = null;
         ManipulaData md = new ManipulaData();
         List<Cliente> clientes = null;
-        Cabeleireiro c = new CabeleireiroController().selecionaCabeleireiro();   
+        Cabeleireiro c = new CabeleireiroController().selecionaCabeleireiro();
+        long periodoDeReenvio = LocalDate.now().minusMonths(c.getEmailUltimaVisita().getPeriodoReenvio()).toEpochDay() * 24 * 60 * 60 * 1000;
         
-        try {   
-           
-            connection = new ConnectionMVC().getConnection();
-            
-            pStatement = connection.prepareStatement(sql);
         
-            pStatement.setLong(1, LocalDate.now().minusMonths(c.getEmailUltimaVisita().getPeriodoReenvio()).toEpochDay() * 24 * 60 * 60 * 1000 );
-            pStatement.setLong(2, LocalDate.now().minusMonths(c.getEmailUltimaVisita().getPeriodoReenvio()).toEpochDay() * 24 * 60 * 60 * 1000 );
+        String sql1 = "SELECT NOME, SOBRENOME, EMAIL, CLIENTE.ID FROM CLIENTE "
+                + "INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID "
+                + "INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.ID_CLIENTE = CLIENTE.ID "
+                + "WHERE AGENDAMENTO.DATA NOT BETWEEN ? AND " + md.meiaNoiteHoje() +" AND EMAILULTIMAVISITA.ULTIMOENVIO IS NULL AND CLIENTE.EXCLUIDO = FALSE";
+        
+        String sql2 = "SELECT NOME, SOBRENOME, EMAIL, CLIENTE.ID FROM CLIENTE "
+                + "INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID "
+                + "INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.ID_CLIENTE = CLIENTE.ID "
+                + " WHERE EMAILULTIMAVISITA.ULTIMOENVIO < ? AND CLIENTE.EXCLUIDO = FALSE AND EMAILULTIMAVISITA.ULTIMOENVIO IS NOT NULL ";
+         
+         try {
+
+             connection = new ConnectionMVC().getConnection();
+
+             pStatement = connection.prepareStatement(sql1);
+
+             pStatement.setLong(1, periodoDeReenvio);
+
+             ResultSet rs = pStatement.executeQuery();
+
+             if (rs != null) {
+                 clientes = new ArrayList<>();
+
+                 while (rs.next()) {
+
+                     Cliente clienteAtual = new Cliente();
+                     clienteAtual.setId(rs.getLong("ID"));
+                     clienteAtual.setNome(rs.getString("NOME"));
+                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
+                     clienteAtual.setEmail(rs.getString("EMAIL"));
+                     clientes.add(clienteAtual);
+
+                 }
+
+             }
+
+             pStatement = connection.prepareStatement(sql2);
+
+             pStatement.setLong(1, periodoDeReenvio);
+
+             rs = pStatement.executeQuery();
+
+             if (rs != null) {
+
+                 while (rs.next()) {
+
+                     Cliente clienteAtual = new Cliente();
+                     clienteAtual.setId(rs.getLong("ID"));
+                     clienteAtual.setNome(rs.getString("NOME"));
+                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
+                     clienteAtual.setEmail(rs.getString("EMAIL"));
+                     clientes.add(clienteAtual);
+
+                 }
+
+             }
             
-            ResultSet rs = pStatement.executeQuery();
-            
-            if(rs != null){
-                clientes = new ArrayList<>();
-            
-                while(rs.next()){
-                    
-                    Cliente clienteAtual = new Cliente();
-                    clienteAtual.setId(rs.getLong("ID"));
-                    clienteAtual.setNome(rs.getString("NOME"));
-                    clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
-                    clienteAtual.setEmail(rs.getString("EMAIL"));
-                    clientes.add(clienteAtual);
-                   
-                }
-                
-                
-            }
-            
-          
+        
+                     
         } catch (SQLException e) {
             throw new ExceptionDAO("Erro ao listar emails ultimavisita cliente (classClienteDAO)" + e);
         }finally{
