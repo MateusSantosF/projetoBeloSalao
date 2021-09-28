@@ -23,6 +23,7 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Cliente;
@@ -30,6 +31,7 @@ import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.Apresenta.DetalhesCliente;
 import java.awt.Color;
+import java.awt.Font;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -54,6 +56,31 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
 
     public ModalDetalhesAgendamento(Agendamento agendamento) {
         initComponents();
+
+        ManipulaFontes mf = new ManipulaFontes();
+
+        jLabel6.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f));
+        jList1.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 18f));
+        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabelNomeCliente.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabel11.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabel10.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabel13.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabelHorario.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabelTempoEstimado.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabelPago.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabelFormaDePagamento.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabelTotalBruto.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabelAdicional.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabelDesconto.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabelTotal.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
 
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
@@ -172,6 +199,7 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabelHorario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelHorario.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelHorario.setText("00:00h");
 
         jLabelDesconto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -225,6 +253,7 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
         jLabel8.setText("Desconto");
 
         jLabelTempoEstimado.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelTempoEstimado.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelTempoEstimado.setText("00:00h");
 
         jLabelTotalBruto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -300,16 +329,16 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
                             .addGap(7, 7, 7))
                         .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(94, 94, 94)
-                                .addComponent(jLabelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelTempoEstimado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabelTempoEstimado, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
+                                .addComponent(jLabelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(53, 53, 53)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel12))

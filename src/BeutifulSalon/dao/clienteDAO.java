@@ -238,7 +238,7 @@ public class clienteDAO {
         String sql2 = "SELECT NOME, SOBRENOME, EMAIL, CLIENTE.ID FROM CLIENTE "      
                 + " INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.ID_CLIENTE = CLIENTE.ID "
                 + " WHERE EMAILULTIMAVISITA.ULTIMOENVIO <= ? "
-                + "  AND (SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO WHERE AGENDAMENTO.ID_CLIENTE = CLIENTE.ID) < ? AND "
+                + " AND (SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO WHERE AGENDAMENTO.ID_CLIENTE = CLIENTE.ID) < ? AND "
                 + " CLIENTE.EXCLUIDO = FALSE AND EMAILULTIMAVISITA.ULTIMOENVIO IS NOT NULL ";  
          
          try {
@@ -267,13 +267,11 @@ public class clienteDAO {
 
              }
 
-             pStatement = connection.prepareStatement(sql2);
-             
+             pStatement = connection.prepareStatement(sql2);         
              pStatement.setLong(1, periodoDeReenvio);
              pStatement.setLong(2, periodoDeReenvio);
 
              rs = pStatement.executeQuery();
-
              if (rs != null) {
 
                  while (rs.next()) {
