@@ -229,16 +229,17 @@ public class clienteDAO {
         Cabeleireiro c = new CabeleireiroController().selecionaCabeleireiro();
         long periodoDeReenvio = LocalDate.now().minusMonths(c.getEmailUltimaVisita().getPeriodoReenvio()).toEpochDay() * 24 * 60 * 60 * 1000;
         
-        
+       
         String sql1 = "SELECT NOME, SOBRENOME, EMAIL, CLIENTE.ID FROM CLIENTE "
                 + "INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID "
                 + "INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.ID_CLIENTE = CLIENTE.ID "
-                + "WHERE AGENDAMENTO.DATA NOT BETWEEN ? AND " + md.meiaNoiteHoje() +" AND EMAILULTIMAVISITA.ULTIMOENVIO IS NULL AND CLIENTE.EXCLUIDO = FALSE";
+                + "WHERE AGENDAMENTO.DATA NOT BETWEEN ? AND " + md.MeiaNoiteAmanha() +" AND EMAILULTIMAVISITA.ULTIMOENVIO IS NULL AND CLIENTE.EXCLUIDO = FALSE";
         
-        String sql2 = "SELECT NOME, SOBRENOME, EMAIL, CLIENTE.ID FROM CLIENTE "
-                + "INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID "
-                + "INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.ID_CLIENTE = CLIENTE.ID "
-                + " WHERE EMAILULTIMAVISITA.ULTIMOENVIO < ? AND CLIENTE.EXCLUIDO = FALSE AND EMAILULTIMAVISITA.ULTIMOENVIO IS NOT NULL ";
+        String sql2 = "SELECT NOME, SOBRENOME, EMAIL, CLIENTE.ID FROM CLIENTE "      
+                + " INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.ID_CLIENTE = CLIENTE.ID "
+                + " WHERE EMAILULTIMAVISITA.ULTIMOENVIO <= ? "
+                + "  AND (SELECT MAX(AGENDAMENTO.DATA) FROM AGENDAMENTO WHERE AGENDAMENTO.ID_CLIENTE = CLIENTE.ID) < ? AND "
+                + " CLIENTE.EXCLUIDO = FALSE AND EMAILULTIMAVISITA.ULTIMOENVIO IS NOT NULL ";  
          
          try {
 
@@ -267,8 +268,9 @@ public class clienteDAO {
              }
 
              pStatement = connection.prepareStatement(sql2);
-
+             
              pStatement.setLong(1, periodoDeReenvio);
+             pStatement.setLong(2, periodoDeReenvio);
 
              rs = pStatement.executeQuery();
 
