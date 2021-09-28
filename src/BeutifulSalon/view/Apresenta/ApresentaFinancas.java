@@ -6,6 +6,7 @@
 package BeutifulSalon.view.Apresenta;
 
 import BeutifulSalon.Ferramentas.ManipulaFontes;
+import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.Tabelas.DespesaComparadaTableModel;
 import BeutifulSalon.Tabelas.DespesaPrevistaTableModel;
 import BeutifulSalon.Tabelas.DestacaVencimentosTabela;
@@ -1483,7 +1484,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabelSearch1MousePressed
 
     private void jTabbedStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedStateChanged
-
+          CentralizaElementosTabela render = new CentralizaElementosTabela();
         int indice = jTabbed.getSelectedIndex();
         String ano = String.valueOf(LocalDate.now().getYear());
         switch (indice) {
@@ -1502,6 +1503,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             case 2:
                 modeloServicoComparado.getOrcamentoComparadoPorAno(ano);
                 jTableServicoComparado.setModel(modeloServicoComparado);
+                jTableServicoComparado.setDefaultRenderer(Object.class, render);
                 break;
 
             case 3:
@@ -1519,9 +1521,14 @@ public class ApresentaFinancas extends javax.swing.JPanel {
       
                 break;
             case 5:
-               
+                
                 modeloDespesaComparada.getDespesaComparadaPorAno(ano);
                 jTableComparativoDespesas.setModel(modeloDespesaComparada);
+                
+               
+                jTableComparativoDespesas.setDefaultRenderer(Object.class, render);
+
+
                 break;
         }
       

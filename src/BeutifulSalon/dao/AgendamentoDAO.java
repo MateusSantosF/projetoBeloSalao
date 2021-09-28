@@ -15,7 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -29,7 +28,7 @@ public class AgendamentoDAO {
     public void cadastraAgendamento(Agendamento agendamento) throws SQLException, SQLException {
 
         String insertAgendamento = "INSERT INTO AGENDAMENTO (DATA, HORARIO, ID_CLIENTE, REALIZADO, DESCONTO, TOTAL,"
-                + " VALORADICIONAL, PAGO, FORMADEPAGAMENTO) VALUES (?, ?, ?, ?, ?,?,?,?,?)";
+                + " VALORADICIONAL, PAGO, FORMADEPAGAMENTO, FIMAGENDAMENTO) VALUES (?, ?, ?, ?, ?,?,?,?,?,?)";
 
         String insertServicoAgendamento = "INSERT INTO AGENDAMENTO_SERVICO (ID_AGENDAMENTO, ID_SERVICO) "
                 + "VALUES ((SELECT ID_AGENDAMENTO FROM AGENDAMENTO ORDER BY ID_AGENDAMENTO DESC LIMIT 1), ?)";
@@ -52,6 +51,7 @@ public class AgendamentoDAO {
             pStatement.setLong(7, agendamento.getValorAdicional());
             pStatement.setBoolean(8, agendamento.isPago());
             pStatement.setString(9, agendamento.getFormaDePagamento());
+            pStatement.setTime(10, java.sql.Time.valueOf(agendamento.getFimAgendamento()));
             int firstInsert = pStatement.executeUpdate();
 
             if (firstInsert > 0) {
@@ -265,7 +265,7 @@ public class AgendamentoDAO {
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO  FROM AGENDAMENTO"
                 + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE "
                 + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.MeiaNoiteAmanha() + " AND REALIZADO = TRUE "
-                + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO DESC ";
+                + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO ASC ";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -332,7 +332,7 @@ public class AgendamentoDAO {
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO"
                 + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE "
                 + " WHERE DATA BETWEEN " + datas.MeiaNoiteAmanha() + " AND " + datas.somaDia(LocalDateTime.now().plusDays(1), 1)
-                + " AND REALIZADO = TRUE AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO DESC";
+                + " AND REALIZADO = TRUE AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO ASC";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -599,7 +599,7 @@ public class AgendamentoDAO {
                 + ", PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO"
                 + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
                 + " WHERE DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data) +" "
-                + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO";
+                + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO ASC";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -665,11 +665,11 @@ public class AgendamentoDAO {
         
         ManipulaData datas = new ManipulaData();
       
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL,"
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO,FIMAGENDAMENTO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL,"
                 + "PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO"
                 + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
                 + " WHERE REALIZADO = TRUE AND DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data)  
-                + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO";
+                + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO ASC";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -698,6 +698,7 @@ public class AgendamentoDAO {
                     ag.setDesconto(rs.getLong("DESCONTO"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                    ag.setFimAgendamento(rs.getTime("FIMAGENDAMENTO").toLocalTime());
                     
 
                     ag.setServicos(sc.buscarServicoPeloAgendamento(rs.getLong("ID_AGENDAMENTO")));

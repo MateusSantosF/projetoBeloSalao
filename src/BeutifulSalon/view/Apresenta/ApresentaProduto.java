@@ -30,7 +30,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Produtos
         jLabel2.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f)); //Confira os produtos cadastrados!
         jLabel3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Buscar por nome
-        jLabelDetalhes.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //+Detalhes
+        //jLabelDetalhes.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //+Detalhes JAS AKI ESSE BOTAO
         jLabelEditar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Editar
         jLabelExcluir.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Excluir
         jScrollPane2.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //ScrollPane
@@ -60,7 +60,6 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabelDetalhes = new javax.swing.JLabel();
         jLabelEditar = new javax.swing.JLabel();
         jLabelExcluir = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -134,17 +133,6 @@ public class ApresentaProduto extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
-
-        jLabelDetalhes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabelDetalhes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelDetalhes.setText("+Detalhes");
-        jLabelDetalhes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabelDetalhes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelDetalhes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabelDetalhesMousePressed(evt);
-            }
-        });
 
         jLabelEditar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabelEditar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -226,8 +214,6 @@ public class ApresentaProduto extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabelBtnBuscarProdutos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabelExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -249,7 +235,6 @@ public class ApresentaProduto extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelDetalhes, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(20, 20, 20)
@@ -270,10 +255,6 @@ public class ApresentaProduto extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_jLabelBtnBuscarProdutosConsultarCliente
-
-    private void jLabelDetalhesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDetalhesMousePressed
-        
-    }//GEN-LAST:event_jLabelDetalhesMousePressed
 
     private void jLabelEditarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEditarMousePressed
         int indice = jTableConsultaProdutos.getSelectedRow();
@@ -318,7 +299,6 @@ public class ApresentaProduto extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelBtnBuscarProdutos;
-    private javax.swing.JLabel jLabelDetalhes;
     private javax.swing.JLabel jLabelEditar;
     private javax.swing.JLabel jLabelExcluir;
     private javax.swing.JPanel jPanel1;

@@ -1,11 +1,10 @@
+/* SCRIPT CRIAÇÃO */
+
 CREATE TABLE IF NOT EXISTS CLIENTE (
-    ID            INTEGER      PRIMARY KEY AUTOINCREMENT,
-    CPF           CHAR (14),
-    ID            INTEGER      DEFAULT NULL,
     NOME          VARCHAR (30) NOT NULL,
     SOBRENOME     VARCHAR (40) NOT NULL,
-    EMAIL         VARCHAR (60) NOT NULL,
-    DATANASC      CHAR (10)    NOT NULL,
+    EMAIL         VARCHAR (60),
+    DATANASC      CHAR (10),
     CEP           CHAR (9),
     BAIRRO        VARCHAR (50),
     RUA           VARCHAR (60),
@@ -14,39 +13,81 @@ CREATE TABLE IF NOT EXISTS CLIENTE (
     TELEFONE      VARCHAR (15),
     CELULAR       VARCHAR (15),
     DATAREG       DATE,
-    TIPODECABELO  TINYINT      DEFAULT 12,
-    TAMANHOCABELO TINYINT      DEFAULT 4,
-    CORCABELOI    VARCHAR (16) DEFAULT [Não Informado],
-    CONHECEU      TINYINT      DEFAULT 5,
-    FACEBOOK      VARCHAR (35),
-    INSTAGRAM     VARCHAR (35),
-    OBSERVACOES   TEXT         DEFAULT [Nada Informado.]
+    TIPODECABELO  INT          DEFAULT (12),
+    TAMANHOCABELO INT          DEFAULT (4),
+    CORCABELO     VARCHAR (16) DEFAULT [Não Informado],
+    CONHECEU      INT          DEFAULT (5),
+    FACEBOOK      VARCHAR (35) DEFAULT [Não Informado],
+    INSTAGRAM     VARCHAR (35) DEFAULT [Não Informado],
+    OBSERVACOES   TEXT         DEFAULT [Não Informado.],
+    FOTOPERFIL    BLOB,
+    ID            INTEGER      PRIMARY KEY AUTOINCREMENT,
+    EXCLUIDO      BOOLEAN      DEFAULT (false) 
 );
 
+CREATE TRIGGER IF NOT EXISTS registraEmailUltimaVisita
+         AFTER INSERT
+            ON CLIENTE
+BEGIN
+    INSERT INTO EMAILULTIMAVISITA (
+                                      ID_CLIENTE,
+                                      ULTIMOENVIO
+                                  )
+                                  VALUES (
+                                      (
+                                          SELECT ID
+                                            FROM CLIENTE
+                                           ORDER BY ID DESC
+                                           LIMIT 1
+                                      ),
+                                      NULL
+                                  );
+END;
+
+CREATE TRIGGER IF NOT EXISTS registraEmailAniversario
+         AFTER INSERT
+            ON CLIENTE
+BEGIN
+    INSERT INTO EMAILANIVERSARIO (
+                                     ID_CLIENTE,
+                                     ULTIMOENVIO
+                                 )
+                                 VALUES (
+                                     (
+                                         SELECT ID
+                                           FROM CLIENTE
+                                          ORDER BY ID DESC
+                                          LIMIT 1
+                                     ),
+                                     NULL
+                                 );
+END;
 
 CREATE TABLE IF NOT EXISTS EMAILANIVERSARIO (
-    ID_CLIENTE  INTEGER NOT NULL,
+    ID_CLIENTE  INTEGER NOT NULL
+                        REFERENCES CLIENTE (ID),
     ULTIMOENVIO DATE,
     FOREIGN KEY (
         ID_CLIENTE
     )
-    REFERENCES CLIENTE (ID) 
+    REFERENCES CLIENTE
 );
 
 CREATE TABLE IF NOT EXISTS EMAILULTIMAVISITA (
-    ID_CLIENTE  INTEGER NOT NULL,
+    ID_CLIENTE  INTEGER NOT NULL
+                        REFERENCES CLIENTE (ID),
     ULTIMOENVIO DATE,
     FOREIGN KEY (
         ID_CLIENTE
     )
-    REFERENCES CLIENTE (ID) 
+    REFERENCES CLIENTE
 );
 
 CREATE TABLE IF NOT EXISTS COMPRA (
-    ID_COMPRA        INTEGER   PRIMARY KEY AUTOINCREMENT,
-    DATA             DATE,
-    VALORTOTAL       INTEGER,
-    VALORDESCONTO    INTENGER
+    ID_COMPRA     INTEGER  PRIMARY KEY AUTOINCREMENT,
+    DATA          DATE,
+    VALORTOTAL    INTEGER,
+    VALORDESCONTO INTENGER
 );
 
 CREATE TABLE IF NOT EXISTS ITEM_COMPRA (
@@ -66,17 +107,19 @@ CREATE TABLE IF NOT EXISTS ITEM_COMPRA (
     REFERENCES COMPRA (ID_COMPRA) 
 );
 
+
 CREATE TABLE IF NOT EXISTS VENDA (
     ID_VENDA      INTEGER   PRIMARY KEY AUTOINCREMENT,
     DATA          DATE,
     VALORTOTAL    INTEGER,
     VALORDESCONTO INTENGER,
     CPF_CLIENTE   CHAR (14),
-    ID_CLIENTE    INTEGER,
+    ID_CLIENTE    INTEGER   NOT NULL
+                            REFERENCES CLIENTE (ID),
     FOREIGN KEY (
-        ID_CLIENTE
+        CPF_CLIENTE
     )
-    REFERENCES CLIENTE (ID) 
+    REFERENCES CLIENTE
 );
 
 CREATE TABLE IF NOT EXISTS ITEM_VENDA (
@@ -97,27 +140,57 @@ CREATE TABLE IF NOT EXISTS ITEM_VENDA (
     REFERENCES COMPRA (ID_VENDA) 
 );
 
-CREATE TABLE IF NOT EXISTS PRODUTO (
+CREATE TABLE PRODUTO (
     IDPRODUTO INTEGER      PRIMARY KEY AUTOINCREMENT,
     NOME      VARCHAR (45) NOT NULL,
     MARCA     VARCHAR (45) NOT NULL,
     PRECO     INTEGER      NOT NULL,
-    DATAREG   DATE         NOT NULL
+    DATAREG   DATE         NOT NULL,
+    EXCLUIDO  BOOLEAN      DEFAULT (false),
+    CONSTRAINT iPRODUTO UNIQUE (
+        NOME,
+        MARCA
+    )
 );
+
+CREATE TRIGGER IF NOT EXISTS exclusaoLogicaProduto
+         AFTER UPDATE OF EXCLUIDO
+            ON PRODUTO
+BEGIN
+    DELETE FROM PRODUTO_SERVICO
+          WHERE ID_PRODUTO = old.IDPRODUTO;
+    DELETE FROM ESTOQUE
+          WHERE ESTOQUE.ID_PRODUTO = old.IDPRODUTO;
+END;
+
 
 CREATE TABLE IF NOT EXISTS SERVICO (
     ID_SERVICO INTEGER      PRIMARY KEY AUTOINCREMENT,
     NOME       VARCHAR (30) NOT NULL,
     PRECO      INTEGER      NOT NULL,
-    TEMPOGASTO DATIME
+    TEMPOGASTO DATIME,
+    EXCLUIDO   BOOLEAN      DEFAULT (false) 
 );
 
+CREATE TABLE IF NOT EXISTS PRODUTO_SERVICO (
+    ID_PRODUTO INT,
+    RENDIMENTO INT,
+    ID_SERVICO INT,
+    FOREIGN KEY (
+        ID_PRODUTO
+    )
+    REFERENCES PRODUTO,
+    FOREIGN KEY (
+        ID_SERVICO
+    )
+    REFERENCES SERVICO (ID_SERVICO) 
+);
+
+
 CREATE TABLE IF NOT EXISTS CABELEIREIRO (
-    CPF                   CHAR (14)    PRIMARY KEY,
-    EMAIL                 VARCHAR (60) NOT NULL,
-    NOME                  VARCHAR (45) NOT NULL,
-    SENHA                 VARCHAR (45) NOT NULL,
-    METADELUCRO           INTEGER,
+    CPF                   CHAR (14),
+    EMAIL                 VARCHAR (60)                              NOT NULL,
+    NOME                  VARCHAR (45)                              NOT NULL,
     SEGUNDAE              DATETIME,
     TERCAE                DATETIME,
     QUARTAE               DATETIME,
@@ -132,33 +205,24 @@ CREATE TABLE IF NOT EXISTS CABELEIREIRO (
     SEXTAS                DATETIME,
     SABADOS               DATETIME,
     DOMINGOS              DATETIME,
-    ENVIARANIVERSARIO     BOOLEAN      DEFAULT 0,
-    TITULOANIVERSARIO     VARCHAR (60) DEFAULT [Título não informado.],
-    TEXTOANIVERSARIO      TEXT         DEFAULT "",
-    ANEXOANIVERSARIO      BLOOB,
-    NOMEANEXOANIVERSARIO  VARCHAR (60),
-    ENVIARULTIMAVISITA    BOOLEAN      DEFAULT 0,
-    TITULOULTIMAVISITA    VARCHAR (60) DEFAULT [Título não informado.],
-    TEXTOULTIMAVISITA     TEXT         DEFAULT "",
-    ANEXOULTIMAVISITA     BLOOB,
+    ENVIARANIVERSARIO     BOOLEAN                                   DEFAULT 0,
+    TITULOANIVERSARIO     VARCHAR (60)                              DEFAULT [Título não informado.],
+    TEXTOANIVERSARIO      TEXT                                      DEFAULT "",
+    ANEXOANIVERSARIO      [BLOOB NOMEANEXOANIVERSARIO VARCHAR] (60),
+    NOMEANEXOANIVERSARIO  STRING (60),
+    SENHA                 VARCHAR (45),
+    ENVIARULTIMAVISITA    BOOLEAN                                   DEFAULT (FALSE),
+    TITULOULTIMAVISITA    VARCHAR (60)                              DEFAULT [Título não informado],
+    TEXTOULTIMAVISITA     TEXT                                      DEFAULT "",
+    ANEXOULTIMAVISITA     BLOB,
     NOMEANEXOULTIMAVISITA VARCHAR (60),
-    PERIODOULTIMAVISITA   INT          DEFAULT 2,
+    PERIODOULTIMAVISITA   INTEGER                                   DEFAULT (2),
+    METADELUCRO           INTEGER                                   DEFAULT (0),
+    ID                    INTEGER                                   PRIMARY KEY,
     POSTIT                TEXT
 );
 
-CREATE TABLE IF NOT EXISTS PRODUTO_SERVICO (
-    ID_PRODUTO INT,
-    RENDIMENTO INT,
-    ID_SERVICO INT,
-    FOREIGN KEY (
-        ID_PRODUTO
-    )
-    REFERENCES PRODUTO (ID_PRODUTO),
-    FOREIGN KEY (
-        ID_SERVICO
-    )
-    REFERENCES SERVICO (ID_SERVICO) 
-);
+
 
 CREATE TABLE IF NOT EXISTS ESTOQUE (
     ID_ESTOQUE     INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -168,18 +232,22 @@ CREATE TABLE IF NOT EXISTS ESTOQUE (
     VALOR_UNITARIO INTEGER
 );
 
+
 CREATE TABLE IF NOT EXISTS AGENDAMENTO (
-    ID_AGENDAMENTO INTEGER  PRIMARY KEY AUTOINCREMENT,
-    DATA           DATE     NOT NULL,
-    HORARIO        DATETIME NOT NULL,
-    REALIZADO      BOOLEAN,
-    TOTAL          INTEGER,
-    DESCONTO       INTEGER,
-    VALORADICIONAL INTEGER,
-    PAGO           BOOLEAN,
+    ID_AGENDAMENTO   INTEGER      PRIMARY KEY AUTOINCREMENT,
+    DATA             DATE         NOT NULL,
+    HORARIO          DATETIME     NOT NULL,
+    REALIZADO        BOOLEAN,
+    TOTAL            INTEGER,
+    DESCONTO         INTEGER,
+    ID_CLIENTE       INTEGER      NOT NULL
+                                  REFERENCES CLIENTE (ID),
+    VALORADICIONAL   INTEGER,
+    PAGO             BOOLEAN,
     FORMADEPAGAMENTO VARCHAR (15),
-    ID_CLIENTE     INTEGER  NOT NULL
+    FIMAGENDAMENTO   TIME
 );
+
 
 CREATE TABLE IF NOT EXISTS AGENDAMENTO_SERVICO (
     ID_AGENDAMENTO INTEGER,
@@ -196,7 +264,7 @@ CREATE TABLE IF NOT EXISTS AGENDAMENTO_SERVICO (
 
 CREATE TABLE IF NOT EXISTS ORCAMENTO (
     ID_ORCAMENTO INTEGER      PRIMARY KEY AUTOINCREMENT,
-    NOME         VARCHAR (30) NOT NULL,
+    NOME         VARCHAR (45) NOT NULL,
     JANEIRO      INTEGER      NOT NULL,
     FEVEREIRO    INTEGER      NOT NULL,
     MARCO        INTEGER      NOT NULL,
@@ -206,21 +274,21 @@ CREATE TABLE IF NOT EXISTS ORCAMENTO (
     JULHO        INTEGER      NOT NULL,
     AGOSTO       INTEGER      NOT NULL,
     SETEMBRO     INTEGER      NOT NULL,
-    OUTUBRO      INTEGERNOT,
+    OUTUBRO      INTEGER      NOT NULL,
     NOVEMBRO     INTEGER      NOT NULL,
     DEZEMBRO     INTEGER      NOT NULL,
     PREVISTO     BOOLEAN,
-    ANO          VARCHAR (4),
-    CPF          CHAR (14),
-    FOREIGN KEY (
-        CPF
+    ANO          CHAR (5)
+    REFERENCES CABELEIREIRO (CPF),
+    CONSTRAINT iORCAMENTO UNIQUE (
+        NOME,
+        ANO
     )
-    REFERENCES CABELEIREIRO (CPF) 
 );
 
-CREATE TABLE IF NOT EXISTS ORCAMENTOSERVICO (
+CREATE TABLE IF NOT EXISTS  ORCAMENTOSERVICO (
     ID_ORCAMENTO INTEGER      PRIMARY KEY AUTOINCREMENT,
-    NOMESERV     VARCHAR (40) NOT NULL,
+    NOMESERV     VARCHAR (45) NOT NULL,
     JANEIRO      INTEGER      NOT NULL,
     FEVEREIRO    INTEGER      NOT NULL,
     MARCO        INTEGER      NOT NULL,
@@ -230,24 +298,23 @@ CREATE TABLE IF NOT EXISTS ORCAMENTOSERVICO (
     JULHO        INTEGER      NOT NULL,
     AGOSTO       INTEGER      NOT NULL,
     SETEMBRO     INTEGER      NOT NULL,
-    OUTUBRO      INTEGERNOT,
+    OUTUBRO      INTEGER      NOT NULL,
     NOVEMBRO     INTEGER      NOT NULL,
     DEZEMBRO     INTEGER      NOT NULL,
     PREVISTO     BOOLEAN,
-    ANO          VARCHAR (4)  NOT NULL,
+    ANO          CHAR (5)     NOT NULL,
     ID_SERVICO   INTEGER      NOT NULL,
-    CPF          CHAR (14),
-    FOREIGN KEY (
-        CPF
+    CONSTRAINT iORCAMENTOSERVICO UNIQUE (
+        NOMESERV,
+        ANO
     )
-    REFERENCES CABELEIREIRO (CPF) 
 );
 
-CREATE TABLE IF NOT EXISTS DESPESAMENSAL (
+CREATE TABLE DESPESAMENSAL (
     ID_DESPESA     INTEGER      PRIMARY KEY AUTOINCREMENT,
     VALORPAGO      INTEGER,
-    FORMAPAGAMENTO VARCHAR (10),
-    ANO            VARCHAR (4)  NOT NULL,
+    FORMAPAGAMENTO VARCHAR (15),
+    ANO            CHAR(5)      NOT NULL,
     DATALANCAMENTO DATE         NOT NULL,
     DATAVENCIMENTO DATE         NOT NULL,
     DATAPAGAMENTO  DATE,
@@ -258,7 +325,16 @@ CREATE TABLE IF NOT EXISTS DESPESAMENSAL (
         ID_ORCAMENTO
     )
     REFERENCES ORCAMENTO (ID_ORCAMENTO) 
-);-- TESTES DO MATEUS
+);
+
+
+
+
+
+
+
+
+-- TESTES DO MATEUS
 
 PRAGMA foreign_keys = OF;-- SELECIONA COMPRA DO CABELEIREIRO
 

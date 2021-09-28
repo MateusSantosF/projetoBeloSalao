@@ -50,7 +50,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         
         
         CentralizaElementosTabela render = new CentralizaElementosTabela();
-        modelo.getTodosAgendamentos();
+        modelo.getAgendamentosHoje();
         ((DefaultTableCellRenderer) jTableAgendamentos.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         jTableAgendamentos.setDefaultRenderer(Object.class, render);
         jTableAgendamentos.setModel(modelo);
@@ -197,6 +197,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         jRadioButtonHoje.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButtonHoje);
         jRadioButtonHoje.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jRadioButtonHoje.setSelected(true);
         jRadioButtonHoje.setText("Hoje");
         jRadioButtonHoje.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,7 +228,6 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
         jRadioButtonTodos.setBackground(new java.awt.Color(255, 255, 255));
         buttonGroup1.add(jRadioButtonTodos);
         jRadioButtonTodos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jRadioButtonTodos.setSelected(true);
         jRadioButtonTodos.setText("Todos");
         jRadioButtonTodos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

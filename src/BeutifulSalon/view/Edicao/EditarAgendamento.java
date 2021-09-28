@@ -44,6 +44,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
      * Creates new form CadastroAgendamento
      */
     
+    private LocalTime horarioInicioAntigo;
+    private LocalTime horarioFinalAntigo;
     private Agendamento agendamento;
     private String idCliente;
     private boolean isDesconto;
@@ -60,7 +62,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         initComponents();
         
         ManipulaFontes mf = new ManipulaFontes(); ;
-        
+        horarioInicioAntigo= ag.getHorario();
+        horarioFinalAntigo = ag.getFimAgendamento();
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Cadastro de Agendamento
         jCheckBoxClienteVeio.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Cliente veio?
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome do Cliente
@@ -443,23 +446,20 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addGap(58, 58, 58))
+                        .addGap(18, 18, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addContainerGap(18, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jToggleButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jComboBoxFormaPagamento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addGap(0, 0, Short.MAX_VALUE))
-                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabelAddServicos))))
-                        .addGap(18, 18, 18)))
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelAddServicos)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -499,7 +499,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
                             .addComponent(jLabel9)
                             .addComponent(jLabel8))
                         .addGap(324, 324, 324)))
-                .addGap(9, 9, Short.MAX_VALUE))
+                .addGap(15, 15, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
@@ -509,7 +509,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(53, 53, 53)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -635,7 +635,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
         String dataFormatada = "";
         String formaDePagamento ="";
-            boolean pago;
+        boolean pago;
             
          
         try {
@@ -664,7 +664,9 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
                     agendamento.getIdAgendamento(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText())),
                     pago,
-                    formaDePagamento);
+                    formaDePagamento,
+                    horarioInicioAntigo,
+                    horarioFinalAntigo);
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, e);
         }

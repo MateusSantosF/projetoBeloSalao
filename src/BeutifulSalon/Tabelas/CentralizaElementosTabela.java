@@ -18,12 +18,17 @@ public class CentralizaElementosTabela extends DefaultTableCellRenderer {
     public CentralizaElementosTabela() {
         super();
     }
-       
+
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
             boolean isSelected, boolean hasFocus, int row, int column) {
-        
-        this.setHorizontalAlignment(CENTER);
+
+        if (column != 0) {
+            this.setHorizontalAlignment(CENTER);
+        } else {
+            this.setHorizontalAlignment(LEFT);
+        }
+
         return super.getTableCellRendererComponent(table, value, isSelected,
                 hasFocus, row, column);
     }

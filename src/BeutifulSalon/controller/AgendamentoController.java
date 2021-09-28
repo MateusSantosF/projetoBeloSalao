@@ -27,12 +27,12 @@ import javax.swing.JOptionPane;
  */
 public class AgendamentoController {
 
-    public boolean cadastraAgendamento(String data, String horario, long idCliente, ArrayList<Servico> servicos, long total, 
-            long desconto,long valorAdicional ,boolean realizado, boolean pago, String FormaDePagamento) throws ExceptionDAO {
+    public boolean cadastraAgendamento(String data, String horario, long idCliente, ArrayList<Servico> servicos, long total,
+            long desconto, long valorAdicional, boolean realizado, boolean pago, String FormaDePagamento) throws ExceptionDAO {
 
-        if (Valida.isHora(horario) && !servicos.isEmpty()) {
-            
-             if( total < 0 ){
+        if (Valida.isHora(horario) && !servicos.isEmpty() && idCliente > 0) {
+
+            if (total < 0) {
                 JOptionPane.showMessageDialog(null, "Você não pode registrar um agendamento com valores negativos.");
                 return false;
             }
@@ -50,28 +50,26 @@ public class AgendamentoController {
                 JOptionPane.showMessageDialog(null, "Erro ao convertar datas " + e);
                 return false;
             }
-                
-                LocalTime fimAgendamento = h;
-                int horas = 0;
-                int minutos = 0;
-                
-                for (Servico s : servicos) {
-                    Servico sAtual = new ServicoController().buscarServico(s.getId());
-                    horas += sAtual.getTempoGasto().getHour();
-                    minutos += sAtual.getTempoGasto().getMinute();
-                }
-                fimAgendamento = fimAgendamento.plusHours(horas);
-                fimAgendamento = fimAgendamento.plusMinutes(minutos);
-             
-            
-            if(!new ManipulaData().validaHorarioAgendamento(h, fimAgendamento, dataAgendamento)){
+
+            LocalTime fimAgendamento = h;
+            int horas = 0;
+            int minutos = 0;
+
+            for (Servico s : servicos) {
+                Servico sAtual = new ServicoController().buscarServico(s.getId());
+                horas += sAtual.getTempoGasto().getHour();
+                minutos += sAtual.getTempoGasto().getMinute();
+            }
+            fimAgendamento = fimAgendamento.plusHours(horas);
+            fimAgendamento = fimAgendamento.plusMinutes(minutos);
+
+            if (new ManipulaData().validaHorarioAgendamento(h, fimAgendamento, dataAgendamento) == false) {
                 JOptionPane.showMessageDialog(null, "Horário não disponível");
                 return false;
             }
-            
-        
 
             Agendamento agendamento = new Agendamento();
+            agendamento.setFimAgendamento(fimAgendamento);
             agendamento.setTotal(total);
             agendamento.setDesconto(desconto);
             agendamento.setIdCliente(idCliente);
@@ -97,12 +95,13 @@ public class AgendamentoController {
         return true;
     }
 
-    public boolean atualizarAgendamento(String data, String horario,long idCliente, ArrayList<Servico> servicos, long total, 
-            long desconto, boolean realizado, long idAgendamento, long valorAdicional, boolean pago, String formaDePagamento) throws ExceptionDAO {
+    public boolean atualizarAgendamento(String data, String horario, long idCliente, ArrayList<Servico> servicos, long total,
+            long desconto, boolean realizado, long idAgendamento, long valorAdicional, boolean pago, String formaDePagamento,
+            LocalTime horarioInicioAntigo, LocalTime horarioFinalAntigo) throws ExceptionDAO {
 
         if (Valida.isHora(horario) && !servicos.isEmpty()) {
-            
-            if( total < 0 ){
+
+            if (total < 0) {
                 JOptionPane.showMessageDialog(null, "Você não pode registrar um agendamento com valores negativos.");
                 return false;
             }
@@ -120,8 +119,27 @@ public class AgendamentoController {
                 JOptionPane.showMessageDialog(null, "Erro ao convertar datas " + e);
                 return false;
             }
-            //Passando parametros
 
+            LocalTime fimAgendamento = h;
+            int horas = 0;
+            int minutos = 0;
+
+            for (Servico s : servicos) {
+                Servico sAtual = new ServicoController().buscarServico(s.getId());
+                horas += sAtual.getTempoGasto().getHour();
+                minutos += sAtual.getTempoGasto().getMinute();
+            }
+            fimAgendamento = fimAgendamento.plusHours(horas);
+            fimAgendamento = fimAgendamento.plusMinutes(minutos);
+
+            if (!h.equals(horarioInicioAntigo) && !fimAgendamento.equals(horarioFinalAntigo)) {
+                if (!new ManipulaData().validaHorarioAgendamentoEdit(h, fimAgendamento, dataAgendamento, idAgendamento)) {
+                    JOptionPane.showMessageDialog(null, "Horário não disponível");
+                    return false;
+                }
+            }
+
+            //Passando parametros
             Agendamento agendamento = new Agendamento();
             agendamento.setIdAgendamento(idAgendamento);
             agendamento.setTotal(total);
@@ -151,36 +169,34 @@ public class AgendamentoController {
 
     public boolean editarAgendamento(long idAgendamento) {
 
-  
+        Agendamento ag = listarAgendamento(idAgendamento);
 
-            Agendamento ag = listarAgendamento(idAgendamento);
-
-            if (ag != null) {
-                new EditarAgendamento(ag).setVisible(true);
-            } else {
-                return false;
-            }
+        if (ag != null) {
+            new EditarAgendamento(ag).setVisible(true);
+        } else {
+            return false;
+        }
 
         return true;
     }
 
-    public Agendamento listarAgendamento(long idAgendamento)  {
-        
+    public Agendamento listarAgendamento(long idAgendamento) {
+
         try {
             return new Agendamento().listarAgendamento(idAgendamento);
         } catch (Exception e) {
             return null;
         }
-       
+
     }
 
     public ArrayList<Servico> listarServicosAgendamento(long idAgendamento) {
         try {
-             return new Agendamento().listarServicosAgendamento(idAgendamento);
+            return new Agendamento().listarServicosAgendamento(idAgendamento);
         } catch (ExceptionDAO e) {
             System.out.println("Erro ao listar serviços do agendamento");
         }
-       return null;
+        return null;
     }
 
     public ArrayList<Agendamento> listarAgendamentos() {
@@ -244,37 +260,37 @@ public class AgendamentoController {
         }
         return null;
     }
-    
-     public long retornaSomaDeAgendamentosMensal(){
-         try {
-            return new Agendamento().retornaSomaDeAgendamentosMensal(); 
-         } catch (ExceptionDAO e) {
+
+    public long retornaSomaDeAgendamentosMensal() {
+        try {
+            return new Agendamento().retornaSomaDeAgendamentosMensal();
+        } catch (ExceptionDAO e) {
             System.out.println("erro ao retornar soma mensal de agemdamentos");
-         }
-         return 0L;
-     }
-     
-      public long retornaSomaDeAgendamentosMensal(Month mes){
-         try {
-            return new Agendamento().retornaSomaDeAgendamentosMensal(mes); 
-         } catch (ExceptionDAO e) {
+        }
+        return 0L;
+    }
+
+    public long retornaSomaDeAgendamentosMensal(Month mes) {
+        try {
+            return new Agendamento().retornaSomaDeAgendamentosMensal(mes);
+        } catch (ExceptionDAO e) {
             System.out.println("erro ao retornar soma mensal de agemdamentos");
-         }
-         return 0L;
-     }
+        }
+        return 0L;
+    }
 
     public boolean excluirAgendamento(Agendamento agendamento) {
-        
+
         try {
             return agendamento.excluirAgendamento(agendamento);
         } catch (ExceptionDAO e) {
             return false;
         }
-       
+
     }
 
     public ArrayList<Agendamento> listarAgendamentosNaoPagos() {
-         try {
+        try {
             return new Agendamento().listarAgendamentosNaoPagos();
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, e);

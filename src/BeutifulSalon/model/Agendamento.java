@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * @author mateus
  */
 public class Agendamento {
-    
+
     private long idAgendamento;
     private long idCliente;
     private long total;
@@ -28,15 +28,17 @@ public class Agendamento {
     private String formaDePagamento;
     private LocalDate data;
     private LocalTime horario;
+    private LocalTime fimAgendamento;
     private Boolean realizado;
     private ArrayList<Servico> servicos;
-    
 
-    
-    public Agendamento(){};
+    public Agendamento() {
+    }
+
+    ;
     
     public Agendamento(LocalDate data, LocalTime horario, long idCliente, ArrayList<Servico> servicos) {
-      
+
         this.data = data;
         this.horario = horario;
         this.idCliente = idCliente;
@@ -50,7 +52,7 @@ public class Agendamento {
     public void setDesconto(long desconto) {
         this.desconto = desconto;
     }
-    
+
     public long getTotal() {
         return total;
     }
@@ -58,8 +60,7 @@ public class Agendamento {
     public void setTotal(long total) {
         this.total = total;
     }
-    
-    
+
     public Boolean getRealizado() {
         return realizado;
     }
@@ -67,7 +68,7 @@ public class Agendamento {
     public void setRealizado(Boolean realizado) {
         this.realizado = realizado;
     }
-      
+
     public long getIdAgendamento() {
         return idAgendamento;
     }
@@ -79,8 +80,7 @@ public class Agendamento {
     public void setValorAdicional(long valorAdicional) {
         this.valorAdicional = valorAdicional;
     }
-    
-    
+
     public void setIdAgendamento(long idAgendamento) {
         this.idAgendamento = idAgendamento;
     }
@@ -108,9 +108,6 @@ public class Agendamento {
     public void setFormaDePagamento(String formaDePagamento) {
         this.formaDePagamento = formaDePagamento;
     }
-    
-    
-   
 
     public LocalTime getHorario() {
         return horario;
@@ -128,7 +125,13 @@ public class Agendamento {
         this.idCliente = idCliente;
     }
 
-   
+    public LocalTime getFimAgendamento() {
+        return fimAgendamento;
+    }
+
+    public void setFimAgendamento(LocalTime fimAgendamento) {
+        this.fimAgendamento = fimAgendamento;
+    }
 
     public ArrayList<Servico> getServicos() {
         return servicos;
@@ -137,33 +140,33 @@ public class Agendamento {
     public void setServicos(ArrayList<Servico> servicos) {
         this.servicos = servicos;
     }
-    
-    
-    public void cadastraAgendamento(Agendamento agendamento) throws ExceptionDAO, SQLException{
+
+    public void cadastraAgendamento(Agendamento agendamento) throws ExceptionDAO, SQLException {
         new AgendamentoDAO().cadastraAgendamento(agendamento);
     }
-    
-    public void atualizarAgendamento(Agendamento agendamento) throws ExceptionDAO, SQLException{
+
+    public void atualizarAgendamento(Agendamento agendamento) throws ExceptionDAO, SQLException {
         new AgendamentoDAO().atualizarAgendamento(agendamento);
     }
 
-    public ArrayList<Agendamento> listarAgendamentos() throws ExceptionDAO {        
+    public ArrayList<Agendamento> listarAgendamentos() throws ExceptionDAO {
         return new AgendamentoDAO().listarAgendamentos();
     }
-    
-    public Agendamento listarAgendamento(long idAgendamento) throws ExceptionDAO{
+
+    public Agendamento listarAgendamento(long idAgendamento) throws ExceptionDAO {
         return new AgendamentoDAO().listarAgendamento(idAgendamento);
     }
-    
-    public ArrayList<Agendamento> listarAgendamentos(LocalDate data) throws ExceptionDAO {        
+
+    public ArrayList<Agendamento> listarAgendamentos(LocalDate data) throws ExceptionDAO {
         return new AgendamentoDAO().listarAgendamentos(data);
     }
+
     public ArrayList<Agendamento> listarAgendamentosRealizados(LocalDate data) {
         return new AgendamentoDAO().listarAgendamentosRealizados(data);
     }
 
     public ArrayList<Agendamento> listarAgendamentosHoje() throws ExceptionDAO {
-       return new AgendamentoDAO().listarAgendamentosHoje();
+        return new AgendamentoDAO().listarAgendamentosHoje();
     }
 
     public ArrayList<Agendamento> listarAgendamentosAmanha() throws ExceptionDAO {
@@ -171,14 +174,14 @@ public class Agendamento {
     }
 
     public ArrayList<Agendamento> listarAgendamentosSemana() throws ExceptionDAO {
-       return new AgendamentoDAO().listarAgendamentosSemana();
+        return new AgendamentoDAO().listarAgendamentosSemana();
     }
 
     public ArrayList<Agendamento> listarAgendamentosNome(String nome) throws ExceptionDAO {
         return new AgendamentoDAO().listarAgendamentosNome(nome);
     }
 
-    public ArrayList<Servico> listarServicosAgendamento(long idAgendamento) throws ExceptionDAO{
+    public ArrayList<Servico> listarServicosAgendamento(long idAgendamento) throws ExceptionDAO {
         return new AgendamentoDAO().listaServicosAgendamento(idAgendamento);
     }
 
@@ -189,17 +192,17 @@ public class Agendamento {
     public long retornaSomaDeAgendamentosMensal() throws ExceptionDAO {
         return new AgendamentoDAO().retornaSomaDeAgendamentosMensal();
     }
-     public long retornaSomaDeAgendamentosMensal(Month mes) throws ExceptionDAO{
-        return new AgendamentoDAO().retornaSomaDeAgendamentosMensal(mes);
-     }
 
-    public boolean excluirAgendamento(Agendamento agendamento) throws ExceptionDAO{
-       return new AgendamentoDAO().excluirAgendamento(agendamento);
+    public long retornaSomaDeAgendamentosMensal(Month mes) throws ExceptionDAO {
+        return new AgendamentoDAO().retornaSomaDeAgendamentosMensal(mes);
     }
 
-    public ArrayList<Agendamento> listarAgendamentosNaoPagos() throws ExceptionDAO{
+    public boolean excluirAgendamento(Agendamento agendamento) throws ExceptionDAO {
+        return new AgendamentoDAO().excluirAgendamento(agendamento);
+    }
+
+    public ArrayList<Agendamento> listarAgendamentosNaoPagos() throws ExceptionDAO {
         return new AgendamentoDAO().listarAgendamentosNaoPagos();
     }
-    
-    
+
 }

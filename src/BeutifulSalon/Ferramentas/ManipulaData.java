@@ -47,7 +47,7 @@ public class ManipulaData {
             return Period.between(dataNascimento, LocalDate.now()).getYears();
         } catch (DateTimeParseException e) {
         }
-      return 0;
+        return 0;
     }
 
     public long meiaNoite(LocalDate dia) {
@@ -238,35 +238,136 @@ public class ManipulaData {
 
     public boolean validaHorarioAgendamento(LocalTime entradaCliente, LocalTime terminoAgendamento, LocalDate data) {
 
-        ArrayList<LocalTime> horarios = recuperaHorariosDisponiveis(data);
-        boolean livre = false;
+        AgendamentoController ag = new AgendamentoController();
+        CabeleireiroController cc = new CabeleireiroController();
 
-        if (horarios != null) {
-            int i = 0;
-            int tamanho = horarios.size();
+        //busca agendamentos do dia inserido na tela de agendamento
+        ArrayList<Agendamento> agendamentos = ag.listarAgendamentosRealizados(data);
+        boolean estaLivre = false;
+        long inicio = entradaCliente.toNanoOfDay();
+        long fim = terminoAgendamento.toNanoOfDay();
 
-            for (i = 0; i < tamanho; i++) {
+        ArrayList<LocalTime> expedienteDoDia;
+        LocalTime entrada;
+        LocalTime saida;
+        int diaDaSemana = 1; // 1 (segunda) -  7 (Domingo)
+        Agendamento ultimoAgendamentoProcessado = null;
+        System.out.println("============================");
+        System.out.println("Inicio A1=>" + entradaCliente);
+        System.out.println("FIM    A1=>" + terminoAgendamento);
 
-                if (i % 2 != 0) {
-                    LocalTime entrada = horarios.get(i - 1);
-                    LocalTime saida = horarios.get(i - 1).plusHours(horarios.get(i).getHour()).plusMinutes(horarios.get(i).getMinute());
-        
-                    if (!entrada.equals(saida)) {
-                       if(entradaCliente.isAfter(entrada) || entradaCliente.equals(entrada)){
-                           if( terminoAgendamento.isBefore(saida) || terminoAgendamento.equals(saida)){
-                               livre = true;
-                               return livre;
-                           }
-                       }
-                    }
+        if (agendamentos.size() > 0) {
 
+            for (Agendamento g : agendamentos) {
+
+                System.out.println("Inicio A2=>" + g.getHorario());
+                System.out.println("FIM    A2=>" + g.getFimAgendamento());
+                long inicioTemp = g.getHorario().toNanoOfDay();
+                long fimTemp = g.getFimAgendamento().toNanoOfDay();
+                System.out.println("Inicio" + inicio);
+                System.out.println("Fim" + fim);
+                System.out.println("Iniciotemp" + inicioTemp);
+                System.out.println("Fimtemp" + fimTemp);
+
+                if (inicio >= fimTemp || fim <= inicioTemp) {
+                    estaLivre = true;
+                    System.out.println("TRUE");
+                } else {
+                    return false;
+                }
+                ultimoAgendamentoProcessado = g;
+                System.out.println("============================");
+            }
+
+            diaDaSemana = data.getDayOfWeek().getValue();
+
+            //recupera horario de inicio e término do expediente
+            expedienteDoDia = cc.selecionaExpediente(diaDaSemana);
+            entrada = expedienteDoDia.get(0);
+            saida = expedienteDoDia.get(1);
+
+            if (ultimoAgendamentoProcessado.getFimAgendamento().toNanoOfDay() <= saida.toNanoOfDay()) {
+                if (entradaCliente.isAfter(ultimoAgendamentoProcessado.getFimAgendamento())) {
+                    estaLivre = true;
                 }
 
             }
+
+            System.out.println("============================");
+            return estaLivre;
+
         } else {
             return true;
         }
-        return livre;
+
+    }
+
+    public boolean validaHorarioAgendamentoEdit(LocalTime entradaCliente, LocalTime terminoAgendamento, LocalDate data, long idAg) {
+
+        AgendamentoController ag = new AgendamentoController();
+        CabeleireiroController cc = new CabeleireiroController();
+
+        //busca agendamentos do dia inserido na tela de agendamento
+        ArrayList<Agendamento> agendamentos = ag.listarAgendamentosRealizados(data);
+        boolean estaLivre = false;
+        long inicio = entradaCliente.toNanoOfDay();
+        long fim = terminoAgendamento.toNanoOfDay();
+
+        ArrayList<LocalTime> expedienteDoDia;
+        LocalTime entrada;
+        LocalTime saida;
+        int diaDaSemana = 1; // 1 (segunda) -  7 (Domingo)
+        Agendamento ultimoAgendamentoProcessado = null;
+        System.out.println("============================");
+        System.out.println("Inicio A1=>" + entradaCliente);
+        System.out.println("FIM    A1=>" + terminoAgendamento);
+
+        if (agendamentos.size() > 0) {
+
+            for (Agendamento g : agendamentos) {
+                if (g.getIdAgendamento() != idAg) {
+                    System.out.println("Inicio A2=>" + g.getHorario());
+                    System.out.println("FIM    A2=>" + g.getFimAgendamento());
+                    long inicioTemp = g.getHorario().toNanoOfDay();
+                    long fimTemp = g.getFimAgendamento().toNanoOfDay();
+                    System.out.println("Inicio" + inicio);
+                    System.out.println("Fim" + fim);
+                    System.out.println("Iniciotemp" + inicioTemp);
+                    System.out.println("Fimtemp" + fimTemp);
+
+                    if (inicio >= fimTemp || fim <= inicioTemp) {
+                        estaLivre = true;
+                        System.out.println("TRUE");
+                    } else {
+                        return false;
+                    }
+                    ultimoAgendamentoProcessado = g;
+                    System.out.println("============================");
+                }
+
+            }
+
+            diaDaSemana = data.getDayOfWeek().getValue();
+
+            //recupera horario de inicio e término do expediente
+            expedienteDoDia = cc.selecionaExpediente(diaDaSemana);
+            entrada = expedienteDoDia.get(0);
+            saida = expedienteDoDia.get(1);
+
+            if (ultimoAgendamentoProcessado.getFimAgendamento().toNanoOfDay() <= saida.toNanoOfDay()) {
+                if (entradaCliente.isAfter(ultimoAgendamentoProcessado.getFimAgendamento())) {
+                    estaLivre = true;
+                }
+
+            }
+
+            System.out.println("============================");
+            return estaLivre;
+
+        } else {
+            return true;
+        }
+
     }
 
     public ArrayList<String> formataHorariosDisponiveis(ArrayList<LocalTime> horarios) {

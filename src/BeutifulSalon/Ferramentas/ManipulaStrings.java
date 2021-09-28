@@ -26,14 +26,24 @@ public class ManipulaStrings {
                 saida = saida + " " + nomePedacos[k];
             } else {
                 if(!nomePedacos[k].equals(" ") ){
-                    if( !nomePedacos[k].equals("de") &&
+                    if( !nomePedacos[k].equals("De") &&
+                        !nomePedacos[k].equals("Da") && 
+                        !nomePedacos[k].equals("Do") && 
+                        !nomePedacos[k].equals("Das") && 
+                        !nomePedacos[k].equals("Dos") &&
+                        !nomePedacos[k].equals("de") &&
                         !nomePedacos[k].equals("da") && 
                         !nomePedacos[k].equals("do") && 
                         !nomePedacos[k].equals("das") && 
                         !nomePedacos[k].equals("dos")){
                         
                         saida = saida + " " + nomePedacos[k].charAt(0) + ". ";
-                    }else if(nomePedacos[k].equals("de") ||
+                    }else if(nomePedacos[k].equals("De") ||
+                        nomePedacos[k].equals("Da") || 
+                        nomePedacos[k].equals("Do") || 
+                        nomePedacos[k].equals("Das") || 
+                        nomePedacos[k].equals("Dos") ||
+                        nomePedacos[k].equals("de") ||
                         nomePedacos[k].equals("da") || 
                         nomePedacos[k].equals("do") || 
                         nomePedacos[k].equals("das") || 
