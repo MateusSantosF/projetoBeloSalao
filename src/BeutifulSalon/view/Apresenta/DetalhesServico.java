@@ -126,6 +126,15 @@ public class DetalhesServico extends javax.swing.JFrame {
             jLabelMeta.setForeground(verde);
         }
         
+        if(pontoDeEquilibrio < 0){
+            jLabelPontoDeEquilíbrio.setText("PREJUÍZO");
+            jLabelPontoDeEquilíbrio.setForeground(vermelho);
+        }
+        
+        if(meta < 0){
+            jLabelMeta.setText("PREJUÍZO");
+            jLabelMeta.setForeground(vermelho);
+        }
         
         DefaultTableModel model = (DefaultTableModel) jTableProdutosUtilizados.getModel();
         model.setRowCount(0);
@@ -263,7 +272,7 @@ public class DetalhesServico extends javax.swing.JFrame {
 
         jLabelPontoDeEquilíbrio.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabelPontoDeEquilíbrio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelPontoDeEquilíbrio.setText("0");
+        jLabelPontoDeEquilíbrio.setText("PREJUIZO");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;

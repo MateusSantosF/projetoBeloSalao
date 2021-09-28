@@ -370,10 +370,15 @@ public class ManipulaData {
 
     }
 
-    public ArrayList<String> formataHorariosDisponiveis(ArrayList<LocalTime> horarios) {
+    public ArrayList<String> formataHorariosDisponiveis(ArrayList<LocalTime> horarios, LocalDate dataBuscada) {
 
+        CabeleireiroController cc = new CabeleireiroController();
         ArrayList<String> horariosFormatados = new ArrayList<>();
-
+        ArrayList<LocalTime> expedienteDoDia;
+        LocalTime entradaExpd;
+        LocalTime saidaExpd;
+        int diaDaSemana = 1;
+        
         if (horarios != null) {
             int i = 0;
             int tamanho = horarios.size();
@@ -392,7 +397,14 @@ public class ManipulaData {
 
             }
         } else {
-            horariosFormatados.add("Não existem agendamentos neste dia.");
+            
+            diaDaSemana = dataBuscada.getDayOfWeek().getValue();
+
+            //recupera horario de inicio e término do expediente
+            expedienteDoDia = cc.selecionaExpediente(diaDaSemana);
+            entradaExpd = expedienteDoDia.get(0);
+            saidaExpd = expedienteDoDia.get(1);
+            horariosFormatados.add(entradaExpd + "h às " + saidaExpd + "h");
         }
 
         return horariosFormatados;

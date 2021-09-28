@@ -704,7 +704,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
             ArrayList<LocalTime> horariosLivres = manipulaData.recuperaHorariosDisponiveis(dataDigitada);
             DefaultListModel<String> model = new DefaultListModel<String>();
 
-            ArrayList<String> horariosFormatados = manipulaData.formataHorariosDisponiveis(horariosLivres);
+            ArrayList<String> horariosFormatados = manipulaData.formataHorariosDisponiveis(horariosLivres, dataDigitada);
 
             horariosFormatados.forEach(t -> {
                 model.addElement(t);
