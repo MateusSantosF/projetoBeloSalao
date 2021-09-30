@@ -63,7 +63,7 @@ public class CompraProdutoDAO {
                         pStatement.setLong(3, it.getPrecoTotal());
                         pStatement.setLong(4, it.getId_produto());
                         pStatement.executeUpdate();
-
+                   
                     }
 
                 } catch (SQLException e) {
@@ -136,6 +136,59 @@ public class CompraProdutoDAO {
                 }
             }
             
+            return compras;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+   
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return compras;
+    }
+    
+    public long retornaMaxID(){
+        
+        String sql = "SELECT MAX(IDPRODUTO) AS MAX FROM PRODUTO";
+        long compras = 0;
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+        
+
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                   compras =  rs.getLong("MAX");
+                }
+            }
+            
+            System.out.println("ID => " + compras);
             return compras;
        
 

@@ -112,11 +112,14 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel8.setText("jLabel8");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Dashboard");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
+            }
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -506,6 +509,15 @@ public class MainMenu extends javax.swing.JFrame {
 
     }//GEN-LAST:event_formWindowClosed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int opc = JOptionPane.showConfirmDialog(null, "Realmente deseja sair?", "Fechar Programa", JOptionPane.YES_NO_OPTION);
+
+        if (opc == 0) {
+            this.dispose();
+
+        }
+    }//GEN-LAST:event_formWindowClosing
+
     private void trocaCorPainel(JPanel painelAtivo) {
 
         for (JPanel p : paineis) {
@@ -549,92 +561,104 @@ public class MainMenu extends javax.swing.JFrame {
             public void run() {
                 new MainMenu().setVisible(true);
 
-                CabeleireiroController cc = new CabeleireiroController();
-
-                int qtdEmailSucesso = 0;
-                int qtdEmailErro = 0;
-
-                if (cc.verificaRegistro() == 1) {
-                    Cabeleireiro cab = cc.selecionaCabeleireiro();
-                    if (cab.getEmailAniversario().isEnviar()) {
-
-                        List<Cliente> clientes = new ClienteController().listarAniversariantesDoMes();
-
-                        if (clientes != null) {
-
-                            for (Cliente c : clientes) {
-                                boolean sucesso = false;
-
-                                if (Valida.isEmailSemNotificar(c.getEmail())) {
-                                    try {
-                                        new ClienteController().atualizarUltimoEnvioEmailAniversario(c.getId());
-                                        Email mail = cc.selecionaCabeleireiro().getEmailAniversario();
-                                        mail.setTitulo(mail.getTitulo().replace("<nome>", c.getNome()));
-                                        mail.setDestinatario(c.getEmail());
-                                        mail.setTexto(mail.getTexto().replace("<nome>", c.getNome()));
-
-                                        sucesso = mail.sendEmail(JavaMail.EMAIL_ANIVERSARIO_ULTIMAVISITA);
-
-                                        if (sucesso) {
-                                            qtdEmailSucesso++;
-                                        } else {
-                                            qtdEmailErro++;
-                                        }
-                                    } catch (MessagingException ex) {
-                                        System.out.println(ex);
-                                    }
-                                }
-
-                            }
-
-                        }
-
-                    }
-
-                    if (cab.getEmailUltimaVisita().isEnviar()) {
-                        List<Cliente> clientesUltimoEnvio = new ClienteController().listaClientesEmailUltimaVisita();
-
-                        if (clientesUltimoEnvio != null) {
-
-                            for (Cliente c : clientesUltimoEnvio) {
-
-                                boolean sucesso = false;
-
-                                if (Valida.isEmailSemNotificar(c.getEmail())) {
-                                    try {
-                                        new ClienteController().atualizarUltimoEnvioEmailUltimaVisita(c.getId());
-                                        Email mail = cc.selecionaCabeleireiro().getEmailUltimaVisita();
-                                        mail.setTitulo(mail.getTitulo().replace("<nome>", c.getNome()));
-                                        mail.setDestinatario(c.getEmail());
-                                        mail.setTexto(mail.getTexto().replace("<nome>", c.getNome()));
-                                        sucesso = mail.sendEmail(JavaMail.EMAIL_ANIVERSARIO_ULTIMAVISITA);
-
-                                        if (sucesso) {
-                                            qtdEmailSucesso++;
-                                        } else {
-                                            qtdEmailErro++;
-                                        }
-                                    } catch (MessagingException ex) {
-                                        System.out.println(ex);
-                                    }
-                                }
-
-                            }
-
-                        } else {
-                            System.out.println("veio nulo");
-                        }
-
-                    }
-
-                }//Fim envio email
-
-                if ((qtdEmailSucesso + qtdEmailErro) > 0) {
-                    JOptionPane.showMessageDialog(null, "Foram enviados " + (qtdEmailSucesso + qtdEmailErro) + " emails automáticamente.\n"
-                            + "Com sucesso:" + qtdEmailSucesso + "\nSem Sucesso: " + qtdEmailErro);
-                }
             }
         });
+
+        CabeleireiroController cc = new CabeleireiroController();
+        Cabeleireiro cab = cc.selecionaCabeleireiro();
+        List<Cliente> clientes = new ClienteController().listarAniversariantesDoMes();
+        List<Cliente> clientesUltimoEnvio = new ClienteController().listaClientesEmailUltimaVisita();
+
+        if (clientes != null || clientesUltimoEnvio != null) {
+            new Thread() {
+
+                @Override
+                public void run() {
+
+                    int qtdEmailSucesso = 0;
+                    int qtdEmailErro = 0;
+
+                    if (cc.verificaRegistro() == 1) {
+
+                        if (cab.getEmailAniversario().isEnviar()) {
+
+                            if (clientes != null) {
+
+                                for (Cliente c : clientes) {
+                                    boolean sucesso = false;
+
+                                    if (Valida.isEmailSemNotificar(c.getEmail())) {
+                                        try {
+                                            new ClienteController().atualizarUltimoEnvioEmailAniversario(c.getId());
+                                            Email mail = cc.selecionaCabeleireiro().getEmailAniversario();
+                                            mail.setTitulo(mail.getTitulo().replace("<nome>", c.getNome()));
+                                            mail.setDestinatario(c.getEmail());
+                                            mail.setTexto(mail.getTexto().replace("<nome>", c.getNome()));
+
+                                            sucesso = mail.sendEmail(JavaMail.EMAIL_ANIVERSARIO_ULTIMAVISITA);
+
+                                            if (sucesso) {
+                                                qtdEmailSucesso++;
+                                            } else {
+                                                qtdEmailErro++;
+                                            }
+                                        } catch (MessagingException ex) {
+                                            System.out.println(ex);
+                                        }
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                        if (cab.getEmailUltimaVisita().isEnviar()) {
+
+                            if (clientesUltimoEnvio != null) {
+
+                                for (Cliente c : clientesUltimoEnvio) {
+
+                                    boolean sucesso = false;
+
+                                    if (Valida.isEmailSemNotificar(c.getEmail())) {
+                                        try {
+                                            new ClienteController().atualizarUltimoEnvioEmailUltimaVisita(c.getId());
+                                            Email mail = cc.selecionaCabeleireiro().getEmailUltimaVisita();
+                                            mail.setTitulo(mail.getTitulo().replace("<nome>", c.getNome()));
+                                            mail.setDestinatario(c.getEmail());
+                                            mail.setTexto(mail.getTexto().replace("<nome>", c.getNome()));
+                                            sucesso = mail.sendEmail(JavaMail.EMAIL_ANIVERSARIO_ULTIMAVISITA);
+
+                                            if (sucesso) {
+                                                qtdEmailSucesso++;
+                                            } else {
+                                                qtdEmailErro++;
+                                            }
+                                        } catch (MessagingException ex) {
+                                            System.out.println(ex);
+                                        }
+                                    }
+
+                                }
+
+                            } else {
+                                System.out.println("veio nulo");
+                            }
+
+                        }
+
+                    }//Fim envio email
+
+                    if ((qtdEmailSucesso + qtdEmailErro) > 0) {
+                        JOptionPane.showMessageDialog(null, "Foram enviados " + (qtdEmailSucesso + qtdEmailErro) + " emails automáticamente.\n"
+                                + "Com sucesso:" + qtdEmailSucesso + "\nSem Sucesso: " + qtdEmailErro);
+                    }
+                }
+
+            }.start();
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

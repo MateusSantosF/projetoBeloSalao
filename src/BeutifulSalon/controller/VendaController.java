@@ -50,15 +50,21 @@ public class VendaController {
     public boolean validaQuantidadeProduto(ArrayList<Item> itensDaVenda) {
 
         EstoqueController ec = new EstoqueController();
-
+        boolean comEstoque = true;
         for (Item i : itensDaVenda) {
-            if (ec.quantidadeProduto(i.getId_produto()) <= 0) {
-                JOptionPane.showMessageDialog(null, "Quantidade de produto(s) insuficiente no estoque.");
-                return false;
+            long qtd = ec.quantidadeProduto(i.getId_produto());
+            if (qtd >= i.getQuantidade()) {
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Quantidade de produto(s) insuficiente no estoque.\n"
+                        + "Produto:" + i.getNome() +
+                        "\nQuantidade em estoque: "+ qtd+"\n"
+                                + "Quantidade Solicitada:"+ i.getQuantidade());
+                comEstoque = false;
             }
         }
 
-        return true;
+        return comEstoque;
     }
 
     public List<Venda> selecionaVendasDoAno(int anoReferente) {

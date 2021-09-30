@@ -19,7 +19,9 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 /**
  *
@@ -167,12 +169,11 @@ public class AgendamentoController {
         return true;
     }
 
-    public boolean editarAgendamento(long idAgendamento) {
-
-        Agendamento ag = listarAgendamento(idAgendamento);
+    public boolean editarAgendamento(Agendamento ag, EditarAgendamento edag) {
 
         if (ag != null) {
-            new EditarAgendamento(ag).setVisible(true);
+
+            edag.setVisible(true);
         } else {
             return false;
         }

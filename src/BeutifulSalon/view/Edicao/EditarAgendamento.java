@@ -13,7 +13,9 @@ import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
+import BeutifulSalon.model.ObservadoEdicao;
 import BeutifulSalon.model.Observador;
+import BeutifulSalon.model.ObservadorEdicao;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.ModalInputMonetarios;
@@ -27,6 +29,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,7 +41,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author mateus
  */
-public class EditarAgendamento extends javax.swing.JFrame implements Observador {
+public class EditarAgendamento extends javax.swing.JFrame implements Observador, ObservadoEdicao {
 
     /**
      * Creates new form CadastroAgendamento
@@ -49,8 +52,9 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
     private Agendamento agendamento;
     private String idCliente;
     private boolean isDesconto;
-     private ModalInputMonetarios modalDesconto;
+    private ModalInputMonetarios modalDesconto;
     private ModalInputMonetarios modalValorAdicional;
+    private ArrayList<ObservadorEdicao> observadores = new ArrayList<>();
    
     
     public EditarAgendamento() {
@@ -427,7 +431,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
         jLabel14.setText("Forma de Pagamento");
 
         jComboBoxFormaPagamento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBoxFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Crédito", "Débito" }));
+        jComboBoxFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Crédito", "Débito,", "Pix" }));
         jComboBoxFormaPagamento.setEnabled(false);
         jComboBoxFormaPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -506,7 +510,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -518,9 +522,9 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
                                 .addComponent(jToggleButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel14)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBoxFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(12, 12, 12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -673,6 +677,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
 
         if (sucesso) {
             JOptionPane.showMessageDialog(null, "Agendamento atualizado com sucesso");
+            notificarObservadores();
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar Agendamento. Verifique os dados inseridos!");
@@ -701,7 +706,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Data inválida!" + e);
             }
-            ArrayList<LocalTime> horariosLivres = manipulaData.recuperaHorariosDisponiveis(dataDigitada);
+            List<LocalTime> horariosLivres = manipulaData.recuperaHorariosDisponiveis(dataDigitada);
             DefaultListModel<String> model = new DefaultListModel<String>();
 
             ArrayList<String> horariosFormatados = manipulaData.formataHorariosDisponiveis(horariosLivres, dataDigitada);
@@ -988,5 +993,22 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador 
     
     @Override
     public void update(Orcamento orcamento) {
+    }
+
+    @Override
+    public void registrarObservador(ObservadorEdicao observador) {
+        observadores.add(observador);
+    }
+
+    @Override
+    public void removeObservador(ObservadorEdicao observador) {
+        observadores.remove(observador);
+    }
+
+    @Override
+    public void notificarObservadores() {
+        observadores.forEach(ob->{
+            ob.update(true);
+        });
     }
 }

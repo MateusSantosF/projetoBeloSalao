@@ -6,6 +6,7 @@
 package BeutifulSalon.controller;
 
 import BeutifulSalon.Ferramentas.Valida;
+import BeutifulSalon.dao.CabeleireiroDAO;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cabeleireiro;
 import BeutifulSalon.model.Dinheiro;
@@ -41,7 +42,7 @@ public class CabeleireiroController {
         return true;
     }
 
-    public boolean atualizarCabeleireiro(String nome, String cpf, String email, ArrayList<LocalTime> expediente,  char[] senha, String metaDeLucro) {
+    public boolean atualizarCabeleireiro(String nome, String cpf, String email, ArrayList<LocalTime> expediente, char[] senha, String metaDeLucro) {
 
         if (nome.length() > 0 && Valida.isCpf(cpf) && Valida.isEmail(email) && !expediente.isEmpty() && expediente.size() == 14) {
 
@@ -50,7 +51,7 @@ public class CabeleireiroController {
                 cabeleireiro.setSenha(String.copyValueOf(senha));
                 cabeleireiro.setMetaDeLucro(Dinheiro.parseCent(Dinheiro.retiraCaracteres(metaDeLucro)));
                 cabeleireiro.atualizarCabeleireiro(cabeleireiro);
-                
+
             } catch (ExceptionDAO e) {
 
                 JOptionPane.showMessageDialog(null, "Controller" + e);
@@ -92,12 +93,12 @@ public class CabeleireiroController {
                 System.out.println("Erro ao cadastrarEmail" + e);
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
 
     }
-    
+
     public boolean cadastrarEmailUltimaVisita(Email email, String cpf, int periodo) {
 
         if (email.getTitulo().length() > 0 && email.getTexto().length() > 24) {
@@ -108,10 +109,21 @@ public class CabeleireiroController {
                 System.out.println("Erro ao cadastrarEmailUltimaVisita" + e);
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
 
     }
- 
+
+    public boolean atualizarPreferencias(boolean verificar, int tempoEntreAgendamentos) {
+        
+        try {
+            new CabeleireiroDAO().atualizarPreferencias(verificar, tempoEntreAgendamentos);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Erro ao atualizar preferencias do sistema");
+            return false;
+        }
+    }
+
 }

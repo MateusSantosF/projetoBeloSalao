@@ -10,7 +10,9 @@ package BeutifulSalon.model;
  * @author Mateus
  */
 public interface ObservadoCliente {
-     public void registrarObservador(ObservadorCliente observador);
+    public void registrarObservador(ObservadorCliente observador);
+
     public void removeObservador(ObservadorCliente observador);
+
     public void notificarObservadores();
 }

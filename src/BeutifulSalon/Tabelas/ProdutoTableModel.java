@@ -43,14 +43,13 @@ public class ProdutoTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-
+        EstoqueController estoque = new EstoqueController();
         switch (columnIndex) {
             case 0:
                 return dados.get(rowIndex).getNome();
 
             case 1:
                 return dados.get(rowIndex).getMarca();
-
             case 2:
                 if (dados.get(rowIndex).getPreco() < 0) {
                     return "Não é Vendido";
@@ -59,7 +58,7 @@ public class ProdutoTableModel extends AbstractTableModel {
                 }
 
             case 3:
-                EstoqueController estoque = new EstoqueController();
+
                 return estoque.quantidadeProduto(dados.get(rowIndex).getId_produto());
             default:
                 return null;

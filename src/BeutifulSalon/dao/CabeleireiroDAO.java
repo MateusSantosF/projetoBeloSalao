@@ -236,6 +236,8 @@ public class CabeleireiroDAO {
                     cabeleireiro.setSenha(rs.getString("SENHA"));
                     cabeleireiro.setMetaDeLucro(rs.getLong("METADELUCRO"));
                     cabeleireiro.setPostit(rs.getString("POSTIT"));
+                    cabeleireiro.setVerificarHorariosDisponiveis(rs.getBoolean("VERIFICACAOHORARIOS"));
+                    cabeleireiro.setTempoEntreHorariosLivres(rs.getInt("TEMPOENTREHORARIOS"));
 
                 }
             }
@@ -395,6 +397,7 @@ public class CabeleireiroDAO {
             pStatement.setTime(17, java.sql.Time.valueOf(cabeleireiro.getDomingoS()));
             pStatement.setString(18, cabeleireiro.getSenha());
             pStatement.setLong(19, cabeleireiro.getMetaDeLucro());
+            
 
             
             pStatement.execute();
@@ -425,7 +428,7 @@ public class CabeleireiroDAO {
     
     public void cadastrarEmailPadraoAniversario(Email email, String cpf){
          String sqlScript = "UPDATE CABELEIREIRO SET ENVIARANIVERSARIO = ?, TITULOANIVERSARIO = ? ,TEXTOANIVERSARIO = ?,"
-                 + "ANEXOANIVERSARIO = ?, NOMEANEXOANIVERSARIO = ? WHERE CPF = ?";
+                 + "ANEXOANIVERSARIO = ?, NOMEANEXOANIVERSARIO = ?";
              
   
         PreparedStatement pStatement = null;
@@ -524,7 +527,7 @@ public class CabeleireiroDAO {
     public void cadastrarEmailUltimaVisita(Email email, String cpf, int periodo) {
         
         String sqlScript = "UPDATE CABELEIREIRO SET ENVIARULTIMAVISITA = ?, TITULOULTIMAVISITA = ? ,TEXTOULTIMAVISITA = ?,"
-                 + "ANEXOULTIMAVISITA = ?, NOMEANEXOULTIMAVISITA = ?, PERIODOULTIMAVISITA = ? WHERE CPF = ?";
+                 + "ANEXOULTIMAVISITA = ?, NOMEANEXOULTIMAVISITA = ?, PERIODOULTIMAVISITA = ?";
              
         PreparedStatement pStatement = null;
         Connection connection = null;
@@ -566,6 +569,427 @@ public class CabeleireiroDAO {
             }
 
         }
+    }
+
+    public void atualizarPreferencias(boolean verificar, int tempoEntreAgendamentos) {
+        
+        String sqlScript = "UPDATE CABELEIREIRO SET VERIFICACAOHORARIOS = ?,TEMPOENTREHORARIOS = ?  ";
+             
+  
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+
+            pStatement = connection.prepareStatement(sqlScript);
+            pStatement.setBoolean(1, verificar);
+            pStatement.setInt(2, tempoEntreAgendamentos);
+            
+            pStatement.execute();
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+
+        }
+    }
+
+    public void recriarBanco() {
+  
+        String tabelaCliente = "CREATE TABLE IF NOT EXISTS CLIENTE ("
+                + " NOME          VARCHAR (30) NOT NULL,"
+                + " SOBRENOME     VARCHAR (40) NOT NULL,"
+                + " EMAIL         VARCHAR (60),"
+                + " DATANASC      CHAR (10),"
+                + " CEP           CHAR (9),"
+                + " BAIRRO        VARCHAR (50),"
+                + " RUA           VARCHAR (60),"
+                + " NUMERO        VARCHAR (6),"
+                + " CIDADE        CHAR (4),"
+                + " TELEFONE      VARCHAR (15),"
+                + " CELULAR       VARCHAR (15),"
+                + " DATAREG       DATE,"
+                + " TIPODECABELO  INT          DEFAULT (12),"
+                + " TAMANHOCABELO INT          DEFAULT (4),"
+                + " CORCABELO     VARCHAR (16) DEFAULT [Não Informado],"
+                + " CONHECEU      INT          DEFAULT (5),"
+                + " FACEBOOK      VARCHAR (35) DEFAULT [Não Informado],"
+                + " INSTAGRAM     VARCHAR (35) DEFAULT [Não Informado],"
+                + " OBSERVACOES   TEXT         DEFAULT [Não Informado.],"
+                + " FOTOPERFIL    BLOB,"
+                + " ID            INTEGER      PRIMARY KEY AUTOINCREMENT,"
+                + "EXCLUIDO      BOOLEAN      DEFAULT (false) "
+                + "); ";
+        
+        String triggerCliente1 = "CREATE TRIGGER IF NOT EXISTS registraEmailUltimaVisita"
+                + "    AFTER INSERT"
+                + "      ON CLIENTE"
+                + " BEGIN"
+                + "    INSERT INTO EMAILULTIMAVISITA ("
+                + "                                      ID_CLIENTE,"
+                + "                                      ULTIMOENVIO"
+                + "                                  )"
+                + "                                  VALUES ("
+                + "                                      ("
+                + "                                          SELECT ID"
+                + "                                            FROM CLIENTE"
+                + "                                           ORDER BY ID DESC"
+                + "                                           LIMIT 1"
+                + "                                      ),"
+                + "                                      NULL"
+                + "                                  );"
+                + "END; ";
+              String triggerCliente2 = "CREATE TRIGGER IF NOT EXISTS registraEmailAniversario"
+                + "         AFTER INSERT"
+                + "            ON CLIENTE"
+                + " BEGIN"
+                + "    INSERT INTO EMAILANIVERSARIO ("
+                + "                                     ID_CLIENTE,"
+                + "                                     ULTIMOENVIO"
+                + "                                 )"
+                + "                                 VALUES ("
+                + "                                     ("
+                + "                                         SELECT ID"
+                + "                                           FROM CLIENTE"
+                + "                                          ORDER BY ID DESC"
+                + "                                          LIMIT 1"
+                + "                                     ),"
+                + "                                     NULL"
+                + "                                 );"
+                + "END;";
+              
+                String tabelaEmailAniversario = "CREATE TABLE IF NOT EXISTS EMAILANIVERSARIO ("
+                + "    ID_CLIENTE  INTEGER NOT NULL"
+                + "                        REFERENCES CLIENTE (ID),"
+                + "    ULTIMOENVIO DATE,"
+                + "    FOREIGN KEY ("
+                + "        ID_CLIENTE"
+                + "    )"
+                + "    REFERENCES CLIENTE"
+                + ");";
+                String tabelaEmailUltimaVisita = "CREATE TABLE IF NOT EXISTS EMAILULTIMAVISITA ("
+                + "  ID_CLIENTE  INTEGER NOT NULL"
+                + "                       REFERENCES CLIENTE (ID),"
+                + "  ULTIMOENVIO DATE,"
+                + "  FOREIGN KEY ("
+                + "      ID_CLIENTE"
+                + "  )"
+                + "  REFERENCES CLIENTE"
+                + ");";
+                
+                String tabelaCompra =  "CREATE TABLE IF NOT EXISTS COMPRA ("
+                + "   ID_COMPRA     INTEGER  PRIMARY KEY AUTOINCREMENT,"
+                + "  DATA          DATE,"
+                + " VALORTOTAL    INTEGER,"
+                + " VALORDESCONTO INTENGER"
+                + ");";
+                 String tabelItemCompra = "CREATE TABLE IF NOT EXISTS ITEM_COMPRA ("
+                + "   ID_ITEMCOMPRA INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "  PRECOUNITARIO INTEGER,"
+                + " QUANTIDADE    INT,"
+                + " PRECOTOTAL    INTEGER,"
+                + " ID_PRODUTO    INTEGER,"
+                + " ID_COMPRA     INTEGER,"
+                + " FOREIGN KEY ("
+                + "     ID_PRODUTO"
+                + ")"
+                + " REFERENCES PRODUTO (IDPRODUTO),"
+                + " FOREIGN KEY ("
+                + "     ID_COMPRA"
+                + " )"
+                + " REFERENCES COMPRA (ID_COMPRA) "
+                + ");";
+                 
+                String tabelaVenda =  "CREATE TABLE IF NOT EXISTS VENDA ("
+                + "   ID_VENDA      INTEGER   PRIMARY KEY AUTOINCREMENT,"
+                + "  DATA          DATE,"
+                + " VALORTOTAL    INTEGER,"
+                + "VALORDESCONTO INTENGER,"
+                + "CPF_CLIENTE   CHAR (14),"
+                + "ID_CLIENTE    INTEGER   NOT NULL"
+                + "                        REFERENCES CLIENTE (ID),"
+                + "FOREIGN KEY ("
+                + "    CPF_CLIENTE"
+                + ")"
+                + "REFERENCES CLIENTE"
+                + ");";
+                
+                String tabelaItemVenda =  "CREATE TABLE IF NOT EXISTS ITEM_VENDA ("
+                + "    ID_ITEMVENDA  INTEGER    PRIMARY KEY AUTOINCREMENT,"
+                + "    PRECOUNITARIO INTEGER,"
+                + "    QUANTIDADE    INT,"
+                + "    PRECOTOTAL    INTEGER,"
+                + "    ID_PRODUTO    INTEGER,"
+                + "    ID_VENDA      INTEGER,"
+                + "    BOOLEAN       DADO_ATIVO,"
+                + "    FOREIGN KEY ("
+                + "        ID_PRODUTO"
+                + "    )"
+                + "    REFERENCES PRODUTO (IDPRODUTO),"
+                + "    FOREIGN KEY ("
+                + "        ID_VENDA"
+                + "    )"
+                + "    REFERENCES COMPRA (ID_VENDA) "
+                + ");";
+                
+                String tabelaProduto = "CREATE TABLE PRODUTO ("
+                + "    IDPRODUTO INTEGER      PRIMARY KEY AUTOINCREMENT,"
+                + "    NOME      VARCHAR (45) NOT NULL,"
+                + "    MARCA     VARCHAR (45) NOT NULL,"
+                + "    PRECO     INTEGER      NOT NULL,"
+                + "    DATAREG   DATE         NOT NULL,"
+                + "   EXCLUIDO  BOOLEAN      DEFAULT (false),"
+                + "   CONSTRAINT iPRODUTO UNIQUE ("
+                + "      NOME,"
+                + "       MARCA"
+                + "  )"
+                + ");";
+                
+                String triggerExclusaoProduto =  "CREATE TRIGGER IF NOT EXISTS exclusaoLogicaProduto"
+                + "         AFTER UPDATE OF EXCLUIDO"
+                + "            ON PRODUTO"
+                + " BEGIN"
+                + "    DELETE FROM PRODUTO_SERVICO"
+                + "         WHERE ID_PRODUTO = old.IDPRODUTO;"
+                + "  DELETE FROM ESTOQUE"
+                + "       WHERE ESTOQUE.ID_PRODUTO = old.IDPRODUTO;"
+                + "END;";
+                
+                 String tabelaServico =  "CREATE TABLE IF NOT EXISTS SERVICO ("
+                + "   ID_SERVICO INTEGER      PRIMARY KEY AUTOINCREMENT,"
+                + "  NOME       VARCHAR (30) NOT NULL,"
+                + " PRECO      INTEGER      NOT NULL,"
+                + "TEMPOGASTO DATIME,"
+                + "EXCLUIDO   BOOLEAN      DEFAULT (false) "
+                + ");";
+                 
+                 
+                 String tabelaProdutoServico =  "CREATE TABLE IF NOT EXISTS PRODUTO_SERVICO ("
+                + "   ID_PRODUTO INT,"
+                + "  RENDIMENTO INT,"
+                + " ID_SERVICO INT,"
+                + "FOREIGN KEY ("
+                + "   ID_PRODUTO"
+                + ")"
+                + "REFERENCES PRODUTO,"
+                + "FOREIGN KEY ("
+                + "   ID_SERVICO"
+                + ")"
+                + "REFERENCES SERVICO (ID_SERVICO) "
+                + ");";
+                 
+                 
+                 String tabelaCabeleireiro =  "CREATE TABLE IF NOT EXISTS CABELEIREIRO ("
+                + "   CPF                   CHAR (14),"
+                + "  EMAIL                 VARCHAR (60)                              NOT NULL,"
+                + " NOME                  VARCHAR (45)                              NOT NULL,"
+                + "SEGUNDAE              DATETIME,"
+                + "TERCAE                DATETIME,"
+                + "QUARTAE               DATETIME,"
+                + "QUINTAE               DATETIME,"
+                + "SEXTAE                DATETIME,"
+                + "SABADOE               DATETIME,"
+                + "DOMINGOE              DATETIME,"
+                + "SEGUNDAS              DATETIME,"
+                + "TERCAS                DATETIME,"
+                + "QUARTAS               DATETIME,"
+                + "QUINTAS               DATETIME,"
+                + "SEXTAS                DATETIME,"
+                + "SABADOS               DATETIME,"
+                + "DOMINGOS              DATETIME,"
+                + "ENVIARANIVERSARIO     BOOLEAN                                   DEFAULT 0,"
+                + "TITULOANIVERSARIO     VARCHAR (60)                              DEFAULT [Título não informado.],"
+                + "TEXTOANIVERSARIO      TEXT                                      DEFAULT '',"
+                + "ANEXOANIVERSARIO      [BLOOB NOMEANEXOANIVERSARIO VARCHAR] (60),"
+                + "NOMEANEXOANIVERSARIO  STRING (60),"
+                + "SENHA                 VARCHAR (45),"
+                + "ENVIARULTIMAVISITA    BOOLEAN                                   DEFAULT (FALSE),"
+                + "TITULOULTIMAVISITA    VARCHAR (60)                              DEFAULT [Título não informado],"
+                + "TEXTOULTIMAVISITA     TEXT                                      DEFAULT '',"
+                + "ANEXOULTIMAVISITA     BLOB,"
+                + "NOMEANEXOULTIMAVISITA VARCHAR (60),"
+                + "PERIODOULTIMAVISITA   INTEGER                                   DEFAULT (2),"
+                + "METADELUCRO           INTEGER                                   DEFAULT (0),"
+                + "ID                    INTEGER                                   PRIMARY KEY,"
+                + "POSTIT                TEXT,"
+                + "TEMPOENTREHORARIOS    INTEGER                                   DEFAULT(6),"
+                + "VERIFICACAOHORARIOS   BOOLEAN                                   DEFAULT (FALSE)"
+                + ");";
+                         
+                 String tabelaEstoque =  "CREATE TABLE IF NOT EXISTS ESTOQUE ("
+                + "   ID_ESTOQUE     INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "  ID_PRODUTO     INTEGER NOT NULL,"
+                + "  QUANTIDADE     INTEGER NOT NULL"
+                + "                         DEFAULT 0,"
+                + " VALOR_UNITARIO INTEGER"
+                + ");";
+                 
+                String tabelaAgendamento =  "CREATE TABLE IF NOT EXISTS AGENDAMENTO ("
+                + "   ID_AGENDAMENTO   INTEGER      PRIMARY KEY AUTOINCREMENT,"
+                + "  DATA             DATE         NOT NULL,"
+                + " HORARIO          DATETIME     NOT NULL,"
+                + "REALIZADO        BOOLEAN,"
+                + "TOTAL            INTEGER,"
+                + "DESCONTO         INTEGER,"
+                + "ID_CLIENTE       INTEGER      NOT NULL"
+                + "                              REFERENCES CLIENTE (ID),"
+                + "VALORADICIONAL   INTEGER,"
+                + "PAGO             BOOLEAN,"
+                + "FORMADEPAGAMENTO VARCHAR (15),"
+                + "FIMAGENDAMENTO   TIME"
+                + ");";
+                
+                String tabelaAgendamentoServico = "CREATE TABLE IF NOT EXISTS AGENDAMENTO_SERVICO ("
+                + "   ID_AGENDAMENTO INTEGER,"
+                + "  ID_SERVICO     INTEGER,"
+                + " FOREIGN KEY ("
+                + "    ID_AGENDAMENTO"
+                + ")"
+                + "REFERENCES AGENDAMENTO (ID_AGENDAMENTO),"
+                + "FOREIGN KEY ("
+                + "    ID_SERVICO"
+                + ")"
+                + "REFERENCES SERVICO (ID_SERVICO) "
+                + ");";
+                
+                String tabelaOrcamento = "CREATE TABLE IF NOT EXISTS ORCAMENTO ("
+                + "   ID_ORCAMENTO INTEGER      PRIMARY KEY AUTOINCREMENT,"
+                + "  NOME         VARCHAR (45) NOT NULL,"
+                + " JANEIRO      INTEGER      NOT NULL,"
+                + "FEVEREIRO    INTEGER      NOT NULL,"
+                + "MARCO        INTEGER      NOT NULL,"
+                + "ABRIL        INTEGER      NOT NULL,"
+                + "MAIO         INTEGER      NOT NULL,"
+                + "JUNHO        INTEGER      NOT NULL,"
+                + "JULHO        INTEGER      NOT NULL,"
+                + "AGOSTO       INTEGER      NOT NULL,"
+                + "SETEMBRO     INTEGER      NOT NULL,"
+                + "OUTUBRO      INTEGER      NOT NULL,"
+                + "NOVEMBRO     INTEGER      NOT NULL,"
+                + "DEZEMBRO     INTEGER      NOT NULL,"
+                + "PREVISTO     BOOLEAN,"
+                + "ANO          CHAR (5)"
+                + "REFERENCES CABELEIREIRO (CPF),"
+                + "CONSTRAINT iORCAMENTO UNIQUE ("
+                + "    NOME,"
+                + "    ANO"
+                + ")"
+                + ");";
+                 String tabelaOrcamentoServico ="CREATE TABLE IF NOT EXISTS  ORCAMENTOSERVICO ("
+                + "   ID_ORCAMENTO INTEGER      PRIMARY KEY AUTOINCREMENT,"
+                + "  NOMESERV     VARCHAR (45) NOT NULL,"
+                + " JANEIRO      INTEGER      NOT NULL,"
+                + "FEVEREIRO    INTEGER      NOT NULL,"
+                + "MARCO        INTEGER      NOT NULL,"
+                + "ABRIL        INTEGER      NOT NULL,"
+                + "MAIO         INTEGER      NOT NULL,"
+                + "JUNHO        INTEGER      NOT NULL,"
+                + "JULHO        INTEGER      NOT NULL,"
+                + "AGOSTO       INTEGER      NOT NULL,"
+                + "SETEMBRO     INTEGER      NOT NULL,"
+                + "OUTUBRO      INTEGER      NOT NULL,"
+                + "NOVEMBRO     INTEGER      NOT NULL,"
+                + "DEZEMBRO     INTEGER      NOT NULL,"
+                + "PREVISTO     BOOLEAN,"
+                + "ANO          CHAR (5)     NOT NULL,"
+                + "ID_SERVICO   INTEGER      NOT NULL,"
+                + "CONSTRAINT iORCAMENTOSERVICO UNIQUE ("
+                + "    NOMESERV,"
+                + "    ANO"
+                + " )"
+                + "); ";
+                 
+                String tabelaDespesaMensal = "CREATE TABLE DESPESAMENSAL ("
+                + "   ID_DESPESA     INTEGER      PRIMARY KEY AUTOINCREMENT,"
+                + "  VALORPAGO      INTEGER,"
+                + " FORMAPAGAMENTO VARCHAR (15),"
+                + "ANO            CHAR(5)      NOT NULL,"
+                + "DATALANCAMENTO DATE         NOT NULL,"
+                + "DATAVENCIMENTO DATE         NOT NULL,"
+                + "DATAPAGAMENTO  DATE,"
+                + "STATUS         BOOLEAN      NOT NULL,"
+                + "ANOTACAO       TEXT,"
+                + "ID_ORCAMENTO   INTEGER      NOT NULL,"
+                + "FOREIGN KEY ("
+                + "    ID_ORCAMENTO"
+                + ")"
+                + "REFERENCES ORCAMENTO (ID_ORCAMENTO) );";
+             
+  
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        try {
+
+           connection = new ConnectionMVC().getConnection();
+
+           connection.prepareStatement(tabelaCliente).execute();
+           connection.prepareStatement(tabelaEmailAniversario).execute();
+           connection.prepareStatement(tabelaEmailUltimaVisita).execute();
+           connection.prepareStatement(triggerCliente1).execute();
+           connection.prepareStatement(triggerCliente2).execute();
+           connection.prepareStatement(tabelaCliente).execute();
+           connection.prepareStatement(tabelaCompra).execute();
+           connection.prepareStatement(tabelItemCompra).execute();
+           connection.prepareStatement(tabelaVenda).execute();
+           connection.prepareStatement(tabelaItemVenda).execute();
+           connection.prepareStatement(tabelaProduto).execute();
+           connection.prepareStatement(triggerExclusaoProduto).execute();
+           connection.prepareStatement(tabelaServico).execute();
+           connection.prepareStatement(tabelaProdutoServico).execute();
+           connection.prepareStatement(tabelaCabeleireiro).execute();
+           connection.prepareStatement(tabelaEstoque).execute();
+           connection.prepareStatement(tabelaAgendamento).execute();
+           connection.prepareStatement(tabelaAgendamentoServico).execute();
+           connection.prepareStatement(tabelaOrcamento).execute();
+           connection.prepareStatement(tabelaOrcamentoServico).execute();
+           connection.prepareStatement(tabelaDespesaMensal).execute();
+           
+   
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+
+        }
+
+
     }
 
 }

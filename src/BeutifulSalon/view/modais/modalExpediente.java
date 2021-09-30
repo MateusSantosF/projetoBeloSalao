@@ -61,13 +61,13 @@ public class ModalExpediente extends javax.swing.JFrame implements Observado {
                 jFTTercaEntrada.setText(c.getTercaE().format(parserHora));
                 jFTTercaSaida.setText(c.getTercaS().format(parserHora));
                 jFTQuartaEntrada.setText(c.getQuartaE().format(parserHora));
-                jFTQuartaSaida.setText(c.getQuartaS().format(parserHora));
+                jFTSabadoSaida.setText(c.getQuartaS().format(parserHora));
                 jFTQuintaEntrada.setText(c.getQuintaE().format(parserHora));
-                jFTQuintaSaida.setText(c.getQuintaS().format(parserHora));
+                jFTSextaSaida.setText(c.getQuintaS().format(parserHora));
                 jFTSextaEntrada.setText(c.getSextaE().format(parserHora));
-                jFTSextaSaida.setText(c.getSextaS().format(parserHora));
+                jFTQuintaSaida.setText(c.getSextaS().format(parserHora));
                 jFTSabadoEntrada.setText(c.getSabadoE().format(parserHora));
-                jFTSabadoSaida.setText(c.getSabadoS().format(parserHora));
+                jFTQuartaSaida.setText(c.getSabadoS().format(parserHora));
                 jFTDomingoEntrada.setText(c.getDomingoE().format(parserHora));
                 jFTDomingoSaida.setText(c.getDomingoS().format(parserHora));
             }
@@ -78,13 +78,13 @@ public class ModalExpediente extends javax.swing.JFrame implements Observado {
         horarios.add(jFTTercaEntrada);
         horarios.add(jFTTercaSaida);
         horarios.add(jFTQuartaEntrada);
-        horarios.add(jFTQuartaSaida);
-        horarios.add(jFTQuintaEntrada);
-        horarios.add(jFTQuintaSaida);
-        horarios.add(jFTSextaEntrada);
-        horarios.add(jFTSextaSaida);
-        horarios.add(jFTSabadoEntrada);
         horarios.add(jFTSabadoSaida);
+        horarios.add(jFTQuintaEntrada);
+        horarios.add(jFTSextaSaida);
+        horarios.add(jFTSextaEntrada);
+        horarios.add(jFTQuintaSaida);
+        horarios.add(jFTSabadoEntrada);
+        horarios.add(jFTQuartaSaida);
         horarios.add(jFTDomingoEntrada);
         horarios.add(jFTDomingoSaida);
     }
@@ -115,10 +115,10 @@ public class ModalExpediente extends javax.swing.JFrame implements Observado {
         jFTSabadoEntrada = new javax.swing.JFormattedTextField();
         jFTDomingoEntrada = new javax.swing.JFormattedTextField();
         jFTDomingoSaida = new javax.swing.JFormattedTextField();
-        jFTQuartaSaida = new javax.swing.JFormattedTextField();
-        jFTQuintaSaida = new javax.swing.JFormattedTextField();
-        jFTSextaSaida = new javax.swing.JFormattedTextField();
         jFTSabadoSaida = new javax.swing.JFormattedTextField();
+        jFTSextaSaida = new javax.swing.JFormattedTextField();
+        jFTQuintaSaida = new javax.swing.JFormattedTextField();
+        jFTQuartaSaida = new javax.swing.JFormattedTextField();
         jButton1 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -253,20 +253,12 @@ public class ModalExpediente extends javax.swing.JFrame implements Observado {
         jFTDomingoSaida.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         try {
-            jFTQuartaSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
+            jFTSabadoSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFTQuartaSaida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFTQuartaSaida.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        try {
-            jFTQuintaSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jFTQuintaSaida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFTQuintaSaida.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jFTSabadoSaida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFTSabadoSaida.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         try {
             jFTSextaSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
@@ -277,12 +269,20 @@ public class ModalExpediente extends javax.swing.JFrame implements Observado {
         jFTSextaSaida.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         try {
-            jFTSabadoSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
+            jFTQuintaSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFTSabadoSaida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jFTSabadoSaida.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jFTQuintaSaida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFTQuintaSaida.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        try {
+            jFTQuartaSaida.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFTQuartaSaida.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jFTQuartaSaida.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jButton1.setBackground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Confirmar");
@@ -318,7 +318,6 @@ public class ModalExpediente extends javax.swing.JFrame implements Observado {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -349,10 +348,10 @@ public class ModalExpediente extends javax.swing.JFrame implements Observado {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jFTDomingoSaida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jFTQuartaSaida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jFTQuintaSaida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jFTSextaSaida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jFTSabadoSaida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jFTSextaSaida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jFTQuintaSaida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jFTQuartaSaida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jFTTercaSaida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jFTSegundaSaida, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(39, 39, 39))))
@@ -390,19 +389,19 @@ public class ModalExpediente extends javax.swing.JFrame implements Observado {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jFTQuartaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFTSabadoSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jFTQuartaSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jFTQuintaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFTSextaSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jFTSextaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jFTQuintaSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jFTSextaEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jFTSextaSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jFTSabadoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFTQuartaSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jFTSabadoSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jFTDomingoSaida, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)

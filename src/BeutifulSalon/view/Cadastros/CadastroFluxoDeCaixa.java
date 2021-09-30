@@ -46,9 +46,9 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
     public CadastroFluxoDeCaixa() {
         initComponents();
-        
-        ManipulaFontes mf = new ManipulaFontes(); ;
-        
+
+        ManipulaFontes mf = new ManipulaFontes();;
+
         jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f)); //Fluxo de caixa
         jRadioButtonCliente.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Cliente
         jRadioButtonCabelereiro.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Cabelereiro
@@ -60,9 +60,8 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
         jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Valor Desconto:
         jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //TOTAL
         jButtonFinalizarCompra.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Finalizar Compra
-        
-        jDateChooser1.setDate(new ManipulaData().localDateToDate(LocalDate.now()));
 
+        jDateChooser1.setDate(new ManipulaData().localDateToDate(LocalDate.now()));
 
     }
 
@@ -387,53 +386,52 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonFinalizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarCompraActionPerformed
-       
+
         boolean sucesso;
 
-       
-            CompraController cc = new CompraController();
-            VendaController vc = new VendaController();
-            CabeleireiroController cabc = new CabeleireiroController();
-            boolean isClienteComprando = jRadioButtonCliente.isSelected();
-            
-            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
-             DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
-            String dataFormatada = "";
-            try {
-                dataFormatada = formater.format(jDateChooser1.getDate());
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao converter data");
-            }
+        CompraController cc = new CompraController();
+        VendaController vc = new VendaController();
+        CabeleireiroController cabc = new CabeleireiroController();
+        boolean isClienteComprando = jRadioButtonCliente.isSelected();
 
-            //retorna o CPF de acordo com o RadioButton
-            if (isClienteComprando) {
-                 sucesso = vc.RegistraVenda(
-                        LocalDate.parse(dataFormatada, formatterData),
-                        Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
-                        id_Cliente,
-                        new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
-            } else {
-                    
-                sucesso = cc.RegistraCompra(
+        SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
+        String dataFormatada = "";
+        try {
+            dataFormatada = formater.format(jDateChooser1.getDate());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao converter data");
+        }
+
+        //retorna o CPF de acordo com o RadioButton
+        if (isClienteComprando) {
+            sucesso = vc.RegistraVenda(
+                    LocalDate.parse(dataFormatada, formatterData),
+                    Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
+                    id_Cliente,
+                    new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
+        } else {
+
+            sucesso = cc.RegistraCompra(
                     LocalDate.parse(dataFormatada, formatterData),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
                     new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
-            }
-            
-            if (sucesso) {
-                if (isClienteComprando) {
-                    JOptionPane.showMessageDialog(null, "Venda registrada com sucesso.");
-                    modalInputMonetarios = null;
-                } else {
-                    JOptionPane.showMessageDialog(null, "Compra registrada com sucesso.");
-                }
+        }
 
-                limparTodosCampos();
+        if (sucesso) {
+            if (isClienteComprando) {
+                JOptionPane.showMessageDialog(null, "Venda registrada com sucesso.");
+                modalInputMonetarios = null;
             } else {
-                JOptionPane.showMessageDialog(null, "Erro ao registrar venda");
+                JOptionPane.showMessageDialog(null, "Compra registrada com sucesso.");
             }
 
- 
+            limparTodosCampos();
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao registrar venda");
+        }
+
+
     }//GEN-LAST:event_jButtonFinalizarCompraActionPerformed
 
     private void jButtonFinalizarCompraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonFinalizarCompraMousePressed
@@ -444,16 +442,15 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
         if (!jCheckBoxDesconto2.isSelected()) {
             jCheckBoxDesconto2.setSelected(true);
-            
-            if(modalInputMonetarios == null){
+
+            if (modalInputMonetarios == null) {
                 modalInputMonetarios = new ModalInputMonetarios("Insira o valor do desconto");
                 modalInputMonetarios.registrarObservador(this);
                 modalInputMonetarios.setVisible(true);
-            }else{
+            } else {
                 modalInputMonetarios.setVisible(true);
             }
-            
-            
+
         }
     }//GEN-LAST:event_jCheckBoxDesconto2MousePressed
 
@@ -486,7 +483,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
             jLabelAddCliente.setEnabled(true);
             jTextFieldNome2.setEditable(false);
-        
+
             limparTodosCampos();
         }
     }//GEN-LAST:event_jRadioButtonClienteActionPerformed
@@ -494,14 +491,14 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     private void jRadioButtonCabelereiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonCabelereiroActionPerformed
         if (jRadioButtonCabelereiro.isSelected()) {
             jTextFieldNome2.setEnabled(false);
-      
+
             jLabelAddCliente.setEnabled(false);
             limparTodosCampos();
         }
     }//GEN-LAST:event_jRadioButtonCabelereiroActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-      modalInputMonetarios = null;
+        modalInputMonetarios = null;
     }//GEN-LAST:event_formWindowClosing
 
     void limparTodosCampos() {
@@ -647,7 +644,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
     @Override
     public void update(Orcamento orcamento) {
-      
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

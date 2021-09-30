@@ -43,7 +43,7 @@ public class EstoqueController {
     public boolean atualizaEstoque(Venda venda) throws ExceptionDAO {
 
         ArrayList<Item> produtosVendidos = venda.getItensCompra();
- 
+
         for (Item i : produtosVendidos) {
             Estoque estoque = new Estoque();
             estoque.setIdProduto(i.getId_produto());
@@ -76,16 +76,16 @@ public class EstoqueController {
         }
         return 0;
     }
-    
-     public long ultimoValorPagoProduto(long idProduto){
-        
+
+    public long ultimoValorPagoProduto(long idProduto) {
+
         try {
             return new Estoque().ultimoValorPagoProduto(idProduto);
         } catch (ExceptionDAO e) {
             System.out.println("produto não encontrado");
         }
-         
-         return 0;
-     }
+
+        return 0;
+    }
 
 }

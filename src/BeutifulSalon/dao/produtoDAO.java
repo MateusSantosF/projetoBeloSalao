@@ -66,7 +66,7 @@ public class ProdutoDAO {
             pStatement = connection.prepareStatement(sql);
             
             ResultSet rs = pStatement.executeQuery();
-           
+     
             
             if(rs != null){
                 produtos = new ArrayList<>();
@@ -80,9 +80,11 @@ public class ProdutoDAO {
                     produtoAtual.setId_produto(rs.getLong("IDPRODUTO"));
   
                     produtos.add(produtoAtual);
+               
                 }
                 
             }
+
          
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro ConnectionMVC: " + e);

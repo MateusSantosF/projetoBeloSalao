@@ -50,6 +50,11 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data de pagamento
         jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Valor Pago 
         jLabel10.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Anotação / Lembrete 
+        jDateChooserDataPagamento.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jDateChooserVencimento.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jDateChooserLacamento.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jFormattedTextFieldValorPago.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+
 
         jToggleButton.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Pagamento Pendente 
         jButtonCadastrar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cadastrar
@@ -138,7 +143,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jComboBoxFormaPagamento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBoxFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Boleto", "Crédito", "Débito", "Dinheiro" }));
+        jComboBoxFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Boleto", "Crédito", "Débito", "Dinheiro,", "Pix" }));
         jComboBoxFormaPagamento.setEnabled(false);
         jComboBoxFormaPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {

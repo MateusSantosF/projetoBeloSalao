@@ -10,6 +10,8 @@ import BeutifulSalon.Tabelas.AgendamentoTableModel;
 import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.model.Agendamento;
+import BeutifulSalon.model.ObservadorEdicao;
+import BeutifulSalon.view.Edicao.EditarAgendamento;
 import BeutifulSalon.view.modais.ModalDetalhesAgendamento;
 import java.awt.Font;
 import javax.swing.JOptionPane;
@@ -21,7 +23,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author Mateus
  */
-public class ApresentaAgendamentos extends javax.swing.JPanel {
+public class ApresentaAgendamentos extends javax.swing.JPanel implements ObservadorEdicao{
 
     /**
      * Creates new form ApresentaAgendamentos
@@ -411,11 +413,15 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
         int index = jTableAgendamentos.getSelectedRow();
         AgendamentoController ag = new AgendamentoController();
+        Agendamento agendamento;
         boolean sucesso = false;
-        
+
         if(index > -1){
             long idAgendamento = modelo.getAgendamento(index).getIdAgendamento();
-            sucesso = ag.editarAgendamento(idAgendamento);
+            agendamento = ag.listarAgendamento(idAgendamento);
+            EditarAgendamento ed = new EditarAgendamento(agendamento);
+            ed.registrarObservador(this);
+            sucesso = ag.editarAgendamento(agendamento, ed);
             
             if(!sucesso){
               JOptionPane.showMessageDialog(null, "Erro ao selecionar PKAgendamento");   
@@ -493,4 +499,23 @@ public class ApresentaAgendamentos extends javax.swing.JPanel {
     private javax.swing.JTable jTableAgendamentos;
     private javax.swing.JTextField jTextFieldNomeCliente;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(boolean editou) {
+        
+        if(jRadioButtonAmanha.isSelected()){
+            modelo.getAgendamentosAmanha();
+           
+        }else if(jRadioButtonHoje.isSelected()){
+            modelo.getAgendamentosHoje();
+        }else if(jRadioButtonNaoPago.isSelected()){
+            modelo.getAgendamentosNaPagos();
+        }else if(jRadioButtonSemana.isSelected()){
+            modelo.getAgendamentosSemana();
+        }else{
+            modelo.getTodosAgendamentos();
+        }
+        
+         jTableAgendamentos.setModel(modelo);
+    }
 }

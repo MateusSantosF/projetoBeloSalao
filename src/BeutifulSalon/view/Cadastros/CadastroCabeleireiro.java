@@ -7,6 +7,7 @@ package BeutifulSalon.view.Cadastros;
 
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.CabeleireiroController;
+import BeutifulSalon.dao.CabeleireiroDAO;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cabeleireiro;
 import BeutifulSalon.model.Cliente;
@@ -26,6 +27,8 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -51,9 +54,9 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
 
     public CadastroCabeleireiro() {
         initComponents();
-        
-        ManipulaFontes mf = new ManipulaFontes(); ;
-        
+
+        ManipulaFontes mf = new ManipulaFontes();;
+
         //Fontes
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Informe seus dados pessoais
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Primeiro Nome 
@@ -61,12 +64,12 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //E-mail
         jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Senha E-mail
         jLabel21.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); // meta de lucro
-        
+
         jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Configurar Expediente
         jButton1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Abrir grade 
-        
+
         jButtonCadastrar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Confirmar
-        
+
         //Fontes email aniversario
         jLabel6.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
         jCheckBoxAniversario.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
@@ -77,7 +80,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel11.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
-        
+
         //Fontes email visita
         jLabel14.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
         jComboBoxPeriodo.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
@@ -90,16 +93,15 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jLabel16.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
-        
+
         // ===================================================//
-        
         DecimalFormat decimal = new DecimalFormat("#,###,###.00");
         NumberFormatter numFormatter = new NumberFormatter(decimal);
         numFormatter.setFormat(decimal);
         numFormatter.setAllowsInvalid(false);
         DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
         jFormattedTextFieldPreco.setFormatterFactory(dfFactory);
-        
+
         CabeleireiroController cc = new CabeleireiroController();
 
         if (cc.verificaRegistro() == 1) {
@@ -108,33 +110,35 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
             jTextFieldNome.setText(cabeleireiro.getNome());
             jFormattedTextFieldCPF.setText(cabeleireiro.getCpf());
             jTextFieldEmail.setText(cabeleireiro.getEmail());
-            
+
             jTextFieldTituloAniversario.setText(cabeleireiro.getEmailAniversario().getTitulo());
             jTextFieldTituloUltimaVisita.setText(cabeleireiro.getEmailUltimaVisita().getTitulo());
-            
+
             jComboBoxPeriodo.setSelectedIndex(cabeleireiro.getEmailUltimaVisita().getPeriodoReenvio() - 2);
-            
-            if(cabeleireiro.getEmailAniversario().getTexto().length() < 2){
+
+            if (cabeleireiro.getEmailAniversario().getTexto().length() < 2) {
                 jTextAreaAniversario.setText("Feliz aniversário <nome>,");
                 jTextAreaUltimaVisita.setText("Caro <nome>,");
-            }else{
-                jTextAreaAniversario.setText(cabeleireiro.getEmailAniversario().getTexto().replaceAll("<br>", "\n"));  
+            } else {
+                jTextAreaAniversario.setText(cabeleireiro.getEmailAniversario().getTexto().replaceAll("<br>", "\n"));
                 jTextAreaUltimaVisita.setText(cabeleireiro.getEmailUltimaVisita().getTexto().replaceAll("<br>", "\n"));
             }
-            
-            if(cabeleireiro.getEmailUltimaVisita().getTexto().length() < 2){
+
+            if (cabeleireiro.getEmailUltimaVisita().getTexto().length() < 2) {
                 jTextAreaUltimaVisita.setText("Caro <nome>,");
 
-            }else{
+            } else {
                 jTextAreaUltimaVisita.setText(cabeleireiro.getEmailUltimaVisita().getTexto().replaceAll("<br>", "\n"));
             }
-            
+
             jCheckBoxUltimaVisita.setSelected(cabeleireiro.getEmailUltimaVisita().isEnviar());
             jCheckBoxAniversario.setSelected(cabeleireiro.getEmailAniversario().isEnviar());
             jLabelNomeArquivoAniversario.setText(cabeleireiro.getEmailAniversario().getNomeDoArquivo());
             jFormattedTextFieldPreco.setValue(Dinheiro.parseDecimal(cabeleireiro.getMetaDeLucro()));
             jPasswordField.setText(cabeleireiro.getSenha());
-            
+            jCheckBoxVerificaHorarios.setSelected(cabeleireiro.isVerificarHorariosDisponiveis());
+            jSliderTempoEntreAgendamentos.setValue(cabeleireiro.getTempoEntreHorariosLivres());
+
         }
 
     }
@@ -196,6 +200,16 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jComboBoxPeriodo = new javax.swing.JComboBox<>();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel22 = new javax.swing.JLabel();
+        jCheckBoxVerificaHorarios = new javax.swing.JCheckBox();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jButtonCadastrar1 = new javax.swing.JButton();
+        jLabel25 = new javax.swing.JLabel();
+        jSliderTempoEntreAgendamentos = new javax.swing.JSlider();
+        jLabel26 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -266,7 +280,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(94, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -481,7 +495,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel13))
                     .addComponent(jScrollPane1))
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -629,7 +643,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                         .addComponent(jComboBoxPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCheckBoxUltimaVisita)))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -664,7 +678,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 634, Short.MAX_VALUE)
+            .addGap(0, 705, Short.MAX_VALUE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -693,6 +707,113 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jTabbedPane2.getAccessibleContext().setAccessibleName("");
 
         jTabbedPane1.addTab("Emails Automáticos", jPanelEmails);
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+        jCheckBoxVerificaHorarios.setBackground(new java.awt.Color(255, 255, 255));
+        jCheckBoxVerificaHorarios.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jCheckBoxVerificaHorarios.setForeground(new java.awt.Color(0, 0, 0));
+        jCheckBoxVerificaHorarios.setText("Desativar verificação de Horário Disponível em Agendamentos*");
+        jCheckBoxVerificaHorarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxVerificaHorariosActionPerformed(evt);
+            }
+        });
+
+        jLabel23.setText("*Ativar esta opção pode bagunçar a grade de horários disponíveis em até 3 dias em diante.");
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel24.setText("Configurações do Sistema");
+
+        jButtonCadastrar1.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonCadastrar1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButtonCadastrar1.setText("Confirmar");
+        jButtonCadastrar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButtonCadastrar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCadastrar1ActionPerformed(evt);
+            }
+        });
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel25.setText("Tempo Mínimo Permitido entre Horários disponíveis (Em Minutos)");
+
+        jSliderTempoEntreAgendamentos.setBackground(new java.awt.Color(255, 255, 255));
+        jSliderTempoEntreAgendamentos.setForeground(new java.awt.Color(0, 0, 0));
+        jSliderTempoEntreAgendamentos.setMajorTickSpacing(5);
+        jSliderTempoEntreAgendamentos.setMaximum(55);
+        jSliderTempoEntreAgendamentos.setMinimum(5);
+        jSliderTempoEntreAgendamentos.setPaintLabels(true);
+        jSliderTempoEntreAgendamentos.setPaintTicks(true);
+        jSliderTempoEntreAgendamentos.setValue(5);
+
+        jLabel26.setBackground(new java.awt.Color(204, 0, 0));
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel26.setText("Resetar Banco de Dados");
+
+        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setForeground(new java.awt.Color(0, 0, 0));
+        jButton2.setText("Resetar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonCadastrar1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(261, 261, 261))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel25)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jCheckBoxVerificaHorarios)
+                            .addComponent(jLabel23))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel22))
+                    .addComponent(jLabel24)
+                    .addComponent(jSliderTempoEntreAgendamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(86, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(jLabel24)
+                .addGap(43, 43, 43)
+                .addComponent(jCheckBoxVerificaHorarios)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel22)
+                .addGap(21, 21, 21)
+                .addComponent(jLabel25)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSliderTempoEntreAgendamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37)
+                .addComponent(jLabel26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addComponent(jButtonCadastrar1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40))
+        );
+
+        jTabbedPane1.addTab("Configurações", jPanel6);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -737,12 +858,13 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                     JOptionPane.showMessageDialog(null, "Erro! verifique as informações e tente novamente");
                 }
             } else {
+                System.out.println("ENTROOOOU");
 
                 if (expediente == null) {
                     Cabeleireiro c = null;
 
                     c = cc.selecionaCabeleireiro();
-
+                    System.out.println("ENTROOOOU222");
                     expediente = new ArrayList<>();
                     expediente.add(c.getSegundaE());
                     expediente.add(c.getSegundaS());
@@ -845,7 +967,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                     dis.close();
 
                     email.setAnexo(imagem);
-                    
+
                     email.setDiretorioArquivo(caminhoArquivo);
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, "Erro ao ler anexo" + e);
@@ -873,8 +995,8 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     }//GEN-LAST:event_jTextAreaAniversarioKeyPressed
 
     private void jTextAreaAniversarioCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextAreaAniversarioCaretUpdate
-        
- 
+
+
     }//GEN-LAST:event_jTextAreaAniversarioCaretUpdate
 
     private void jTextAreaAniversarioCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextAreaAniversarioCaretPositionChanged
@@ -882,9 +1004,9 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     }//GEN-LAST:event_jTextAreaAniversarioCaretPositionChanged
 
     private void jLabel13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MousePressed
-       JOptionPane.showMessageDialog(null, "Digite '<nome>' ao longo do texto ou do título, para inserir o \n"
-               + "nome do cliente para qual o email será enviado\n\n"
-               + "Ex: Feliz aniversário <nome>!,\nA equipe do Salão deseja[...]");
+        JOptionPane.showMessageDialog(null, "Digite '<nome>' ao longo do texto ou do título, para inserir o \n"
+                + "nome do cliente para qual o email será enviado\n\n"
+                + "Ex: Feliz aniversário <nome>!,\nA equipe do Salão deseja[...]");
     }//GEN-LAST:event_jLabel13MousePressed
 
     private void jCheckBoxUltimaVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxUltimaVisitaActionPerformed
@@ -926,12 +1048,12 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     }//GEN-LAST:event_jLabel17MousePressed
 
     private void jLabel19MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19MousePressed
-       
+
         CabeleireiroController cc = new CabeleireiroController();
         emailUltimaVisita.setTitulo(jTextFieldTituloUltimaVisita.getText());
         emailUltimaVisita.setTexto(jTextAreaUltimaVisita.getText());
         emailUltimaVisita.setEnviar(jCheckBoxUltimaVisita.isSelected());
-        
+
         if (cc.verificaRegistro() == 1) {
             if (emailUltimaVisita.getDiretorioArquivo() != null) {
 
@@ -944,7 +1066,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                     dis.close();
 
                     emailUltimaVisita.setAnexo(imagem);
-                    
+
                     emailUltimaVisita.setDiretorioArquivo(caminhoArquivoUltimaVisita);
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, "Erro ao ler anexo" + e);
@@ -966,10 +1088,53 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     }//GEN-LAST:event_jLabel19MousePressed
 
     private void jLabel20MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MousePressed
-       JOptionPane.showMessageDialog(null, "Digite '<nome>' ao longo do texto ou do título, para inserir o \n"
-               + "nome do cliente para qual o email será enviado\n\n"
-               + "Ex: Caro <nome>!,\nA equipe do Salão notou que[...]");
+        JOptionPane.showMessageDialog(null, "Digite '<nome>' ao longo do texto ou do título, para inserir o \n"
+                + "nome do cliente para qual o email será enviado\n\n"
+                + "Ex: Caro <nome>!,\nA equipe do Salão notou que[...]");
     }//GEN-LAST:event_jLabel20MousePressed
+
+    private void jCheckBoxVerificaHorariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxVerificaHorariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxVerificaHorariosActionPerformed
+
+    private void jButtonCadastrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrar1ActionPerformed
+
+        boolean sucesso = new CabeleireiroController().atualizarPreferencias(jCheckBoxVerificaHorarios.isSelected(),
+                jSliderTempoEntreAgendamentos.getValue());
+
+        if (sucesso) {
+            JOptionPane.showMessageDialog(null, "Preferências atualizadas com sucesso");
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar preferências");
+        }
+    }//GEN-LAST:event_jButtonCadastrar1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja resetar o Banco de Dados?\n"
+                + "Após feito isso, não será possível recuperar nenhuma das informações cadastradas.", "RESETAR BANCO DE DADOS", JOptionPane.YES_NO_OPTION);
+
+        String msg = JOptionPane.showInputDialog("Digite:\nDELETAR");
+
+        if (opc == 0) {
+            if (msg.equals("DELETAR")) {
+
+                File bancoAntigo = new File("BancoDeDados/beutifulsalondb.db");
+
+                if (bancoAntigo.delete()) {
+                    File bancoNovo = new File("BancoDeDados/beutifulsalondb.db");
+                    try {
+                        bancoNovo.createNewFile();
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(null, ex + "erro");
+                    }
+
+                    new CabeleireiroDAO().recriarBanco();
+                }
+
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1008,9 +1173,12 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonCadastrar;
+    private javax.swing.JButton jButtonCadastrar1;
     private javax.swing.JCheckBox jCheckBoxAniversario;
     private javax.swing.JCheckBox jCheckBoxUltimaVisita;
+    private javax.swing.JCheckBox jCheckBoxVerificaHorarios;
     private javax.swing.JComboBox<String> jComboBoxPeriodo;
     private javax.swing.JFileChooser jFileChooser;
     private javax.swing.JFormattedTextField jFormattedTextFieldCPF;
@@ -1029,6 +1197,11 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1043,10 +1216,12 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelEmails;
     private javax.swing.JPasswordField jPasswordField;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSlider jSliderTempoEntreAgendamentos;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextArea jTextAreaAniversario;
@@ -1079,6 +1254,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
 
     @Override
     public void update(ArrayList<LocalTime> horarios) {
+        System.out.println("entrou");
         expediente = horarios;
     }
 

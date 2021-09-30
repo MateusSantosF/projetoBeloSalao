@@ -56,7 +56,6 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="jLabel1" min="-2" pref="58" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jLabel2" min="-2" pref="62" max="-2" attributes="0"/>
@@ -94,10 +93,10 @@
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jFTDomingoSaida" alignment="1" min="-2" pref="62" max="-2" attributes="0"/>
-                                      <Component id="jFTQuartaSaida" alignment="1" min="-2" pref="62" max="-2" attributes="0"/>
-                                      <Component id="jFTQuintaSaida" alignment="1" min="-2" pref="62" max="-2" attributes="0"/>
-                                      <Component id="jFTSextaSaida" alignment="1" min="-2" pref="62" max="-2" attributes="0"/>
                                       <Component id="jFTSabadoSaida" alignment="1" min="-2" pref="62" max="-2" attributes="0"/>
+                                      <Component id="jFTSextaSaida" alignment="1" min="-2" pref="62" max="-2" attributes="0"/>
+                                      <Component id="jFTQuintaSaida" alignment="1" min="-2" pref="62" max="-2" attributes="0"/>
+                                      <Component id="jFTQuartaSaida" alignment="1" min="-2" pref="62" max="-2" attributes="0"/>
                                       <Component id="jFTTercaSaida" alignment="1" min="-2" pref="62" max="-2" attributes="0"/>
                                       <Component id="jFTSegundaSaida" alignment="1" min="-2" pref="62" max="-2" attributes="0"/>
                                   </Group>
@@ -146,22 +145,22 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jFTQuartaEntrada" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                              <Component id="jFTSabadoSaida" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                              <Component id="jFTQuartaSaida" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jFTQuintaEntrada" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                              <Component id="jFTSextaSaida" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jFTSextaEntrada" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                               <Component id="jFTQuintaSaida" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jFTSextaEntrada" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                              <Component id="jFTSextaSaida" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jFTSabadoEntrada" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                              <Component id="jFTQuartaSaida" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                              <Component id="jFTSabadoSaida" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -374,18 +373,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jFTQuartaSaida">
-          <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-              <Format format="##:##" subtype="-1" type="5"/>
-            </Property>
-            <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="18" style="0"/>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jFTQuintaSaida">
+        <Component class="javax.swing.JFormattedTextField" name="jFTSabadoSaida">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
               <Format format="##:##" subtype="-1" type="5"/>
@@ -407,7 +395,18 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jFTSabadoSaida">
+        <Component class="javax.swing.JFormattedTextField" name="jFTQuintaSaida">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="##:##" subtype="-1" type="5"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="18" style="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="jFTQuartaSaida">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
               <Format format="##:##" subtype="-1" type="5"/>

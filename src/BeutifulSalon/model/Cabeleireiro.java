@@ -39,6 +39,8 @@ public class Cabeleireiro {
     private LocalTime sextaS;
     private LocalTime sabadoS;
     private LocalTime domingoS;
+    private boolean verificarHorariosDisponiveis;
+    private int tempoEntreHorariosLivres;
 
     public Cabeleireiro() {
     };
@@ -86,6 +88,24 @@ public class Cabeleireiro {
     public void setMetaDeLucro(long metaDeLucro) {
         this.metaDeLucro = metaDeLucro;
     }
+
+    public int getTempoEntreHorariosLivres() {
+        return tempoEntreHorariosLivres;
+    }
+
+    public void setTempoEntreHorariosLivres(int tempoEntreHorariosLivres) {
+        this.tempoEntreHorariosLivres = tempoEntreHorariosLivres;
+    }
+    
+
+    public boolean isVerificarHorariosDisponiveis() {
+        return verificarHorariosDisponiveis;
+    }
+
+    public void setVerificarHorariosDisponiveis(boolean verificarHorariosDisponiveis) {
+        this.verificarHorariosDisponiveis = verificarHorariosDisponiveis;
+    }
+    
 
     public long getId() {
         return id;

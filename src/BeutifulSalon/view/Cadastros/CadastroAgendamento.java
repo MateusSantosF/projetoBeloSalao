@@ -23,6 +23,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -655,7 +656,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, "Data inválida!" + e);
                     }
-                    ArrayList<LocalTime> horariosLivres = manipulaData.recuperaHorariosDisponiveis(dataDigitada);
+                    List<LocalTime> horariosLivres = manipulaData.recuperaHorariosDisponiveis(dataDigitada);
                     DefaultListModel<String> model = new DefaultListModel<String>();
 
                     ArrayList<String> horariosFormatados = manipulaData.formataHorariosDisponiveis(horariosLivres, dataDigitada);

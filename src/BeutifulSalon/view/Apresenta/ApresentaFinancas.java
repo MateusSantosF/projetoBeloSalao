@@ -220,6 +220,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jTextFieldAno4 = new javax.swing.JFormattedTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabelExcluir3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         DespesasPrevistas = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         jTableConsultaOrcamento = new javax.swing.JTable();
@@ -313,6 +314,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
         jTableConsultaServicoRealizado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableConsultaServicoRealizado.setGridColor(new java.awt.Color(255, 255, 255));
+        jTableConsultaServicoRealizado.setRowHeight(22);
         jTableConsultaServicoRealizado.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaServicoRealizado.setShowGrid(true);
         jScrollPane5.setViewportView(jTableConsultaServicoRealizado);
@@ -500,6 +502,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
         jTableConsultaOrcamentoServico.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableConsultaOrcamentoServico.setGridColor(new java.awt.Color(255, 255, 255));
+        jTableConsultaOrcamentoServico.setRowHeight(22);
         jTableConsultaOrcamentoServico.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaOrcamentoServico.setShowGrid(true);
         jScrollPane3.setViewportView(jTableConsultaOrcamentoServico);
@@ -707,6 +710,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
         jTableServicoComparado.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableServicoComparado.setGridColor(new java.awt.Color(255, 255, 255));
+        jTableServicoComparado.setRowHeight(22);
         jTableServicoComparado.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableServicoComparado.setShowGrid(true);
         jScrollPane7.setViewportView(jTableServicoComparado);
@@ -887,6 +891,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
         jTableLancamentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableLancamentos.setGridColor(new java.awt.Color(255, 255, 255));
+        jTableLancamentos.setRowHeight(22);
         jTableLancamentos.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableLancamentos.setShowGrid(true);
         jScrollPane4.setViewportView(jTableLancamentos);
@@ -1012,6 +1017,10 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("ou");
+
         javax.swing.GroupLayout lançamentosLayout = new javax.swing.GroupLayout(lançamentos);
         lançamentos.setLayout(lançamentosLayout);
         lançamentosLayout.setHorizontalGroup(
@@ -1027,20 +1036,22 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                             .addGroup(lançamentosLayout.createSequentialGroup()
                                 .addComponent(jTextFieldAno4, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnBuscaPorAno4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(220, 220, 220)
+                                .addComponent(btnBuscaPorAno4, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)))
+                        .addGap(162, 162, 162)
                         .addGroup(lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15)
-                            .addComponent(jComboBoxLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addGroup(lançamentosLayout.createSequentialGroup()
+                                .addComponent(jComboBoxLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(20, 20, 20)
                         .addGroup(lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel14)
                             .addComponent(jComboBoxVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(35, 35, 35)
                         .addComponent(jButtonEditar2, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
-                        .addComponent(jLabelExcluir3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3)))
+                        .addComponent(jLabelExcluir3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(25, 25, 25))
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 1084, Short.MAX_VALUE)
         );
@@ -1048,24 +1059,27 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, lançamentosLayout.createSequentialGroup()
                 .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addGap(26, 26, 26)
                 .addGroup(lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextFieldAno4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(lançamentosLayout.createSequentialGroup()
                         .addComponent(jLabel13)
-                        .addGap(10, 10, 10)
-                        .addComponent(btnBuscaPorAno4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnBuscaPorAno4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldAno4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(lançamentosLayout.createSequentialGroup()
-                        .addGroup(lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel15)
                             .addComponent(jLabel14))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBoxLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonEditar2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelExcluir3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(17, 17, 17)
+                        .addGroup(lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(lançamentosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jComboBoxVencimento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonEditar2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelExcluir3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel1))
+                            .addComponent(jComboBoxLancamento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
                 .addGap(25, 25, 25)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1130,6 +1144,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
         jTableConsultaOrcamento.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableConsultaOrcamento.setGridColor(new java.awt.Color(255, 255, 255));
+        jTableConsultaOrcamento.setRowHeight(22);
         jTableConsultaOrcamento.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableConsultaOrcamento.setShowGrid(true);
         jScrollPane8.setViewportView(jTableConsultaOrcamento);
@@ -1335,6 +1350,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         });
         jTableComparativoDespesas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jTableComparativoDespesas.setGridColor(new java.awt.Color(255, 255, 255));
+        jTableComparativoDespesas.setRowHeight(22);
         jTableComparativoDespesas.setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         jTableComparativoDespesas.setShowGrid(true);
         jScrollPane9.setViewportView(jTableComparativoDespesas);
@@ -1769,6 +1785,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private javax.swing.JButton jButtonEditar2;
     private javax.swing.JComboBox<String> jComboBoxLancamento;
     private javax.swing.JComboBox<String> jComboBoxVencimento;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;

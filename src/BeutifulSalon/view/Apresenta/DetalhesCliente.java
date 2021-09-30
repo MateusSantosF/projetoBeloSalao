@@ -150,6 +150,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jTextFieldNumero.setText(cliente.getNumeroDaCasa());
         
         jTextFieldFacebook.setText(cliente.getFacebook());
+        jTextFieldInstagram.setText(cliente.getInstagram());
 
         jComboBoxTipoCabelo.setSelectedIndex(cliente.getTipoDeCabelo());
         jComboBoxTamanhoCabelo.setSelectedIndex(cliente.getTamanhoCabelo());
