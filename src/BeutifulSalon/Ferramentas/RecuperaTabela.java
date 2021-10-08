@@ -78,34 +78,5 @@ public class RecuperaTabela {
 
     }
 
-    public ArrayList<Servico> recuperaServicos(JTable tabela) {
-
-        ArrayList<Servico> servicosSolicitados = new ArrayList<>();
-
-        try {
-            for (int i = 0; i < tabela.getRowCount(); i++) {
-
-                Servico servicoAtual = new Servico();
-
-                for (int j = 0; j < tabela.getColumnCount(); j++) {
-
-                    if (j == 0) {
-                        servicoAtual.setNome(tabela.getValueAt(i, j).toString());
-                    } else if (j == 1) {
-                        servicoAtual.setPreco(Dinheiro.parseCent(
-                                Dinheiro.retiraCaracteres(tabela.getValueAt(i, j).toString())));
-                    } else {
-                        servicoAtual.setId(Long.parseLong(tabela.getValueAt(i, j).toString()));
-                    }
-
-                }
-                servicosSolicitados.add(servicoAtual);
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao recuperar Tabela.");
-        }
-
-        return servicosSolicitados;
-    }
 
 }

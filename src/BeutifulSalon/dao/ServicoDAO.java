@@ -30,7 +30,7 @@ public class ServicoDAO {
     public List<Servico> listarServicos() throws ExceptionDAO {
 
         String sql = "SELECT ID_SERVICO, NOME, PRECO, TEMPOGASTO, (SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) FROM AGENDAMENTO_SERVICO WHERE AGENDAMENTO_SERVICO.ID_SERVICO = SERVICO.ID_SERVICO) AS QTD FROM SERVICO "
-                + " WHERE SERVICO.EXCLUIDO = FALSE ORDER BY NOME DESC";
+                + " WHERE SERVICO.EXCLUIDO = FALSE ORDER BY NOME";
         String sql2 = "SELECT * FROM PRODUTO_SERVICO WHERE ID_SERVICO = ?";
 
         Connection connection = null;
@@ -241,7 +241,7 @@ public class ServicoDAO {
         String sql2 = "SELECT ID_SERVICO, NOME, PRECO, TEMPOGASTO, "
                 + "(SELECT COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) FROM AGENDAMENTO_SERVICO WHERE "
                 + "AGENDAMENTO_SERVICO.ID_SERVICO = SERVICO.ID_SERVICO) AS QTD FROM SERVICO WHERE SERVICO.NOME LIKE '%" + nome + "%' "
-                + " AND SERVICO.EXCLUIDO = FALSE ORDER BY NOME DESC";
+                + " AND SERVICO.EXCLUIDO = FALSE ORDER BY NOME ASC";
         
         
         Connection connection = null;
@@ -462,11 +462,11 @@ public class ServicoDAO {
 
         Connection connection = null;
         PreparedStatement pStatement = null;
-        Servico servicos = null;
+        Servico servico = null;
 
         try {
             connection = new ConnectionMVC().getConnection();
-    
+   
            
             pStatement = connection.prepareStatement(sql);
             pStatement.setLong(1, id);
@@ -499,20 +499,15 @@ public class ServicoDAO {
                     servicoAtual.setProdutos(produtos);
                 }
 
-                servicos = servicoAtual;
+                servico = servicoAtual;
 
             }
             
             
-            return servicos;
+            return servico;
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro DAO" + e);
-            try {
-                connection.rollback();
-            } catch (SQLException ex) {
-                Logger.getLogger(CompraProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
         } finally {
 
@@ -534,7 +529,7 @@ public class ServicoDAO {
             }
         }
         
-        return servicos;
+        return servico;
     }
 
     public void cadastrarServico(Servico servico) throws SQLException {

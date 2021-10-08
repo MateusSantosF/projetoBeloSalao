@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -30,7 +31,7 @@ public class Agendamento {
     private LocalTime horario;
     private LocalTime fimAgendamento;
     private Boolean realizado;
-    private ArrayList<Servico> servicos;
+    private List<Servico> servicos;
 
     public Agendamento() {
     }
@@ -133,11 +134,11 @@ public class Agendamento {
         this.fimAgendamento = fimAgendamento;
     }
 
-    public ArrayList<Servico> getServicos() {
+    public List<Servico> getServicos() {
         return servicos;
     }
 
-    public void setServicos(ArrayList<Servico> servicos) {
+    public void setServicos(List<Servico> servicos) {
         this.servicos = servicos;
     }
 

@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -57,7 +58,7 @@ public class AgendamentoDAO {
             if (firstInsert > 0) {
                 try {
 
-                    ArrayList<Servico> servicos = agendamento.getServicos();
+                    List<Servico> servicos = agendamento.getServicos();
 
                     for (Servico s : servicos) {
                         pStatement = connection.prepareStatement(insertServicoAgendamento);
@@ -774,7 +775,7 @@ public class AgendamentoDAO {
                 
                 try {
 
-                    ArrayList<Servico> servicos = agendamento.getServicos();
+                    List<Servico> servicos = agendamento.getServicos();
 
                     for (Servico s : servicos) {
                         pStatement = connection.prepareStatement(insertServicoAgendamento);

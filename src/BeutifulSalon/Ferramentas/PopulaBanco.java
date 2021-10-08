@@ -11,6 +11,7 @@ import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.dao.CompraProdutoDAO;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.dao.ProdutoDAO;
+import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.Dinheiro;
@@ -25,13 +26,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import javax.swing.JOptionPane;
 
 /**
@@ -196,16 +200,14 @@ public class PopulaBanco {
         if (dados.length >= 3) {
             if (dados[2] != "" && dados[2] != " " && dados[2] != null) {
 
-              
-
                 //salão roger
-                int formatado = Integer.valueOf(dados[2].substring(0, dados[2].indexOf("M") - 1)  );
+                int formatado = Integer.valueOf(dados[2].substring(0, dados[2].indexOf("M") - 1));
                 //System.out.println("Formatado =>" + formatado);
-                int minutos = formatado%60;
+                int minutos = formatado % 60;
                 int horas = (formatado - minutos) / 60;
-                
-               // System.out.println("Horas =>" + horas);
-               // System.out.println("mInutos =>" + minutos);
+
+                // System.out.println("Horas =>" + horas);
+                // System.out.println("mInutos =>" + minutos);
                 LocalTime t = LocalTime.of(horas, minutos);
                 duracao = t;
             }
@@ -233,7 +235,7 @@ public class PopulaBanco {
                         //System.out.println("Rendimento linha=>" + dados[i + 2]);
                         rendimento = Integer.valueOf(dados[i + 2]);
                         p.setRendimento(rendimento);
-                       // System.out.println("Rendimento =>" + p.getRendimento());
+                        // System.out.println("Rendimento =>" + p.getRendimento());
                     }
                 }
 
@@ -306,7 +308,7 @@ public class PopulaBanco {
                 System.out.println(linha);
                 Produto p = criaProduto(linha);
                 new ProdutoDAO().cadastrarProduto(p);
-                
+
                 String[] dados = linha.split(";");
                 if (dados.length >= 4) {
                     if (dados[3] != "" && dados[3] != " " && dados[3] != null) {
@@ -314,24 +316,53 @@ public class PopulaBanco {
                         Compra c = new Compra();
                         ArrayList<Item> itc = new ArrayList<>();
                         Item i = new Item();
-                        
+
                         c.setValorTotal(Dinheiro.parseCent(Dinheiro.retiraCaracteres(dados[3])));
                         c.setValorDesconto(0);
                         c.setData(LocalDate.now());
-                       
+
                         i.setPreco(Dinheiro.parseCent(Dinheiro.retiraCaracteres(dados[3])));
                         i.setMarca(p.getMarca());
                         i.setQuantidade(1);
                         i.setPrecoTotal(Dinheiro.parseCent(Dinheiro.retiraCaracteres(dados[3])));
                         i.setId_produto(new CompraProdutoDAO().retornaMaxID());
                         itc.add(i);
-                      
+
                         c.setItensCompra(itc);
                         new CompraProdutoDAO().cadastraCompra(c);
-                        
+
                     }
                 }
 
+            }
+
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, e);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, e);
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(null, e);
+                }
+            }
+        }
+    }
+    
+    public void CadastrarServicosRealizados() {
+
+        BufferedReader br = null;
+        String linha = "";
+        try {
+            br = new BufferedReader(new InputStreamReader(new FileInputStream(
+                    "C:\\Users\\Mateus\\Desktop\\LUCASDEDILAINE\\servicosRealizados.csv"), StandardCharsets.ISO_8859_1));
+
+            br.readLine();
+            while ((linha = br.readLine()) != null) {
+                System.out.println(linha);
+                cadastraServicosRealizados(linha);
             }
 
         } catch (FileNotFoundException e) {
@@ -376,9 +407,9 @@ public class PopulaBanco {
                 }
             }
         }
-        
+
         produto.setDataReg(LocalDate.now());
-        
+
         return produto;
     }
 
@@ -485,11 +516,502 @@ public class PopulaBanco {
 
     }
 
+    public int geraDiaAleatorio() {
+        Random gerador = new Random();
+        return gerador.nextInt(27)+1;
+    }
+
+    public int geraClienteAleatorio() {
+        Random gerador = new Random();
+        return gerador.nextInt(40) + 1;
+    }
+    
+    public int geraHoraAleatoria() {
+        Random gerador = new Random();
+        return gerador.nextInt(10) + 7;
+    }
+    
+     public int geraMinutoAleatorio() {
+        Random gerador = new Random();
+        return gerador.nextInt(45) + 1;
+    }
+
+    public void cadastraServicosRealizados(String linha) {
+
+        String[] dados = linha.split(";");
+        Servico servico = new Servico();
+        ManipulaData mp = new ManipulaData();
+        List<Servico> servicos = new ArrayList<>();
+
+        if (dados[0] != "" && dados[0] != " " && dados[0] != null) {
+            servico = new ServicoController().listarServicos(dados[0]).get(0);
+            servicos.add(servico);
+        }
+
+        if (dados.length >= 2) {
+            if (dados[1] != "" && dados[1] != " " && dados[1] != null) {
+               
+                int ant = 0;
+                int atual = 0;
+                LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+                for (int i = 0; i < Integer.parseInt(dados[1]); i++) {
+
+                    if (i == 0) {
+                        ant = geraDiaAleatorio();
+                        atual = ant;
+                    } else {
+                        atual = geraDiaAleatorio();
+                        if (ant == atual) {
+                            atual = geraDiaAleatorio();
+                        }
+                    }
+                    Agendamento ag = new Agendamento();
+                    LocalDate janeiro = LocalDate.of(2021, Month.JANUARY, atual);
+                    ag.setData(janeiro);
+                    ag.setIdCliente(geraClienteAleatorio());
+                    ag.setServicos(servicos);
+                    ag.setTotal(servico.getPreco());
+                    ag.setDesconto(0);
+                    ag.setPago(true);
+                    ag.setRealizado(true);
+                    ag.setFormaDePagamento("Pix");
+                    ag.setHorario(horario);
+                    ag.setFimAgendamento(horario.plusHours(servico.getTempoGasto().getHour()).plusMinutes(servico.getTempoGasto().getMinute()));
+                    try {
+                         ag.cadastraAgendamento(ag);
+                    } catch (ExceptionDAO | SQLException e) {
+                        System.out.println(e);
+                    }
+                }
+
+            }
+        }
+
+        if (dados.length >= 3) {
+            if (dados[2] != "" && dados[2] != " " && dados[2] != null) {
+
+                int ant = 0;
+                int atual = 0;
+                LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+                for (int i = 0; i < Integer.parseInt(dados[2]); i++) {
+
+                    if (i == 0) {
+                        ant = geraDiaAleatorio();
+                        atual = ant;
+                    } else {
+                        atual = geraDiaAleatorio();
+                        if (ant == atual) {
+                            atual = geraDiaAleatorio();
+                        }
+                    }
+                    Agendamento ag = new Agendamento();
+                    LocalDate fevereiro = LocalDate.of(2021, Month.FEBRUARY ,atual);
+                    ag.setData(fevereiro);
+                    ag.setIdCliente(geraClienteAleatorio());
+                    ag.setServicos(servicos);
+                    ag.setTotal(servico.getPreco());
+                    ag.setDesconto(0);
+                     ag.setRealizado(true);
+                    ag.setPago(true);
+                    ag.setFormaDePagamento("Pix");
+                    ag.setHorario(horario);
+                    ag.setFimAgendamento(horario.plusHours(servico.getTempoGasto().getHour()).plusMinutes(servico.getTempoGasto().getMinute()));
+
+                     try {
+                         ag.cadastraAgendamento(ag);
+                    } catch (ExceptionDAO | SQLException e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        }
+
+        if (dados.length >= 4) {
+            if (dados[3] != "" && dados[3] != " " && dados[3] != null) {
+                int ant = 0;
+                int atual = 0;
+                LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+                for (int i = 0; i < Integer.parseInt(dados[3]); i++) {
+
+                    if (i == 0) {
+                        ant = geraDiaAleatorio();
+                        atual = ant;
+                    } else {
+                        atual = geraDiaAleatorio();
+                        if (ant == atual) {
+                            atual = geraDiaAleatorio();
+                        }
+                    }
+                    Agendamento ag = new Agendamento();
+                    LocalDate marco = LocalDate.of(2021, Month.MARCH ,atual);
+                    ag.setData(marco);
+                    ag.setIdCliente(geraClienteAleatorio());
+                    ag.setServicos(servicos);
+                    ag.setTotal(servico.getPreco());
+                    ag.setDesconto(0);
+                    ag.setPago(true);
+                     ag.setRealizado(true);
+                    ag.setFormaDePagamento("Pix");
+                    ag.setHorario(horario);
+                    ag.setFimAgendamento(horario.plusHours(servico.getTempoGasto().getHour()).plusMinutes(servico.getTempoGasto().getMinute()));
+
+                    try {
+                         ag.cadastraAgendamento(ag);
+                    } catch (ExceptionDAO | SQLException e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        }
+
+        if (dados.length >= 5) {
+            if (dados[4] != "" && dados[4] != " " && dados[4] != null) {
+                int ant = 0;
+                int atual = 0;
+                LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+                for (int i = 0; i < Integer.parseInt(dados[4]); i++) {
+
+                    if (i == 0) {
+                        ant = geraDiaAleatorio();
+                        atual = ant;
+                    } else {
+                        atual = geraDiaAleatorio();
+                        if (ant == atual) {
+                            atual = geraDiaAleatorio();
+                        }
+                    }
+                    Agendamento ag = new Agendamento();
+                    LocalDate abril = LocalDate.of(2021, Month.APRIL,atual);
+                    ag.setData(abril);
+                    ag.setIdCliente(geraClienteAleatorio());
+                    ag.setServicos(servicos);
+                    ag.setTotal(servico.getPreco());
+                    ag.setDesconto(0);
+                    ag.setPago(true);
+                    ag.setRealizado(true);
+                    ag.setFormaDePagamento("Pix");
+                    ag.setHorario(horario);
+                    ag.setFimAgendamento(horario.plusHours(servico.getTempoGasto().getHour()).plusMinutes(servico.getTempoGasto().getMinute()));
+
+                    try {
+                         ag.cadastraAgendamento(ag);
+                    } catch (ExceptionDAO | SQLException e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        }
+        if (dados.length >= 6) {
+            if (dados[5] != "" && dados[5] != " " && dados[5] != null) {
+                int ant = 0;
+                int atual = 0;
+                LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+                for (int i = 0; i < Integer.parseInt(dados[5]); i++) {
+
+                    if (i == 0) {
+                        ant = geraDiaAleatorio();
+                        atual = ant;
+                    } else {
+                        atual = geraDiaAleatorio();
+                        if (ant == atual) {
+                            atual = geraDiaAleatorio();
+                        }
+                    }
+                    Agendamento ag = new Agendamento();
+                    LocalDate fevereiro = LocalDate.of(2021, Month.MAY ,atual);
+                    ag.setData(fevereiro);
+                    ag.setIdCliente(geraClienteAleatorio());
+                    ag.setServicos(servicos);
+                    ag.setTotal(servico.getPreco());
+                    ag.setDesconto(0);
+                     ag.setRealizado(true);
+                    ag.setPago(true);
+                    ag.setFormaDePagamento("Pix");
+                    ag.setHorario(horario);
+                    ag.setFimAgendamento(horario.plusHours(servico.getTempoGasto().getHour()).plusMinutes(servico.getTempoGasto().getMinute()));
+
+                    try {
+                         ag.cadastraAgendamento(ag);
+                    } catch (ExceptionDAO | SQLException e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        }
+        if (dados.length >= 7) {
+            if (dados[6] != "" && dados[6] != " " && dados[6] != null) {
+                 int ant = 0;
+                int atual = 0;
+                LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+                for (int i = 0; i < Integer.parseInt(dados[6]); i++) {
+
+                    if (i == 0) {
+                        ant = geraDiaAleatorio();
+                        atual = ant;
+                    } else {
+                        atual = geraDiaAleatorio();
+                        if (ant == atual) {
+                            atual = geraDiaAleatorio();
+                        }
+                    }
+                    Agendamento ag = new Agendamento();
+                    LocalDate fevereiro = LocalDate.of(2021, Month.JUNE ,atual);
+                    ag.setData(fevereiro);
+                    ag.setIdCliente(geraClienteAleatorio());
+                    ag.setServicos(servicos);
+                    ag.setTotal(servico.getPreco());
+                    ag.setDesconto(0);
+                    ag.setRealizado(true);
+                    ag.setPago(true);
+                    ag.setFormaDePagamento("Pix");
+                    ag.setHorario(horario);
+                   ag.setFimAgendamento(horario.plusHours(servico.getTempoGasto().getHour()).plusMinutes(servico.getTempoGasto().getMinute()));
+
+                     try {
+                         ag.cadastraAgendamento(ag);
+                    } catch (ExceptionDAO | SQLException e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        }
+
+        if (dados.length >= 8) {
+            if (dados[7] != "" && dados[7] != " " && dados[7] != null) {
+                int ant = 0;
+                int atual = 0;
+                LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+                for (int i = 0; i < Integer.parseInt(dados[7]); i++) {
+
+                    if (i == 0) {
+                        ant = geraDiaAleatorio();
+                        atual = ant;
+                    } else {
+                        atual = geraDiaAleatorio();
+                        if (ant == atual) {
+                            atual = geraDiaAleatorio();
+                        }
+                    }
+                    Agendamento ag = new Agendamento();
+                    LocalDate fevereiro = LocalDate.of(2021, Month.JULY ,atual);
+                    ag.setData(fevereiro);
+                    ag.setIdCliente(geraClienteAleatorio());
+                    ag.setServicos(servicos);
+                    ag.setTotal(servico.getPreco());
+                    ag.setDesconto(0);
+                    ag.setRealizado(true);
+                    ag.setPago(true);
+                    ag.setFormaDePagamento("Pix");
+                    ag.setHorario(horario);
+                    ag.setFimAgendamento(horario.plusHours(servico.getTempoGasto().getHour()).plusMinutes(servico.getTempoGasto().getMinute()));
+
+                    try {
+                         ag.cadastraAgendamento(ag);
+                    } catch (ExceptionDAO | SQLException e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        }
+
+        if (dados.length >= 9) {
+            if (dados[8] != "" && dados[8] != " " && dados[8] != null) {
+                 int ant = 0;
+                int atual = 0;
+                LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+                for (int i = 0; i < Integer.parseInt(dados[8]); i++) {
+
+                    if (i == 0) {
+                        ant = geraDiaAleatorio();
+                        atual = ant;
+                    } else {
+                        atual = geraDiaAleatorio();
+                        if (ant == atual) {
+                            atual = geraDiaAleatorio();
+                        }
+                    }
+                    Agendamento ag = new Agendamento();
+                    LocalDate fevereiro = LocalDate.of(2021, Month.AUGUST ,atual);
+                    ag.setData(fevereiro);
+                    ag.setIdCliente(geraClienteAleatorio());
+                    ag.setServicos(servicos);
+                    ag.setTotal(servico.getPreco());
+                    ag.setDesconto(0);
+                    ag.setRealizado(true);
+                    ag.setPago(true);
+                    ag.setFormaDePagamento("Pix");
+                    ag.setHorario(horario);
+                    ag.setFimAgendamento(horario.plusHours(servico.getTempoGasto().getHour()).plusMinutes(servico.getTempoGasto().getMinute()));
+
+                     try {
+                         ag.cadastraAgendamento(ag);
+                    } catch (ExceptionDAO | SQLException e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        }
+
+        if (dados.length >= 10) {
+            if (dados[9] != "" && dados[9] != " " && dados[9] != null) {
+                int ant = 0;
+                int atual = 0;
+                LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+                for (int i = 0; i < Integer.parseInt(dados[9]); i++) {
+
+                    if (i == 0) {
+                        ant = geraDiaAleatorio();
+                        atual = ant;
+                    } else {
+                        atual = geraDiaAleatorio();
+                        if (ant == atual) {
+                            atual = geraDiaAleatorio();
+                        }
+                    }
+                    Agendamento ag = new Agendamento();
+                    LocalDate fevereiro = LocalDate.of(2021, Month.SEPTEMBER ,atual);
+                    ag.setData(fevereiro);
+                    ag.setIdCliente(geraClienteAleatorio());
+                    ag.setServicos(servicos);
+                    ag.setTotal(servico.getPreco());
+                    ag.setDesconto(0);
+                    ag.setPago(true);
+                    ag.setRealizado(true);
+                    ag.setFormaDePagamento("Pix");
+                    ag.setHorario(horario);
+                    ag.setFimAgendamento(horario.plusHours(servico.getTempoGasto().getHour()).plusMinutes(servico.getTempoGasto().getMinute()));
+
+                     try {
+                         ag.cadastraAgendamento(ag);
+                    } catch (ExceptionDAO | SQLException e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        }
+
+        if (dados.length >= 11) {
+            if (dados[10] != "" && dados[10] != " " && dados[10] != null) {
+                 int ant = 0;
+                int atual = 0;
+                LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+                for (int i = 0; i < Integer.parseInt(dados[10]); i++) {
+
+                    if (i == 0) {
+                        ant = geraDiaAleatorio();
+                        atual = ant;
+                    } else {
+                        atual = geraDiaAleatorio();
+                        if (ant == atual) {
+                            atual = geraDiaAleatorio();
+                        }
+                    }
+                    Agendamento ag = new Agendamento();
+                    LocalDate fevereiro = LocalDate.of(2021, Month.OCTOBER ,atual);
+                    ag.setData(fevereiro);
+                    ag.setIdCliente(geraClienteAleatorio());
+                    ag.setServicos(servicos);
+                    ag.setTotal(servico.getPreco());
+                    ag.setDesconto(0);
+                    ag.setPago(true);
+                    ag.setRealizado(true);
+                    ag.setFormaDePagamento("Pix");
+                    ag.setHorario(horario);
+                    ag.setFimAgendamento(horario.plusHours(servico.getTempoGasto().getHour()).plusMinutes(servico.getTempoGasto().getMinute()));
+
+                    try {
+                         ag.cadastraAgendamento(ag);
+                    } catch (ExceptionDAO | SQLException e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        }
+        if (dados.length >= 12) {
+            if (dados[11] != "" && dados[11] != " " && dados[11] != null) {
+                int ant = 0;
+                int atual = 0;
+                LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+                for (int i = 0; i < Integer.parseInt(dados[11]); i++) {
+
+                    if (i == 0) {
+                        ant = geraDiaAleatorio();
+                        atual = ant;
+                    } else {
+                        atual = geraDiaAleatorio();
+                        if (ant == atual) {
+                            atual = geraDiaAleatorio();
+                        }
+                    }
+                    Agendamento ag = new Agendamento();
+                    LocalDate fevereiro = LocalDate.of(2021, Month.NOVEMBER ,atual);
+                    ag.setData(fevereiro);
+                    ag.setIdCliente(geraClienteAleatorio());
+                    ag.setServicos(servicos);
+                    ag.setTotal(servico.getPreco());
+                    ag.setDesconto(0);
+                    ag.setRealizado(true);
+                    ag.setPago(true);
+                    ag.setFormaDePagamento("Pix");
+                    ag.setHorario(horario);
+                    ag.setFimAgendamento(horario.plusHours(servico.getTempoGasto().getHour()).plusMinutes(servico.getTempoGasto().getMinute()));
+
+                     try {
+                         ag.cadastraAgendamento(ag);
+                    } catch (ExceptionDAO | SQLException e) {
+                        System.out.println(e);
+                    }
+                }
+            }
+        }
+
+        if (dados.length >= 13) {
+            if (dados[12] != "" && dados[12] != " " && dados[12] != null) {
+                int ant = 0;
+                int atual = 0;
+                LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+                for (int i = 0; i < Integer.parseInt(dados[11]); i++) {
+
+                    if (i == 0) {
+                        ant = geraDiaAleatorio();
+                        atual = ant;
+                    } else {
+                        atual = geraDiaAleatorio();
+                        if (ant == atual) {
+                            atual = geraDiaAleatorio();
+                        }
+                    }
+                    Agendamento ag = new Agendamento();
+                    LocalDate fevereiro = LocalDate.of(2021, Month.DECEMBER ,atual);
+                    ag.setData(fevereiro);
+                    ag.setIdCliente(geraClienteAleatorio());
+                    ag.setServicos(servicos);
+                    ag.setTotal(servico.getPreco());
+                    ag.setDesconto(0);
+                     ag.setRealizado(true);
+                    ag.setPago(true);
+                    ag.setFormaDePagamento("Pix");
+                    ag.setHorario(horario);
+                    ag.setFimAgendamento(horario.plusHours(servico.getTempoGasto().getHour()).plusMinutes(servico.getTempoGasto().getMinute()));
+
+                    try {
+                         ag.cadastraAgendamento(ag);
+                    } catch (ExceptionDAO | SQLException e) {
+                        System.out.println(e);
+                    }
+                   
+                }
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
         //new PopulaBanco().CadastrarClientes();
-        new PopulaBanco().CadastrarServicos();
-        new PopulaBanco().CadastrarOrcamentoPrevisto();
+        //new PopulaBanco().CadastrarServicos();
+        //new PopulaBanco().CadastrarOrcamentoPrevisto();
         //new PopulaBanco().CadastrarProdutos();
+        new PopulaBanco().CadastrarServicosRealizados();
     }
 
 }

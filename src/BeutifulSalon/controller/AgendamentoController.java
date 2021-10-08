@@ -19,6 +19,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,7 +30,7 @@ import javax.swing.JPanel;
  */
 public class AgendamentoController {
 
-    public boolean cadastraAgendamento(String data, String horario, long idCliente, ArrayList<Servico> servicos, long total,
+    public boolean cadastraAgendamento(String data, String horario, long idCliente, List<Servico> servicos, long total,
             long desconto, long valorAdicional, boolean realizado, boolean pago, String FormaDePagamento) throws ExceptionDAO {
 
         if (Valida.isHora(horario) && !servicos.isEmpty() && idCliente > 0) {
@@ -56,8 +57,9 @@ public class AgendamentoController {
             LocalTime fimAgendamento = h;
             int horas = 0;
             int minutos = 0;
-
+            servicos.remove(servicos.size() - 1);
             for (Servico s : servicos) {
+                System.out.println(s.getId());
                 Servico sAtual = new ServicoController().buscarServico(s.getId());
                 horas += sAtual.getTempoGasto().getHour();
                 minutos += sAtual.getTempoGasto().getMinute();
@@ -69,7 +71,9 @@ public class AgendamentoController {
                 JOptionPane.showMessageDialog(null, "Horário não disponível");
                 return false;
             }
-
+            //RETIRA LINHA DE TEMPO TOTAL DOS SERVIÇOS
+           
+            
             Agendamento agendamento = new Agendamento();
             agendamento.setFimAgendamento(fimAgendamento);
             agendamento.setTotal(total);
@@ -97,7 +101,7 @@ public class AgendamentoController {
         return true;
     }
 
-    public boolean atualizarAgendamento(String data, String horario, long idCliente, ArrayList<Servico> servicos, long total,
+    public boolean atualizarAgendamento(String data, String horario, long idCliente, List<Servico> servicos, long total,
             long desconto, boolean realizado, long idAgendamento, long valorAdicional, boolean pago, String formaDePagamento,
             LocalTime horarioInicioAntigo, LocalTime horarioFinalAntigo) throws ExceptionDAO {
 
@@ -125,7 +129,8 @@ public class AgendamentoController {
             LocalTime fimAgendamento = h;
             int horas = 0;
             int minutos = 0;
-
+            //removendo linha do total de horas previstas
+            servicos.remove(servicos.size() - 1);
             for (Servico s : servicos) {
                 Servico sAtual = new ServicoController().buscarServico(s.getId());
                 horas += sAtual.getTempoGasto().getHour();

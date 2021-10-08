@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS CABELEIREIRO (
     TEXTOANIVERSARIO      TEXT                                      DEFAULT "",
     ANEXOANIVERSARIO      [BLOOB NOMEANEXOANIVERSARIO VARCHAR] (60),
     NOMEANEXOANIVERSARIO  STRING (60),
-    SENHA                 VARCHAR (45),
+    SENHA                 BLOB,
     ENVIARULTIMAVISITA    BOOLEAN                                   DEFAULT (FALSE),
     TITULOULTIMAVISITA    VARCHAR (60)                              DEFAULT [Título não informado],
     TEXTOULTIMAVISITA     TEXT                                      DEFAULT "",

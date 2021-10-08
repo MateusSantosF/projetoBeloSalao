@@ -115,7 +115,7 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
                 {null, null, null, null}
             },
             new String [] {
-                "Nome", "Marca", "Preço", "id"
+                "Nome", "Marca", "Preço de Venda", "id"
             }
         ) {
             boolean[] canEdit = new boolean [] {

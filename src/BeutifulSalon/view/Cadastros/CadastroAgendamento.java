@@ -4,6 +4,8 @@ import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.Ferramentas.Valida;
+import BeutifulSalon.Tabelas.DestacaTotalTabela;
+import BeutifulSalon.Tabelas.ModalServicoTableModel;
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
@@ -11,10 +13,12 @@ import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
+import BeutifulSalon.view.Apresenta.ApresentaFinancas;
 import BeutifulSalon.view.modais.ModalCliente;
 import BeutifulSalon.view.modais.ModalInputMonetarios;
 import BeutifulSalon.view.modais.ModalServicos;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
@@ -29,7 +33,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import static javax.swing.SwingConstants.CENTER;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -40,17 +48,17 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
     /**
      * Creates new form CadastroAgendamento
      */
-    
     private long idCliente;
     private boolean isDesconto;
     private ModalInputMonetarios modalDesconto;
     private ModalInputMonetarios modalValorAdicional;
-    
+    private ModalServicoTableModel servicosEscolhidos = new ModalServicoTableModel();
+
     public CadastroAgendamento() {
         initComponents();
-        
-        ManipulaFontes mf = new ManipulaFontes(); ;
-        
+
+        ManipulaFontes mf = new ManipulaFontes();;
+
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Cadastro de Agendamento
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome do Cliente
         jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Serviços Solicitados
@@ -67,12 +75,14 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jCheckBoxDesconto.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Desconto 
         jCheckValorAdicional.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //valor adicional
         jButtonFinalizarCompra.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Finalizar Agendamento
-        
-        jToggleButton.setText("Pagamento Realizado");  
+
+        jToggleButton.setText("Pagamento Realizado");
         jComboBoxFormaPagamento.setEnabled(true);
         Color verde = new Color(57, 201, 114);
         jToggleButton.setBackground(verde);
         jDateChooser1.setDate(new ManipulaData().localDateToDate(LocalDate.now()));
+
+        jTableServicosSolicitados.setModel(servicosEscolhidos);
     }
 
     /**
@@ -544,8 +554,8 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -569,18 +579,18 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         isDesconto = true;
         calculaTotalBruto();
         calculaTotal();
-        
+
         if (!jCheckBoxDesconto.isSelected()) {
             jCheckBoxDesconto.setSelected(true);
-            
-            if( modalDesconto == null){
+
+            if (modalDesconto == null) {
                 modalDesconto = new ModalInputMonetarios("Insira o valor do desconto");
                 modalDesconto.registrarObservador(this);
-                modalDesconto.setVisible(true); 
-            }else{
-                modalDesconto.setVisible(true); 
+                modalDesconto.setVisible(true);
+            } else {
+                modalDesconto.setVisible(true);
             }
-            
+
         }
     }//GEN-LAST:event_jCheckBoxDescontoMousePressed
 
@@ -597,13 +607,13 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         try {
             SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
             String dataFormatada = "";
-            String formaDePagamento ="";
+            String formaDePagamento = "";
             boolean pago;
-            
-            if(!jToggleButton.isSelected()){
+
+            if (!jToggleButton.isSelected()) {
                 pago = true;
                 formaDePagamento = String.valueOf(jComboBoxFormaPagamento.getSelectedItem());
-            }else{
+            } else {
                 pago = false;
                 formaDePagamento = "--";
             }
@@ -617,7 +627,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                     dataFormatada,
                     jTextFieldHorario.getText(),
                     idCliente,
-                    new RecuperaTabela().recuperaServicos(jTableServicosSolicitados),
+                    servicosEscolhidos.getDados(),
                     calculaTotalFinal(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText())),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText())),
@@ -692,7 +702,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
     }//GEN-LAST:event_jTextFieldTotalBrutoActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-      modalDesconto = null;
+        modalDesconto = null;
     }//GEN-LAST:event_formWindowClosing
 
     private void jCheckValorAdicionalMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCheckValorAdicionalMousePressed
@@ -703,11 +713,11 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         if (!jCheckValorAdicional.isSelected()) {
             jCheckValorAdicional.setSelected(true);
 
-            if( modalValorAdicional == null){
+            if (modalValorAdicional == null) {
                 modalValorAdicional = new ModalInputMonetarios("Insira o valor Adicional");
                 modalValorAdicional.registrarObservador(this);
                 modalValorAdicional.setVisible(true);
-            }else{
+            } else {
                 modalValorAdicional.setVisible(true);
             }
 
@@ -731,9 +741,9 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
     }//GEN-LAST:event_jToggleButtonStateChanged
 
     private void jToggleButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButtonMousePressed
-        
+
         if (jToggleButton.isSelected()) {
-            jToggleButton.setText("Pagamento Realizado");  
+            jToggleButton.setText("Pagamento Realizado");
             jComboBoxFormaPagamento.setEnabled(true);
             Color verde = new Color(57, 201, 114);
             jToggleButton.setBackground(verde);
@@ -761,24 +771,18 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jTextFieldTotal.setText("");
         jTextFieldHorario.setText("");
 
-        DefaultTableModel modal = (DefaultTableModel) jTableServicosSolicitados.getModel();
-        modal.setRowCount(0);
-        jTableServicosSolicitados.setModel(modal);
+        
     }
 
     private void calculaTotalBruto() {
         long total = 0;
         try {
-            ArrayList<Servico> servicos = new RecuperaTabela().recuperaServicos(jTableServicosSolicitados);
+            List<Servico> servicos = servicosEscolhidos.getDados();
 
-            try {
-                for (Servico s : servicos) {
-                    total += s.getPreco();
-                }
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao calcular total " + e);
+            for (Servico s : servicos) {
+                total += s.getPreco();
             }
+
         } catch (HeadlessException e) {
             JOptionPane.showMessageDialog(null, "Erro ao calcular total2" + e);
         }
@@ -789,7 +793,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
     private void calculaTotal() {
 
-         try {
+        try {
 
             long valorDesconto = 0;
             long valorAdicional = 0;
@@ -797,8 +801,8 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
             if (!jTextFieldDesconto.getText().equals("")) {
                 valorDesconto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText()));
             }
-             if (!jTextFieldValorAdicional.getText().equals("")) {
-               valorAdicional = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText()));
+            if (!jTextFieldValorAdicional.getText().equals("")) {
+                valorAdicional = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText()));
             }
 
             long valorTotalBruto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldTotalBruto.getText()));
@@ -822,7 +826,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                 valorDesconto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText()));
             }
             if (!jTextFieldValorAdicional.getText().equals("")) {
-               valorAdicional = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText()));
+                valorAdicional = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText()));
             }
 
             long valorTotalBruto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldTotalBruto.getText()));
@@ -908,39 +912,71 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
     private javax.swing.JToggleButton jToggleButton;
     // End of variables declaration//GEN-END:variables
 
+    public class OcultaPreco extends DefaultTableCellRenderer implements TableCellRenderer {
+
+        private Color color;
+        private int row = -1;
+
+        public OcultaPreco(Color color, int row) {
+            super();
+            this.color = color;
+            this.row = row;
+
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table,
+                Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            if (row != -1 && color != null) {
+                if (row == this.row) {
+                    c.setBackground(Color.BLACK);
+                    c.setForeground(Color.BLACK);
+                    this.setHorizontalAlignment(LEFT);
+
+                } else {
+                    c.setBackground(Color.WHITE);
+                    c.setForeground(Color.BLACK);
+                }
+            }
+
+            return c;
+        }
+
+    }
+
     @Override
     public void update(Object obj) {
-
+        servicosEscolhidos = (ModalServicoTableModel) obj;
+        servicosEscolhidos.calculaTempoTotal();
+        jTableServicosSolicitados.setModel(servicosEscolhidos);
+        jTableServicosSolicitados.getColumnModel().getColumn(1).setCellRenderer(new OcultaPreco(Color.BLACK, (jTableServicosSolicitados.getRowCount() - 1)));
+        jTableServicosSolicitados.getColumnModel().getColumn(0).setCellRenderer(new DestacaTotalTabela(Color.WHITE, jTableServicosSolicitados.getRowCount() - 1));
+        calculaTotalBruto();
+        calculaTotal();
     }
 
     @Override
     public void update(DefaultTableModel model) {
-
-        try {
-            jTableServicosSolicitados.setModel(model);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao inserir serviços na tabela." + e);
-        }
-
-        calculaTotalBruto();
-        calculaTotal();
-
     }
 
     @Override
     public void update(String valorDesconto) {
-        
-        if(isDesconto){
-           jTextFieldDesconto.setText("-" + Dinheiro.parseString(Dinheiro.retiraCaracteres(valorDesconto)));
-              jCheckBoxDesconto.setSelected(true);
- 
-        }else{
+
+        if (isDesconto) {
+            jTextFieldDesconto.setText("-" + Dinheiro.parseString(Dinheiro.retiraCaracteres(valorDesconto)));
+            jCheckBoxDesconto.setSelected(true);
+
+        } else {
             jTextFieldValorAdicional.setText(Dinheiro.parseString(Dinheiro.retiraCaracteres(valorDesconto)));
             jCheckValorAdicional.setSelected(true);
         }
         calculaTotalBruto();
         calculaTotal();
-       
+
     }
 
     @Override

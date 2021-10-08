@@ -10,6 +10,7 @@ import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Cabeleireiro;
 import BeutifulSalon.model.Servico;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -125,14 +126,16 @@ public class ManipulaData {
 
         //primeiro dia do ano referente a data passada por parametro
         LocalDate dataModificada = LocalDate.of(data.getYear(), 1, 1);
-
+      
         meses.add(dataModificada.getMonth());
-        for (int i = 2; i < 12; i++) {
+        for (int i = 1; i < 12; i++) {
 
             //soma-se meses referente ao ano para evitar problemas com qtd de dias;
             Month mesAtual = dataModificada.plusMonths(i).getMonth();
+            System.out.println(mesAtual);
             meses.add(mesAtual);
         }
+        
 
         return meses;
     }
@@ -200,6 +203,7 @@ public class ManipulaData {
         CabeleireiroController cc = new CabeleireiroController();
         Cabeleireiro cabeleireiro = cc.selecionaCabeleireiro();
 
+        //verifica preferencia de validação de horários
         if (cabeleireiro.isVerificarHorariosDisponiveis()) {
             return true;
         }
@@ -212,8 +216,6 @@ public class ManipulaData {
         long inicio = entradaCliente.toNanoOfDay();
         long fim = terminoAgendamento.toNanoOfDay();
 
-      
-
         ArrayList<LocalTime> expedienteDoDia;
         LocalTime entrada;
         LocalTime saida;
@@ -225,8 +227,6 @@ public class ManipulaData {
         expedienteDoDia = cc.selecionaExpediente(diaDaSemana);
         entrada = expedienteDoDia.get(0);
         saida = expedienteDoDia.get(1);
-
-
 
         if (!(inicio >= entrada.toNanoOfDay())) {
             JOptionPane.showMessageDialog(null, "Você não pode marcar um agendamento antes do seu horário de expediente.");
@@ -289,8 +289,15 @@ public class ManipulaData {
 
     public boolean validaHorarioAgendamentoEdit(LocalTime entradaCliente, LocalTime terminoAgendamento, LocalDate data, long idAg) {
 
-        AgendamentoController ag = new AgendamentoController();
         CabeleireiroController cc = new CabeleireiroController();
+        Cabeleireiro cabeleireiro = cc.selecionaCabeleireiro();
+
+        //verifica preferencia de validação de horários
+        if (cabeleireiro.isVerificarHorariosDisponiveis()) {
+            return true;
+        }
+
+        AgendamentoController ag = new AgendamentoController();
 
         //busca agendamentos do dia inserido na tela de agendamento
         ArrayList<Agendamento> agendamentos = ag.listarAgendamentosRealizados(data);
@@ -302,42 +309,67 @@ public class ManipulaData {
         LocalTime entrada;
         LocalTime saida;
         int diaDaSemana = 1; // 1 (segunda) -  7 (Domingo)
+
+        diaDaSemana = data.getDayOfWeek().getValue();
+
+        //recupera horario de inicio e término do expediente
+        expedienteDoDia = cc.selecionaExpediente(diaDaSemana);
+        entrada = expedienteDoDia.get(0);
+        saida = expedienteDoDia.get(1);
+
+        if (!(inicio >= entrada.toNanoOfDay())) {
+            JOptionPane.showMessageDialog(null, "Você não pode marcar um agendamento antes do seu horário de expediente.");
+            return false;
+        }
+
         Agendamento ultimoAgendamentoProcessado = null;
+        System.out.println("============================");
+        System.out.println("ENTRADA CLIENTE =>" + entradaCliente);
+        System.out.println("SAÍDA CLIENTE =>" + terminoAgendamento);
 
         if (agendamentos.size() > 0) {
 
             for (Agendamento g : agendamentos) {
                 if (g.getIdAgendamento() != idAg) {
-
+                    System.out.println("Inicio=>" + g.getHorario());
+                    System.out.println("FIM =>" + g.getFimAgendamento());
                     long inicioTemp = g.getHorario().toNanoOfDay();
                     long fimTemp = g.getFimAgendamento().toNanoOfDay();
+                    System.out.println("InicioCliente" + inicio);
+                    System.out.println("FimCliente" + fim);
+                    System.out.println("InicioTemp" + inicioTemp);
+                    System.out.println("FimTemp" + fimTemp);
 
                     if (inicio >= fimTemp || fim <= inicioTemp) {
                         estaLivre = true;
-
                     } else {
                         return false;
                     }
                     ultimoAgendamentoProcessado = g;
-
                 }
 
+                System.out.println("============================");
             }
 
-            diaDaSemana = data.getDayOfWeek().getValue();
-
-            //recupera horario de inicio e término do expediente
-            expedienteDoDia = cc.selecionaExpediente(diaDaSemana);
-            entrada = expedienteDoDia.get(0);
-            saida = expedienteDoDia.get(1);
-
+            //ultimo agendamento processado ( o mais tarde) é menor que a saída do expediente?
             if (ultimoAgendamentoProcessado.getFimAgendamento().toNanoOfDay() <= saida.toNanoOfDay()) {
                 if (entradaCliente.isAfter(ultimoAgendamentoProcessado.getFimAgendamento())) {
                     estaLivre = true;
                 }
+                System.out.println("Ultimo agendament NAO é após fim expediente");
 
+            } else {
+                System.out.println("Ultimo agendament é após fim expediente");
+                //o término do agendamento é antes do inicio ?
+                if (terminoAgendamento.isBefore(ultimoAgendamentoProcessado.getHorario())) {
+
+                    estaLivre = true;
+                } else {
+                    estaLivre = false;
+                }
             }
 
+            System.out.println("============================");
             return estaLivre;
 
         } else {

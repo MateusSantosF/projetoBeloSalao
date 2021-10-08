@@ -53,6 +53,7 @@ import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.util.SortOrder;
 import org.jfree.data.RangeType;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -95,8 +96,9 @@ public class GraficoDeBarras {
         ManipulaData md = new ManipulaData();
 
         // row keys...
-        final String series1 = "Entrada";
-        final String series2 = "Saída";
+        final String series1 = "Saída";
+        final String series2 = "Entrada";
+        final String series3 = "Lucro";
 
         // column keys...
         final String category1 = "Jan";
@@ -125,94 +127,106 @@ public class GraficoDeBarras {
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
 
-                    dataset.addValue(entrada, series1, category1);
-                    dataset.addValue(saida, series2, category1);
+                    dataset.addValue(saida, series1, category1);
+                    dataset.addValue(entrada, series2, category1);
+                    dataset.addValue(entrada - saida, series3, category1);
                     break;
                 case FEBRUARY:
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
 
-                    dataset.addValue(entrada, series1, category2);
-                    dataset.addValue(saida, series2, category2);
+                    dataset.addValue(saida, series1, category2);
+                    dataset.addValue(entrada, series2, category2);
+                    dataset.addValue(entrada - saida, series3, category2);
 
                     break;
                 case MARCH:
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
 
-                    dataset.addValue(entrada, series1, category3);
-                    dataset.addValue(saida, series2, category3);
+                    dataset.addValue(saida, series1, category3);
+                    dataset.addValue(entrada, series2, category3);
+                    dataset.addValue(entrada - saida, series3, category3);
 
                     break;
                 case APRIL:
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
 
-                    dataset.addValue(entrada, series1, category4);
-                    dataset.addValue(saida, series2, category4);
+                    dataset.addValue(saida, series1, category4);
+                    dataset.addValue(entrada, series2, category4);
+                    dataset.addValue(entrada - saida, series3, category4);
                     break;
                 case MAY:
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
 
-                    dataset.addValue(entrada, series1, category5);
-                    dataset.addValue(saida, series2, category5);
+                    dataset.addValue(saida, series1, category5);
+                    dataset.addValue(entrada, series2, category5);
+                    dataset.addValue(entrada - saida, series3, category5);
 
                     break;
                 case JUNE:
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
 
-                    dataset.addValue(entrada, series1, category6);
-                    dataset.addValue(saida, series2, category6);
+                    dataset.addValue(saida, series1, category6);
+                    dataset.addValue(entrada, series2, category6);
+                    dataset.addValue(entrada - saida, series3, category6);
 
                     break;
                 case JULY:
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
 
-                    dataset.addValue(entrada, series1, category7);
-                    dataset.addValue(saida, series2, category7);
+                    dataset.addValue(saida, series1, category7);
+                    dataset.addValue(entrada, series2, category7);
+                    dataset.addValue(entrada - saida, series3, category7);
 
                     break;
                 case AUGUST:
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
 
-                    dataset.addValue(entrada, series1, category8);
-                    dataset.addValue(saida, series2, category8);
+                    dataset.addValue(saida, series1, category8);
+                    dataset.addValue(entrada, series2, category8);
+                    dataset.addValue(entrada - saida, series3, category8);
 
                     break;
                 case SEPTEMBER:
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
 
-                    dataset.addValue(entrada, series1, category9);
-                    dataset.addValue(saida, series2, category9);
+                    dataset.addValue(saida, series1, category9);
+                    dataset.addValue(entrada, series2, category9);
+                    dataset.addValue(entrada - saida, series3, category9);
 
                     break;
                 case OCTOBER:
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
 
-                    dataset.addValue(entrada, series1, category10);
-                    dataset.addValue(saida, series2, category10);
+                    dataset.addValue(saida, series1, category10);
+                    dataset.addValue(entrada, series2, category10);
+                    dataset.addValue(entrada - saida, series3, category10);
 
                     break;
                 case NOVEMBER:
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
 
-                    dataset.addValue(entrada, series1, category11);
-                    dataset.addValue(saida, series2, category11);
+                    dataset.addValue(saida, series1, category11);
+                    dataset.addValue(entrada, series2, category11);
+                    dataset.addValue(entrada - saida, series3, category11);
 
                     break;
                 case DECEMBER:
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
 
-                    dataset.addValue(entrada, series1, category12);
-                    dataset.addValue(saida, series2, category12);
+                    dataset.addValue(saida, series1, category12);
+                    dataset.addValue(entrada, series2, category12);
+                    dataset.addValue(entrada - saida, series3, category12);
 
                     break;
 
@@ -237,7 +251,7 @@ public class GraficoDeBarras {
         final JFreeChart chart = ChartFactory.createBarChart(
                 "", // chart title
                 "", // domain axis label
-                "", // range axis label
+                "Valores", // range axis label
                 dataset, // data
                 PlotOrientation.VERTICAL, // orientation
                 true, // include legend
@@ -245,7 +259,7 @@ public class GraficoDeBarras {
                 false // URLs?
         );
 
-        chart.setPadding(new RectangleInsets(20, 10, 0, 0));
+        //chart.setPadding(new RectangleInsets(20, 10, 0, 0));
 
         // set the background color for the chart...
         chart.setBackgroundPaint(Color.white);
@@ -259,7 +273,8 @@ public class GraficoDeBarras {
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
         plot.setRangeCrosshairVisible(true);
-
+     
+        
         // set the range axis to display integers only...
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
@@ -271,32 +286,29 @@ public class GraficoDeBarras {
 
         renderer.setDrawBarOutline(false);
         renderer.setBarPainter(new StandardBarPainter());
-        renderer.setSeriesStroke(0, new BasicStroke(0.2f));
+        renderer.setSeriesStroke(0, new BasicStroke(0.1f));
+        renderer.setSeriesStroke(1, new BasicStroke(0.1f));
+        renderer.setSeriesStroke(2, new BasicStroke(0.1f));
+        renderer.setItemMargin(-0.001);
+       
 
         Color vermelho = new Color(239, 70, 55);    // red
         Color verde = new Color(85, 177, 69);       // green
-
-        // set up gradient paints for series...
-        final GradientPaint gp0 = new GradientPaint(
-                0.0f, 0.0f, Color.blue,
-                0.0f, 0.0f, Color.lightGray
-        );
-        final GradientPaint gp1 = new GradientPaint(
-                0.0f, 0.0f, Color.green,
-                0.0f, 0.0f, Color.lightGray
-        );
+        Color azul = new Color(9, 10, 55);
 
         NumberFormat numeros = NumberFormat.getCurrencyInstance();
 
         renderer.setSeriesToolTipGenerator(0, new StandardCategoryToolTipGenerator("({0}, {1}) = {2}", numeros));
         renderer.setSeriesToolTipGenerator(1, new StandardCategoryToolTipGenerator("({0}, {1}) = {2}", numeros));
-        renderer.setSeriesPaint(0, this.verde);
-        renderer.setSeriesPaint(1, this.vermelho);
+        renderer.setSeriesToolTipGenerator(2, new StandardCategoryToolTipGenerator("({0}, {1}) = {2}", numeros));
+        renderer.setSeriesPaint(1, this.verde);
+        renderer.setSeriesPaint(0, this.vermelho);
+        renderer.setSeriesPaint(2, azul);
 
         final CategoryAxis domainAxis = plot.getDomainAxis();
-
-        domainAxis.setCategoryLabelPositionOffset(2);
-        domainAxis.setCategoryMargin(0);
+   
+        domainAxis.setCategoryLabelPositionOffset(1);
+     
 
         // OPTIONAL CUSTOMISATION COMPLETED.
         return chart;

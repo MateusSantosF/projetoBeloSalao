@@ -416,6 +416,7 @@ public class VendaProdutoDAO {
             }
             
             connection.commit();
+            connection.setAutoCommit(true);
             return vendas;
        
 

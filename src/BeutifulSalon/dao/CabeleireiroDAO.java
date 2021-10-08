@@ -21,6 +21,8 @@ import java.util.ArrayList;
  */
 public class CabeleireiroDAO {
 
+    private static String chaveencriptacao = "0123456789abcdef";
+
     public void cadastrarCabeleireiro(Cabeleireiro cabeleireiro) {
         String sqlScript = "INSERT INTO CABELEIREIRO (CPF ,EMAIL, NOME"
                 + ", SEGUNDAE, TERCAE, QUARTAE, QUINTAE, SEXTAE, SABADOE, DOMINGOE,"
@@ -45,7 +47,7 @@ public class CabeleireiroDAO {
             pStatement.setTime(8, java.sql.Time.valueOf(cabeleireiro.getSextaE()));
             pStatement.setTime(9, java.sql.Time.valueOf(cabeleireiro.getSabadoE()));
             pStatement.setTime(10, java.sql.Time.valueOf(cabeleireiro.getDomingoE()));
-            
+
             pStatement.setTime(11, java.sql.Time.valueOf(cabeleireiro.getSegundaS()));
             pStatement.setTime(12, java.sql.Time.valueOf(cabeleireiro.getTercaS()));
             pStatement.setTime(13, java.sql.Time.valueOf(cabeleireiro.getQuartaS()));
@@ -53,7 +55,7 @@ public class CabeleireiroDAO {
             pStatement.setTime(15, java.sql.Time.valueOf(cabeleireiro.getSextaS()));
             pStatement.setTime(16, java.sql.Time.valueOf(cabeleireiro.getSabadoS()));
             pStatement.setTime(17, java.sql.Time.valueOf(cabeleireiro.getDomingoS()));
-            pStatement.setString(18, cabeleireiro.getSenha());
+            pStatement.setBytes(18, cabeleireiro.criptografaSenha(cabeleireiro.getSenha()));
             pStatement.setLong(19, cabeleireiro.getMetaDeLucro());
 
             pStatement.execute();
@@ -82,23 +84,22 @@ public class CabeleireiroDAO {
         }
 
     }
-    
-    public void cadastrarPostIt(String texto)throws ExceptionDAO{
-        
+
+    public void cadastrarPostIt(String texto) throws ExceptionDAO {
+
         String sql = "UPDATE CABELEIREIRO SET POSTIT = ?";
-        
+
         Connection connection = null;
         PreparedStatement ps = null;
-        
+
         try {
             connection = new ConnectionMVC().getConnection();
             ps = connection.prepareStatement(sql);
             ps.setString(1, texto);
-            
+
             ps.execute();
-           
-            
-        }  catch (SQLException e) {
+
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO " + e);
         } finally {
 
@@ -120,33 +121,31 @@ public class CabeleireiroDAO {
             }
 
         }
-        
-       
+
     }
-    
-    public int verificaRegistro(){
-        
-        
+
+    public int verificaRegistro() {
+
         String sql = "SELECT COUNT(1) AS QTD FROM CABELEIREIRO";
-        
+
         Connection connection = null;
         PreparedStatement ps = null;
         int nRegistro = 0;
-        
+
         try {
             connection = new ConnectionMVC().getConnection();
             ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            
-            if(rs != null){
-                while(rs.next()){
+
+            if (rs != null) {
+                while (rs.next()) {
                     nRegistro = rs.getInt("QTD");
                 }
             }
-            
+
             return nRegistro;
-            
-        }  catch (SQLException e) {
+
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO teste1 " + e);
         } finally {
 
@@ -168,7 +167,7 @@ public class CabeleireiroDAO {
             }
 
         }
-        
+
         return nRegistro;
     }
 
@@ -199,7 +198,7 @@ public class CabeleireiroDAO {
                     cabeleireiro.setSextaE(rs.getTime("SEXTAE").toLocalTime());
                     cabeleireiro.setSabadoE(rs.getTime("SABADOE").toLocalTime());
                     cabeleireiro.setDomingoE(rs.getTime("DOMINGOE").toLocalTime());
-                    
+
                     cabeleireiro.setSegundaS(rs.getTime("SEGUNDAS").toLocalTime());
                     cabeleireiro.setTercaS(rs.getTime("TERCAS").toLocalTime());
                     cabeleireiro.setQuartaS(rs.getTime("QUARTAS").toLocalTime());
@@ -207,7 +206,7 @@ public class CabeleireiroDAO {
                     cabeleireiro.setSextaS(rs.getTime("SEXTAS").toLocalTime());
                     cabeleireiro.setSabadoS(rs.getTime("SABADOS").toLocalTime());
                     cabeleireiro.setDomingoS(rs.getTime("DOMINGOS").toLocalTime());
-                    
+
                     Email emailAniversario = new Email();
                     emailAniversario.setRementente(cabeleireiro.getEmail());
                     emailAniversario.setTitulo(rs.getString("TITULOANIVERSARIO"));
@@ -215,25 +214,25 @@ public class CabeleireiroDAO {
                     emailAniversario.setEnviar(rs.getBoolean("ENVIARANIVERSARIO"));
                     emailAniversario.setDiretorioArquivo(rs.getString("NOMEANEXOANIVERSARIO"));
                     byte[] anexoAniversario = rs.getBytes("ANEXOANIVERSARIO");
-                    if(anexoAniversario != null){
+                    if (anexoAniversario != null) {
                         emailAniversario.setAnexo(anexoAniversario);
                     }
-                    
+
                     Email emailUltimaVisita = new Email();
                     emailUltimaVisita.setEnviar(rs.getBoolean("ENVIARULTIMAVISITA"));
                     emailUltimaVisita.setRementente(cabeleireiro.getEmail());
                     emailUltimaVisita.setTitulo(rs.getString("TITULOULTIMAVISITA"));
-                    emailUltimaVisita.setTexto(rs.getString("TEXTOULTIMAVISITA"));             
+                    emailUltimaVisita.setTexto(rs.getString("TEXTOULTIMAVISITA"));
                     emailUltimaVisita.setDiretorioArquivo(rs.getString("NOMEANEXOULTIMAVISITA"));
                     emailUltimaVisita.setPeriodoReenvio(rs.getInt("PERIODOULTIMAVISITA"));
                     byte[] anexoUltimaVisita = rs.getBytes("ANEXOULTIMAVISITA");
-                    if(anexoAniversario != null){
+                    if (anexoAniversario != null) {
                         emailUltimaVisita.setAnexo(anexoUltimaVisita);
                     }
-                    
+
                     cabeleireiro.setEmailUltimaVisita(emailUltimaVisita);
                     cabeleireiro.setEmailAniversario(emailAniversario);
-                    cabeleireiro.setSenha(rs.getString("SENHA"));
+                    cabeleireiro.setSenha(Cabeleireiro.decrypt(rs.getBytes("SENHA"), chaveencriptacao));
                     cabeleireiro.setMetaDeLucro(rs.getLong("METADELUCRO"));
                     cabeleireiro.setPostit(rs.getString("POSTIT"));
                     cabeleireiro.setVerificarHorariosDisponiveis(rs.getBoolean("VERIFICACAOHORARIOS"));
@@ -271,13 +270,13 @@ public class CabeleireiroDAO {
     }
 
     public ArrayList<LocalTime> selecionaExpediente(int diaDaSemana) {
-        
+
         String sqlScript = "";
         String entrada = "";
         String saida = "";
         ArrayList<LocalTime> horario = new ArrayList<>();
 
-        switch(diaDaSemana){
+        switch (diaDaSemana) {
             case 1:
                 sqlScript = "SELECT SEGUNDAE,SEGUNDAS FROM CABELEIREIRO";
                 entrada = "SEGUNDAE";
@@ -313,9 +312,9 @@ public class CabeleireiroDAO {
                 entrada = "DOMINGOE";
                 saida = "DOMINGOS";
                 break;
-                
+
         }
-        
+
         PreparedStatement pStatement = null;
         Connection connection = null;
         ResultSet rs = null;
@@ -331,9 +330,9 @@ public class CabeleireiroDAO {
                     horario.add(rs.getTime(saida).toLocalTime());
                 }
             }
-           
+
             return horario;
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro CabeleireiroDAO teste " + e);
         } finally {
 
@@ -355,19 +354,17 @@ public class CabeleireiroDAO {
             }
 
         }
-                    
+
         return null;
     }
 
     public void atualizarCabeleireiro(Cabeleireiro cabeleireiro) {
-        
+
         String sqlScript = "UPDATE CABELEIREIRO SET CPF = ? ,EMAIL = ? , NOME = ? ,"
                 + " SEGUNDAE = ?, TERCAE = ?, QUARTAE = ?, QUINTAE = ?, SEXTAE = ?, SABADOE = ?, DOMINGOE = ?,"
                 + " SEGUNDAS = ?, TERCAS = ?, QUARTAS =?, QUINTAS = ?, SEXTAS = ? , SABADOS = ?, DOMINGOS = ?, SENHA = ?, METADELUCRO = ? "
                 + "WHERE ID = (SELECT MAX(ID) FROM CABELEIREIRO)";
-        
-  
-  
+
         PreparedStatement pStatement = null;
         Connection connection = null;
         try {
@@ -375,8 +372,7 @@ public class CabeleireiroDAO {
             connection = new ConnectionMVC().getConnection();
 
             pStatement = connection.prepareStatement(sqlScript);
-            
-           
+
             pStatement.setString(1, cabeleireiro.getCpf());
             pStatement.setString(2, cabeleireiro.getEmail());
             pStatement.setString(3, cabeleireiro.getNome());
@@ -395,11 +391,9 @@ public class CabeleireiroDAO {
             pStatement.setTime(15, java.sql.Time.valueOf(cabeleireiro.getSextaS()));
             pStatement.setTime(16, java.sql.Time.valueOf(cabeleireiro.getSabadoS()));
             pStatement.setTime(17, java.sql.Time.valueOf(cabeleireiro.getDomingoS()));
-            pStatement.setString(18, cabeleireiro.getSenha());
+            pStatement.setBytes(18, cabeleireiro.criptografaSenha(cabeleireiro.getSenha()));
             pStatement.setLong(19, cabeleireiro.getMetaDeLucro());
-            
 
-            
             pStatement.execute();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);
@@ -423,14 +417,13 @@ public class CabeleireiroDAO {
             }
 
         }
-   
+
     }
-    
-    public void cadastrarEmailPadraoAniversario(Email email, String cpf){
-         String sqlScript = "UPDATE CABELEIREIRO SET ENVIARANIVERSARIO = ?, TITULOANIVERSARIO = ? ,TEXTOANIVERSARIO = ?,"
-                 + "ANEXOANIVERSARIO = ?, NOMEANEXOANIVERSARIO = ?";
-             
-  
+
+    public void cadastrarEmailPadraoAniversario(Email email, String cpf) {
+        String sqlScript = "UPDATE CABELEIREIRO SET ENVIARANIVERSARIO = ?, TITULOANIVERSARIO = ? ,TEXTOANIVERSARIO = ?,"
+                + "ANEXOANIVERSARIO = ?, NOMEANEXOANIVERSARIO = ?";
+
         PreparedStatement pStatement = null;
         Connection connection = null;
         try {
@@ -443,11 +436,10 @@ public class CabeleireiroDAO {
             pStatement.setString(2, email.getTitulo());
             pStatement.setString(3, email.getTexto());
             pStatement.setBytes(4, email.getAnexo());
-            pStatement.setString(5, email.getDiretorioArquivo() );
-            
+            pStatement.setString(5, email.getDiretorioArquivo());
+
             pStatement.execute();
-            
-            
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);
         } finally {
@@ -470,13 +462,12 @@ public class CabeleireiroDAO {
             }
 
         }
-  
+
     }
-    
-    
-    public Email getEmailPadraoAniversario(){
+
+    public Email getEmailPadraoAniversario() {
         String sqlScript = "SELECT ENVIARANIVERSARIO,TITULOANIVERSARIO,TEXTOANIVERSARIO,ANEXOANIVERSARIO FROM CABELEIREIRO";
-  
+
         PreparedStatement pStatement = null;
         Connection connection = null;
         Email email = null;
@@ -485,18 +476,18 @@ public class CabeleireiroDAO {
             connection = new ConnectionMVC().getConnection();
 
             pStatement = connection.prepareStatement(sqlScript);
-            
+
             ResultSet rs = pStatement.executeQuery();
-            
-            if(rs != null){
+
+            if (rs != null) {
                 email = new Email();
-                
+
                 email.setEnviar(rs.getBoolean("ENVIARANIVERSARIO"));
                 email.setTitulo(rs.getString("TITULOANIVERSARIO"));
                 email.setTexto(rs.getString("TEXTOANIVERSARIO"));
                 email.setAnexo(rs.getBytes("ANEXOANIVERSARIO"));
             }
-            
+
             return email;
 
         } catch (SQLException e) {
@@ -525,10 +516,10 @@ public class CabeleireiroDAO {
     }
 
     public void cadastrarEmailUltimaVisita(Email email, String cpf, int periodo) {
-        
+
         String sqlScript = "UPDATE CABELEIREIRO SET ENVIARULTIMAVISITA = ?, TITULOULTIMAVISITA = ? ,TEXTOULTIMAVISITA = ?,"
-                 + "ANEXOULTIMAVISITA = ?, NOMEANEXOULTIMAVISITA = ?, PERIODOULTIMAVISITA = ?";
-             
+                + "ANEXOULTIMAVISITA = ?, NOMEANEXOULTIMAVISITA = ?, PERIODOULTIMAVISITA = ?";
+
         PreparedStatement pStatement = null;
         Connection connection = null;
         try {
@@ -541,12 +532,11 @@ public class CabeleireiroDAO {
             pStatement.setString(2, email.getTitulo());
             pStatement.setString(3, email.getTexto());
             pStatement.setBytes(4, email.getAnexo());
-            pStatement.setString(5, email.getDiretorioArquivo() );
+            pStatement.setString(5, email.getDiretorioArquivo());
             pStatement.setInt(6, periodo);
-            
+
             pStatement.execute();
-            
-            
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);
         } finally {
@@ -572,10 +562,9 @@ public class CabeleireiroDAO {
     }
 
     public void atualizarPreferencias(boolean verificar, int tempoEntreAgendamentos) {
-        
+
         String sqlScript = "UPDATE CABELEIREIRO SET VERIFICACAOHORARIOS = ?,TEMPOENTREHORARIOS = ?  ";
-             
-  
+
         PreparedStatement pStatement = null;
         Connection connection = null;
         try {
@@ -585,10 +574,9 @@ public class CabeleireiroDAO {
             pStatement = connection.prepareStatement(sqlScript);
             pStatement.setBoolean(1, verificar);
             pStatement.setInt(2, tempoEntreAgendamentos);
-            
+
             pStatement.execute();
-            
-            
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);
         } finally {
@@ -614,7 +602,7 @@ public class CabeleireiroDAO {
     }
 
     public void recriarBanco() {
-  
+
         String tabelaCliente = "CREATE TABLE IF NOT EXISTS CLIENTE ("
                 + " NOME          VARCHAR (30) NOT NULL,"
                 + " SOBRENOME     VARCHAR (40) NOT NULL,"
@@ -639,7 +627,7 @@ public class CabeleireiroDAO {
                 + " ID            INTEGER      PRIMARY KEY AUTOINCREMENT,"
                 + "EXCLUIDO      BOOLEAN      DEFAULT (false) "
                 + "); ";
-        
+
         String triggerCliente1 = "CREATE TRIGGER IF NOT EXISTS registraEmailUltimaVisita"
                 + "    AFTER INSERT"
                 + "      ON CLIENTE"
@@ -658,7 +646,7 @@ public class CabeleireiroDAO {
                 + "                                      NULL"
                 + "                                  );"
                 + "END; ";
-              String triggerCliente2 = "CREATE TRIGGER IF NOT EXISTS registraEmailAniversario"
+        String triggerCliente2 = "CREATE TRIGGER IF NOT EXISTS registraEmailAniversario"
                 + "         AFTER INSERT"
                 + "            ON CLIENTE"
                 + " BEGIN"
@@ -676,8 +664,8 @@ public class CabeleireiroDAO {
                 + "                                     NULL"
                 + "                                 );"
                 + "END;";
-              
-                String tabelaEmailAniversario = "CREATE TABLE IF NOT EXISTS EMAILANIVERSARIO ("
+
+        String tabelaEmailAniversario = "CREATE TABLE IF NOT EXISTS EMAILANIVERSARIO ("
                 + "    ID_CLIENTE  INTEGER NOT NULL"
                 + "                        REFERENCES CLIENTE (ID),"
                 + "    ULTIMOENVIO DATE,"
@@ -686,7 +674,7 @@ public class CabeleireiroDAO {
                 + "    )"
                 + "    REFERENCES CLIENTE"
                 + ");";
-                String tabelaEmailUltimaVisita = "CREATE TABLE IF NOT EXISTS EMAILULTIMAVISITA ("
+        String tabelaEmailUltimaVisita = "CREATE TABLE IF NOT EXISTS EMAILULTIMAVISITA ("
                 + "  ID_CLIENTE  INTEGER NOT NULL"
                 + "                       REFERENCES CLIENTE (ID),"
                 + "  ULTIMOENVIO DATE,"
@@ -695,14 +683,14 @@ public class CabeleireiroDAO {
                 + "  )"
                 + "  REFERENCES CLIENTE"
                 + ");";
-                
-                String tabelaCompra =  "CREATE TABLE IF NOT EXISTS COMPRA ("
+
+        String tabelaCompra = "CREATE TABLE IF NOT EXISTS COMPRA ("
                 + "   ID_COMPRA     INTEGER  PRIMARY KEY AUTOINCREMENT,"
                 + "  DATA          DATE,"
                 + " VALORTOTAL    INTEGER,"
                 + " VALORDESCONTO INTENGER"
                 + ");";
-                 String tabelItemCompra = "CREATE TABLE IF NOT EXISTS ITEM_COMPRA ("
+        String tabelItemCompra = "CREATE TABLE IF NOT EXISTS ITEM_COMPRA ("
                 + "   ID_ITEMCOMPRA INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "  PRECOUNITARIO INTEGER,"
                 + " QUANTIDADE    INT,"
@@ -718,8 +706,8 @@ public class CabeleireiroDAO {
                 + " )"
                 + " REFERENCES COMPRA (ID_COMPRA) "
                 + ");";
-                 
-                String tabelaVenda =  "CREATE TABLE IF NOT EXISTS VENDA ("
+
+        String tabelaVenda = "CREATE TABLE IF NOT EXISTS VENDA ("
                 + "   ID_VENDA      INTEGER   PRIMARY KEY AUTOINCREMENT,"
                 + "  DATA          DATE,"
                 + " VALORTOTAL    INTEGER,"
@@ -732,8 +720,8 @@ public class CabeleireiroDAO {
                 + ")"
                 + "REFERENCES CLIENTE"
                 + ");";
-                
-                String tabelaItemVenda =  "CREATE TABLE IF NOT EXISTS ITEM_VENDA ("
+
+        String tabelaItemVenda = "CREATE TABLE IF NOT EXISTS ITEM_VENDA ("
                 + "    ID_ITEMVENDA  INTEGER    PRIMARY KEY AUTOINCREMENT,"
                 + "    PRECOUNITARIO INTEGER,"
                 + "    QUANTIDADE    INT,"
@@ -750,8 +738,8 @@ public class CabeleireiroDAO {
                 + "    )"
                 + "    REFERENCES COMPRA (ID_VENDA) "
                 + ");";
-                
-                String tabelaProduto = "CREATE TABLE PRODUTO ("
+
+        String tabelaProduto = "CREATE TABLE PRODUTO ("
                 + "    IDPRODUTO INTEGER      PRIMARY KEY AUTOINCREMENT,"
                 + "    NOME      VARCHAR (45) NOT NULL,"
                 + "    MARCA     VARCHAR (45) NOT NULL,"
@@ -763,8 +751,8 @@ public class CabeleireiroDAO {
                 + "       MARCA"
                 + "  )"
                 + ");";
-                
-                String triggerExclusaoProduto =  "CREATE TRIGGER IF NOT EXISTS exclusaoLogicaProduto"
+
+        String triggerExclusaoProduto = "CREATE TRIGGER IF NOT EXISTS exclusaoLogicaProduto"
                 + "         AFTER UPDATE OF EXCLUIDO"
                 + "            ON PRODUTO"
                 + " BEGIN"
@@ -773,17 +761,16 @@ public class CabeleireiroDAO {
                 + "  DELETE FROM ESTOQUE"
                 + "       WHERE ESTOQUE.ID_PRODUTO = old.IDPRODUTO;"
                 + "END;";
-                
-                 String tabelaServico =  "CREATE TABLE IF NOT EXISTS SERVICO ("
+
+        String tabelaServico = "CREATE TABLE IF NOT EXISTS SERVICO ("
                 + "   ID_SERVICO INTEGER      PRIMARY KEY AUTOINCREMENT,"
                 + "  NOME       VARCHAR (30) NOT NULL,"
                 + " PRECO      INTEGER      NOT NULL,"
                 + "TEMPOGASTO DATIME,"
                 + "EXCLUIDO   BOOLEAN      DEFAULT (false) "
                 + ");";
-                 
-                 
-                 String tabelaProdutoServico =  "CREATE TABLE IF NOT EXISTS PRODUTO_SERVICO ("
+
+        String tabelaProdutoServico = "CREATE TABLE IF NOT EXISTS PRODUTO_SERVICO ("
                 + "   ID_PRODUTO INT,"
                 + "  RENDIMENTO INT,"
                 + " ID_SERVICO INT,"
@@ -796,9 +783,8 @@ public class CabeleireiroDAO {
                 + ")"
                 + "REFERENCES SERVICO (ID_SERVICO) "
                 + ");";
-                 
-                 
-                 String tabelaCabeleireiro =  "CREATE TABLE IF NOT EXISTS CABELEIREIRO ("
+
+        String tabelaCabeleireiro = "CREATE TABLE IF NOT EXISTS CABELEIREIRO ("
                 + "   CPF                   CHAR (14),"
                 + "  EMAIL                 VARCHAR (60)                              NOT NULL,"
                 + " NOME                  VARCHAR (45)                              NOT NULL,"
@@ -821,7 +807,7 @@ public class CabeleireiroDAO {
                 + "TEXTOANIVERSARIO      TEXT                                      DEFAULT '',"
                 + "ANEXOANIVERSARIO      [BLOOB NOMEANEXOANIVERSARIO VARCHAR] (60),"
                 + "NOMEANEXOANIVERSARIO  STRING (60),"
-                + "SENHA                 VARCHAR (45),"
+                + "SENHA                 BLOB (45),"
                 + "ENVIARULTIMAVISITA    BOOLEAN                                   DEFAULT (FALSE),"
                 + "TITULOULTIMAVISITA    VARCHAR (60)                              DEFAULT [Título não informado],"
                 + "TEXTOULTIMAVISITA     TEXT                                      DEFAULT '',"
@@ -834,16 +820,16 @@ public class CabeleireiroDAO {
                 + "TEMPOENTREHORARIOS    INTEGER                                   DEFAULT(6),"
                 + "VERIFICACAOHORARIOS   BOOLEAN                                   DEFAULT (FALSE)"
                 + ");";
-                         
-                 String tabelaEstoque =  "CREATE TABLE IF NOT EXISTS ESTOQUE ("
+
+        String tabelaEstoque = "CREATE TABLE IF NOT EXISTS ESTOQUE ("
                 + "   ID_ESTOQUE     INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "  ID_PRODUTO     INTEGER NOT NULL,"
                 + "  QUANTIDADE     INTEGER NOT NULL"
                 + "                         DEFAULT 0,"
                 + " VALOR_UNITARIO INTEGER"
                 + ");";
-                 
-                String tabelaAgendamento =  "CREATE TABLE IF NOT EXISTS AGENDAMENTO ("
+
+        String tabelaAgendamento = "CREATE TABLE IF NOT EXISTS AGENDAMENTO ("
                 + "   ID_AGENDAMENTO   INTEGER      PRIMARY KEY AUTOINCREMENT,"
                 + "  DATA             DATE         NOT NULL,"
                 + " HORARIO          DATETIME     NOT NULL,"
@@ -857,8 +843,8 @@ public class CabeleireiroDAO {
                 + "FORMADEPAGAMENTO VARCHAR (15),"
                 + "FIMAGENDAMENTO   TIME"
                 + ");";
-                
-                String tabelaAgendamentoServico = "CREATE TABLE IF NOT EXISTS AGENDAMENTO_SERVICO ("
+
+        String tabelaAgendamentoServico = "CREATE TABLE IF NOT EXISTS AGENDAMENTO_SERVICO ("
                 + "   ID_AGENDAMENTO INTEGER,"
                 + "  ID_SERVICO     INTEGER,"
                 + " FOREIGN KEY ("
@@ -870,8 +856,8 @@ public class CabeleireiroDAO {
                 + ")"
                 + "REFERENCES SERVICO (ID_SERVICO) "
                 + ");";
-                
-                String tabelaOrcamento = "CREATE TABLE IF NOT EXISTS ORCAMENTO ("
+
+        String tabelaOrcamento = "CREATE TABLE IF NOT EXISTS ORCAMENTO ("
                 + "   ID_ORCAMENTO INTEGER      PRIMARY KEY AUTOINCREMENT,"
                 + "  NOME         VARCHAR (45) NOT NULL,"
                 + " JANEIRO      INTEGER      NOT NULL,"
@@ -894,7 +880,7 @@ public class CabeleireiroDAO {
                 + "    ANO"
                 + ")"
                 + ");";
-                 String tabelaOrcamentoServico ="CREATE TABLE IF NOT EXISTS  ORCAMENTOSERVICO ("
+        String tabelaOrcamentoServico = "CREATE TABLE IF NOT EXISTS  ORCAMENTOSERVICO ("
                 + "   ID_ORCAMENTO INTEGER      PRIMARY KEY AUTOINCREMENT,"
                 + "  NOMESERV     VARCHAR (45) NOT NULL,"
                 + " JANEIRO      INTEGER      NOT NULL,"
@@ -917,8 +903,8 @@ public class CabeleireiroDAO {
                 + "    ANO"
                 + " )"
                 + "); ";
-                 
-                String tabelaDespesaMensal = "CREATE TABLE DESPESAMENSAL ("
+
+        String tabelaDespesaMensal = "CREATE TABLE DESPESAMENSAL ("
                 + "   ID_DESPESA     INTEGER      PRIMARY KEY AUTOINCREMENT,"
                 + "  VALORPAGO      INTEGER,"
                 + " FORMAPAGAMENTO VARCHAR (15),"
@@ -933,39 +919,35 @@ public class CabeleireiroDAO {
                 + "    ID_ORCAMENTO"
                 + ")"
                 + "REFERENCES ORCAMENTO (ID_ORCAMENTO) );";
-             
-  
+
         PreparedStatement pStatement = null;
         Connection connection = null;
         try {
 
-           connection = new ConnectionMVC().getConnection();
+            connection = new ConnectionMVC().getConnection();
 
-           connection.prepareStatement(tabelaCliente).execute();
-           connection.prepareStatement(tabelaEmailAniversario).execute();
-           connection.prepareStatement(tabelaEmailUltimaVisita).execute();
-           connection.prepareStatement(triggerCliente1).execute();
-           connection.prepareStatement(triggerCliente2).execute();
-           connection.prepareStatement(tabelaCliente).execute();
-           connection.prepareStatement(tabelaCompra).execute();
-           connection.prepareStatement(tabelItemCompra).execute();
-           connection.prepareStatement(tabelaVenda).execute();
-           connection.prepareStatement(tabelaItemVenda).execute();
-           connection.prepareStatement(tabelaProduto).execute();
-           connection.prepareStatement(triggerExclusaoProduto).execute();
-           connection.prepareStatement(tabelaServico).execute();
-           connection.prepareStatement(tabelaProdutoServico).execute();
-           connection.prepareStatement(tabelaCabeleireiro).execute();
-           connection.prepareStatement(tabelaEstoque).execute();
-           connection.prepareStatement(tabelaAgendamento).execute();
-           connection.prepareStatement(tabelaAgendamentoServico).execute();
-           connection.prepareStatement(tabelaOrcamento).execute();
-           connection.prepareStatement(tabelaOrcamentoServico).execute();
-           connection.prepareStatement(tabelaDespesaMensal).execute();
-           
-   
-            
-            
+            connection.prepareStatement(tabelaCliente).execute();
+            connection.prepareStatement(tabelaEmailAniversario).execute();
+            connection.prepareStatement(tabelaEmailUltimaVisita).execute();
+            connection.prepareStatement(triggerCliente1).execute();
+            connection.prepareStatement(triggerCliente2).execute();
+            connection.prepareStatement(tabelaCliente).execute();
+            connection.prepareStatement(tabelaCompra).execute();
+            connection.prepareStatement(tabelItemCompra).execute();
+            connection.prepareStatement(tabelaVenda).execute();
+            connection.prepareStatement(tabelaItemVenda).execute();
+            connection.prepareStatement(tabelaProduto).execute();
+            connection.prepareStatement(triggerExclusaoProduto).execute();
+            connection.prepareStatement(tabelaServico).execute();
+            connection.prepareStatement(tabelaProdutoServico).execute();
+            connection.prepareStatement(tabelaCabeleireiro).execute();
+            connection.prepareStatement(tabelaEstoque).execute();
+            connection.prepareStatement(tabelaAgendamento).execute();
+            connection.prepareStatement(tabelaAgendamentoServico).execute();
+            connection.prepareStatement(tabelaOrcamento).execute();
+            connection.prepareStatement(tabelaOrcamentoServico).execute();
+            connection.prepareStatement(tabelaDespesaMensal).execute();
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro atualizar dados do cabeleireiro" + e);
         } finally {
@@ -988,7 +970,6 @@ public class CabeleireiroDAO {
             }
 
         }
-
 
     }
 

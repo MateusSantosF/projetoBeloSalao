@@ -7,20 +7,35 @@ package BeutifulSalon.model;
 
 import BeutifulSalon.dao.CabeleireiroDAO;
 import BeutifulSalon.dao.ExceptionDAO;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.spec.IvParameterSpec;
 
 /**
  *
  * @author mateus
  */
 public class Cabeleireiro {
-    
+
+    private static String IV = "AAAAAAAAAAAAAAAA";
+    private static String chaveencriptacao = "0123456789abcdef";
     private long id;
     private String cpf;
     private String nome;
     private String email;
-    private String senha;
+    private byte[] senha;
     private String postit;
     private Email emailAniversario;
     private Email emailUltimaVisita;
@@ -43,7 +58,10 @@ public class Cabeleireiro {
     private int tempoEntreHorariosLivres;
 
     public Cabeleireiro() {
-    };
+
+    }
+
+    ;
 
 
 
@@ -77,6 +95,42 @@ public class Cabeleireiro {
         return emailAniversario;
     }
 
+    public byte[] criptografaSenha(String senha) {
+
+        byte[] textoencriptado = null;
+        try {
+            textoencriptado = encrypt(senha, chaveencriptacao);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return textoencriptado;
+    }
+
+    private static byte[] encrypt(String textopuro, String chaveencriptacao) {
+        try {
+            Cipher encripta = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
+            SecretKeySpec key = new SecretKeySpec(chaveencriptacao.getBytes("UTF-8"), "AES");
+            encripta.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(IV.getBytes("UTF-8")));
+            return encripta.doFinal(textopuro.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException | InvalidAlgorithmParameterException | InvalidKeyException | NoSuchAlgorithmException | NoSuchProviderException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException e) {
+        }
+        return null;
+    }
+
+    public static String decrypt(byte[] textoencriptado, String chaveencriptacao) {
+
+        try {
+            Cipher decripta = Cipher.getInstance("AES/CBC/PKCS5Padding", "SunJCE");
+            SecretKeySpec key = new SecretKeySpec(chaveencriptacao.getBytes("UTF-8"), "AES");
+            decripta.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(IV.getBytes("UTF-8")));
+            return new String(decripta.doFinal(textoencriptado), "UTF-8");
+        } catch (UnsupportedEncodingException | InvalidAlgorithmParameterException | InvalidKeyException | NoSuchAlgorithmException | NoSuchProviderException | BadPaddingException | IllegalBlockSizeException | NoSuchPaddingException e) {
+        }
+        return null;
+    }
+
     public void setEmailAniversario(Email emailAniversario) {
         this.emailAniversario = emailAniversario;
     }
@@ -96,7 +150,6 @@ public class Cabeleireiro {
     public void setTempoEntreHorariosLivres(int tempoEntreHorariosLivres) {
         this.tempoEntreHorariosLivres = tempoEntreHorariosLivres;
     }
-    
 
     public boolean isVerificarHorariosDisponiveis() {
         return verificarHorariosDisponiveis;
@@ -105,7 +158,6 @@ public class Cabeleireiro {
     public void setVerificarHorariosDisponiveis(boolean verificarHorariosDisponiveis) {
         this.verificarHorariosDisponiveis = verificarHorariosDisponiveis;
     }
-    
 
     public long getId() {
         return id;
@@ -122,9 +174,6 @@ public class Cabeleireiro {
     public void setPostit(String postit) {
         this.postit = postit;
     }
-    
-    
-    
 
     public String getCpf() {
         return cpf;
@@ -135,7 +184,9 @@ public class Cabeleireiro {
     }
 
     public String getSenha() {
-        return senha;
+
+        return decrypt(senha, chaveencriptacao);
+
     }
 
     public Email getEmailUltimaVisita() {
@@ -145,10 +196,11 @@ public class Cabeleireiro {
     public void setEmailUltimaVisita(Email emailUltimaVisita) {
         this.emailUltimaVisita = emailUltimaVisita;
     }
-    
 
     public void setSenha(String senha) {
-        this.senha = senha;
+
+        this.senha = encrypt(senha, chaveencriptacao);
+
     }
 
     public String getNome() {
@@ -302,8 +354,8 @@ public class Cabeleireiro {
     public void cadastrarEmailPadraoAniversario(Email email, String cpf) throws ExceptionDAO {
         new CabeleireiroDAO().cadastrarEmailPadraoAniversario(email, cpf);
     }
-    
-    public void cadastrarEmailUltimaVisita (Email mail, String cpf, int periodo) throws ExceptionDAO{
+
+    public void cadastrarEmailUltimaVisita(Email mail, String cpf, int periodo) throws ExceptionDAO {
         new CabeleireiroDAO().cadastrarEmailUltimaVisita(mail, cpf, periodo);
     }
 }

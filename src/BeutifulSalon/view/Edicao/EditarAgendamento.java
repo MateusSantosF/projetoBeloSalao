@@ -6,6 +6,8 @@ import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.Ferramentas.Valida;
+import BeutifulSalon.Tabelas.DestacaTotalTabela;
+import BeutifulSalon.Tabelas.ModalServicoTableModel;
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.dao.AgendamentoDAO;
@@ -21,6 +23,7 @@ import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.ModalInputMonetarios;
 import BeutifulSalon.view.modais.ModalServicos;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.text.ParseException;
@@ -35,7 +38,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import static javax.swing.SwingConstants.LEFT;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
@@ -46,7 +53,6 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
     /**
      * Creates new form CadastroAgendamento
      */
-    
     private LocalTime horarioInicioAntigo;
     private LocalTime horarioFinalAntigo;
     private Agendamento agendamento;
@@ -55,8 +61,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
     private ModalInputMonetarios modalDesconto;
     private ModalInputMonetarios modalValorAdicional;
     private ArrayList<ObservadorEdicao> observadores = new ArrayList<>();
-   
-    
+    private ModalServicoTableModel servicosEscolhidos = new ModalServicoTableModel();
+
     public EditarAgendamento() {
         initComponents();
     }
@@ -64,9 +70,9 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
     public EditarAgendamento(Agendamento ag) {
 
         initComponents();
-        
-        ManipulaFontes mf = new ManipulaFontes(); ;
-        horarioInicioAntigo= ag.getHorario();
+
+        ManipulaFontes mf = new ManipulaFontes();;
+        horarioInicioAntigo = ag.getHorario();
         horarioFinalAntigo = ag.getFimAgendamento();
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Cadastro de Agendamento
         jCheckBoxClienteVeio.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Cliente veio?
@@ -84,8 +90,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
         jCheckBoxDesconto.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Desconto 
         jCheckValorAdicional.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //valor Adicional
         jButtonFinalizarEdicao.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Finalizar Edição
-        
-        
+
         this.agendamento = ag;
         ClienteController cc = new ClienteController();
         Cliente clienteAgendamento = cc.buscarCliente(ag.getIdCliente());
@@ -98,48 +103,49 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
         this.idCliente = String.valueOf(clienteAgendamento.getId());
         jTextFieldTotal.setText(Dinheiro.parseString(ag.getTotal()));
         jTextFieldTotalBruto.setText(Dinheiro.parseString(ag.getTotal() + ag.getDesconto() - ag.getValorAdicional()));
-       
-       
+
         jTextFieldHorario.setValue(ag.getHorario().toString());
-        
-        if(ag.getDesconto() > 0){
+
+        if (ag.getDesconto() > 0) {
             jCheckBoxDesconto.setSelected(true);
-            jTextFieldDesconto.setText("-"+Dinheiro.parseString(ag.getDesconto()));
+            jTextFieldDesconto.setText("-" + Dinheiro.parseString(ag.getDesconto()));
         }
-        
-        if(ag.getValorAdicional() >0){
+
+        if (ag.getValorAdicional() > 0) {
             jTextFieldValorAdicional.setText(Dinheiro.parseString(ag.getValorAdicional()));
             jCheckValorAdicional.setSelected(true);
         }
-        if(!ag.getRealizado()){
-            jCheckBoxClienteVeio.setSelected(true);  
+        if (!ag.getRealizado()) {
+            jCheckBoxClienteVeio.setSelected(true);
         }
-        
- 
 
         try {
             jDateChooser1.setDate(formater.parse(ag.getData().format(formatterData)));
         } catch (ParseException ex) {
             Logger.getLogger(EditarAgendamento.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if(agendamento.isPago()){
-            
-            jToggleButton.setText("Pagamento Realizado");  
+
+        if (agendamento.isPago()) {
+
+            jToggleButton.setText("Pagamento Realizado");
             jComboBoxFormaPagamento.setEnabled(true);
             jComboBoxFormaPagamento.setSelectedItem(agendamento.getFormaDePagamento());
             Color verde = new Color(57, 201, 114);
             jToggleButton.setBackground(verde);
-        }else{
+        } else {
             jToggleButton.setText("Pagamento Pendente");
             jComboBoxFormaPagamento.setEnabled(false);
             Color vermelho = new Color(248, 67, 69);
             jToggleButton.setBackground(vermelho);
         }
-        
-        
-        jTableServicosSolicitados.setModel(new ApresentaTabela().apresentaServicosAgendamento(jTableServicosSolicitados, ag.getIdAgendamento()));
 
+        servicosEscolhidos.getServicosAgendamento(ag.getIdAgendamento());
+        servicosEscolhidos.calculaTempoTotal();
+        jTableServicosSolicitados.setModel(servicosEscolhidos);
+        jTableServicosSolicitados.getColumnModel().getColumn(1).setCellRenderer(new OcultaPreco(Color.BLACK, (jTableServicosSolicitados.getRowCount() - 1)));
+        jTableServicosSolicitados.getColumnModel().getColumn(0).setCellRenderer(new DestacaTotalTabela(Color.WHITE, jTableServicosSolicitados.getRowCount() - 1));
+
+     
     }
 
     /**
@@ -189,7 +195,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setResizable(false);
+        setPreferredSize(new java.awt.Dimension(966, 709));
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -218,16 +224,18 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel12)
                     .addComponent(jLabel1))
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jCheckBoxClienteVeio.setBackground(new java.awt.Color(255, 255, 255));
         jCheckBoxClienteVeio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jCheckBoxClienteVeio.setText("Cliente não compareceu");
+        jCheckBoxClienteVeio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCheckBoxClienteVeio.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         jCheckBoxClienteVeio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxClienteVeioActionPerformed(evt);
@@ -450,8 +458,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addGap(18, 18, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap(18, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -463,9 +471,9 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabelAddServicos)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(12, 12, 12)))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -480,7 +488,6 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
                                 .addGap(45, 45, 45)))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jButtonFinalizarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -493,7 +500,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
                                         .addComponent(jTextFieldTotalBruto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jCheckBoxClienteVeio, javax.swing.GroupLayout.Alignment.TRAILING))
                                     .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonFinalizarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel6))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -510,10 +518,13 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(42, 42, 42))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -524,17 +535,18 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
                                 .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jComboBoxFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(48, 48, 48)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelAddServicos)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                                        .addGap(12, 12, 12))))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(71, 71, 71)
+                                .addGap(52, 52, 52)
                                 .addComponent(jLabel7)
                                 .addGap(23, 23, 23)
                                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -544,9 +556,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
                                 .addComponent(jLabel9)
                                 .addGap(62, 62, 62))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCheckBoxClienteVeio)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldTotalBruto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextFieldValorAdicional, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -575,9 +586,9 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonFinalizarEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(41, 41, 41))
         );
 
         jDateChooser1.setLocale(new Locale("pt", "BR"));
@@ -611,18 +622,18 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
         isDesconto = true;
         calculaTotalBruto();
         calculaTotal();
-        
+
         if (!jCheckBoxDesconto.isSelected()) {
             jCheckBoxDesconto.setSelected(true);
-            
-            if( modalDesconto == null){
+
+            if (modalDesconto == null) {
                 modalDesconto = new ModalInputMonetarios("Insira o valor do desconto");
                 modalDesconto.registrarObservador(this);
-                modalDesconto.setVisible(true); 
-            }else{
-                modalDesconto.setVisible(true); 
+                modalDesconto.setVisible(true);
+            } else {
+                modalDesconto.setVisible(true);
             }
-            
+
         }
     }//GEN-LAST:event_jCheckBoxDescontoMousePressed
 
@@ -638,30 +649,29 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
 
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
         String dataFormatada = "";
-        String formaDePagamento ="";
+        String formaDePagamento = "";
         boolean pago;
-            
-         
+
         try {
             dataFormatada = formater.format(jDateChooser1.getDate());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao converter data");
         }
-           if(!jToggleButton.isSelected()){
-                pago = true;
-                formaDePagamento = String.valueOf(jComboBoxFormaPagamento.getSelectedItem());
-            }else{
-                pago = false;
-                formaDePagamento = "--";
-            }
-        
+        if (!jToggleButton.isSelected()) {
+            pago = true;
+            formaDePagamento = String.valueOf(jComboBoxFormaPagamento.getSelectedItem());
+        } else {
+            pago = false;
+            formaDePagamento = "--";
+        }
+
         //editar
         try {
             sucesso = ac.atualizarAgendamento(
                     dataFormatada,
                     jTextFieldHorario.getText(),
                     Long.valueOf(this.idCliente),
-                    new RecuperaTabela().recuperaServicos(jTableServicosSolicitados),
+                    servicosEscolhidos.getDados(),
                     calculaTotalFinal(),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText())),
                     !jCheckBoxClienteVeio.isSelected(),
@@ -736,11 +746,11 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
         if (!jCheckValorAdicional.isSelected()) {
             jCheckValorAdicional.setSelected(true);
 
-            if( modalValorAdicional == null){
+            if (modalValorAdicional == null) {
                 modalValorAdicional = new ModalInputMonetarios("Insira o valor Adicional");
                 modalValorAdicional.registrarObservador(this);
                 modalValorAdicional.setVisible(true);
-            }else{
+            } else {
                 modalValorAdicional.setVisible(true);
             }
 
@@ -802,7 +812,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
     private void calculaTotalBruto() {
         long total = 0;
         try {
-            ArrayList<Servico> servicos = new RecuperaTabela().recuperaServicos(jTableServicosSolicitados);
+            List<Servico> servicos = servicosEscolhidos.getDados();
 
             try {
                 for (Servico s : servicos) {
@@ -830,8 +840,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
             if (!jTextFieldDesconto.getText().equals("")) {
                 valorDesconto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText()));
             }
-             if (!jTextFieldValorAdicional.getText().equals("")) {
-               valorAdicional = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText()));
+            if (!jTextFieldValorAdicional.getText().equals("")) {
+                valorAdicional = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText()));
             }
 
             long valorTotalBruto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldTotalBruto.getText()));
@@ -845,7 +855,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
 
     private long calculaTotalFinal() {
 
-         long valorTotal = 0;
+        long valorTotal = 0;
         try {
 
             long valorDesconto = 0;
@@ -855,7 +865,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
                 valorDesconto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto.getText()));
             }
             if (!jTextFieldValorAdicional.getText().equals("")) {
-               valorAdicional = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText()));
+                valorAdicional = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText()));
             }
 
             long valorTotalBruto = Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldTotalBruto.getText()));
@@ -868,7 +878,43 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
 
         return valorTotal;
     }
+    
+    public class OcultaPreco extends DefaultTableCellRenderer implements TableCellRenderer {
 
+        private Color color;
+        private int row = -1;
+
+        public OcultaPreco(Color color, int row) {
+            super();
+            this.color = color;
+            this.row = row;
+
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table,
+                Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            if (row != -1 && color != null) {
+                if (row == this.row) {
+                    c.setBackground(Color.BLACK);
+                    c.setForeground(Color.BLACK);
+                    this.setHorizontalAlignment(LEFT);
+
+                } else {
+                    c.setBackground(Color.WHITE);
+                    c.setForeground(Color.BLACK);
+                }
+            }
+
+            return c;
+        }
+
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -942,10 +988,19 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
     private javax.swing.JTextField jTextFieldValorAdicional;
     private javax.swing.JToggleButton jToggleButton;
     // End of variables declaration//GEN-END:variables
-
+    
+    
+    
+    
     @Override
     public void update(Object obj) {
-
+        servicosEscolhidos = (ModalServicoTableModel) obj;
+        servicosEscolhidos.calculaTempoTotal();
+        jTableServicosSolicitados.setModel(servicosEscolhidos);
+        jTableServicosSolicitados.getColumnModel().getColumn(1).setCellRenderer(new OcultaPreco(Color.BLACK, (jTableServicosSolicitados.getRowCount() - 1)));
+        jTableServicosSolicitados.getColumnModel().getColumn(0).setCellRenderer(new DestacaTotalTabela(Color.WHITE, jTableServicosSolicitados.getRowCount() - 1));
+        calculaTotalBruto();
+        calculaTotal();
     }
 
     @Override
@@ -964,11 +1019,11 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
 
     @Override
     public void update(String valorDesconto) {
-       if(isDesconto){
-           jTextFieldDesconto.setText("-" + Dinheiro.parseString(Dinheiro.retiraCaracteres(valorDesconto)));
-           jCheckBoxDesconto.setSelected(true);
- 
-        }else{
+        if (isDesconto) {
+            jTextFieldDesconto.setText("-" + Dinheiro.parseString(Dinheiro.retiraCaracteres(valorDesconto)));
+            jCheckBoxDesconto.setSelected(true);
+
+        } else {
             jTextFieldValorAdicional.setText(Dinheiro.parseString(Dinheiro.retiraCaracteres(valorDesconto)));
             jCheckValorAdicional.setSelected(true);
         }
@@ -990,7 +1045,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
     @Override
     public void update(ArrayList<LocalTime> horarios) {
     }
-    
+
     @Override
     public void update(Orcamento orcamento) {
     }
@@ -1007,7 +1062,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
 
     @Override
     public void notificarObservadores() {
-        observadores.forEach(ob->{
+        observadores.forEach(ob -> {
             ob.update(true);
         });
     }
