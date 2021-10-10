@@ -196,10 +196,10 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jLabel28 = new javax.swing.JLabel();
         jTextFieldInstagram = new javax.swing.JTextField();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTableCompras = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableServicos = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTableCompras = new javax.swing.JTable();
         jLabel29 = new javax.swing.JLabel();
         jToggleButton1 = new javax.swing.JToggleButton();
         jButtonSalvar = new javax.swing.JButton();
@@ -331,21 +331,6 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
 
         jTabbedPane1.setName(""); // NOI18N
 
-        jTableCompras.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(jTableCompras);
-
-        jTabbedPane1.addTab("Compras", jScrollPane3);
-
         jTableServicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -360,6 +345,21 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jScrollPane2.setViewportView(jTableServicos);
 
         jTabbedPane1.addTab("Últimos Serviços", jScrollPane2);
+
+        jTableCompras.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jTableCompras);
+
+        jTabbedPane1.addTab("Compras", jScrollPane3);
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

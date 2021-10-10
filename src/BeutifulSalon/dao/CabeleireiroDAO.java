@@ -431,7 +431,6 @@ public class CabeleireiroDAO {
             connection = new ConnectionMVC().getConnection();
 
             pStatement = connection.prepareStatement(sqlScript);
-            pStatement.setString(6, cpf);
             pStatement.setBoolean(1, email.isEnviar());
             pStatement.setString(2, email.getTitulo());
             pStatement.setString(3, email.getTexto());
@@ -527,7 +526,6 @@ public class CabeleireiroDAO {
             connection = new ConnectionMVC().getConnection();
 
             pStatement = connection.prepareStatement(sqlScript);
-            pStatement.setString(7, cpf);
             pStatement.setBoolean(1, email.isEnviar());
             pStatement.setString(2, email.getTitulo());
             pStatement.setString(3, email.getTexto());

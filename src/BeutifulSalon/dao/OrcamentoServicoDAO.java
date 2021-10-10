@@ -412,12 +412,16 @@ public class OrcamentoServicoDAO {
         }
         return false;
     }
-
-    public OrcamentoServico buscarOrcamentoServico(long id) {
+    /**
+     * Retorna o orçamento do serviço pelo ID, do ANO ATUAL
+     * @param idServico
+     * @return 
+     */
+     public OrcamentoServico buscarOrcamentoServicoPeloServico(long idServico) {
         
         String sql  = "SELECT ID_ORCAMENTO, NOMESERV,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
-                + "NOVEMBRO,DEZEMBRO,ID_SERVICO,ANO FROM ORCAMENTOSERVICO WHERE ID_ORCAMENTO = ?";
-        
+                + "NOVEMBRO,DEZEMBRO,ID_SERVICO,ANO FROM ORCAMENTOSERVICO WHERE ID_SERVICO = ? AND ANO = ?";
+
         Connection connection = null;
         PreparedStatement pStatement = null;
         OrcamentoServico orcamento =  null;
@@ -426,7 +430,8 @@ public class OrcamentoServicoDAO {
             connection = new ConnectionMVC().getConnection();
             pStatement = connection.prepareStatement(sql);
        
-            pStatement.setLong(1, id);
+            pStatement.setLong(1, idServico);
+            pStatement.setString(2, String.valueOf(LocalDate.now().getYear()));
             ResultSet rs = pStatement.executeQuery();
            
             
@@ -451,7 +456,72 @@ public class OrcamentoServicoDAO {
                     orcamentoAtual.setDez(rs.getLong("DEZEMBRO")); 
                     orcamentoAtual.setAno(rs.getString("ANO"));
                     orcamentoAtual.setId_servico(rs.getLong("ID_SERVICO"));
+                    orcamento = orcamentoAtual;
+                }
+                
+            }
+            return orcamento;
+         
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ConnectionMVC: " + e);
+        }finally{
+            
+            try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+        
+        return orcamento;
+    }
+
+    public OrcamentoServico buscarOrcamentoServico(long idOrcamento) {
+        
+        String sql  = "SELECT ID_ORCAMENTO, NOMESERV,JANEIRO,FEVEREIRO,MARCO,ABRIL,MAIO,JUNHO,JULHO,AGOSTO,SETEMBRO,OUTUBRO,"
+                + "NOVEMBRO,DEZEMBRO,ID_SERVICO,ANO FROM ORCAMENTOSERVICO WHERE ID_ORCAMENTO = ?";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        OrcamentoServico orcamento =  null;
+        
+        try{
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
        
+            pStatement.setLong(1, idOrcamento);
+            ResultSet rs = pStatement.executeQuery();
+           
+            
+            if(rs != null){
+                orcamento = new OrcamentoServico();
+                
+                while(rs.next()){
+                    OrcamentoServico orcamentoAtual = new OrcamentoServico();
+                    orcamentoAtual.setId_orcamento(rs.getLong("ID_ORCAMENTO"));
+                    orcamentoAtual.setNome(rs.getString("NOMESERV"));
+                    orcamentoAtual.setJan(rs.getLong("JANEIRO"));
+                    orcamentoAtual.setFev(rs.getLong("FEVEREIRO"));
+                    orcamentoAtual.setMar(rs.getLong("MARCO"));
+                    orcamentoAtual.setAbr(rs.getLong("ABRIL"));
+                    orcamentoAtual.setMai(rs.getLong("MAIO"));
+                    orcamentoAtual.setJun(rs.getLong("JUNHO"));
+                    orcamentoAtual.setJul(rs.getLong("JULHO"));
+                    orcamentoAtual.setAgo(rs.getLong("AGOSTO"));
+                    orcamentoAtual.setSet(rs.getLong("SETEMBRO"));
+                    orcamentoAtual.setOut(rs.getLong("OUTUBRO"));
+                    orcamentoAtual.setNov(rs.getLong("NOVEMBRO"));
+                    orcamentoAtual.setDez(rs.getLong("DEZEMBRO")); 
+                    orcamentoAtual.setAno(rs.getString("ANO"));
+                    orcamentoAtual.setId_servico(rs.getLong("ID_SERVICO"));
                     orcamento = orcamentoAtual;
                 }
                 

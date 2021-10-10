@@ -23,12 +23,23 @@ public class CabeleireiroController {
 
     public boolean cadastrarCabeleireiro(String nome, String cpf, String email, ArrayList<LocalTime> expediente, char[] senha, String metaDeLucro) {
 
-        if (nome.length() > 0 && Valida.isCpf(cpf) && Valida.isEmail(email) && !expediente.isEmpty() && expediente.size() == 14) {
+        if (nome.length() > 0 && Valida.isEmail(email) && !expediente.isEmpty() && expediente.size() == 14) {
 
             try {
+                if (cpf.replaceAll(" ", "").length() == 14) {
+                    if (Valida.isCpf(cpf) == false) {
+                        return false;
+                    }
+                } else {
+                    cpf = null;
+                }
+
                 Cabeleireiro cabeleireiro = new Cabeleireiro(cpf, nome.trim(), email.trim(), expediente);
                 cabeleireiro.setSenha(String.copyValueOf(senha));
-                cabeleireiro.setMetaDeLucro(Dinheiro.parseCent(Dinheiro.retiraCaracteres(metaDeLucro)));
+                if(metaDeLucro.length() > 0){
+                    cabeleireiro.setMetaDeLucro(Dinheiro.parseCent(Dinheiro.retiraCaracteres(metaDeLucro)));
+                }
+                
 
                 cabeleireiro.cadastrarCabeleireiro(cabeleireiro);
             } catch (ExceptionDAO e) {
@@ -116,7 +127,7 @@ public class CabeleireiroController {
     }
 
     public boolean atualizarPreferencias(boolean verificar, int tempoEntreAgendamentos) {
-        
+
         try {
             new CabeleireiroDAO().atualizarPreferencias(verificar, tempoEntreAgendamentos);
             return true;

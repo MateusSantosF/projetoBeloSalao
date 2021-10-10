@@ -64,8 +64,10 @@ import org.jfree.data.category.DefaultCategoryDataset;
  */
 public class GraficoDeBarras {
 
-    private Color verde = new Color(57, 201, 114);
+    private Color verde = new Color(9, 213, 147);
     private Color vermelho = new Color(248, 67, 69);
+    private Color azul = new Color(6, 116, 245);
+    private Color amarelo = new Color(248, 164,53);
 
     public GraficoDeBarras() {
 
@@ -260,7 +262,6 @@ public class GraficoDeBarras {
         );
 
         //chart.setPadding(new RectangleInsets(20, 10, 0, 0));
-
         // set the background color for the chart...
         chart.setBackgroundPaint(Color.white);
 
@@ -273,8 +274,7 @@ public class GraficoDeBarras {
         plot.setDomainGridlinePaint(Color.white);
         plot.setRangeGridlinePaint(Color.white);
         plot.setRangeCrosshairVisible(true);
-     
-        
+
         // set the range axis to display integers only...
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
@@ -290,25 +290,19 @@ public class GraficoDeBarras {
         renderer.setSeriesStroke(1, new BasicStroke(0.1f));
         renderer.setSeriesStroke(2, new BasicStroke(0.1f));
         renderer.setItemMargin(-0.001);
-       
-
-        Color vermelho = new Color(239, 70, 55);    // red
-        Color verde = new Color(85, 177, 69);       // green
-        Color azul = new Color(9, 10, 55);
 
         NumberFormat numeros = NumberFormat.getCurrencyInstance();
 
         renderer.setSeriesToolTipGenerator(0, new StandardCategoryToolTipGenerator("({0}, {1}) = {2}", numeros));
         renderer.setSeriesToolTipGenerator(1, new StandardCategoryToolTipGenerator("({0}, {1}) = {2}", numeros));
         renderer.setSeriesToolTipGenerator(2, new StandardCategoryToolTipGenerator("({0}, {1}) = {2}", numeros));
-        renderer.setSeriesPaint(1, this.verde);
-        renderer.setSeriesPaint(0, this.vermelho);
-        renderer.setSeriesPaint(2, azul);
+        renderer.setSeriesPaint(0, vermelho); // despesa
+        renderer.setSeriesPaint(1, verde); // ganhos
+        renderer.setSeriesPaint(2, azul); // lucros
 
         final CategoryAxis domainAxis = plot.getDomainAxis();
-   
+
         domainAxis.setCategoryLabelPositionOffset(1);
-     
 
         // OPTIONAL CUSTOMISATION COMPLETED.
         return chart;

@@ -236,13 +236,23 @@ public class OrcamentoController {
     }
 
     public OrcamentoServico buscarOrcamentoServico(long id) {
-        
+
         try {
             return new OrcamentoServico().buscarOrcamentoServico(id);
         } catch (ExceptionDAO e) {
             System.out.println("erro ao buscar orçamento serviço");
             return null;
         }
+    }
+
+    public OrcamentoServico buscarOrcamentoServicoPeloServico(long idServico) {
+        try {
+            return new OrcamentoServico().buscarOrcamentoServicoPeloServico(idServico);
+        } catch (ExceptionDAO e) {
+            System.out.println("erro ao buscar orçamento serviço pelo Serviço");
+            return null;
+        }
+
     }
 
 }

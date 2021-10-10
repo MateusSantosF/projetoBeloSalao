@@ -272,5 +272,9 @@ public class OrcamentoServico {
     public OrcamentoServico buscarOrcamentoServico(long id) throws ExceptionDAO {
         return new OrcamentoServicoDAO().buscarOrcamentoServico(id);
     }
+    
+     public OrcamentoServico buscarOrcamentoServicoPeloServico(long idServico) throws ExceptionDAO{
+        return new OrcamentoServicoDAO().buscarOrcamentoServicoPeloServico(idServico);
+     }
    
 }

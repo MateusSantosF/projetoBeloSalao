@@ -9,6 +9,7 @@ import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.Tabelas.DespesaComparadaTableModel;
 import BeutifulSalon.Tabelas.DespesaPrevistaTableModel;
+import BeutifulSalon.Tabelas.DestacaPagamentoTabela;
 import BeutifulSalon.Tabelas.DestacaVencimentosTabela;
 import BeutifulSalon.Tabelas.LancamentoTableModel;
 import BeutifulSalon.Tabelas.ServicoComparadoTableModel;
@@ -1526,6 +1527,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
                 modeloLancamento.getDespesasAnual(ano);
                 jTableLancamentos.setModel(modeloLancamento);
                 jTableLancamentos.getColumnModel().getColumn(2).setCellRenderer(new DestacaVencimentosTabela(2, modeloLancamento));
+                jTableLancamentos.getColumnModel().getColumn(6).setCellRenderer(new DestacaPagamentoTabela(6, modeloLancamento));
               
                 break;
 

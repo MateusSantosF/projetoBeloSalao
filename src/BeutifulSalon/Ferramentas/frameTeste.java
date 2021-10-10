@@ -53,38 +53,8 @@ public class frameTeste extends javax.swing.JFrame {
      */
     public frameTeste() {
         initComponents();
-        
-        try {
-        
-        List<Venda> cs = new ArrayList<>();
-        
-        cs = new VendaController().selecionaTodasVendas();
-        ArrayList<Item> itens = new ArrayList<>();
-        Item i = new Item();
-         Item i2 = new Item();
-        i.setNome("teste");
-         i2.setNome("test2");
-        itens.add(i);
-         itens.add(i2);
-       
-         cs.get(0).setItensVenda(itens);
-          cs.get(0).setItensCompra(itens);
-        JasperReport j = JasperCompileManager.compileReport("C:\\Users\\Mateus\\Desktop\\BeloSalao\\projetoBeloSalao\\src\\RelatorioVendas.jrxml");
-        JasperPrint rp = JasperFillManager.fillReport(j, null, new JRBeanCollectionDataSource(cs));
-       
-   
-        
-        JDialog tela = new JDialog(this, "relatorio", true);
-        tela.setSize(1000,600);
-        
-        JRViewer painel = new JRViewer(rp);
-        
-        tela.getContentPane().add(painel);
-        
-        tela.setVisible(true);
-        } catch (JRException e) {
-            System.out.println(e);
-        }
+     
+     
     }
 
     /**
@@ -163,7 +133,9 @@ public class frameTeste extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frameTeste().setVisible(true);
+                frameTeste t = new frameTeste();
+            
+                t.setVisible(true);
             }
         });
     }

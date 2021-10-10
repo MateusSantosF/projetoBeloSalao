@@ -17,7 +17,7 @@ public class OrdenaClientePorVisitas implements Comparator<Cliente>{
 
     @Override
     public int compare(Cliente o1, Cliente o2) {
-        if(o1.getDeOndeConheceu() > o2.getDeOndeConheceu()){
+        if(o1.getQtdVisitas() > o2.getQtdVisitas()){
             return 1;
         }
         
