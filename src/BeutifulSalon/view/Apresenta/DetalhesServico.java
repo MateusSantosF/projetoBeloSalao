@@ -74,7 +74,7 @@ public class DetalhesServico extends javax.swing.JFrame {
         jLabelTempoDuracao.setText(servico.getTempoGasto().format(formatterHora) + "h");
 
         //CALCULANDO MARGEM DE CONTRIBUIÇÃO
-        long margemContribuicao = servico.getPreco();
+        Long margemContribuicao = servico.getPreco();
         long subtracao = 0;
 
         for (Produto p : servico.getProdutos()) {
@@ -195,8 +195,7 @@ public class DetalhesServico extends javax.swing.JFrame {
                     totalDespesaMensalPrevista += oc.getOut();
                 }
                 
-                for(OrcamentoServico ocs: orcamentoServico){
-                    
+                for(OrcamentoServico ocs: orcamentoServico){           
                     totalPrevistoServicosDoMes += ocs.getOut()  * new ServicoController().buscarServico(ocs.getId_servico()).getPreco();
                 }
        
@@ -221,19 +220,21 @@ public class DetalhesServico extends javax.swing.JFrame {
                 previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getDez() * servico.getPreco();
                 break;
         }
-        System.out.println("Total Despesas do Mes=>"+ Dinheiro.parseString(totalDespesaMensalPrevista) );
+        
+        
+        if(totalPrevistoServicosDoMes > 0 && margemContribuicao > 0){
+            
+            System.out.println("Total Despesas do Mes=>"+ Dinheiro.parseString(totalDespesaMensalPrevista) );
         System.out.println("Previsto do Servico Mensal=>"+  Dinheiro.parseString(previstoServicoMensal) );
         System.out.println("Total Previsto de todos Servicos do Mes=>" +  Dinheiro.parseString(totalPrevistoServicosDoMes));
         System.out.println("Margem de Contribuição =>" + Dinheiro.parseString(margemContribuicao));
+            pontoDeEquilibrio = (double)((double)previstoServicoMensal/totalPrevistoServicosDoMes)*previstoServicoMensal /margemContribuicao;
+            meta /= margemContribuicao;
         
-        if(totalPrevistoServicosDoMes > 0 && margemContribuicao > 0){
-            pontoDeEquilibrio = ((totalDespesaMensalPrevista * previstoServicoMensal)/totalPrevistoServicosDoMes)/margemContribuicao;
-
         }
-        
-
+        System.out.println("PONTO DE EQ=>" + pontoDeEquilibrio);
         jLabelMeta.setText(String.valueOf((int) Math.ceil(meta)));
-        jLabelPontoDeEquilíbrio.setText(String.valueOf((int) Math.ceil(pontoDeEquilibrio)));
+        jLabelPontoDeEquilíbrio.setText(String.valueOf( Math.round(pontoDeEquilibrio)));
 
         //============================================
         if (servico.getQuantidadeRealizada() < pontoDeEquilibrio) {

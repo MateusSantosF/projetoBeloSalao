@@ -301,5 +301,9 @@ public class DespesaComparadaTableModel extends AbstractTableModel {
             System.out.println(e);
         }
     }
+    
+    public Orcamento getOrcamento(int rowIndex){
+        return dados.get(rowIndex);
+    }
 
 }

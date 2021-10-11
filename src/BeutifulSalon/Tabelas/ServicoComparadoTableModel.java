@@ -99,6 +99,10 @@ public class ServicoComparadoTableModel extends AbstractTableModel {
         orcamentoServico.forEach(orcS -> dados.add(orcS));
         this.fireTableDataChanged();
     }
+    
+    public OrcamentoServico getServicoComparado(int rowIndex){
+        return dados.get(rowIndex);
+    }
 
     public void getOrcamentoComparadoPorAno(String anoReferente) {
 
