@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.controller;
 
+import BeutifulSalon.Ferramentas.FichaAgendamento;
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.AgendamentoDAO;
@@ -32,7 +33,8 @@ public class AgendamentoController {
 
     public boolean cadastraAgendamento(String data, String horario, long idCliente, List<Servico> servicos, long total,
             long desconto, long valorAdicional, boolean realizado, boolean pago, String FormaDePagamento) throws ExceptionDAO {
-
+        
+        Agendamento ag = null;
         if (Valida.isHora(horario) && !servicos.isEmpty() && idCliente > 0) {
 
             if (total < 0) {
@@ -59,7 +61,7 @@ public class AgendamentoController {
             int minutos = 0;
             servicos.remove(servicos.size() - 1);
             for (Servico s : servicos) {
-                System.out.println(s.getId());
+    
                 Servico sAtual = new ServicoController().buscarServico(s.getId());
                 horas += sAtual.getTempoGasto().getHour();
                 minutos += sAtual.getTempoGasto().getMinute();
@@ -72,8 +74,7 @@ public class AgendamentoController {
                 return false;
             }
             //RETIRA LINHA DE TEMPO TOTAL DOS SERVIÇOS
-           
-            
+
             Agendamento agendamento = new Agendamento();
             agendamento.setFimAgendamento(fimAgendamento);
             agendamento.setTotal(total);
@@ -89,6 +90,7 @@ public class AgendamentoController {
 
             try {
                 agendamento.cadastraAgendamento(agendamento);
+                ag = agendamento;
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "AgendamentoController" + e);
                 return false;
@@ -96,6 +98,12 @@ public class AgendamentoController {
 
         } else {
             return false;
+        }
+
+        int opc = JOptionPane.showConfirmDialog(null, "Deseja imprimir a ficha de agendamento?", "Imprimir Ficha", JOptionPane.YES_NO_OPTION);
+
+        if (opc == 0 && ag != null) {
+            new FichaAgendamento().imprimirFicha(ag);
         }
 
         return true;

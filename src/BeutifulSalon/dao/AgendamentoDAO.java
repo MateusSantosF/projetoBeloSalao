@@ -8,6 +8,7 @@ package BeutifulSalon.dao;
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Agendamento;
+import BeutifulSalon.model.RelatorioAgendamento;
 import BeutifulSalon.model.Servico;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -324,6 +325,77 @@ public class AgendamentoDAO {
         
         return agendamentos;
     }
+    
+     public ArrayList<RelatorioAgendamento> listarAgendamentosRelatorio(long inicio, long fim) {
+        
+             
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, CLIENTE.NOME AS NOME, CLIENTE.SOBRENOME AS SOBRENOME, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO  FROM AGENDAMENTO"
+                + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE "
+                + " WHERE DATA BETWEEN " + inicio + " AND " + fim + " AND REALIZADO = TRUE "
+                + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO ASC ";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ArrayList<RelatorioAgendamento> agendamentos = null;
+
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                
+                agendamentos = new ArrayList<>();
+                while(rs.next()){
+                   RelatorioAgendamento ag = new RelatorioAgendamento();
+                   
+                
+                    ag.setData(rs.getDate("DATA").toLocalDate());
+                    ag.setHorario(rs.getTime("HORARIO").toLocalTime());     
+                    ag.setFormaPagamento(rs.getString("FORMADEPAGAMENTO"));
+                    ag.setNomeCliente(rs.getString("NOME"));
+                    ag.setSobrenomeCliente(rs.getString("SOBRENOME"));
+                    ag.setStatusPagamento(rs.getBoolean("REALIZADO"));
+                    ag.setTotal(rs.getLong("TOTAL"));
+                    ag.setDesconto(rs.getLong("DESCONTO"));
+                    ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
+                    try {
+                        ag.setServicosSolicitados(listaServicosAgendamento(rs.getLong("ID_AGENDAMENTO")));
+                    } catch (ExceptionDAO e) {
+                    }
+                  
+                    agendamentos.add(ag);         
+                }
+            }
+           
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro agendamentoDAO" + e);
+        }finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        
+        return agendamentos;
+    }
+    
     
     public ArrayList<Agendamento> listarAgendamentosAmanha()  throws ExceptionDAO{
         

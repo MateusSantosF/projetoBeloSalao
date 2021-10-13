@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/controller/RelatorioController.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/Cadastros/CadastroCabeleireiro.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/frameTeste.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/FichaAgendamento.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/model/Cliente.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/model/RelatorioAgendamento.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/dao/AgendamentoDAO.java</file>
+        </group>
     </open-files>
 </project-private>

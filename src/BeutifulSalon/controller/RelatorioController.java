@@ -25,9 +25,11 @@ package BeutifulSalon.controller;
 
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.Valida;
+import BeutifulSalon.dao.AgendamentoDAO;
 import BeutifulSalon.dao.VendaProdutoDAO;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Item;
+import BeutifulSalon.model.RelatorioAgendamento;
 import BeutifulSalon.model.RelatorioVenda;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -85,7 +87,6 @@ public class RelatorioController {
 
                 JasperReport j = JasperCompileManager.compileReport("src\\RelatorioVendas.jrxml");
                 JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
-                
 
                 JDialog tela = new JDialog();
                 tela.setSize(1080, 720);
@@ -107,5 +108,59 @@ public class RelatorioController {
             return false;
         }
 
+    }
+
+    public boolean gerarRelatorioAgendamento(String dataInicio, String dataFim) {
+
+        if (Valida.isData(dataInicio) && Valida.isData(dataFim)) {
+            ManipulaData md = new ManipulaData();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+            LocalDate inicio = LocalDate.parse(dataInicio, formatter);
+            LocalDate fim = LocalDate.parse(dataFim, formatter);
+
+            List<RelatorioAgendamento> datasource = new AgendamentoDAO().listarAgendamentosRelatorio(md.meiaNoite(inicio), md.meiaNoiteAmanha(fim));
+            long totalAdicional = 0;
+            long totalDescontos = 0;
+            long totalFinal = 0;
+
+            for (RelatorioAgendamento r : datasource) {
+                totalAdicional += Dinheiro.parseCent(Dinheiro.retiraCaracteres(r.getValorAdicional()));
+                totalDescontos += Dinheiro.parseCent(Dinheiro.retiraCaracteres(r.getDesconto()));
+                totalFinal += Dinheiro.parseCent(Dinheiro.retiraCaracteres(r.getTotal()));
+            }
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("DataInicio", inicio.format(formatterData));
+            params.put("DataFim", fim.format(formatterData));
+            params.put("totalAdicionais", Dinheiro.parseString(totalAdicional));
+            params.put("totalDesconto", Dinheiro.parseString(totalDescontos));
+            params.put("TotalFinal", Dinheiro.parseString(totalFinal));
+            params.put("subTotal", Dinheiro.parseString(totalFinal + totalDescontos - totalAdicional));
+
+            try {
+
+                JasperReport j = JasperCompileManager.compileReport("src\\RelatorioDeAgendamentos.jrxml");
+                JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
+
+                JDialog tela = new JDialog();
+                tela.setSize(1080, 720);
+
+                JRViewer painel = new JRViewer(rp);
+
+                tela.getContentPane().add(painel);
+
+                tela.setVisible(true);
+
+            } catch (JRException e) {
+
+                JOptionPane.showMessageDialog(null, e);
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+        return true;
     }
 }

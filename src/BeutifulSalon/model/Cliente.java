@@ -132,6 +132,10 @@ public class Cliente {
     public String getInstagram() {
         return instagram;
     }
+    
+    public String getNomeCompleto(){
+        return nome +" "+sobrenome;
+    }
 
     public void setInstagram(String instagram) {
         this.instagram = instagram;

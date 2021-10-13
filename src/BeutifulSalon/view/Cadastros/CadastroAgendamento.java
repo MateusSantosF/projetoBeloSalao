@@ -638,7 +638,11 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
             if (sucesso) {
                 JOptionPane.showMessageDialog(null, "Agendamento Realizado com sucesso");
                 limparCampos();
+                servicosEscolhidos.clearDados();
+                jTableServicosSolicitados.setModel(servicosEscolhidos);
                 modalDesconto = null;
+                jCheckBoxDesconto.setSelected(false);
+                jCheckValorAdicional.setSelected(false);
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar Agendamento. Verifique os dados inseridos!");
             }

@@ -117,6 +117,11 @@ public class ModalServicoTableModel extends AbstractTableModel {
     public Servico getServico(int rowCount) {
         return dados.get(rowCount);
     }
+    
+    public void clearDados(){
+        dados.clear();
+        this.fireTableDataChanged();
+    }
 
     public void calculaTempoTotal() {
 

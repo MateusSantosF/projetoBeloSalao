@@ -23,17 +23,30 @@
  */
 package BeutifulSalon.Ferramentas;
 
+import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.controller.VendaController;
+import BeutifulSalon.dao.AgendamentoDAO;
+import BeutifulSalon.dao.VendaProdutoDAO;
 import BeutifulSalon.model.Cabeleireiro;
 import BeutifulSalon.model.Cliente;
+import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Item;
+import BeutifulSalon.model.RelatorioAgendamento;
+import BeutifulSalon.model.RelatorioVenda;
+import BeutifulSalon.model.Servico;
 import BeutifulSalon.model.Venda;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -53,8 +66,58 @@ public class frameTeste extends javax.swing.JFrame {
      */
     public frameTeste() {
         initComponents();
-     
-     
+            
+            String dataInicio = "05/10/2021";
+            String dataFim = "12/10/2021";
+        
+        
+            ManipulaData md = new ManipulaData();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+            LocalDate inicio = LocalDate.parse(dataInicio, formatter);
+            LocalDate fim = LocalDate.parse(dataFim, formatter);
+        
+        
+           List<RelatorioAgendamento> datasource = new AgendamentoDAO().listarAgendamentosRelatorio(md.meiaNoite(inicio), md.meiaNoiteAmanha(fim));
+            long totalAdicional = 0;
+            long totalDescontos = 0;
+            long totalFinal = 0;
+            
+            for(RelatorioAgendamento r : datasource){
+                totalAdicional += Dinheiro.parseCent(Dinheiro.retiraCaracteres(r.getValorAdicional()));
+                totalDescontos += Dinheiro.parseCent(Dinheiro.retiraCaracteres(r.getDesconto()));
+                totalFinal += Dinheiro.parseCent(Dinheiro.retiraCaracteres(r.getTotal()));
+            }
+
+        
+            Map<String, Object> params = new HashMap<>();
+            params.put("DataInicio", inicio.format(formatterData));
+            params.put("DataFim", fim.format(formatterData));
+            params.put("totalAdicionais", Dinheiro.parseString(totalAdicional));
+            params.put("totalDesconto", Dinheiro.parseString(totalDescontos));
+            params.put("TotalFinal", Dinheiro.parseString(totalFinal));
+            params.put("subTotal", Dinheiro.parseString(totalFinal + totalDescontos - totalAdicional));
+
+        try {
+
+            JasperReport j = JasperCompileManager.compileReport("src\\RelatorioDeAgendamentos.jrxml");
+            JasperPrint rp = JasperFillManager.fillReport(j, params,new JRBeanCollectionDataSource(datasource));
+
+            JDialog tela = new JDialog();
+            tela.setSize(1080, 720);
+
+            JRViewer painel = new JRViewer(rp);
+
+            tela.getContentPane().add(painel);
+
+            tela.setVisible(true);
+
+        } catch (JRException e) {
+
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+
     }
 
     /**
@@ -98,9 +161,8 @@ public class frameTeste extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       Cabeleireiro c = new CabeleireiroController().selecionaCabeleireiro();
-       
-        JOptionPane.showMessageDialog(null, c.getSenha());
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -134,7 +196,7 @@ public class frameTeste extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 frameTeste t = new frameTeste();
-            
+
                 t.setVisible(true);
             }
         });

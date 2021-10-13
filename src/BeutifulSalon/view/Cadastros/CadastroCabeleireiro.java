@@ -1283,7 +1283,10 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                 JOptionPane.showMessageDialog(null, "Verifique as datas inseridas e tente novamente.");
             }
         }else if(jRadioButtonAgendamentos.isSelected()){
-            
+            boolean sucesso = new RelatorioController().gerarRelatorioAgendamento(jFormattedTextFieldDataInicio.getValue().toString(), jFormattedTextFieldDataFim.getValue().toString());
+            if (!sucesso) {
+                JOptionPane.showMessageDialog(null, "Verifique as datas inseridas e tente novamente.");
+            }
         }else{
             
         }

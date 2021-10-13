@@ -23,6 +23,7 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.FichaAgendamento;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.Agendamento;
@@ -36,6 +37,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -49,6 +51,7 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
     private Color verde = new Color(57, 201, 114);
     private Color vermelho = new Color(248, 67, 69);
     private Cliente cliente;
+    private Agendamento agendamento;
 
     public ModalDetalhesAgendamento() {
         initComponents();
@@ -58,7 +61,7 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
         initComponents();
 
         ManipulaFontes mf = new ManipulaFontes();
-
+        this.agendamento = agendamento;
         jLabel6.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f));
         jList1.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 18f));
         jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
@@ -156,6 +159,7 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabelTempoEstimado = new javax.swing.JLabel();
@@ -232,17 +236,32 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Detalhes");
 
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-impressora.png"))); // NOI18N
+        jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel14MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(181, 181, 181)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel14)
+                .addGap(14, 14, 14))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -405,6 +424,14 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
         new DetalhesCliente(cliente).setVisible(true);
     }//GEN-LAST:event_jLabel13MousePressed
 
+    private void jLabel14MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MousePressed
+       int opc = JOptionPane.showConfirmDialog(null, "Deseja imprimir a ficha de agendamento?", "Imprimir Ficha", JOptionPane.YES_NO_OPTION);
+
+        if (opc == 0 && agendamento != null) {
+            new FichaAgendamento().imprimirFicha(agendamento);
+        }
+    }//GEN-LAST:event_jLabel14MousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -446,6 +473,7 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
