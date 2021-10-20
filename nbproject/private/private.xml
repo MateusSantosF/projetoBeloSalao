@@ -3,13 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/controller/RelatorioController.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/Cadastros/CadastroCabeleireiro.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/frameTeste.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/FichaAgendamento.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/model/Cliente.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/model/RelatorioAgendamento.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/dao/AgendamentoDAO.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/controller/VendaController.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/dao/VendaProdutoDAO.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/model/Venda.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/Apresenta/ApresentaProduto.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/modais/ModalDetalhesAgendamento.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Tabelas/VendaTableModel.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/Apresenta/ApresentaCliente.java</file>
         </group>
     </open-files>
 </project-private>

@@ -49,8 +49,10 @@ public class FichaAgendamento {
     
     public void imprimirFicha(Agendamento ag){
         
-        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
+        
+        
         
         Map<String, Object> params = new HashMap<>();
         params.put("nomeCliente", new ClienteController().buscarCliente(ag.getIdCliente()).getNomeCompleto());
@@ -63,13 +65,15 @@ public class FichaAgendamento {
         params.put("valorAdicional", Dinheiro.parseString(ag.getValorAdicional()));
         params.put("valorDesconto", Dinheiro.parseString(ag.getDesconto()));
         params.put("valorTotal", Dinheiro.parseString(ag.getTotal()));
+        params.put("tempoPrevisto", ag.getTempoPrevisto());
 
         try {
 
-            JasperReport j = JasperCompileManager.compileReport("src\\FichaAgendamento.jrxml");
+            JasperReport j = JasperCompileManager.compileReport("Relatorios\\FichaAgendamento.jrxml");
             JasperPrint rp = JasperFillManager.fillReport(j, params, new JREmptyDataSource());
             JasperPrintManager.printPage(rp, 0, true);
-    
+            
+ 
         } catch (JRException e) {
 
             JOptionPane.showMessageDialog(null, e);

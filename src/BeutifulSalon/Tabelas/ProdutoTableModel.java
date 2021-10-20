@@ -20,7 +20,7 @@ import javax.swing.table.AbstractTableModel;
 public class ProdutoTableModel extends AbstractTableModel {
 
     private final List<Produto> dados;
-    private final String[] columns = {"Nome", "Marca", "Preço de Venda", "Quantidade em Estoque"};
+    private final String[] columns = {"Nome", "Marca", "Preço de Venda","Último Valor Pago", "Quantidade em Estoque"};
 
     public ProdutoTableModel() {
         this.dados = new ArrayList<>();
@@ -56,9 +56,9 @@ public class ProdutoTableModel extends AbstractTableModel {
                 } else {
                     return Dinheiro.parseString(dados.get(rowIndex).getPreco());
                 }
-
             case 3:
-
+                return Dinheiro.parseString(estoque.ultimoValorPagoProduto(dados.get(rowIndex).getId_produto()));
+            case 4:
                 return estoque.quantidadeProduto(dados.get(rowIndex).getId_produto());
             default:
                 return null;

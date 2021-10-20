@@ -11,6 +11,7 @@ import BeutifulSalon.model.Estoque;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Venda;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -42,7 +43,7 @@ public class EstoqueController {
 
     public boolean atualizaEstoque(Venda venda) throws ExceptionDAO {
 
-        ArrayList<Item> produtosVendidos = venda.getItensCompra();
+        List<Item> produtosVendidos = venda.getItensCompra();
 
         for (Item i : produtosVendidos) {
             Estoque estoque = new Estoque();

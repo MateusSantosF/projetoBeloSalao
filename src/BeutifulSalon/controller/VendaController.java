@@ -46,6 +46,17 @@ public class VendaController {
 
         return true;
     }
+    
+    public boolean excluiVenda(Venda venda){
+        
+        try {
+            return venda.excluirVenda(venda);
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao excluir venda:" + e);
+            return false;
+        }
+
+    }
 
     public boolean validaQuantidadeProduto(ArrayList<Item> itensDaVenda) {
 
@@ -54,12 +65,12 @@ public class VendaController {
         for (Item i : itensDaVenda) {
             long qtd = ec.quantidadeProduto(i.getId_produto());
             if (qtd >= i.getQuantidade()) {
-                
-            }else{
+
+            } else {
                 JOptionPane.showMessageDialog(null, "Quantidade de produto(s) insuficiente no estoque.\n"
-                        + "Produto:" + i.getNome() +
-                        "\nQuantidade em estoque: "+ qtd+"\n"
-                                + "Quantidade Solicitada:"+ i.getQuantidade());
+                        + "Produto:" + i.getNome()
+                        + "\nQuantidade em estoque: " + qtd + "\n"
+                        + "Quantidade Solicitada:" + i.getQuantidade());
                 comEstoque = false;
             }
         }
@@ -76,21 +87,30 @@ public class VendaController {
         }
 
     }
-    
-    public long selecionaVendasPorMes(Month mes){
+
+    public long selecionaVendasPorMes(Month mes) {
         try {
             return new Venda().selecionaVendasPorMes(mes);
         } catch (ExceptionDAO e) {
-            System.out.println("Erro ao listar vendas por mes"  + e);
+            System.out.println("Erro ao listar vendas por mes" + e);
         }
         return 0;
     }
-    
-    public List<Venda> selecionaTodasVendas(){
+
+    public List<Venda> selecionaTodasVendas() {
         try {
             return new Venda().selecionaTodasVendas();
         } catch (ExceptionDAO e) {
-            System.out.println("Erro ao listar todas vendas"  + e);
+            System.out.println("Erro ao listar todas vendas" + e);
+        }
+        return null;
+    }
+
+    public List<Venda> selecionaVendasPorNomeCliente(String nomeCliente) {
+        try {
+            return new Venda().selecionaVendasPorNomeCliente(nomeCliente);
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao listar todas vendas" + e);
         }
         return null;
     }
@@ -125,6 +145,15 @@ public class VendaController {
             System.out.println("Erro ao somar vendas mensais.");
         }
         return 0L;
+    }
+
+    public List<Venda> selecionaVendasDoAnoPorNomeCliente(String nomeCliente) {
+        try {
+            return new Venda().selecionaVendasDoAnoPorNomeCliente(nomeCliente);
+        } catch (ExceptionDAO e) {
+            System.out.println("Erro ao listar todas vendas" + e);
+        }
+        return null;
     }
 
 }

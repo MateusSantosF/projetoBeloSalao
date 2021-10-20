@@ -134,7 +134,7 @@ public class RelatorioController {
             params.put("DataInicio", inicio.format(formatterData));
             params.put("DataFim", fim.format(formatterData));
             params.put("totalAdicionais", Dinheiro.parseString(totalAdicional));
-            params.put("totalDesconto", Dinheiro.parseString(totalDescontos));
+            params.put("totalDesconto", "-"+Dinheiro.parseString(totalDescontos));
             params.put("TotalFinal", Dinheiro.parseString(totalFinal));
             params.put("subTotal", Dinheiro.parseString(totalFinal + totalDescontos - totalAdicional));
 

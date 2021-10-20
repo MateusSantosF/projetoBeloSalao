@@ -76,6 +76,8 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
         jLabel13.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
         jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabel15.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
+        jLabelData.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
         jLabelHorario.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
         jLabelTempoEstimado.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
         jLabelPago.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 18f));
@@ -91,6 +93,7 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
 
         jLabelNomeCliente.setText(cliente.getNome() + " " + cliente.getSobrenome());
         jLabelHorario.setText(agendamento.getHorario().format(formatterHora) + "h");
+        jLabelData.setText(agendamento.getData().format(formatterData));
 
         jLabelTotalBruto.setText(Dinheiro.parseString(agendamento.getTotal() + agendamento.getDesconto() - agendamento.getValorAdicional()));
         jLabelDesconto.setText("-" + Dinheiro.parseString(agendamento.getDesconto()));
@@ -148,7 +151,7 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabelHorario = new javax.swing.JLabel();
+        jLabelData = new javax.swing.JLabel();
         jLabelDesconto = new javax.swing.JLabel();
         jLabelNomeCliente = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -174,6 +177,8 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabelFormaDePagamento = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabelHorario = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(48, 63, 79));
 
@@ -202,9 +207,9 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabelHorario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabelHorario.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelHorario.setText("00:00h");
+        jLabelData.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelData.setText("00:00h");
 
         jLabelDesconto.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabelDesconto.setText("-R$ 00,00");
@@ -253,7 +258,7 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel14)
-                .addGap(14, 14, 14))
+                .addGap(17, 17, 17))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,6 +315,13 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
             }
         });
 
+        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel15.setText("Data:");
+
+        jLabelHorario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelHorario.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabelHorario.setText("00:00h");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -349,15 +361,19 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
                                 .addComponent(jLabelAdicional, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabelTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabelTempoEstimado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabelTempoEstimado, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabelHorario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(53, 53, 53)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -377,12 +393,16 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                     .addComponent(jLabelNomeCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelHorario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelPago, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabelPago, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabelHorario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -474,6 +494,7 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -483,6 +504,7 @@ public class ModalDetalhesAgendamento extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelAdicional;
+    private javax.swing.JLabel jLabelData;
     private javax.swing.JLabel jLabelDesconto;
     private javax.swing.JLabel jLabelFormaDePagamento;
     private javax.swing.JLabel jLabelHorario;

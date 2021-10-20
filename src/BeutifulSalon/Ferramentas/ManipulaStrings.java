@@ -14,48 +14,53 @@ import javax.swing.JOptionPane;
 public class ManipulaStrings {
 
     public String abreviarNome(String nome) {
-        
-        String nomeInteiro = nome;
-        nomeInteiro = nomeInteiro.replaceAll("\\s+"," ").trim();
-        nomeInteiro = nomeInteiro.replace(' ', ';');
-        String nomePedacos[] = nomeInteiro.split(";");
-        
-        String saida = "";
-        for (int k = 0; k <= nomePedacos.length - 1; k++) {
-            if (k == 0 || k == (nomePedacos.length - 1)) {
-                saida = saida + " " + nomePedacos[k];
-            } else {
-                if(!nomePedacos[k].equals(" ") ){
-                    if( !nomePedacos[k].equals("De") &&
-                        !nomePedacos[k].equals("Da") && 
-                        !nomePedacos[k].equals("Do") && 
-                        !nomePedacos[k].equals("Das") && 
-                        !nomePedacos[k].equals("Dos") &&
-                        !nomePedacos[k].equals("de") &&
-                        !nomePedacos[k].equals("da") && 
-                        !nomePedacos[k].equals("do") && 
-                        !nomePedacos[k].equals("das") && 
-                        !nomePedacos[k].equals("dos")){
-                        
-                        saida = saida + " " + nomePedacos[k].charAt(0) + ". ";
-                    }else if(nomePedacos[k].equals("De") ||
-                        nomePedacos[k].equals("Da") || 
-                        nomePedacos[k].equals("Do") || 
-                        nomePedacos[k].equals("Das") || 
-                        nomePedacos[k].equals("Dos") ||
-                        nomePedacos[k].equals("de") ||
-                        nomePedacos[k].equals("da") || 
-                        nomePedacos[k].equals("do") || 
-                        nomePedacos[k].equals("das") || 
-                        nomePedacos[k].equals("dos")){
-                        saida = saida + " " + nomePedacos[k];
-                    }
-                }
-                
-            }
 
+        if (nome.length() >= 19) {
+            String nomeInteiro = nome;
+            nomeInteiro = nomeInteiro.replaceAll("\\s+", " ").trim();
+            nomeInteiro = nomeInteiro.replace(' ', ';');
+            String nomePedacos[] = nomeInteiro.split(";");
+
+            String saida = "";
+            for (int k = 0; k <= nomePedacos.length - 1; k++) {
+                if (k == 0 || k == (nomePedacos.length - 1)) {
+                    saida = saida + " " + nomePedacos[k];
+                } else {
+                    if (!nomePedacos[k].equals(" ")) {
+                        if (!nomePedacos[k].equals("De")
+                                && !nomePedacos[k].equals("Da")
+                                && !nomePedacos[k].equals("Do")
+                                && !nomePedacos[k].equals("Das")
+                                && !nomePedacos[k].equals("Dos")
+                                && !nomePedacos[k].equals("de")
+                                && !nomePedacos[k].equals("da")
+                                && !nomePedacos[k].equals("do")
+                                && !nomePedacos[k].equals("das")
+                                && !nomePedacos[k].equals("dos")) {
+
+                            saida = saida + " " + nomePedacos[k].charAt(0) + ". ";
+                        } else if (nomePedacos[k].equals("De")
+                                || nomePedacos[k].equals("Da")
+                                || nomePedacos[k].equals("Do")
+                                || nomePedacos[k].equals("Das")
+                                || nomePedacos[k].equals("Dos")
+                                || nomePedacos[k].equals("de")
+                                || nomePedacos[k].equals("da")
+                                || nomePedacos[k].equals("do")
+                                || nomePedacos[k].equals("das")
+                                || nomePedacos[k].equals("dos")) {
+                            saida = saida + " " + nomePedacos[k];
+                        }
+                    }
+
+                }
+
+            }
+            return saida;
+        } else {
+            return nome;
         }
-        return saida;
+
     }
-    
+
 }

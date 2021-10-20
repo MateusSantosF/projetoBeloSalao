@@ -549,8 +549,8 @@
                   </AuxValues>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                      <JTabbedPaneConstraints tabName="Compras">
-                        <Property name="tabTitle" type="java.lang.String" value="Compras"/>
+                      <JTabbedPaneConstraints tabName="&#xda;ltimas Compras">
+                        <Property name="tabTitle" type="java.lang.String" value="&#xda;ltimas Compras"/>
                       </JTabbedPaneConstraints>
                     </Constraint>
                   </Constraints>

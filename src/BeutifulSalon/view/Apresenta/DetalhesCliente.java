@@ -359,7 +359,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         ));
         jScrollPane3.setViewportView(jTableCompras);
 
-        jTabbedPane1.addTab("Compras", jScrollPane3);
+        jTabbedPane1.addTab("Últimas Compras", jScrollPane3);
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);

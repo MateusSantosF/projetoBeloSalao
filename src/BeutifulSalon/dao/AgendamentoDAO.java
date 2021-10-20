@@ -167,7 +167,7 @@ public class AgendamentoDAO {
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, "
                 + "ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO "
                 + "INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
-                + " WHERE REALIZADO = TRUE AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATA ";
+                + " WHERE REALIZADO = TRUE AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATA DESC ";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
