@@ -812,9 +812,11 @@ public class VendaProdutoDAO {
         
         
         String sql = "DELETE FROM VENDA WHERE ID_VENDA = ?";
+        String sql2 = "DELETE FROM ITEM_VENDA WHERE ID_VENDA = ?";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
+        PreparedStatement pStatement2 = null;
   
         try {
 
@@ -822,7 +824,10 @@ public class VendaProdutoDAO {
             pStatement = connection.prepareStatement(sql);
             pStatement.setLong(1, venda.getIdVenda());
             
-            return pStatement.executeUpdate() == 1;
+             pStatement2 = connection.prepareStatement(sql2);
+            pStatement2.setLong(1, venda.getIdVenda());
+            
+            return pStatement.executeUpdate() == 1 && pStatement2.executeUpdate() >= 1;
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro DAO" + e);

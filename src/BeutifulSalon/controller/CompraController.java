@@ -72,4 +72,40 @@ public class CompraController {
         }
     }
 
+    public List<Compra> getComprasPorNomeProduto(String nomeProduto) {
+        try {
+            return new Compra().getComprasPorNomeProduto(nomeProduto);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar compras por nome produto " + e);
+            return null;
+        }
+    }
+     public List<Compra> retornaTodasComprasDoAno() {
+        try {
+            return new Compra().retornaTodasComprasDoAno();
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar compras do ano" + e);
+            return null;
+        }
+    }
+     public List<Compra> getComprasPorNomeProdutoDoAno(String nomeProduto) {
+         try {
+            return new Compra().getComprasPorNomeProdutoDoAno(nomeProduto);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar compras por nome produto do ano" + e);
+            return null;
+        }
+     }
+             
+    
+    public boolean excluiCompra(Compra compra) {
+        try {
+            return new Compra().excluirCompra(compra);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir compra" + e);
+            return false;
+        }
+
+    }
+
 }

@@ -59,8 +59,6 @@ public class Compra {
     public void setIdCompra(long idCompra) {
         this.idCompra = idCompra;
     }
-    
-    
 
     public void setValorTotal(long valorTotal) {
         this.valorTotal = valorTotal;
@@ -89,15 +87,28 @@ public class Compra {
     public long retornaSomaDeComprasMensais(Month mes) throws ExceptionDAO {
         return new CompraProdutoDAO().retornaSomaDeComprasMensais(mes);
     }
-    
-    public List<Compra> retornaTodasCompras()  throws ExceptionDAO{
+
+    public List<Compra> retornaTodasCompras() throws ExceptionDAO {
         return new CompraProdutoDAO().retornaTodasCompras();
     }
-    
-    public List<Compra> retornaComprasDashboard() throws ExceptionDAO{
+
+    public List<Compra> retornaComprasDashboard() throws ExceptionDAO {
         return new CompraProdutoDAO().retornaComprasDashboard();
     }
 
-   
+    public List<Compra> getComprasPorNomeProduto(String nomeProduto) throws ExceptionDAO {
+        return new CompraProdutoDAO().getComprasPorNomeProduto(nomeProduto);
+    }
+
+    public boolean excluirCompra(Compra compra) throws ExceptionDAO {
+        return new CompraProdutoDAO().excluirCompra(compra);
+    }
+
+    public List<Compra> retornaTodasComprasDoAno() throws ExceptionDAO {
+        return new CompraProdutoDAO().retornaTodasComprasDoAno();
+    }
+     public List<Compra> getComprasPorNomeProdutoDoAno(String nomeProduto)  throws ExceptionDAO{
+         return new CompraProdutoDAO().getComprasPorNomeProdutoDoAno(nomeProduto);
+     }
 
 }

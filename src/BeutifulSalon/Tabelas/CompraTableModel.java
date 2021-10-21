@@ -28,6 +28,7 @@ import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Item;
 import java.awt.TextArea;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,11 +118,148 @@ public class CompraTableModel extends AbstractTableModel {
         addRow(new CompraController().retornaTodasCompras());
     }
 
+    public void getTodasComprasDoAno() {
+        dados.clear();
+        addRow(new CompraController().retornaTodasComprasDoAno());
+    }
+
     public void getComprasDashboard() {
         dados.clear();
         addRow(new CompraController().retornaComprasDashboard());
 
     }
-  
+
+    public void getComprasPorNomeProduto(String nomeProduto) {
+        dados.clear();
+        addRow(new CompraController().getComprasPorNomeProduto(nomeProduto));
+    }
+
+    public void getComprasPorNomeProdutoDoAno(String nomeProduto) {
+        dados.clear();
+        addRow(new CompraController().getComprasPorNomeProdutoDoAno(nomeProduto));
+    }
+
+    public void getComprasPorMes(int mes, boolean anoAtual) {
+
+        List<Compra> compras = new ArrayList<>();
+        if (anoAtual) {
+            dados = new CompraController().retornaTodasComprasDoAno();
+
+        } else {
+            dados = new CompraController().retornaTodasCompras();
+        }
+
+        switch (mes) {
+
+            case 0:
+
+                for (Compra c : dados) {
+                    if (c.getData().getMonth() == Month.JANUARY) {
+                        compras.add(c);
+                    }
+                }
+
+                break;
+            case 1:
+                for (Compra c : dados) {
+                    if (c.getData().getMonth() == Month.FEBRUARY) {
+                        compras.add(c);
+                    }
+                }
+                break;
+            case 2:
+                for (Compra c : dados) {
+                    if (c.getData().getMonth() == Month.MARCH) {
+                        compras.add(c);
+                    }
+                }
+                break;
+            case 3:
+                for (Compra c : dados) {
+                    if (c.getData().getMonth() == Month.APRIL) {
+                        compras.add(c);
+                    }
+                }
+                break;
+
+            case 4:
+                for (Compra c : dados) {
+                    if (c.getData().getMonth() == Month.MAY) {
+                        compras.add(c);
+                    }
+                }
+                break;
+
+            case 5:
+                for (Compra c : dados) {
+                    if (c.getData().getMonth() == Month.JUNE) {
+                        compras.add(c);
+                    }
+                }
+                break;
+            case 6:
+                for (Compra c : dados) {
+                    if (c.getData().getMonth() == Month.JULY) {
+                        compras.add(c);
+                    }
+                }
+                break;
+            case 7:
+                for (Compra c : dados) {
+                    if (c.getData().getMonth() == Month.AUGUST) {
+                        compras.add(c);
+                    }
+                }
+                break;
+            case 8:
+                for (Compra c : dados) {
+                    if (c.getData().getMonth() == Month.SEPTEMBER) {
+                        compras.add(c);
+                    }
+                }
+                break;
+            case 9:
+                for (Compra c : dados) {
+                    if (c.getData().getMonth() == Month.OCTOBER) {
+                        compras.add(c);
+                    }
+                }
+                break;
+            case 10:
+                for (Compra c : dados) {
+                    if (c.getData().getMonth() == Month.NOVEMBER) {
+                        compras.add(c);
+                    }
+                }
+                break;
+            case 11:
+                for (Compra c : dados) {
+                    if (c.getData().getMonth() == Month.DECEMBER) {
+                        compras.add(c);
+                    }
+                }
+                break;
+            case 12:
+                if (anoAtual) {
+                    compras = new CompraController().retornaTodasComprasDoAno();
+                } else {
+                    compras = new CompraController().retornaTodasCompras();
+                }
+                break;
+        }
+        dados.clear();
+        addRow(compras);
+    }
+
+    public String getTotalCompras() {
+
+        long total = 0;
+
+        for (Compra c : dados) {
+            total += c.getValorTotal();
+        }
+
+        return Dinheiro.parseString(total);
+    }
 
 }
