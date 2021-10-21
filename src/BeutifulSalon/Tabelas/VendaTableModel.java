@@ -6,9 +6,11 @@
 package BeutifulSalon.Tabelas;
 
 import BeutifulSalon.Ferramentas.ManipulaStrings;
+import BeutifulSalon.controller.CompraController;
 
 import BeutifulSalon.controller.VendaController;
 import BeutifulSalon.model.Dinheiro;
+import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Venda;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,7 +26,7 @@ public class VendaTableModel extends AbstractTableModel {
 
     private final List<Venda> dados;
     private ManipulaStrings manipulaStrings = new ManipulaStrings();
-    private final String[] columns = {"Cliente", "Data", "Quantidade de Produtos","Desconto","Total"};
+    private final String[] columns = {"Cliente", "Data", "Produtos","Desconto","Total"};
 
     public VendaTableModel() {
         this.dados = new ArrayList<>();
@@ -54,7 +56,20 @@ public class VendaTableModel extends AbstractTableModel {
             case 1:
                 return dados.get(rowIndex).getData().format(formatterData);
             case 2:
-                return dados.get(rowIndex).getQuantidadeProdutosVendidos();
+                StringBuilder produtos = new StringBuilder();
+                List<Item> itens = dados.get(rowIndex).getItensVenda();
+                
+                int rows = 0;
+                for(Item i: itens){
+                    produtos.append(i.getQuantidade()+"un. "+i.getNome());
+                    if( rows != itens.size() -1){
+                        produtos.append("\n");
+                    }
+                    rows++;
+                }
+                
+                
+                return produtos.toString();           
             case 3:         
                return Dinheiro.parseString(dados.get(rowIndex).getValorDesconto());
             case 4:
@@ -107,6 +122,12 @@ public class VendaTableModel extends AbstractTableModel {
         VendaController vc = new VendaController();
         dados.clear();
         addRow(vc.selecionaVendasDoAnoPorNomeCliente(nomeCliente));
+    }
+    
+      
+    public void getComprasCliente(long idCliente){
+        dados.clear();
+        addRow(new VendaController().retornaComprasPorIDCliente(idCliente));
     }
 
 

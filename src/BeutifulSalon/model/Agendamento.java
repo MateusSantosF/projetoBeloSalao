@@ -229,4 +229,8 @@ public class Agendamento {
         return new AgendamentoDAO().listarAgendamentosNaoPagos();
     }
 
+    public List<Agendamento> listarAgendamentosIDCliente(long idCliente) throws ExceptionDAO {
+        return new AgendamentoDAO().listarAgendamentosIDCliente(idCliente);
+    }
+
 }

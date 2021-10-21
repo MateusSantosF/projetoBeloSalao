@@ -7,11 +7,13 @@ package BeutifulSalon.view;
 
 import BeutifulSalon.Ferramentas.GraficoDeBarras;
 import BeutifulSalon.Ferramentas.GraficoDePizza;
+import BeutifulSalon.Ferramentas.JTextAreaJTable;
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.OrdenaClientePorVisitas;
 import BeutifulSalon.Ferramentas.OrdenaProdutoPorQuantidade;
 import BeutifulSalon.Tabelas.CentralizaElementosTabela;
+import BeutifulSalon.Tabelas.CompraTableModel;
 import BeutifulSalon.Tabelas.VendaTableModel;
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.controller.CabeleireiroController;
@@ -57,7 +59,7 @@ public class Dashboard extends javax.swing.JPanel {
     private List<Cliente> top5Clientes = new ArrayList<>();
     private ModalTopCliente modalTopCliente;
 
-    VendaTableModel modeloVendas = new VendaTableModel();
+    CompraTableModel modeloCompra = new CompraTableModel();
 
     public Dashboard() {
         initComponents();
@@ -75,7 +77,7 @@ public class Dashboard extends javax.swing.JPanel {
         jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
 
         //jScrollPane3.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
-        jTable1.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); // tabela
+        jTableCompras.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); // tabela
 
         jLabelHistoricoVenda.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Titulo grafico
         jLabelTop5.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Top5 serviços
@@ -160,7 +162,7 @@ public class Dashboard extends javax.swing.JPanel {
         int nAgendamentos = ag.listarAgendamentosHoje().size();
         long nProdutosEstoque = ec.somaProdutosEstoque();
 
-        long receitaMensal = vc.retornaSomaDeVendasMensal() + ag.retornaSomaDeAgendamentosMensal();
+        //long receitaMensal = vc.retornaSomaDeVendasMensal() + ag.retornaSomaDeAgendamentosMensal();
 
         //FINANCEIRO
         long entrada, saida;
@@ -169,12 +171,15 @@ public class Dashboard extends javax.swing.JPanel {
         entrada = vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m);
         saida = compraController.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m);
 
-        modeloVendas.getTodasVendas();
-        jTable1.setModel(modeloVendas);
+        modeloCompra.getComprasDashboard();
+        jTableCompras.setModel(modeloCompra);
+        jTableCompras.setRowHeight(30);
+       
+        jTableCompras.getColumnModel().getColumn(1).setCellRenderer(new JTextAreaJTable());
         CentralizaElementosTabela render = new CentralizaElementosTabela();
         render.setHorizontalAlignment(SwingConstants.CENTER);
-        ((DefaultTableCellRenderer) jTable1.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
-        jTable1.setDefaultRenderer(Object.class, render);
+        ((DefaultTableCellRenderer) jTableCompras.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        jTableCompras.setDefaultRenderer(Object.class, render);
 
         jLabelSaidaDeCaixa.setText(Dinheiro.parseString(saida));
         jLabelSaidaDeCaixa.setForeground(vermelho);
@@ -237,7 +242,7 @@ public class Dashboard extends javax.swing.JPanel {
         jLabelNomeCabeleireiro = new javax.swing.JLabel();
         jPanelGrafico = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableCompras = new javax.swing.JTable();
         jLabelHistoricoVenda = new javax.swing.JLabel();
         jPanelGraficoPizza1 = new javax.swing.JPanel();
         painelBalanço = new javax.swing.JPanel();
@@ -320,9 +325,9 @@ public class Dashboard extends javax.swing.JPanel {
         jScrollPane3.setBorder(null);
         jScrollPane3.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setBackground(new java.awt.Color(255, 255, 255));
-        jTable1.setForeground(new java.awt.Color(0, 0, 0));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableCompras.setBackground(new java.awt.Color(255, 255, 255));
+        jTableCompras.setForeground(new java.awt.Color(0, 0, 0));
+        jTableCompras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -333,12 +338,12 @@ public class Dashboard extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.setRowHeight(20);
-        jScrollPane3.setViewportView(jTable1);
+        jTableCompras.setRowHeight(20);
+        jScrollPane3.setViewportView(jTableCompras);
 
         jLabelHistoricoVenda.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelHistoricoVenda.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabelHistoricoVenda.setText("Histórico de Vendas");
+        jLabelHistoricoVenda.setText("Histórico de Compras");
 
         jPanelGraficoPizza1.setBackground(new java.awt.Color(255, 255, 255));
         jPanelGraficoPizza1.setForeground(new java.awt.Color(255, 255, 255));
@@ -1234,7 +1239,7 @@ public class Dashboard extends javax.swing.JPanel {
     private javax.swing.JPanel jPanelProdutosMaisVendidos1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableCompras;
     private javax.swing.JPanel jpainelUltimosClientes;
     private javax.swing.JPanel painelBalanço;
     // End of variables declaration//GEN-END:variables

@@ -17,6 +17,7 @@ import BeutifulSalon.model.Item;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,7 +55,7 @@ public class CompraProdutoDAO {
             if (firstInsert > 0) {
                 try {
 
-                    ArrayList<Item> itens = compra.getItensCompra();
+                    List<Item> itens = compra.getItensCompra();
                     for (Item it : itens) {
 
                         pStatement = connection.prepareStatement(insertItemCompra);
@@ -134,6 +135,119 @@ public class CompraProdutoDAO {
                 while(rs.next()){
                     compras = rs.getInt("RENDAMENSAL");
                 }
+            }          
+            return compras;     
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+   
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return compras;
+    }
+    
+    public List<Item> retornaProdutosDaCompra(long idCompra){
+        String sql = "SELECT PRECOUNITARIO, QUANTIDADE, PRECOTOTAL, ID_PRODUTO, ID_COMPRA, PRODUTO.NOME, PRODUTO.MARCA FROM ITEM_COMPRA"
+                + " INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_COMPRA.ID_PRODUTO  WHERE ID_COMPRA = ?";
+        List<Item> itemCompras = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setLong(1, idCompra);
+            
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                   Item i = new Item();
+                   i.setQuantidade(rs.getInt("QUANTIDADE"));
+                   i.setPrecoTotal(rs.getLong("PRECOTOTAL"));
+                   i.setId_produto(rs.getLong("ID_PRODUTO"));
+                   i.setId_compra(rs.getLong("ID_COMPRA"));
+                   i.setPreco(rs.getLong("PRECOUNITARIO"));
+                   i.setNome(rs.getString("NOME"));
+                   i.setMarca(rs.getString("MARCA"));  
+                   itemCompras.add(i);
+                }
+            }
+            
+            return itemCompras;
+            
+            
+        } catch (SQLException e) {
+             JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+        }finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return itemCompras;
+    }
+    
+    public List<Compra> retornaTodasCompras(){
+        
+        String sql = "SELECT * FROM COMPRA GROUP BY COMPRA.ID_COMPRA ORDER BY DATA DESC";
+        List<Compra> compras = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+        
+
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                   Compra c = new Compra();
+                   c.setIdCompra(rs.getLong("ID_COMPRA"));
+                   c.setData(rs.getDate("DATA").toLocalDate());
+                   c.setValorTotal(rs.getLong("VALORTOTAL"));
+                   c.setValorDesconto(rs.getLong("VALORDESCONTO"));
+                   c.setItensCompra(retornaProdutosDaCompra(c.getIdCompra()));
+                   compras.add(c);
+                }
             }
             
             return compras;
@@ -163,6 +277,7 @@ public class CompraProdutoDAO {
         }
         
         return compras;
+    
     }
     
     public long retornaMaxID(){
@@ -188,7 +303,6 @@ public class CompraProdutoDAO {
                 }
             }
             
-            System.out.println("ID => " + compras);
             return compras;
        
 
@@ -217,5 +331,65 @@ public class CompraProdutoDAO {
         
         return compras;
     }
+
+    public List<Compra> retornaComprasDashboard() {
+        
+        String sql = "SELECT * FROM COMPRA GROUP BY COMPRA.ID_COMPRA ORDER BY DATA DESC LIMIT 100";
+        List<Compra> compras = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+        
+
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                   Compra c = new Compra();
+                   c.setIdCompra(rs.getLong("ID_COMPRA"));
+                   c.setData(rs.getDate("DATA").toLocalDate());
+                   c.setValorTotal(rs.getLong("VALORTOTAL"));
+                   c.setValorDesconto(rs.getLong("VALORDESCONTO"));
+                   c.setItensCompra(retornaProdutosDaCompra(c.getIdCompra()));
+                   compras.add(c);
+                }
+            }
+            
+            return compras;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+   
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return compras;
+    }
+
+   
 
 }

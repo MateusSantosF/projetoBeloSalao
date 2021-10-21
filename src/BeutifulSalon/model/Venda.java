@@ -78,7 +78,7 @@ public class Venda{
         return itensVenda;
     }
 
-    public void setItensVenda(ArrayList<Item> itensVenda) {
+    public void setItensVenda(List<Item> itensVenda) {
         this.itensVenda = itensVenda;
     }
 
@@ -193,6 +193,10 @@ public class Venda{
 
     public boolean excluirVenda(Venda venda) throws ExceptionDAO{
         return new VendaProdutoDAO().excluirVenda(venda);
+    }
+
+    public List<Venda> retornaComprasCliente(long idCliente) throws ExceptionDAO{
+        return new VendaProdutoDAO().retornaComprasPorIDCliente(idCliente);
     }
  
 

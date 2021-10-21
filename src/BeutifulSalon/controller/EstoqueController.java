@@ -21,7 +21,7 @@ public class EstoqueController {
 
     public boolean atualizaEstoque(Compra compra) {
 
-        ArrayList<Item> produtosComprados = compra.getItensCompra();
+        List<Item> produtosComprados = compra.getItensCompra();
 
         for (Item i : produtosComprados) {
             Estoque estoque = new Estoque();

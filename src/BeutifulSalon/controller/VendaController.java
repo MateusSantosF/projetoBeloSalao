@@ -8,6 +8,7 @@ package BeutifulSalon.controller;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.dao.VendaProdutoDAO;
+import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Venda;
 import java.time.LocalDate;
@@ -113,6 +114,16 @@ public class VendaController {
             System.out.println("Erro ao listar todas vendas" + e);
         }
         return null;
+    }
+    
+    
+    public List<Venda> retornaComprasPorIDCliente(long idCliente) {
+        try {
+            return new Venda().retornaComprasCliente(idCliente);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, "Erro ao listar compras cliente " + e);
+            return null;
+        }
     }
 
     public List<Item> retornaItemsCompra(long idCliente) {

@@ -5,8 +5,10 @@
  */
 package BeutifulSalon.view.Apresenta;
 
+import BeutifulSalon.Ferramentas.JTextAreaJTable;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Tabelas.CentralizaElementosTabela;
+import BeutifulSalon.Tabelas.CompraTableModel;
 import BeutifulSalon.Tabelas.ProdutoTableModel;
 import BeutifulSalon.Tabelas.VendaTableModel;
 import BeutifulSalon.controller.VendaController;
@@ -26,6 +28,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
     private final ProdutoTableModel produtoTableModel = new ProdutoTableModel();
     private final VendaTableModel vendaTableModel = new VendaTableModel();
     private ModalDetalhesVenda modalDetalhesVenda = new ModalDetalhesVenda();
+    private CompraTableModel compraTableModel = new CompraTableModel();
     
     public ApresentaProduto() {
         initComponents();
@@ -41,7 +44,9 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jLabelExcluir.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Excluir
         jScrollPane2.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //ScrollPane
         jTableConsultaProdutos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); // tabela
-
+        jTableCompra.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f));
+        jTableVendas.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f));
+        
         CentralizaElementosTabela render = new CentralizaElementosTabela();
         ((DefaultTableCellRenderer) jTableConsultaProdutos.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         jTableConsultaProdutos.setDefaultRenderer(Object.class, render);
@@ -88,8 +93,6 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jLabelExcluirCompra = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableCompra = new javax.swing.JTable();
-        jLabelBtnDetalhesCompra = new javax.swing.JLabel();
-        jToggleButtonAnoCompra = new javax.swing.JToggleButton();
         jPanelVendas = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
@@ -104,7 +107,6 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jLabelExcluirVenda = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableVendas = new javax.swing.JTable();
-        jLabelBtnDetalhesVenda = new javax.swing.JLabel();
         jToggleButtonAno = new javax.swing.JToggleButton();
         jPanel6 = new javax.swing.JPanel();
 
@@ -277,7 +279,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
                             .addComponent(jLabelExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
-            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,7 +345,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(261, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,7 +362,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jTextFieldNomeClienteCompra.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel13.setText("Buscar por Cliente");
+        jLabel13.setText("Buscar por Produto");
 
         jLabelBtnBuscarCompra.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconLupa.png"))); // NOI18N
         jLabelBtnBuscarCompra.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -404,30 +406,11 @@ public class ApresentaProduto extends javax.swing.JPanel {
         ));
         jScrollPane3.setViewportView(jTableCompra);
 
-        jLabelBtnDetalhesCompra.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabelBtnDetalhesCompra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelBtnDetalhesCompra.setText("+Detalhes");
-        jLabelBtnDetalhesCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabelBtnDetalhesCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelBtnDetalhesCompra.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabelBtnDetalhesCompraMousePressed(evt);
-            }
-        });
-
-        jToggleButtonAnoCompra.setText("Ano Atual");
-        jToggleButtonAnoCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jToggleButtonAnoCompra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButtonAnoCompraActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
+            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
             .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
@@ -439,12 +422,8 @@ public class ApresentaProduto extends javax.swing.JPanel {
                             .addGroup(jPanel10Layout.createSequentialGroup()
                                 .addComponent(jTextFieldNomeClienteCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabelBtnBuscarCompra)
-                                .addGap(29, 29, 29)
-                                .addComponent(jToggleButtonAnoCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabelBtnBuscarCompra)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelBtnDetalhesCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(jLabelEditarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabelExcluirCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -455,22 +434,18 @@ public class ApresentaProduto extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel10Layout.createSequentialGroup()
-                            .addComponent(jLabel13)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabelBtnBuscarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldNomeClienteCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabelEditarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelBtnDetalhesCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabelExcluirCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jToggleButtonAnoCompra, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelBtnBuscarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldNomeClienteCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabelEditarCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelExcluirCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
                 .addGap(33, 33, 33)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -593,17 +568,6 @@ public class ApresentaProduto extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(jTableVendas);
 
-        jLabelBtnDetalhesVenda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabelBtnDetalhesVenda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelBtnDetalhesVenda.setText("+Detalhes");
-        jLabelBtnDetalhesVenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabelBtnDetalhesVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabelBtnDetalhesVenda.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabelBtnDetalhesVendaMousePressed(evt);
-            }
-        });
-
         jToggleButtonAno.setText("Ano Atual");
         jToggleButtonAno.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jToggleButtonAno.addActionListener(new java.awt.event.ActionListener() {
@@ -616,7 +580,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
+            .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
@@ -631,9 +595,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
                                 .addComponent(jLabelBtnBuscarVenda)
                                 .addGap(29, 29, 29)
                                 .addComponent(jToggleButtonAno, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelBtnDetalhesVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE)
                         .addComponent(jLabelEditarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabelExcluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -653,13 +615,11 @@ public class ApresentaProduto extends javax.swing.JPanel {
                                 .addComponent(jLabelBtnBuscarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jTextFieldNomeClienteVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabelEditarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabelBtnDetalhesVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabelEditarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelExcluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jToggleButtonAno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
                 .addGap(33, 33, 33)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -809,7 +769,13 @@ public class ApresentaProduto extends javax.swing.JPanel {
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         
         switch (jTabbedPane1.getSelectedIndex()) {
+            case 1:
+                
+                compraTableModel.getTodasCompras();
+                jTableCompra.setModel(compraTableModel);
+                jTableCompra.getColumnModel().getColumn(1).setCellRenderer(new JTextAreaJTable());
             
+                break;
             case 2:
                 if (!jToggleButtonAno.isSelected()) {
                     vendaTableModel.getVendasDoAno();
@@ -819,24 +785,12 @@ public class ApresentaProduto extends javax.swing.JPanel {
                     jTableVendas.setModel(vendaTableModel);
                     
                 }
+                 jTableVendas.getColumnModel().getColumn(2).setCellRenderer(new JTextAreaJTable());
                 
                 break;
             
         }
     }//GEN-LAST:event_jTabbedPane1StateChanged
-
-    private void jLabelBtnDetalhesVendaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBtnDetalhesVendaMousePressed
-        
-        int index = jTableVendas.getSelectedRow();
-        
-        if( index > -1){
-           new ModalDetalhesVenda(vendaTableModel.getVenda(index)).setVisible(true);
-           
-        }
-        
-        
-
-    }//GEN-LAST:event_jLabelBtnDetalhesVendaMousePressed
 
     private void jToggleButtonAnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonAnoActionPerformed
         if (jToggleButtonAno.isSelected()) {
@@ -864,14 +818,6 @@ public class ApresentaProduto extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabelExcluirCompraMousePressed
 
-    private void jLabelBtnDetalhesCompraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBtnDetalhesCompraMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabelBtnDetalhesCompraMousePressed
-
-    private void jToggleButtonAnoCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonAnoCompraActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButtonAnoCompraActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -886,12 +832,9 @@ public class ApresentaProduto extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelBtnBuscarCompra;
     private javax.swing.JLabel jLabelBtnBuscarProdutos;
     private javax.swing.JLabel jLabelBtnBuscarVenda;
-    private javax.swing.JLabel jLabelBtnDetalhesCompra;
-    private javax.swing.JLabel jLabelBtnDetalhesVenda;
     private javax.swing.JLabel jLabelEditar;
     private javax.swing.JLabel jLabelEditarCompra;
     private javax.swing.JLabel jLabelEditarVenda;
@@ -922,6 +865,5 @@ public class ApresentaProduto extends javax.swing.JPanel {
     private javax.swing.JTextField jTextFieldNomeClienteVenda;
     private javax.swing.JTextField jTextFieldNomeProduto;
     private javax.swing.JToggleButton jToggleButtonAno;
-    private javax.swing.JToggleButton jToggleButtonAnoCompra;
     // End of variables declaration//GEN-END:variables
 }

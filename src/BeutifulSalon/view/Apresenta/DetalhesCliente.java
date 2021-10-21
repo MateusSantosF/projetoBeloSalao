@@ -5,12 +5,14 @@
  */
 package BeutifulSalon.view.Apresenta;
 
+import BeutifulSalon.Ferramentas.JTextAreaJTable;
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.ManipulaImagem;
 import BeutifulSalon.Ferramentas.ManipulaStrings;
 import BeutifulSalon.Tabelas.ClienteCompraTableModel;
 import BeutifulSalon.Tabelas.ClienteServicoTableModel;
+import BeutifulSalon.Tabelas.VendaTableModel;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Observador;
@@ -100,9 +102,11 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         ClienteController cc = new ClienteController();
         ManipulaImagem mi = new ManipulaImagem();
         modeloServicos.listarServicos(cliente.getId());
-        modeloCompras.listarItens(idCliente);
-        jTableServicos.setModel(modeloServicos);
+        modeloCompras.getComprasCliente(idCliente);
+        jTableServicos.setModel(modeloServicos); 
+        jTableServicos.getColumnModel().getColumn(0).setCellRenderer(new JTextAreaJTable());
         jTableCompras.setModel(modeloCompras);
+        jTableCompras.getColumnModel().getColumn(1).setCellRenderer(new JTextAreaJTable());
 
         byte[] imagemPerfil = cc.getImagemPerfil(cliente.getId());
 

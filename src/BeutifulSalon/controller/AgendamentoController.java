@@ -265,6 +265,15 @@ public class AgendamentoController {
         }
         return null;
     }
+    
+     public List<Agendamento> listarAgendamentosIDCliente(long idCliente) {
+        try {
+            return new Agendamento().listarAgendamentosIDCliente(idCliente);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return null;
+    }
 
     public ArrayList<Agendamento> listarAgendamentosNaoRealizados() {
         try {

@@ -6,9 +6,12 @@
 package BeutifulSalon.Tabelas;
 
 
+import BeutifulSalon.Ferramentas.ManipulaStrings;
 import BeutifulSalon.controller.VendaController;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Item;
+import BeutifulSalon.model.Venda;
+import java.time.LocalDate;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -21,15 +24,14 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ClienteCompraTableModel extends AbstractTableModel {
     
-    private final List<Item> dados;
-    private final String[] columns = {"Nome", "Marca", "Quantidade", "Total", "Data"};
-    private final VendaController vendaController;
+     private final List<Venda> dados;
+    private ManipulaStrings manipulaStrings = new ManipulaStrings();
+    private final String[] columns = {"Data", "Produtos","Desconto","Total"};
 
     public ClienteCompraTableModel() {
         this.dados = new ArrayList<>();
-        vendaController = new VendaController();
     }
-    
+
     @Override
     public int getRowCount() {
         return dados.size();
@@ -39,6 +41,7 @@ public class ClienteCompraTableModel extends AbstractTableModel {
     public int getColumnCount() {
         return columns.length;
     }
+
     @Override
     public String getColumnName(int column) {
         return columns[column];
@@ -46,48 +49,57 @@ public class ClienteCompraTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        
-        switch(columnIndex){
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+        switch (columnIndex) {
             case 0:
-                return dados.get(rowIndex).getNome();      
+                return dados.get(rowIndex).getData().format(formatterData);
             case 1:
-                  return dados.get(rowIndex).getMarca();  
-            case 2:
-                return dados.get(rowIndex).getQuantidade();
+                StringBuilder produtos = new StringBuilder();
+                List<Item> itens = dados.get(rowIndex).getItensVenda();
+                
+                int rows = 0;
+                for(Item i: itens){
+                    produtos.append(i.getQuantidade()+"un. "+i.getNome());
+                    if( rows != itens.size() -1){
+                        produtos.append("\n");
+                    }
+                    rows++;
+                }   
+                return produtos.toString();           
+            case 2:         
+               return Dinheiro.parseString(dados.get(rowIndex).getValorDesconto());
             case 3:
-                return Dinheiro.parseString(dados.get(rowIndex).getPrecoTotal());
-            case 4:
-                return dados.get(rowIndex).getDataReg().format(formatterData);
+                return Dinheiro.parseString(dados.get(rowIndex).getTotal());
+            default:
+                return null;
+
         }
-        
-        return null;
+
     }
 
-    
+    public void addRow(Venda venda) {
+        dados.add(venda);
+        this.fireTableDataChanged();
+    }
+
+    public void addRow(List<Venda> vendas) {
+       vendas.forEach(v -> dados.add(v));
+        this.fireTableDataChanged();
+    }
+
     public void removeRow(int rowIndex) {
         dados.remove(rowIndex);
         this.fireTableRowsDeleted(rowIndex, rowIndex);
     }
-    
-    public void addRow(Item item) {
-        dados.add(item);
-        this.fireTableDataChanged();
-    }
 
-    public void addRow(List<Item> itens) {
-        itens.forEach(i -> dados.add(i));
-        this.fireTableDataChanged();
+    public Venda getVenda(int rowIndex) {
+        return dados.get(rowIndex);
     }
     
-    public Item getItem(int rowCount){
-        return dados.get(rowCount);
-    }
-    
-    public void listarItens(long idCliente){
+      
+    public void getComprasCliente(long idCliente){
         dados.clear();
-        addRow(vendaController.retornaItemsCompra(idCliente));               
+        addRow(new VendaController().retornaComprasPorIDCliente(idCliente));
     }
     
 }

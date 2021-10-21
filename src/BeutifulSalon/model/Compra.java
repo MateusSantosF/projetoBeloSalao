@@ -10,6 +10,7 @@ import BeutifulSalon.dao.ExceptionDAO;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,10 +18,11 @@ import java.util.ArrayList;
  */
 public class Compra {
 
+    long idCompra;
     LocalDate data;
     long valorTotal;
     long valorDesconto;
-    ArrayList<Item> itensCompra;
+    List<Item> itensCompra;
 
     public Compra() {
     }
@@ -50,6 +52,16 @@ public class Compra {
         return valorTotalSomado;
     }
 
+    public long getIdCompra() {
+        return idCompra;
+    }
+
+    public void setIdCompra(long idCompra) {
+        this.idCompra = idCompra;
+    }
+    
+    
+
     public void setValorTotal(long valorTotal) {
         this.valorTotal = valorTotal;
     }
@@ -62,11 +74,11 @@ public class Compra {
         this.valorDesconto = valorDesconto;
     }
 
-    public ArrayList<Item> getItensCompra() {
+    public List<Item> getItensCompra() {
         return itensCompra;
     }
 
-    public void setItensCompra(ArrayList<Item> itensCompra) {
+    public void setItensCompra(List<Item> itensCompra) {
         this.itensCompra = itensCompra;
     }
 
@@ -77,5 +89,15 @@ public class Compra {
     public long retornaSomaDeComprasMensais(Month mes) throws ExceptionDAO {
         return new CompraProdutoDAO().retornaSomaDeComprasMensais(mes);
     }
+    
+    public List<Compra> retornaTodasCompras()  throws ExceptionDAO{
+        return new CompraProdutoDAO().retornaTodasCompras();
+    }
+    
+    public List<Compra> retornaComprasDashboard() throws ExceptionDAO{
+        return new CompraProdutoDAO().retornaComprasDashboard();
+    }
+
+   
 
 }

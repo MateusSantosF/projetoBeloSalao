@@ -7,6 +7,7 @@ package BeutifulSalon.dao;
 
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.controller.EstoqueController;
+import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.RelatorioVenda;
 import BeutifulSalon.model.Venda;
@@ -154,12 +155,12 @@ public class VendaProdutoDAO {
                     vendaAtual.setData(rs.getDate("DATA").toLocalDate());
                     vendaAtual.setValorTotal(rs.getLong("VALORTOTAL"));
                     vendaAtual.setValorDesconto(rs.getLong("VALORDESCONTO"));
-                    vendaAtual.setIdCliente(rs.getLong("ID_CLIENTE"));
-                    
+                    vendaAtual.setIdCliente(rs.getLong("ID_CLIENTE"));      
                     vendaAtual.setIdVenda(rs.getLong("ID_VENDA"));
                     vendaAtual.setNomeCliente(rs.getString("NOME"));
                     vendaAtual.setSobrenomeCliente(rs.getString("SOBRENOME"));
                     vendaAtual.setQuantidadeProdutosVendidos(rs.getInt("qtdVendida"));
+                    vendaAtual.setItensVenda(retornaItemsRelatorioVenda(vendaAtual.getIdVenda()));
                     vendas.add(vendaAtual);
                 }
             }
@@ -228,11 +229,13 @@ public class VendaProdutoDAO {
                     Venda vendaAtual = new Venda();
                     vendaAtual.setData(rs.getDate("DATA").toLocalDate());
                     vendaAtual.setIdCliente(rs.getLong("ID_CLIENTE"));
-                      vendaAtual.setIdVenda(rs.getLong("ID_VENDA"));
+                    vendaAtual.setIdVenda(rs.getLong("ID_VENDA"));
                     vendaAtual.setValorTotal(rs.getLong("VALORTOTAL"));
                     vendaAtual.setNomeCliente(rs.getString("NOME"));
                     vendaAtual.setValorDesconto(rs.getLong("VALORDESCONTO"));
                     vendaAtual.setSobrenomeCliente(rs.getString("SOBRENOME"));
+                    
+                    vendaAtual.setItensVenda(retornaItemsRelatorioVenda(vendaAtual.getIdVenda()));
                     vendaAtual.setQuantidadeProdutosVendidos(rs.getInt("qtdVendida"));
                     vendas.add(vendaAtual);
                 }
@@ -304,7 +307,7 @@ public class VendaProdutoDAO {
                     vendaAtual.setNomeCliente(rs.getString("NOME"));
                     vendaAtual.setSobrenomeCliente(rs.getString("SOBRENOME"));
                     vendaAtual.setQuantidadeProdutosVendidos(rs.getInt("qtdVendida"));
-   
+                     vendaAtual.setItensVenda(retornaItemsRelatorioVenda(vendaAtual.getIdVenda()));
                     vendas.add(vendaAtual);
                 }
             }
@@ -382,7 +385,7 @@ public class VendaProdutoDAO {
                     vendaAtual.setIdVenda(rs.getLong("ID_VENDA"));
                     vendaAtual.setSobrenomeCliente(rs.getString("SOBRENOME"));
                     vendaAtual.setQuantidadeProdutosVendidos(rs.getInt("qtdVendida"));
-   
+                     vendaAtual.setItensVenda(retornaItemsRelatorioVenda(vendaAtual.getIdVenda()));
                     vendas.add(vendaAtual);
                 }
             }
@@ -743,13 +746,7 @@ public class VendaProdutoDAO {
      */
     public long selecionaVendasPorMes(Month mes)throws ExceptionDAO {
         
-        
-        String sql = "SELECT CLIENTE.NOME AS NOME, CLIENTE.SOBRENOME AS SOBRENOME, VENDA.DATA, VENDA.VALORTOTAL, PRODUTO.NOME AS NOMEPRODUTO "
-                + "FROM VENDA " +
-        "    INNER JOIN CLIENTE ON CLIENTE.ID = VENDA.ID_CLIENTE " +
-        "    INNER JOIN ITEM_VENDA ON VENDA.ID_VENDA  = ITEM_VENDA.ID_VENDA " +
-        "    INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO"
-        + "  WHERE VENDA.DATA BETWEEN ? AND ?";
+   
         
         String sql2 = "SELECT SUM(VENDA.VALORTOTAL) AS RENDAMENSAL FROM VENDA WHERE VENDA.DATA BETWEEN ? AND ?";
         long vendas = 0;
@@ -850,6 +847,76 @@ public class VendaProdutoDAO {
             }
         }
         return false;
+    }
+
+    public List<Venda> retornaComprasPorIDCliente(long idCliente) {
+        String sql = "SELECT CLIENTE.NOME AS NOME, CLIENTE.SOBRENOME AS SOBRENOME, VENDA.DATA,VENDA.ID_CLIENTE,VENDA.ID_VENDA, VENDA.VALORDESCONTO ,VENDA.VALORTOTAL, PRODUTO.NOME AS NOMEPRODUTO, "
+                + "SUM(ITEM_VENDA.QUANTIDADE) AS qtdVendida FROM VENDA " +
+        "    INNER JOIN CLIENTE ON CLIENTE.ID = VENDA.ID_CLIENTE " +
+        "    INNER JOIN ITEM_VENDA ON VENDA.ID_VENDA  = ITEM_VENDA.ID_VENDA " +
+        "    INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO "
+                + " WHERE VENDA.ID_CLIENTE = ? GROUP BY VENDA.ID_VENDA ORDER BY VENDA.DATA DESC";
+
+        List<Venda> vendas = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setLong(1, idCliente);
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+         
+                    Venda vendaAtual = new Venda();
+                    vendaAtual.setData(rs.getDate("DATA").toLocalDate());
+                    vendaAtual.setIdCliente(rs.getLong("ID_CLIENTE"));
+                    vendaAtual.setIdVenda(rs.getLong("ID_VENDA"));
+                    vendaAtual.setValorTotal(rs.getLong("VALORTOTAL"));
+                    vendaAtual.setNomeCliente(rs.getString("NOME"));
+                    vendaAtual.setValorDesconto(rs.getLong("VALORDESCONTO"));
+                    vendaAtual.setSobrenomeCliente(rs.getString("SOBRENOME"));
+                    
+                    vendaAtual.setItensVenda(retornaItemsRelatorioVenda(vendaAtual.getIdVenda()));
+                    vendaAtual.setQuantidadeProdutosVendidos(rs.getInt("qtdVendida"));
+                    vendas.add(vendaAtual);
+                }
+            }
+            
+            return vendas;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+    
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return vendas;
+
     }
 
    
