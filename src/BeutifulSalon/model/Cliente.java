@@ -320,6 +320,10 @@ public class Cliente {
     public byte[] recuperaImagemPerfil(long id) throws ExceptionDAO {
         return new clienteDAO().recuperaImagemPerfil(id);
     }
+    
+    public long calculaTotalAnualGasto(long idCliente){
+        return new clienteDAO().calculaTotalAnualGasto(idCliente);
+    }
 
     public List<Cliente> listarAniversariantesDoMes() throws ExceptionDAO {
         return new clienteDAO().listarAniversariantesDoMes();

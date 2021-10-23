@@ -30,6 +30,11 @@ public class CompraController {
             compraAtual.setValorDesconto(valorDesconto);
             compraAtual.setData(data);
             compraAtual.setItensCompra(itensCompra);
+            
+            if(compraAtual.getValorTotal() - valorDesconto < 0){
+                JOptionPane.showMessageDialog(null, "Você não pode registrar uma Compra com valor negativo.");
+                return false;
+            }
 
             try {
                 compraAtual.cadastraCompra(compraAtual);
@@ -43,6 +48,23 @@ public class CompraController {
         }
 
         return true;
+    }
+
+    public boolean atualizarCompra(Compra c, List<Item> itensAntigos) {
+
+        if ((c.getValorTotal() - c.getValorDesconto()) >= 0) {
+            try {
+                return c.atualizarCompra(c, itensAntigos);
+                
+            } catch (ExceptionDAO e) {
+                System.out.println(e);
+                return false;
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Você não pode registrar uma compra com total negativo.");
+            return false;
+        }
     }
 
     public long retornaSomaDeComprasMensais(Month mes) {
@@ -80,7 +102,8 @@ public class CompraController {
             return null;
         }
     }
-     public List<Compra> retornaTodasComprasDoAno() {
+
+    public List<Compra> retornaTodasComprasDoAno() {
         try {
             return new Compra().retornaTodasComprasDoAno();
         } catch (ExceptionDAO e) {
@@ -88,16 +111,16 @@ public class CompraController {
             return null;
         }
     }
-     public List<Compra> getComprasPorNomeProdutoDoAno(String nomeProduto) {
-         try {
+
+    public List<Compra> getComprasPorNomeProdutoDoAno(String nomeProduto) {
+        try {
             return new Compra().getComprasPorNomeProdutoDoAno(nomeProduto);
         } catch (ExceptionDAO e) {
             JOptionPane.showMessageDialog(null, "Erro ao listar compras por nome produto do ano" + e);
             return null;
         }
-     }
-             
-    
+    }
+
     public boolean excluiCompra(Compra compra) {
         try {
             return new Compra().excluirCompra(compra);

@@ -5,9 +5,9 @@
  */
 package BeutifulSalon.Tabelas;
 
-
 import BeutifulSalon.Ferramentas.ManipulaStrings;
 import BeutifulSalon.controller.VendaController;
+import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Venda;
@@ -23,10 +23,10 @@ import javax.swing.table.AbstractTableModel;
  * @author Mateus
  */
 public class ClienteCompraTableModel extends AbstractTableModel {
-    
-     private final List<Venda> dados;
+
+    private final List<Venda> dados;
     private ManipulaStrings manipulaStrings = new ManipulaStrings();
-    private final String[] columns = {"Data", "Produtos","Desconto","Total"};
+    private final String[] columns = {"Data", "Produtos", "Total Bruto", "Desconto", "Total"};
 
     public ClienteCompraTableModel() {
         this.dados = new ArrayList<>();
@@ -52,24 +52,51 @@ public class ClienteCompraTableModel extends AbstractTableModel {
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
         switch (columnIndex) {
             case 0:
-                return dados.get(rowIndex).getData().format(formatterData);
-            case 1:
-                StringBuilder produtos = new StringBuilder();
-                List<Item> itens = dados.get(rowIndex).getItensVenda();
+                if (dados.get(rowIndex).getIdVenda() != -1) {
+                    return dados.get(rowIndex).getData().format(formatterData);
+                }else{
+                    return "";
+                }
                 
-                int rows = 0;
-                for(Item i: itens){
-                    produtos.append(i.getQuantidade()+"un. "+i.getNome());
-                    if( rows != itens.size() -1){
-                        produtos.append("\n");
+            case 1:
+                if (dados.get(rowIndex).getIdVenda() != -1) {
+                    StringBuilder produtos = new StringBuilder();
+                    List<Item> itens = dados.get(rowIndex).getItensVenda();
+
+                    int rows = 0;
+                    for (Item i : itens) {
+                        produtos.append(i.getQuantidade() + "un. " + i.getNome());
+                        if (rows != itens.size() - 1) {
+                            produtos.append("\n");
+                        }
+                        rows++;
                     }
-                    rows++;
-                }   
-                return produtos.toString();           
-            case 2:         
-               return Dinheiro.parseString(dados.get(rowIndex).getValorDesconto());
+                    return produtos.toString();
+                }else{
+                    return "";
+                }
+
+            case 2:
+                if (dados.get(rowIndex).getIdVenda() != -1) {
+                  return Dinheiro.parseString(dados.get(rowIndex).getValorTotal());
+                }else{
+                    return Dinheiro.parseString(dados.get(rowIndex).getValorTotal() + dados.get(rowIndex).getValorDesconto());
+                }
+      
             case 3:
-                return Dinheiro.parseString(dados.get(rowIndex).getTotal());
+                 if (dados.get(rowIndex).getIdVenda() != -1) {
+                   return Dinheiro.parseString(dados.get(rowIndex).getValorDesconto());  
+                 }else{
+                    return Dinheiro.parseString( dados.get(rowIndex).getValorDesconto());
+                 }
+                
+            case 4:
+                 if (dados.get(rowIndex).getIdVenda() != -1) {
+                     return Dinheiro.parseString(dados.get(rowIndex).getTotal() - dados.get(rowIndex).getValorDesconto());
+                 }else{
+                    return Dinheiro.parseString( dados.get(rowIndex).getValorTotal());
+                 }
+                
             default:
                 return null;
 
@@ -83,7 +110,7 @@ public class ClienteCompraTableModel extends AbstractTableModel {
     }
 
     public void addRow(List<Venda> vendas) {
-       vendas.forEach(v -> dados.add(v));
+        vendas.forEach(v -> dados.add(v));
         this.fireTableDataChanged();
     }
 
@@ -95,11 +122,12 @@ public class ClienteCompraTableModel extends AbstractTableModel {
     public Venda getVenda(int rowIndex) {
         return dados.get(rowIndex);
     }
-    
-      
-    public void getComprasCliente(long idCliente){
+
+    public void getComprasCliente(long idCliente) {
         dados.clear();
         addRow(new VendaController().retornaComprasPorIDCliente(idCliente));
     }
-    
+
+
+
 }

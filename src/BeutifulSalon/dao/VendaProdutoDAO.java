@@ -120,6 +120,113 @@ public class VendaProdutoDAO {
 
     }
     
+    public boolean atualizarVenda(Venda venda, List<Item> itensAntigos){
+         
+        String deleteitemVenda = "DELETE FROM ITEM_VENDA WHERE ID_VENDA = ?";
+        String updateVenda = "UPDATE VENDA SET DATA = ?, VALORTOTAL =?, VALORDESCONTO = ?, ID_CLIENTE = ? WHERE ID_VENDA = ?";  
+        String insertItemVenda = "INSERT INTO ITEM_VENDA (PRECOUNITARIO, QUANTIDADE, PRECOTOTAL, ID_PRODUTO, ID_VENDA) "
+                + "VALUES (?,?,?,?,?)";
+
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        EstoqueController estoque = new EstoqueController();
+
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            connection.setAutoCommit(false);
+            
+            //remove itens antigos
+            
+            if(!new EstoqueController().atualizaEstoqueExclusaoVenda(itensAntigos))return false;
+           
+            pStatement = connection.prepareStatement(deleteitemVenda);
+            pStatement.setLong(1, venda.getIdVenda());
+            pStatement.execute();
+            
+            pStatement = connection.prepareStatement(updateVenda);
+            pStatement.setDate(1, java.sql.Date.valueOf(venda.getData()));
+            pStatement.setLong(2, venda.getValorTotal());
+     
+            pStatement.setLong(3, venda.getValorDesconto());
+            pStatement.setLong(4, venda.getIdCliente());
+            pStatement.setLong(5, venda.getIdVenda());
+
+            int firstUpdate = pStatement.executeUpdate();
+
+            if (firstUpdate > 0) {
+                try {
+
+                    List<Item> itens = venda.getItensCompra();
+                    for (Item it : itens) {
+
+                        pStatement = connection.prepareStatement(insertItemVenda);
+                        pStatement.setLong(1, it.getPreco());
+                        pStatement.setInt(2, it.getQuantidade());
+                        pStatement.setLong(3, it.getPrecoTotal());
+                        pStatement.setLong(4, it.getId_produto());
+                        pStatement.setLong(5, venda.getIdVenda());
+                        pStatement.executeUpdate();
+
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Erro registrar itemCompra" + e);
+                    connection.rollback();
+                    return false;
+                }
+            }else{
+                connection.rollback();
+                new EstoqueController().atualizaEstoqueExclusaoCompra(itensAntigos);
+                return false;
+            }
+
+            connection.commit();
+
+            try {
+                boolean sucesso = estoque.atualizaEstoque(venda);
+
+                if (sucesso == false) {
+                    JOptionPane.showMessageDialog(null, "Erro ao atualizar estoque");
+
+                }
+            } catch (ExceptionDAO ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao atualizar estoque" + ex);
+                return false;
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+                return false;
+            }
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return true;
+    }
+    
     public List<Venda> selecionaVendasDoAno(int anoReferente) throws ExceptionDAO{
         
                 
@@ -617,7 +724,8 @@ public class VendaProdutoDAO {
      
      public List<Item> retornaItemsRelatorioVenda(long idVenda) {
         
-        String sql = "SELECT PRODUTO.NOME AS NOME , PRODUTO.MARCA AS MARCA, QUANTIDADE, PRODUTO.PRECO AS PRECO, PRECOTOTAL FROM ITEM_VENDA "
+        String sql = "SELECT PRODUTO.NOME AS NOME , PRODUTO.MARCA AS MARCA, QUANTIDADE, PRODUTO.IDPRODUTO AS IDPROD,"
+                + " PRODUTO.PRECO AS PRECO, PRECOTOTAL FROM ITEM_VENDA "
                 + "INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ID_PRODUTO"
                 + " WHERE ITEM_VENDA.ID_VENDA = ?";
         
@@ -640,6 +748,7 @@ public class VendaProdutoDAO {
    
             
                    Item i = new Item();
+                   i.setId_produto(rs.getLong("IDPROD"));
                    i.setNome(rs.getString("NOME"));
                    i.setMarca(rs.getString("MARCA"));
                    i.setQuantidade(rs.getInt("QUANTIDADE"));
@@ -748,7 +857,8 @@ public class VendaProdutoDAO {
         
    
         
-        String sql2 = "SELECT SUM(VENDA.VALORTOTAL) AS RENDAMENSAL FROM VENDA WHERE VENDA.DATA BETWEEN ? AND ?";
+        String sql2 = "SELECT (SUM(VENDA.VALORTOTAL) - SUM(VENDA.VALORDESCONTO)) AS RENDAMENSAL"
+                + " FROM VENDA WHERE VENDA.DATA BETWEEN ? AND ?";
         long vendas = 0;
 
         //List<Venda> vendas = new ArrayList<>();

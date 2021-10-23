@@ -28,7 +28,7 @@ public class VendaTableModel extends AbstractTableModel {
 
     private List<Venda> dados;
     private ManipulaStrings manipulaStrings = new ManipulaStrings();
-    private final String[] columns = {"Cliente", "Data", "Produtos", "Desconto", "Total"};
+    private final String[] columns = {"Cliente", "Data", "Produtos", "Total Bruto","Desconto", "Total"};
 
     public VendaTableModel() {
         this.dados = new ArrayList<>();
@@ -72,9 +72,11 @@ public class VendaTableModel extends AbstractTableModel {
 
                 return produtos.toString();
             case 3:
-                return Dinheiro.parseString(dados.get(rowIndex).getValorDesconto());
+                return Dinheiro.parseString(dados.get(rowIndex).getValorTotal());
             case 4:
-                return Dinheiro.parseString(dados.get(rowIndex).getTotal());
+                return Dinheiro.parseString(dados.get(rowIndex).getValorDesconto());
+            case 5:
+                return Dinheiro.parseString(dados.get(rowIndex).getTotal() - dados.get(rowIndex).getValorDesconto());
             default:
                 return null;
 
@@ -242,12 +244,14 @@ public class VendaTableModel extends AbstractTableModel {
     public String getTotalVendas() {
 
         long total = 0;
+        long totalDescontos = 0;
 
         for (Venda c : dados) {
             total += c.getValorTotal();
+            totalDescontos += c.getValorDesconto();
         }
 
-        return Dinheiro.parseString(total);
+        return Dinheiro.parseString(total - totalDescontos);
     }
 
 }

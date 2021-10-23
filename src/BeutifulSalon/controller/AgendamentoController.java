@@ -293,7 +293,7 @@ public class AgendamentoController {
         return 0L;
     }
 
-    public long retornaSomaDeAgendamentosMensal(Month mes) {
+    public long retornaSomaDeLucrosAgendamentosMensal(Month mes) {
         try {
             return new Agendamento().retornaSomaDeAgendamentosMensal(mes);
         } catch (ExceptionDAO e) {

@@ -113,9 +113,109 @@ public class CompraProdutoDAO {
 
     }
     
+    
+    public boolean atualizarCompra(Compra compra, List<Item> itensAntigos) {
+        
+        String deleteItemCompra = "DELETE FROM ITEM_COMPRA WHERE ID_COMPRA = ?";
+        
+        String updateCompra = "UPDATE COMPRA SET DATA = ?, VALORTOTAL = ?, VALORDESCONTO = ? WHERE ID_COMPRA = ?";
+
+        String insertItemCompra = "INSERT INTO ITEM_COMPRA (PRECOUNITARIO, QUANTIDADE, PRECOTOTAL, ID_PRODUTO, ID_COMPRA) "
+                + "VALUES (?,?,?,?,?)";
+
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        EstoqueController estoque = new EstoqueController();
+
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            connection.setAutoCommit(false);
+            
+            if(!new EstoqueController().atualizaEstoqueExclusaoCompra(itensAntigos))return false;
+            pStatement = connection.prepareStatement(deleteItemCompra);
+            pStatement.setLong(1, compra.getIdCompra());
+            pStatement.execute();
+            
+            pStatement = connection.prepareStatement(updateCompra);
+            pStatement.setDate(1, java.sql.Date.valueOf(compra.getData()));
+            pStatement.setLong(2, compra.getValorTotal());
+            pStatement.setLong(3, compra.getValorDesconto());
+            pStatement.setLong(4, compra.getIdCompra());
+       
+            int firstInsert = pStatement.executeUpdate();
+            if (firstInsert > 0) {
+                try {
+
+                    List<Item> itens = compra.getItensCompra();
+                    for (Item it : itens) {
+
+                        pStatement = connection.prepareStatement(insertItemCompra);
+                        pStatement.setLong(1, it.getPreco());
+                        pStatement.setInt(2, it.getQuantidade());
+                        pStatement.setLong(3, it.getPrecoTotal());
+                        pStatement.setLong(4, it.getId_produto());
+                        pStatement.setLong(5, compra.getIdCompra());
+                        pStatement.executeUpdate();
+                   
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Erro registrar itemCompra" + e);
+                    connection.rollback();
+                }
+            }else{
+                connection.rollback();
+                new EstoqueController().atualizaEstoqueExclusaoVenda(itensAntigos);
+                return false;
+            }
+
+          connection.commit();
+
+     
+                boolean sucesso = estoque.atualizaEstoque(compra);
+
+                if (sucesso == false) {
+                    JOptionPane.showMessageDialog(null, "Erro ao atualizar estoque");
+                    return false;
+                }
+          
+            return true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                
+                return false;
+            }
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return false;
+    }
+    
     public long retornaSomaDeComprasMensais(Month mes){
         
-        String sql = "SELECT SUM(COMPRA.VALORTOTAL) AS RENDAMENSAL FROM COMPRA WHERE COMPRA.DATA BETWEEN ? AND ?";
+        String sql = "SELECT (SUM(COMPRA.VALORTOTAL) - SUM(VALORDESCONTO)) AS RENDAMENSAL FROM COMPRA WHERE COMPRA.DATA BETWEEN ? AND ?";
         long compras = 0;
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -625,6 +725,8 @@ public class CompraProdutoDAO {
         }
         return false;
     }
+
+   
 
    
 

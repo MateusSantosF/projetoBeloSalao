@@ -43,7 +43,7 @@ import javax.swing.table.TableCellRenderer;
 public class CompraTableModel extends AbstractTableModel {
 
     List<Compra> dados = new ArrayList<>();
-    String[] columns = {"Data", "Produtos", "Valor Desconto", "Valor Total"};
+    String[] columns = {"Data", "Produtos"," Total Bruto" ,"Valor Desconto", "Valor Total"};
 
     @Override
     public String getColumnName(int column) {
@@ -91,9 +91,11 @@ public class CompraTableModel extends AbstractTableModel {
 
                 return produtos.toString();
             case 2:
-                return Dinheiro.parseString(dados.get(rowIndex).getValorDesconto());
-            case 3:
                 return Dinheiro.parseString(dados.get(rowIndex).getValorTotal());
+            case 3:
+                return Dinheiro.parseString(dados.get(rowIndex).getValorDesconto());
+            case 4:
+                return Dinheiro.parseString(dados.get(rowIndex).getValorTotal() - dados.get(rowIndex).getValorDesconto());
         }
 
         return null;
@@ -254,12 +256,14 @@ public class CompraTableModel extends AbstractTableModel {
     public String getTotalCompras() {
 
         long total = 0;
-
+        long totalDescontos = 0;
+        
         for (Compra c : dados) {
             total += c.getValorTotal();
+            totalDescontos += c.getValorDesconto();
         }
 
-        return Dinheiro.parseString(total);
+        return Dinheiro.parseString(total - totalDescontos);
     }
 
 }

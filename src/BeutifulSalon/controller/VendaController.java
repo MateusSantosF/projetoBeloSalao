@@ -23,9 +23,9 @@ import javax.swing.JOptionPane;
  */
 public class VendaController {
 
-    public boolean RegistraVenda(LocalDate data, long valorDesconto, long idCliente, ArrayList<Item> itensCompra) {
+    public boolean cadastrarVenda(LocalDate data, long valorDesconto, long idCliente, ArrayList<Item> itensCompra) {
 
-        if (validaQuantidadeProduto(itensCompra)) {
+        if (validaQuantidadeProduto(itensCompra) ) {
 
             Venda vendaAtual = new Venda();
 
@@ -33,6 +33,11 @@ public class VendaController {
             vendaAtual.setValorDesconto(valorDesconto);
             vendaAtual.setData(data);
             vendaAtual.setItensCompra(itensCompra);
+            
+            if(vendaAtual.getValorTotal() - valorDesconto < 0){
+                JOptionPane.showMessageDialog(null, "Você não pode registrar uma venda com valor negativo.");
+                return false;
+            }
 
             try {
                 vendaAtual.cadastrarVenda(vendaAtual);
@@ -47,9 +52,30 @@ public class VendaController {
 
         return true;
     }
-    
-    public boolean excluiVenda(Venda venda){
-        
+
+    public boolean atualizarVenda(Venda v, List<Item> itensAntigos) {
+        if (validaQuantidadeProduto(v.getItensVenda())) {
+            if ((v.getValorTotal() - v.getValorDesconto()) > 0) {
+
+                try {
+                    return v.atualizarVenda(v, itensAntigos);
+                } catch (ExceptionDAO e) {
+                    System.out.println("Erro atualizar venda " + e);
+                    return false;
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Você não pode cadastrar uma venda com total negativo!");
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+    }
+
+    public boolean excluiVenda(Venda venda) {
+
         try {
             return venda.excluirVenda(venda);
         } catch (ExceptionDAO e) {
@@ -59,7 +85,7 @@ public class VendaController {
 
     }
 
-    public boolean validaQuantidadeProduto(ArrayList<Item> itensDaVenda) {
+    public boolean validaQuantidadeProduto(List<Item> itensDaVenda) {
 
         EstoqueController ec = new EstoqueController();
         boolean comEstoque = true;
@@ -115,8 +141,7 @@ public class VendaController {
         }
         return null;
     }
-    
-    
+
     public List<Venda> retornaComprasPorIDCliente(long idCliente) {
         try {
             return new Venda().retornaComprasCliente(idCliente);

@@ -25,6 +25,7 @@ package BeutifulSalon.Ferramentas;
 
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.model.Cliente;
+import BeutifulSalon.model.Dinheiro;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JDialog;
@@ -47,10 +48,12 @@ public class teste {
     
    
 
-    public void main(String[] args) throws JRException {
+    public static void main(String[] args) throws JRException {
 
     
+       String t =" R$ -20,00";
         
+        System.out.println(Dinheiro.parseCent(Dinheiro.retiraCaracteres(t)));
         
     }
 }

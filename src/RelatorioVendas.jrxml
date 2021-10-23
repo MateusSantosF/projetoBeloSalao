@@ -23,6 +23,9 @@
 	<parameter name="TotalFinal" class="java.lang.String">
 		<parameterDescription><![CDATA[totalFinal]]></parameterDescription>
 	</parameter>
+	<parameter name="numeroTotalVendas" class="java.lang.String">
+		<parameterDescription><![CDATA[numeroTotalVendas]]></parameterDescription>
+	</parameter>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -82,13 +85,20 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="21" splitType="Stretch">
+		<band height="40" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="0" width="340" height="19" uuid="7e46c2d1-2b50-4ed7-ac69-532f3a407d45"/>
 				<textElement>
 					<font fontName="Tahoma" size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Período Referente: " + $P{DataInicio} + " à " + $P{DataFim} + "."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="544" height="20" uuid="5f5bdf10-1136-4f79-a6a1-3d07470414a0"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nº Total de Vendas no período: " + $P{numeroTotalVendas}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

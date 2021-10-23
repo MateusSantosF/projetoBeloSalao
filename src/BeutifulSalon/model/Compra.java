@@ -18,11 +18,11 @@ import java.util.List;
  */
 public class Compra {
 
-    long idCompra;
-    LocalDate data;
-    long valorTotal;
-    long valorDesconto;
-    List<Item> itensCompra;
+    private long idCompra;
+    private LocalDate data;
+    private long valorTotal;
+    private long valorDesconto;
+    private List<Item> itensCompra;
 
     public Compra() {
     }
@@ -107,8 +107,13 @@ public class Compra {
     public List<Compra> retornaTodasComprasDoAno() throws ExceptionDAO {
         return new CompraProdutoDAO().retornaTodasComprasDoAno();
     }
-     public List<Compra> getComprasPorNomeProdutoDoAno(String nomeProduto)  throws ExceptionDAO{
-         return new CompraProdutoDAO().getComprasPorNomeProdutoDoAno(nomeProduto);
-     }
+
+    public List<Compra> getComprasPorNomeProdutoDoAno(String nomeProduto) throws ExceptionDAO {
+        return new CompraProdutoDAO().getComprasPorNomeProdutoDoAno(nomeProduto);
+    }
+    
+    public boolean atualizarCompra(Compra c, List<Item> itensAntigos) throws ExceptionDAO{
+        return new CompraProdutoDAO().atualizarCompra(c, itensAntigos);
+    }
 
 }

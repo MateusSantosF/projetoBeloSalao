@@ -162,13 +162,13 @@ public class Dashboard extends javax.swing.JPanel {
         int nAgendamentos = ag.listarAgendamentosHoje().size();
         long nProdutosEstoque = ec.somaProdutosEstoque();
 
-        //long receitaMensal = vc.retornaSomaDeVendasMensal() + ag.retornaSomaDeAgendamentosMensal();
+        //long receitaMensal = vc.retornaSomaDeVendasMensal() + ag.retornaSomaDeLucrosAgendamentosMensal();
 
         //FINANCEIRO
         long entrada, saida;
 
         Month m = LocalDate.now().getMonth();
-        entrada = vc.selecionaVendasPorMes(m) + ag.retornaSomaDeAgendamentosMensal(m);
+        entrada = vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m);
         saida = compraController.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m);
 
         modeloCompra.getComprasDashboard();
@@ -365,7 +365,7 @@ public class Dashboard extends javax.swing.JPanel {
         jLabel50.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel50.setForeground(new java.awt.Color(204, 204, 204));
         jLabel50.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel50.setText("Balanço");
+        jLabel50.setText("Balanço Mensal");
         jLabel50.setToolTipText("Entrada - Saída");
         jLabel50.setIconTextGap(40);
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1024,7 +1024,7 @@ public class Dashboard extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1493, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -1058,7 +1058,7 @@ public class Dashboard extends javax.swing.JPanel {
             Cliente c = top5Clientes.get(0);
             if (modalTopCliente == null) {
                 if (c != null) {
-                    long total = c.getQuantidadeGastaEmAgendamentosAnual();
+                    long total = c.calculaTotalAnualGasto(c.getId());
                     modalTopCliente = new ModalTopCliente(null, false, c.getNome(), c.getQtdVisitas(), total);
                     modalTopCliente.setVisible(true);
                 }
@@ -1083,7 +1083,7 @@ public class Dashboard extends javax.swing.JPanel {
             Cliente c = top5Clientes.get(1);
             if (modalTopCliente == null) {
                 if (c != null) {
-                    long total = c.getQuantidadeGastaEmAgendamentosAnual();
+                    long total = c.calculaTotalAnualGasto(c.getId());
                     modalTopCliente = new ModalTopCliente(null, false, c.getNome(), c.getQtdVisitas(), total);
                     modalTopCliente.setVisible(true);
                 }
@@ -1099,7 +1099,9 @@ public class Dashboard extends javax.swing.JPanel {
             Cliente c = top5Clientes.get(2);
             if (modalTopCliente == null) {
                 if (c != null) {
-                    long total = c.getQuantidadeGastaEmAgendamentosAnual();
+                   
+                    long total = c.calculaTotalAnualGasto(c.getId());
+                   
                     modalTopCliente = new ModalTopCliente(null, false, c.getNome(), c.getQtdVisitas(), total);
                     modalTopCliente.setVisible(true);
                 }
@@ -1116,7 +1118,7 @@ public class Dashboard extends javax.swing.JPanel {
             Cliente c = top5Clientes.get(3);
             if (modalTopCliente == null) {
                 if (c != null) {
-                    long total = c.getQuantidadeGastaEmAgendamentosAnual();
+                    long total = c.calculaTotalAnualGasto(c.getId());
                     modalTopCliente = new ModalTopCliente(null, false, c.getNome(), c.getQtdVisitas(), total);
                     modalTopCliente.setVisible(true);
                 }
@@ -1133,7 +1135,7 @@ public class Dashboard extends javax.swing.JPanel {
             Cliente c = top5Clientes.get(4);
             if (modalTopCliente == null) {
                 if (c != null) {
-                    long total = c.getQuantidadeGastaEmAgendamentosAnual();
+                    long total = c.calculaTotalAnualGasto(c.getId());
                     modalTopCliente = new ModalTopCliente(null, false, c.getNome(), c.getQtdVisitas(), total);
                     modalTopCliente.setVisible(true);
                 }

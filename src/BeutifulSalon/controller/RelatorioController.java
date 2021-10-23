@@ -82,6 +82,7 @@ public class RelatorioController {
             params.put("TotalVendas", Dinheiro.parseString(totalVendido));
             params.put("TotalDescontos", Dinheiro.parseString(totalDescontos));
             params.put("TotalFinal", Dinheiro.parseString(totalVendido - totalDescontos));
+            params.put("numeroTotalVendas", String.valueOf(datasource.size()));
 
             try {
 
@@ -134,9 +135,10 @@ public class RelatorioController {
             params.put("DataInicio", inicio.format(formatterData));
             params.put("DataFim", fim.format(formatterData));
             params.put("totalAdicionais", Dinheiro.parseString(totalAdicional));
-            params.put("totalDesconto", "-"+Dinheiro.parseString(totalDescontos));
+            params.put("totalDesconto", "-" + Dinheiro.parseString(totalDescontos));
             params.put("TotalFinal", Dinheiro.parseString(totalFinal));
             params.put("subTotal", Dinheiro.parseString(totalFinal + totalDescontos - totalAdicional));
+            params.put("numeroTotalAgendamentos", String.valueOf(datasource.size()));
 
             try {
 
@@ -157,7 +159,7 @@ public class RelatorioController {
                 JOptionPane.showMessageDialog(null, e);
                 return false;
             }
-        }else{
+        } else {
             return false;
         }
 

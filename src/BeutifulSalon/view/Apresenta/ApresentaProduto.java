@@ -12,11 +12,16 @@ import BeutifulSalon.Tabelas.CompraTableModel;
 import BeutifulSalon.Tabelas.ProdutoTableModel;
 import BeutifulSalon.Tabelas.VendaTableModel;
 import BeutifulSalon.controller.CompraController;
+import BeutifulSalon.controller.EstoqueController;
 import BeutifulSalon.controller.VendaController;
+import BeutifulSalon.model.Item;
+import BeutifulSalon.view.Edicao.EditarCompra;
+import BeutifulSalon.view.Edicao.EditarVenda;
 import BeutifulSalon.view.modais.ModalDetalhesVenda;
 import java.awt.Color;
 import java.awt.Font;
 import java.time.LocalDate;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -26,15 +31,15 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author Mateus
  */
 public class ApresentaProduto extends javax.swing.JPanel {
-    
+
     private final ProdutoTableModel produtoTableModel = new ProdutoTableModel();
     private final VendaTableModel vendaTableModel = new VendaTableModel();
     private ModalDetalhesVenda modalDetalhesVenda = new ModalDetalhesVenda();
     private CompraTableModel compraTableModel = new CompraTableModel();
-    
+
     public ApresentaProduto() {
         initComponents();
-        
+
         ManipulaFontes mf = new ManipulaFontes();
 
         //PRODUTOS
@@ -48,15 +53,14 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jTableConsultaProdutos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); // tabela
         jTableCompra.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f));
         jTableVendas.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f));
-        
+
         CentralizaElementosTabela render = new CentralizaElementosTabela();
         ((DefaultTableCellRenderer) jTableConsultaProdutos.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         jTableConsultaProdutos.setDefaultRenderer(Object.class, render);
-        
+
         produtoTableModel.getTodosProdutos();
         jTableConsultaProdutos.setModel(produtoTableModel);
-        
- 
+
     }
 
     /**
@@ -687,7 +691,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
                             .addComponent(jLabelExcluirVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jComboBoxMesVendas, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jToggleButtonAno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)))
+                        .addComponent(jToggleButtonAno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -741,7 +745,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabelBtnBuscarProdutosConsultarCliente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBtnBuscarProdutosConsultarCliente
-        
+
         if (jTextFieldNomeProduto.getText().equals("")) {
             produtoTableModel.getTodosProdutos();
             jTableConsultaProdutos.setModel(produtoTableModel);
@@ -754,10 +758,10 @@ public class ApresentaProduto extends javax.swing.JPanel {
 
     private void jLabelEditarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEditarMousePressed
         int indice = jTableConsultaProdutos.getSelectedRow();
-        
+
         if (indice > -1) {
             boolean sucesso = produtoTableModel.editProduto(indice);
-            
+
             if (sucesso == false) {
                 JOptionPane.showMessageDialog(null, "Erro ao editar produto");
             }
@@ -768,15 +772,15 @@ public class ApresentaProduto extends javax.swing.JPanel {
 
     private void jLabelExcluirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExcluirMousePressed
         int indice = jTableConsultaProdutos.getSelectedRow();
-        
+
         int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o produto:\nNome: "
                 + jTableConsultaProdutos.getValueAt(indice, 0) + "\nMarca: " + jTableConsultaProdutos.getValueAt(indice, 1),
                 "Excluir Produto", JOptionPane.YES_NO_OPTION);
-        
+
         if (opc == 0) {
             if (indice > -1) {
                 boolean sucesso = produtoTableModel.removeProduto(indice);
-                
+
                 if (sucesso) {
                     JOptionPane.showMessageDialog(null, "Produto excluido com sucesso");
                     produtoTableModel.getTodosProdutos();
@@ -789,7 +793,7 @@ public class ApresentaProduto extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabelExcluirMousePressed
 
     private void jLabelBtnBuscarVendaConsultarCliente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBtnBuscarVendaConsultarCliente
-        
+
         if (jTextFieldNomeClienteVenda.getText().equals("")) {
             if (!jToggleButtonAno.isSelected()) {
                 vendaTableModel.getVendasDoAno();
@@ -802,54 +806,62 @@ public class ApresentaProduto extends javax.swing.JPanel {
             } else {
                 vendaTableModel.getVendasPorNomeCliente(jTextFieldNomeClienteVenda.getText());
             }
-            
+
         }
-        
+
         jTableVendas.setModel(vendaTableModel);
-        jLabelTotalVendas.setText("Total: "+ vendaTableModel.getTotalVendas());
+        jLabelTotalVendas.setText("Total: " + vendaTableModel.getTotalVendas());
     }//GEN-LAST:event_jLabelBtnBuscarVendaConsultarCliente
 
     private void jLabelEditarVendaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEditarVendaMousePressed
-        // TODO add your handling code here:
+        int rowselected = jTableVendas.getSelectedRow();
+
+        if (rowselected > -1) {
+            new EditarVenda(vendaTableModel.getVenda(rowselected), vendaTableModel.getVenda(rowselected).getItensVenda()).setVisible(true);
+        }
     }//GEN-LAST:event_jLabelEditarVendaMousePressed
 
     private void jLabelExcluirVendaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExcluirVendaMousePressed
-        
+
         int rowSelected = jTableVendas.getSelectedRow();
         int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esta venda? ",
                 "Excluir Venda", JOptionPane.YES_NO_OPTION);
-        
+
         if (opc == 0) {
             if (rowSelected > -1) {
-                boolean sucesso = new VendaController().excluiVenda(vendaTableModel.getVenda(rowSelected));
-                
-                if (sucesso) {
-                    JOptionPane.showMessageDialog(null, "Venda Excluída com Sucesso!");
-                    if (!jToggleButtonAno.isSelected()) {
-                        vendaTableModel.getVendasDoAno();
+                //soma itens excluidos novamente no estoque
+                List<Item> temp = vendaTableModel.getVenda(rowSelected).getItensVenda();
+                if (new EstoqueController().atualizaEstoqueExclusaoVenda(temp)) {
+                    boolean sucesso = new VendaController().excluiVenda(vendaTableModel.getVenda(rowSelected));
+                    if (sucesso) {
+                        JOptionPane.showMessageDialog(null, "Venda Excluída com Sucesso!");
+                        if (!jToggleButtonAno.isSelected()) {
+                            vendaTableModel.getVendasDoAno();
+                        } else {
+                            vendaTableModel.getTodasVendas();
+                        }
+                        jTableVendas.setModel(vendaTableModel);
+                        jLabelTotalVendas.setText("Total: " + vendaTableModel.getTotalVendas());
                     } else {
-                        vendaTableModel.getTodasVendas();
+                        JOptionPane.showMessageDialog(null, "ERRO ao excluir venda.");
                     }
-                    jTableVendas.setModel(vendaTableModel);
-                    jLabelTotalVendas.setText("Total: "+ vendaTableModel.getTotalVendas());
-                } else {
-                    JOptionPane.showMessageDialog(null, "ERRO ao excluir venda.");
                 }
+
             }
         }
 
     }//GEN-LAST:event_jLabelExcluirVendaMousePressed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
-        
+
         switch (jTabbedPane1.getSelectedIndex()) {
             case 1:
-                
+
                 compraTableModel.getTodasComprasDoAno();
                 jTableCompra.setModel(compraTableModel);
                 jTableCompra.getColumnModel().getColumn(1).setCellRenderer(new JTextAreaJTable());
-                jLabelTotalCompras.setText("Total: "+ compraTableModel.getTotalCompras());
-            
+                jLabelTotalCompras.setText("Total: " + compraTableModel.getTotalCompras());
+
                 break;
             case 2:
                 if (!jToggleButtonAno.isSelected()) {
@@ -858,105 +870,108 @@ public class ApresentaProduto extends javax.swing.JPanel {
                 } else {
                     vendaTableModel.getTodasVendas();
                     jTableVendas.setModel(vendaTableModel);
-                    
+
                 }
                 jTableVendas.getColumnModel().getColumn(2).setCellRenderer(new JTextAreaJTable());
-                jLabelTotalVendas.setText("Total: "+ vendaTableModel.getTotalVendas());
-                
+                jLabelTotalVendas.setText("Total: " + vendaTableModel.getTotalVendas());
+
                 break;
-            
+
         }
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jToggleButtonAnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonAnoActionPerformed
         if (jToggleButtonAno.isSelected()) {
-            
+
             jToggleButtonAno.setText("Todos Anos");
             vendaTableModel.getTodasVendas();
             jTableVendas.setModel(vendaTableModel);
-            
-            if(jComboBoxMesVendas.getSelectedIndex() != 12){
-                vendaTableModel.getVendasPorMes(jComboBoxMesVendas.getSelectedIndex(),false);
+
+            if (jComboBoxMesVendas.getSelectedIndex() != 12) {
+                vendaTableModel.getVendasPorMes(jComboBoxMesVendas.getSelectedIndex(), false);
             }
         } else {
             jToggleButtonAno.setText("Ano Atual");
             vendaTableModel.getVendasDoAno();
             jTableVendas.setModel(vendaTableModel);
-            if(jComboBoxMesVendas.getSelectedIndex() != 12){
-                vendaTableModel.getVendasPorMes(jComboBoxMesVendas.getSelectedIndex(),true);
+            if (jComboBoxMesVendas.getSelectedIndex() != 12) {
+                vendaTableModel.getVendasPorMes(jComboBoxMesVendas.getSelectedIndex(), true);
             }
         }
-        jLabelTotalVendas.setText("Total: "+ vendaTableModel.getTotalVendas());
+        jLabelTotalVendas.setText("Total: " + vendaTableModel.getTotalVendas());
     }//GEN-LAST:event_jToggleButtonAnoActionPerformed
 
     private void jLabelBtnBuscarCompraConsultarCliente(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBtnBuscarCompraConsultarCliente
-        
+
         if (jToggleButtonAnoCompra.isSelected()) {
-            
+
             jToggleButtonAnoCompra.setText("Todos Anos");
             compraTableModel.getComprasPorNomeProduto(jTextFieldNomeClienteCompra.getText());
             jTableCompra.setModel(compraTableModel);
-            jLabelTotalCompras.setText("Total: "+ compraTableModel.getTotalCompras());
+            jLabelTotalCompras.setText("Total: " + compraTableModel.getTotalCompras());
         } else {
             jToggleButtonAnoCompra.setText("Ano Atual");
             compraTableModel.getComprasPorNomeProdutoDoAno(jTextFieldNomeClienteCompra.getText());
             jTableCompra.setModel(compraTableModel);
-            jLabelTotalCompras.setText("Total: "+ compraTableModel.getTotalCompras());
-            
+            jLabelTotalCompras.setText("Total: " + compraTableModel.getTotalCompras());
+
         }
-      
+
     }//GEN-LAST:event_jLabelBtnBuscarCompraConsultarCliente
 
     private void jLabelEditarCompraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelEditarCompraMousePressed
-        // TODO add your handling code here:
+        int rowselected = jTableCompra.getSelectedRow();
+
+        if (rowselected > -1) {
+            new EditarCompra(compraTableModel.getCompra(rowselected), compraTableModel.getCompra(rowselected).getItensCompra()).setVisible(true);
+        }
     }//GEN-LAST:event_jLabelEditarCompraMousePressed
 
     private void jLabelExcluirCompraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExcluirCompraMousePressed
-       
+
         int rowSelected = jTableCompra.getSelectedRow();
         int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esta compra? ",
                 "Excluir Compra", JOptionPane.YES_NO_OPTION);
-        
+
         if (opc == 0) {
             if (rowSelected > -1) {
                 boolean sucesso = new CompraController().excluiCompra(compraTableModel.getCompra(rowSelected));
-                
+
                 if (sucesso) {
                     JOptionPane.showMessageDialog(null, "Compra Excluída com Sucesso!");
                     compraTableModel.getTodasCompras();
                     jTableCompra.setModel(compraTableModel);
-                     jLabelTotalCompras.setText("Total: "+ compraTableModel.getTotalCompras());
+                    jLabelTotalCompras.setText("Total: " + compraTableModel.getTotalCompras());
                 } else {
                     JOptionPane.showMessageDialog(null, "ERRO ao excluir venda.");
                 }
             }
         }
-        
-        
+
+
     }//GEN-LAST:event_jLabelExcluirCompraMousePressed
 
     private void jToggleButtonAnoCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonAnoCompraActionPerformed
-        
+
         if (jToggleButtonAnoCompra.isSelected()) {
-            
+
             jToggleButtonAnoCompra.setText("Todos Anos");
             compraTableModel.getTodasCompras();
-            if(jComboBoxMesCompras.getSelectedIndex() != 12){
+            if (jComboBoxMesCompras.getSelectedIndex() != 12) {
                 compraTableModel.getComprasPorMes(jComboBoxMesCompras.getSelectedIndex(), false);
             }
             jTableCompra.setModel(compraTableModel);
-           
+
         } else {
             jToggleButtonAnoCompra.setText("Ano Atual");
             compraTableModel.getTodasComprasDoAno();
-            if(jComboBoxMesCompras.getSelectedIndex() != 12){
+            if (jComboBoxMesCompras.getSelectedIndex() != 12) {
                 compraTableModel.getComprasPorMes(jComboBoxMesCompras.getSelectedIndex(), true);
             }
             jTableCompra.setModel(compraTableModel);
-           
-            
+
         }
-        jLabelTotalCompras.setText("Total: "+ compraTableModel.getTotalCompras());
+        jLabelTotalCompras.setText("Total: " + compraTableModel.getTotalCompras());
     }//GEN-LAST:event_jToggleButtonAnoCompraActionPerformed
 
     private void jComboBoxMesComprasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxMesComprasItemStateChanged
@@ -966,13 +981,13 @@ public class ApresentaProduto extends javax.swing.JPanel {
     private void jComboBoxMesComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxMesComprasActionPerformed
         compraTableModel.getComprasPorMes(jComboBoxMesCompras.getSelectedIndex(), !jToggleButtonAnoCompra.isSelected());
         jTableCompra.setModel(compraTableModel);
-        jLabelTotalCompras.setText("Total: "+ compraTableModel.getTotalCompras());
+        jLabelTotalCompras.setText("Total: " + compraTableModel.getTotalCompras());
     }//GEN-LAST:event_jComboBoxMesComprasActionPerformed
 
     private void jComboBoxMesVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxMesVendasActionPerformed
         vendaTableModel.getVendasPorMes(jComboBoxMesVendas.getSelectedIndex(), !jToggleButtonAno.isSelected());
         jTableVendas.setModel(vendaTableModel);
-        jLabelTotalVendas.setText("Total: "+ vendaTableModel.getTotalVendas());
+        jLabelTotalVendas.setText("Total: " + vendaTableModel.getTotalVendas());
     }//GEN-LAST:event_jComboBoxMesVendasActionPerformed
 
 

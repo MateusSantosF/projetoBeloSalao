@@ -330,11 +330,11 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
 
         try {
             produtosListados.forEach((Produto produto) -> {
-                if (produto.getPreco() > 0) {
+                if (produto.getPreco() > 0 || cabeleleiro) {
                     tabelaProdutoModel.addRow(new Object[]{
                         produto.getNome(),
                         produto.getMarca(),
-                        Dinheiro.parseString(produto.getPreco()),
+                        (produto.getPreco()  < 0 )? "Não é vendido"  : Dinheiro.parseString( produto.getPreco() ),
                         produto.getId_produto()
                     });
                 }
