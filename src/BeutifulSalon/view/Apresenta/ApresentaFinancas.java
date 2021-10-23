@@ -28,10 +28,13 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import static javax.swing.SwingConstants.CENTER;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
@@ -54,8 +57,10 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
     public ApresentaFinancas() {
         initComponents();
-
+    
+        
         ManipulaFontes mf = new ManipulaFontes();
+   
 
         //SERVICOS PREVISTOS
         jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Serviços Previstos
@@ -103,16 +108,11 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jLabelExcluir2.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Excluir
         jTableConsultaOrcamento.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
 
-        String ano = String.valueOf(LocalDate.now().getYear());
-        int mesAtual = LocalDate.now().getMonth().getValue() - 1;
-
-        jComboBoxVencimento.setSelectedIndex(mesAtual);
-        jComboBoxLancamento.setSelectedIndex(mesAtual);
+  
 
         listarOrcamentoServicoRealizado(ANOATUAL);
 
-        modeloDespesaPrevista.getTodasDespesasPrevistas(ANOATUAL);
-        jTableConsultaOrcamento.setModel(modeloDespesaPrevista);
+ 
         ((DefaultTableCellRenderer) jTableConsultaOrcamento.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         ((DefaultTableCellRenderer) jTableConsultaServicoRealizado.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         ((DefaultTableCellRenderer) jTableConsultaOrcamentoServico.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
@@ -142,6 +142,40 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
             if (row != -1 && color != null) {
                 if (row == this.row) {
+                    c.setBackground(new Color(0, 0, 0));
+                    c.setForeground(this.color);
+                    this.setHorizontalAlignment(CENTER);
+                } else {
+                    c.setBackground(Color.WHITE);
+                    c.setForeground(Color.BLACK);
+                }
+            }
+
+            return c;
+        }
+
+    }
+    
+     public class FormatacaoConteudo2 extends DefaultTableCellRenderer implements TableCellRenderer {
+
+        private Color color;
+        private int row = -1;
+
+        public FormatacaoConteudo2(Color color, int row) {
+            super();
+            this.color = color;
+            this.row = row;
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table,
+                Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            if (row != -1 && color != null) {
+                if (row == this.row || row == this.row  - 1) {
                     c.setBackground(new Color(0, 0, 0));
                     c.setForeground(this.color);
                     this.setHorizontalAlignment(CENTER);
@@ -944,7 +978,8 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         );
 
         jComboBoxLancamento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBoxLancamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
+        jComboBoxLancamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro", "Todos Meses" }));
+        jComboBoxLancamento.setSelectedIndex(12);
         jComboBoxLancamento.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBoxLancamentoItemStateChanged(evt);
@@ -960,7 +995,8 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jLabel15.setText("Lançamento em:");
 
         jComboBoxVencimento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBoxVencimento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" }));
+        jComboBoxVencimento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro", "Todos Meses" }));
+        jComboBoxVencimento.setSelectedIndex(12);
         jComboBoxVencimento.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBoxVencimentoItemStateChanged(evt);
@@ -1476,9 +1512,10 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
     private void listarOrcamentoServicoRealizado(String ano) {
         modeloServicoRealizado.getTodosServicosRealizados(ano);
+        modeloServicoRealizado.calculaCustoProdutosMensal();
         jTableConsultaServicoRealizado.setModel(modeloServicoRealizado);
-        jTableConsultaServicoRealizado.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo(Color.WHITE, jTableConsultaServicoRealizado.getRowCount() - 1));
-
+        jTableConsultaServicoRealizado.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo2(Color.WHITE, jTableConsultaServicoRealizado.getRowCount() - 1));
+        
     }
 
 
@@ -1554,15 +1591,22 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jTabbedStateChanged
 
     private void btnBuscaPorAno4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscaPorAno4MousePressed
-
+        
         if (jTextFieldAno4.getText().equals("")) {
             modeloLancamento.getDespesasAnual(String.valueOf(LocalDate.now().getYear()));
-            jTableLancamentos.setModel(modeloLancamento);
+            if(jComboBoxLancamento.getSelectedIndex() != 12){
+                modeloLancamento.getDespesasPorLancamento(jComboBoxLancamento.getSelectedIndex(), String.valueOf(LocalDate.now().getYear()));
+            }
+           
 
         } else {
             modeloLancamento.getDespesasAnual(jTextFieldAno4.getText());
-            jTableLancamentos.setModel(modeloLancamento);
+            if(jComboBoxLancamento.getSelectedIndex() != 12){
+                modeloLancamento.getDespesasPorLancamento(jComboBoxLancamento.getSelectedIndex(), jTextFieldAno4.getText());
+            }
+            
         }
+        jTableLancamentos.setModel(modeloLancamento);
     }//GEN-LAST:event_btnBuscaPorAno4MousePressed
 
     private void jComboBoxVencimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxVencimentoActionPerformed
@@ -1572,7 +1616,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jComboBoxVencimentoActionPerformed
 
     private void jComboBoxLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxLancamentoActionPerformed
-        modeloLancamento.getDespesasPorLancamento(jComboBoxLancamento.getSelectedIndex() + 1);
+        modeloLancamento.getDespesasPorLancamento(jComboBoxLancamento.getSelectedIndex(), jTextFieldAno4.getText());
         jTableLancamentos.setModel(modeloLancamento);
     }//GEN-LAST:event_jComboBoxLancamentoActionPerformed
 
@@ -1646,9 +1690,11 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         if (jTextFieldAno2.getText().equals("")) {
             String ano = String.valueOf(LocalDate.now().getYear());
             modeloServicoRealizado.getTodosServicosRealizados(ano);
+            modeloServicoRealizado.calculaCustoProdutosMensal();
             jTableConsultaOrcamentoServico.setModel(modeloServicoRealizado);
         } else {
             modeloServicoRealizado.getTodosServicosRealizados(jTextFieldAno2.getText());
+            modeloServicoRealizado.calculaCustoProdutosMensal();
             jTableConsultaOrcamentoServico.setModel(modeloServicoRealizado);
         }
     }//GEN-LAST:event_buscaPorAnoServicoRealizadoMousePressed

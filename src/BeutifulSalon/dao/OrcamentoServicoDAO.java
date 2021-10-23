@@ -256,7 +256,16 @@ public class OrcamentoServicoDAO {
         return 0;
     }
     
-      public Servico listarOrcamentoServicorRealizado(LocalDate ano, Month mes, long idServico) {
+    
+    /**
+     * Retorna a quantidade de um serviço realizada no periodo de tempo especificado.
+     * @param ano
+     * @param mes
+     * @param idServico
+     * @return 
+     */
+    
+    public Servico listarOrcamentoServicorRealizado(LocalDate ano, Month mes, long idServico) {
        
         String sqlString = "SELECT SERVICO.NOME,SERVICO.ID_SERVICO, COUNT(AGENDAMENTO_SERVICO.ID_SERVICO) AS QUANTIDADE FROM AGENDAMENTO" +
                 " INNER JOIN AGENDAMENTO_SERVICO" +

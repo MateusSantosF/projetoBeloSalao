@@ -24,8 +24,8 @@ public class ConnectionMVC {
         try {
             // Usar PARA COMPILAR
             
-           //String caminhoBanco = new File("BancoDeDados/beutifulsalondb.db").getAbsolutePath();
-          // conn = DriverManager.getConnection("jdbc:sqlite:" + caminhoBanco);
+         // String caminhoBanco = new File("BancoDeDados/beutifulsalondb.db").getAbsolutePath();
+         // conn = DriverManager.getConnection("jdbc:sqlite:" + caminhoBanco);
 
             // UTILIZAR ENQUANTO NO NETBEANS
             

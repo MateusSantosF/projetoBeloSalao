@@ -86,7 +86,7 @@ public class RelatorioController {
 
             try {
 
-                JasperReport j = JasperCompileManager.compileReport("src\\RelatorioVendas.jrxml");
+                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioVendas.jrxml");
                 JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
 
                 JDialog tela = new JDialog();
@@ -142,7 +142,7 @@ public class RelatorioController {
 
             try {
 
-                JasperReport j = JasperCompileManager.compileReport("src\\RelatorioDeAgendamentos.jrxml");
+                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioDeAgendamentos.jrxml");
                 JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
 
                 JDialog tela = new JDialog();

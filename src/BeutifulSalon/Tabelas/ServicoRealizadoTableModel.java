@@ -6,11 +6,15 @@
 package BeutifulSalon.Tabelas;
 
 import BeutifulSalon.Ferramentas.ManipulaData;
+import BeutifulSalon.controller.EstoqueController;
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Dinheiro;
+import BeutifulSalon.model.OrcamentoProduto;
 import BeutifulSalon.model.OrcamentoServico;
+import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -25,11 +29,14 @@ import javax.swing.table.AbstractTableModel;
 public class ServicoRealizadoTableModel extends AbstractTableModel {
 
     private final List<OrcamentoServico> dados;
+    private final List<OrcamentoServico> quantidadesRealizadas;
+    private LocalDate ano;
     private final String[] columns = {"Serviço", "Janeiro", "Fevereiro", "Março",
         "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
 
     public ServicoRealizadoTableModel() {
         this.dados = new ArrayList<>();
+        this.quantidadesRealizadas = new ArrayList<>();
     }
 
     @Override
@@ -102,7 +109,7 @@ public class ServicoRealizadoTableModel extends AbstractTableModel {
 
     public void getTodosServicosRealizados(String anoReferente) {
         dados.clear();
-
+        quantidadesRealizadas.clear();
         ServicoController sc = new ServicoController();
         OrcamentoController oc = new OrcamentoController();
         List<Servico> servicos = null;
@@ -115,6 +122,8 @@ public class ServicoRealizadoTableModel extends AbstractTableModel {
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Erro ao retornar ano" + e);
         }
+        this.ano = ano;
+
         servicos = sc.listarServicos();
 
         if (servicos != null) {
@@ -134,61 +143,77 @@ public class ServicoRealizadoTableModel extends AbstractTableModel {
                 long novembro = 0;
                 long dezembro = 0;
 
+                OrcamentoServico ocQuantidades = new OrcamentoServico();
+                ocQuantidades.setId_servico(s.getId());
                 for (Month m : manipulaData.meses(ano)) {
 
                     switch (m) {
                         case JANUARY:
                             janeiro = oc.listarOrcamentoServicorRealizado(ano, Month.JANUARY, s.getId()).getQuantidadeRealizada();
+                            ocQuantidades.setJan(janeiro);
+                       
                             janeiro *= s.getPreco();
                             break;
                         case FEBRUARY:
                             fevereiro = oc.listarOrcamentoServicorRealizado(ano, Month.FEBRUARY, s.getId()).getQuantidadeRealizada();
+                            ocQuantidades.setFev(fevereiro);
                             fevereiro *= s.getPreco();
                             break;
                         case MARCH:
                             marco = oc.listarOrcamentoServicorRealizado(ano, Month.MARCH, s.getId()).getQuantidadeRealizada();
+                            ocQuantidades.setMar(marco);
                             marco *= s.getPreco();
                             break;
                         case APRIL:
                             abril = oc.listarOrcamentoServicorRealizado(ano, Month.APRIL, s.getId()).getQuantidadeRealizada();
+                            ocQuantidades.setAbr(abril);
                             abril *= s.getPreco();
                             break;
                         case MAY:
                             maio = oc.listarOrcamentoServicorRealizado(ano, Month.MAY, s.getId()).getQuantidadeRealizada();
+                            ocQuantidades.setMai(maio);
                             maio *= s.getPreco();
                             break;
                         case JUNE:
                             junho = oc.listarOrcamentoServicorRealizado(ano, Month.JUNE, s.getId()).getQuantidadeRealizada();
+                            ocQuantidades.setJun(junho);
                             junho *= s.getPreco();
                             break;
                         case JULY:
                             julho = oc.listarOrcamentoServicorRealizado(ano, Month.JULY, s.getId()).getQuantidadeRealizada();
+                            ocQuantidades.setJul(julho);
                             julho *= s.getPreco();
                             break;
                         case AUGUST:
                             agosto = oc.listarOrcamentoServicorRealizado(ano, Month.AUGUST, s.getId()).getQuantidadeRealizada();
+                            ocQuantidades.setAgo(agosto);
+                           
                             agosto *= s.getPreco();
                             break;
                         case SEPTEMBER:
                             setembro = oc.listarOrcamentoServicorRealizado(ano, Month.SEPTEMBER, s.getId()).getQuantidadeRealizada();
+                            ocQuantidades.setSet(setembro);
                             setembro *= s.getPreco();
                             break;
                         case OCTOBER:
                             outubro = oc.listarOrcamentoServicorRealizado(ano, Month.OCTOBER, s.getId()).getQuantidadeRealizada();
+                            ocQuantidades.setOut(outubro);
                             outubro *= s.getPreco();
                             break;
                         case NOVEMBER:
                             novembro = oc.listarOrcamentoServicorRealizado(ano, Month.NOVEMBER, s.getId()).getQuantidadeRealizada();
+                            ocQuantidades.setNov(novembro);
                             novembro *= s.getPreco();
                             break;
                         case DECEMBER:
                             dezembro = oc.listarOrcamentoServicorRealizado(ano, Month.DECEMBER, s.getId()).getQuantidadeRealizada();
+                            ocQuantidades.setDez(dezembro);
                             dezembro *= s.getPreco();
                             break;
                     }
 
                 }
-
+                quantidadesRealizadas.add(ocQuantidades);
                 OrcamentoServico orcamentoAtual = new OrcamentoServico();
                 orcamentoAtual.setNome(s.getNome());
                 orcamentoAtual.setJan(janeiro);
@@ -209,7 +234,541 @@ public class ServicoRealizadoTableModel extends AbstractTableModel {
         }
 
         addRow(orcamentos);
+        
+
+    }
+
+    public void calculaCustoProdutosMensal() {
+        
+     
+        ManipulaData manipulaData = new ManipulaData();
+        OrcamentoProduto gastoProdutos = new OrcamentoProduto();
+        Double janeiro = 0.0;
+        Double fevereiro = 0.0;
+        Double marco = 0.0;
+        Double abril = 0.0;
+        Double maio = 0.0;
+        Double junho = 0.0;
+        Double julho = 0.0;
+        Double agosto = 0.0;
+        Double setembro = 0.0;
+        Double outubro = 0.0;
+        Double novembro = 0.0;
+        Double dezembro = 0.0;
+        for (OrcamentoServico s : quantidadesRealizadas) {
+
+            Servico servicoAtual = new ServicoController().buscarServico(s.getId_servico());
+
+            for (Month m : manipulaData.meses(ano)) {
+                switch (m) {
+                    case JANUARY:
+
+                        if (s.getJan() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getJan();
+
+                                    }
+                                }
+                                janeiro += temp.doubleValue();
+                            }
+                        }
+
+                        break;
+                    case FEBRUARY:
+                        if (s.getFev() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                 Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getFev();
+
+                                    }
+                                }
+                                fevereiro += temp.doubleValue();
+                            }
+                        }
+
+                        break;
+                    case MARCH:
+                        if (s.getMar() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getMar();
+
+                                    }
+                                }
+                                marco += temp.doubleValue();
+                            }
+                        }
+
+                        break;
+                    case APRIL:
+                        if (s.getAbr() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                 Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getAbr();
+
+                                    }
+                                }
+                                abril += temp.doubleValue();
+                            }
+                        }
+
+                        break;
+                    case MAY:
+                        if (s.getMai() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                 Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getMai();
+
+                                    }
+                                }
+                                maio += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case JUNE:
+                        if (s.getJun() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getJun();
+
+                                    }
+                                }
+                                junho += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case JULY:
+                        if (s.getJul() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getJul();
+
+                                    }
+                                }
+                                julho += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case AUGUST:
+                        if (s.getAgo() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getAgo();
+
+                                    }
+                                }
+                                agosto += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case SEPTEMBER:
+                        if (s.getSet() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                 Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getSet();
+
+                                    }
+                                }
+                                setembro += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case OCTOBER:
+                        if (s.getOut() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                 Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getOut();
+
+                                    }
+                                }
+                                outubro += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case NOVEMBER:
+                        if (s.getNov() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                 Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getNov();
+
+                                    }
+                                }
+                                novembro += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case DECEMBER:
+                        if (s.getDez() > 0) {
+                            
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getDez();
+
+                                    }
+                                }
+                                dezembro += temp.doubleValue();
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+
+        gastoProdutos.setNome("Gastos Produtos");
+        gastoProdutos.setJan(janeiro.longValue());
+        gastoProdutos.setFev(fevereiro.longValue());
+        gastoProdutos.setMar(marco.longValue());
+        gastoProdutos.setAbr(abril.longValue());
+        gastoProdutos.setMai(maio.longValue());
+        gastoProdutos.setJun(junho.longValue());
+        gastoProdutos.setJul(julho.longValue());
+        gastoProdutos.setAgo(agosto.longValue());
+        gastoProdutos.setSet(setembro.longValue());
+        gastoProdutos.setOut(outubro.longValue());
+        gastoProdutos.setNov(novembro.longValue());
+        gastoProdutos.setDez(dezembro.longValue());
+
+        addRow(gastoProdutos);
         calculaTotalServicosRealizados();
+    }
+    
+    public OrcamentoProduto getOrcamentoProdutosMensal() {
+        dados.clear();
+        quantidadesRealizadas.clear();
+        getTodosServicosRealizados(String.valueOf(LocalDate.now().getYear()));
+        ManipulaData manipulaData = new ManipulaData();
+        OrcamentoProduto gastoProdutos = new OrcamentoProduto();
+        Double janeiro = 0.0;
+        Double fevereiro = 0.0;
+        Double marco = 0.0;
+        Double abril = 0.0;
+        Double maio = 0.0;
+        Double junho = 0.0;
+        Double julho = 0.0;
+        Double agosto = 0.0;
+        Double setembro = 0.0;
+        Double outubro = 0.0;
+        Double novembro = 0.0;
+        Double dezembro = 0.0;
+        for (OrcamentoServico s : quantidadesRealizadas) {
+             
+            
+            Servico servicoAtual = new ServicoController().buscarServico(s.getId_servico());
+
+            for (Month m : manipulaData.meses(ano)) {
+                switch (m) {
+                    case JANUARY:
+
+                        if (s.getJan() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getJan();
+
+                                    }
+                                }
+                                janeiro += temp.doubleValue();
+                            }
+                        }
+
+                        break;
+                    case FEBRUARY:
+                        if (s.getFev() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                 Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getFev();
+
+                                    }
+                                }
+                                fevereiro += temp.doubleValue();
+                            }
+                        }
+
+                        break;
+                    case MARCH:
+                        if (s.getMar() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getMar();
+
+                                    }
+                                }
+                                marco += temp.doubleValue();
+                            }
+                        }
+
+                        break;
+                    case APRIL:
+                        if (s.getAbr() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                 Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getAbr();
+
+                                    }
+                                }
+                                abril += temp.doubleValue();
+                            }
+                        }
+
+                        break;
+                    case MAY:
+                        if (s.getMai() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                 Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getMai();
+
+                                    }
+                                }
+                                maio += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case JUNE:
+                        if (s.getJun() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getJun();
+
+                                    }
+                                }
+                                junho += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case JULY:
+                        if (s.getJul() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getJul();
+
+                                    }
+                                }
+                                julho += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case AUGUST:
+                        if (s.getAgo() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getAgo();
+
+                                    }
+                                }
+                                agosto += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case SEPTEMBER:
+                        if (s.getSet() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                 Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getSet();
+
+                                    }
+                                }
+                                setembro += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case OCTOBER:
+                        if (s.getOut() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                 Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getOut();
+
+                                    }
+                                }
+                                outubro += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case NOVEMBER:
+                        if (s.getNov() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                 Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getNov();
+
+                                    }
+                                }
+                                novembro += temp.doubleValue();
+                            }
+                        }
+                        break;
+                    case DECEMBER:
+                        if (s.getDez() > 0) {
+
+                            for (Produto p : servicoAtual.getProdutos()) {
+                                Long temp = Long.valueOf("0");
+                                p.setPreco(new EstoqueController().ultimoValorPagoProduto(p.getId_produto()));
+                                if (p.getPreco() > 0) {
+                                    if (p.getRendimento() > 0) {
+
+                                        temp += p.getPreco() / p.getRendimento();
+                                        temp *= s.getDez();
+
+                                    }
+                                }
+                                dezembro += temp.doubleValue();
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+
+        gastoProdutos.setNome("Gastos Produtos");
+        gastoProdutos.setJan(janeiro.longValue());
+        gastoProdutos.setFev(fevereiro.longValue());
+        gastoProdutos.setMar(marco.longValue());
+        gastoProdutos.setAbr(abril.longValue());
+        gastoProdutos.setMai(maio.longValue());
+        gastoProdutos.setJun(junho.longValue());
+        gastoProdutos.setJul(julho.longValue());
+        gastoProdutos.setAgo(agosto.longValue());
+        gastoProdutos.setSet(setembro.longValue());
+        gastoProdutos.setOut(outubro.longValue());
+        gastoProdutos.setNov(novembro.longValue());
+        gastoProdutos.setDez(dezembro.longValue());
+
+        return gastoProdutos;
     }
 
     public void calculaTotalServicosRealizados() {
@@ -218,18 +777,35 @@ public class ServicoRealizadoTableModel extends AbstractTableModel {
         janeiro = fevereiro = marco = abril = maio = junho = julho = agosto = setembro = outubro = novembro = dezembro = 0;
 
         for (OrcamentoServico ocs : dados) {
-            janeiro += ocs.getJan();
-            fevereiro += ocs.getFev();
-            marco += ocs.getMar();
-            abril += ocs.getAbr();
-            maio += ocs.getMai();
-            junho += ocs.getJun();
-            julho += ocs.getJul();
-            agosto += ocs.getAgo();
-            setembro += ocs.getSet();
-            outubro += ocs.getOut();
-            novembro += ocs.getNov();
-            dezembro += ocs.getDez();
+
+            if (ocs instanceof OrcamentoProduto) {
+                janeiro -= ocs.getJan();
+                fevereiro -= ocs.getFev();
+                marco -= ocs.getMar();
+                abril -= ocs.getAbr();
+                maio -= ocs.getMai();
+                junho -= ocs.getJun();
+                julho -= ocs.getJul();
+                agosto -= ocs.getAgo();
+                setembro -= ocs.getSet();
+                outubro -= ocs.getOut();
+                novembro -= ocs.getNov();
+                dezembro -= ocs.getDez();
+            } else {
+                janeiro += ocs.getJan();
+                fevereiro += ocs.getFev();
+                marco += ocs.getMar();
+                abril += ocs.getAbr();
+                maio += ocs.getMai();
+                junho += ocs.getJun();
+                julho += ocs.getJul();
+                agosto += ocs.getAgo();
+                setembro += ocs.getSet();
+                outubro += ocs.getOut();
+                novembro += ocs.getNov();
+                dezembro += ocs.getDez();
+            }
+
         }
 
         OrcamentoServico orcamentoTotal = new OrcamentoServico();

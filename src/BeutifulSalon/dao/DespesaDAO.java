@@ -384,6 +384,9 @@ public class DespesaDAO {
                     despesaAtual.setLancameto(rs.getDate("DATALANCAMENTO").toLocalDate());
                     despesaAtual.setVencimento(rs.getDate("DATAVENCIMENTO").toLocalDate());
                     despesaAtual.setAno(rs.getString("ANO"));
+                    if(despesaAtual.getAno().equals("2022")){
+                        System.out.println("Q INFERNO");
+                    }
                     despesaAtual.setStatus(rs.getBoolean("STATUS"));
                     despesaAtual.setIdOrcamento(rs.getLong("ID_ORCAMENTO"));
                     despesaAtual.setValorPago(rs.getLong("VALORPAGO"));
@@ -430,7 +433,9 @@ public class DespesaDAO {
     
     public List<Despesa> listarDespesas(String ano){
         
-        String sql = "SELECT ID_DESPESA, VALORPAGO, FORMAPAGAMENTO, ANO, DATALANCAMENTO, DATAVENCIMENTO, DATAPAGAMENTO, STATUS, ANOTACAO, ID_ORCAMENTO FROM DESPESAMENSAL WHERE ANO = ?";
+        String sql = "SELECT ID_DESPESA, VALORPAGO, FORMAPAGAMENTO, "
+                + "ANO, DATALANCAMENTO, DATAVENCIMENTO, DATAPAGAMENTO,"
+                + " STATUS, ANOTACAO, ID_ORCAMENTO FROM DESPESAMENSAL WHERE DESPESAMENSAL.ANO = ?";
         
         List<Despesa> despesas = new ArrayList<>();
         Connection connection = null;
@@ -451,6 +456,10 @@ public class DespesaDAO {
                     despesaAtual.setLancameto(rs.getDate("DATALANCAMENTO").toLocalDate());
                     despesaAtual.setVencimento(rs.getDate("DATAVENCIMENTO").toLocalDate());
                     despesaAtual.setAno(rs.getString("ANO"));
+                    
+                  
+                  
+                    
                     despesaAtual.setStatus(rs.getBoolean("STATUS"));
                     despesaAtual.setIdOrcamento(rs.getLong("ID_ORCAMENTO"));
                     despesaAtual.setValorPago(rs.getLong("VALORPAGO"));

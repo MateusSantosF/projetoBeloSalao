@@ -12,6 +12,7 @@ import BeutifulSalon.model.Despesa;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.view.Edicao.EditarDespesa;
 import java.awt.HeadlessException;
+import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.Month;
@@ -285,12 +286,26 @@ public class DespesaController {
         return idDespesa;
     }
 
-    public boolean verificaCompatibilidadeEntreAno(long idOrcamento) {
+    public boolean verificaCompatibilidadeEntreAno(long idOrcamento, String lancamento, String Vencimento) {
 
-        String anoAtual = String.valueOf(LocalDate.now().getYear());
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
+        
+        int dataLancamento = LocalDate.parse(lancamento, formatterData).getYear();
+        int dataVencimento = LocalDate.parse(Vencimento, formatterData).getYear();
+        int anoAtual = LocalDate.now().getYear();
         OrcamentoController oc = new OrcamentoController();
-
-        return anoAtual.equals(oc.buscarOrcamento(idOrcamento).getAno());
+        int anoOrcamento = Integer.parseInt(oc.buscarOrcamento(idOrcamento).getAno());
+        
+        System.out.println("Ano Orcamento =>" + anoOrcamento);
+        System.out.println("Ano Lancamento =>" + dataLancamento);
+        
+        if(anoOrcamento == dataLancamento){
+            return true;
+        }else if(anoAtual == anoOrcamento){
+            return true;
+        }else{
+            return false;
+        }
 
     }
 

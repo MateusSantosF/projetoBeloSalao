@@ -42,9 +42,7 @@ public class ModalTopCliente extends javax.swing.JDialog {
     public ModalTopCliente(java.awt.Frame parent, boolean modal, String nome, long qtd, long valorGasto) {
         super(parent, modal);
         initComponents();
-      
-      
-        
+    
         jLabelNomeCliente.setText(nome);
         jTextFieldQtdVisitas.setText(String.valueOf(qtd));
         jTextFieldValorGasto.setText(Dinheiro.parseString(valorGasto));

@@ -23,6 +23,7 @@
  */
 package BeutifulSalon.Ferramentas;
 
+import BeutifulSalon.Tabelas.LancamentoTableModel;
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.controller.ClienteController;
@@ -64,60 +65,12 @@ public class frameTeste extends javax.swing.JFrame {
     /**
      * Creates new form frameTeste
      */
+     private final LancamentoTableModel modeloLancamento = new LancamentoTableModel();
     public frameTeste() {
         initComponents();
             
-            String dataInicio = "05/10/2021";
-            String dataFim = "12/10/2021";
-        
-        
-            ManipulaData md = new ManipulaData();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-            LocalDate inicio = LocalDate.parse(dataInicio, formatter);
-            LocalDate fim = LocalDate.parse(dataFim, formatter);
-        
-        
-           List<RelatorioAgendamento> datasource = new AgendamentoDAO().listarAgendamentosRelatorio(md.meiaNoite(inicio), md.meiaNoiteAmanha(fim));
-            long totalAdicional = 0;
-            long totalDescontos = 0;
-            long totalFinal = 0;
-            
-            for(RelatorioAgendamento r : datasource){
-                totalAdicional += Dinheiro.parseCent(Dinheiro.retiraCaracteres(r.getValorAdicional()));
-                totalDescontos += Dinheiro.parseCent(Dinheiro.retiraCaracteres(r.getDesconto()));
-                totalFinal += Dinheiro.parseCent(Dinheiro.retiraCaracteres(r.getTotal()));
-            }
-
-        
-            Map<String, Object> params = new HashMap<>();
-            params.put("DataInicio", inicio.format(formatterData));
-            params.put("DataFim", fim.format(formatterData));
-            params.put("totalAdicionais", Dinheiro.parseString(totalAdicional));
-            params.put("totalDesconto", Dinheiro.parseString(totalDescontos));
-            params.put("TotalFinal", Dinheiro.parseString(totalFinal));
-            params.put("subTotal", Dinheiro.parseString(totalFinal + totalDescontos - totalAdicional));
-
-        try {
-
-            JasperReport j = JasperCompileManager.compileReport("src\\RelatorioDeAgendamentos.jrxml");
-            JasperPrint rp = JasperFillManager.fillReport(j, params,new JRBeanCollectionDataSource(datasource));
-
-            JDialog tela = new JDialog();
-            tela.setSize(1080, 720);
-
-            JRViewer painel = new JRViewer(rp);
-
-            tela.getContentPane().add(painel);
-
-            tela.setVisible(true);
-
-        } catch (JRException e) {
-
-            JOptionPane.showMessageDialog(null, e);
-
-        }
-
+        modeloLancamento.getDespesasAnual("2021");
+          jTable1.setModel(modeloLancamento);
     }
 
     /**
@@ -129,41 +82,43 @@ public class frameTeste extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addComponent(jButton1)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addGap(116, 116, 116)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(344, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(jButton1)
-                .addContainerGap(176, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(137, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(94, 94, 94))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
-
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,6 +158,7 @@ public class frameTeste extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

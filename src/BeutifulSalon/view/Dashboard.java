@@ -14,6 +14,7 @@ import BeutifulSalon.Ferramentas.OrdenaClientePorVisitas;
 import BeutifulSalon.Ferramentas.OrdenaProdutoPorQuantidade;
 import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.Tabelas.CompraTableModel;
+import BeutifulSalon.Tabelas.ServicoRealizadoTableModel;
 import BeutifulSalon.Tabelas.VendaTableModel;
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.controller.CabeleireiroController;
@@ -27,6 +28,7 @@ import BeutifulSalon.controller.VendaController;
 import BeutifulSalon.model.Cabeleireiro;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
+import BeutifulSalon.model.OrcamentoProduto;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.view.modais.ModalEmail;
 import BeutifulSalon.view.modais.ModalPostIt;
@@ -163,18 +165,59 @@ public class Dashboard extends javax.swing.JPanel {
         long nProdutosEstoque = ec.somaProdutosEstoque();
 
         //long receitaMensal = vc.retornaSomaDeVendasMensal() + ag.retornaSomaDeLucrosAgendamentosMensal();
-
         //FINANCEIRO
         long entrada, saida;
-
+        ServicoRealizadoTableModel produtosGastos = new ServicoRealizadoTableModel();
+        OrcamentoProduto ocProdutosGastos = produtosGastos.getOrcamentoProdutosMensal();
         Month m = LocalDate.now().getMonth();
         entrada = vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m);
         saida = compraController.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m);
 
+        switch (m) {
+
+            case JANUARY:
+                saida += ocProdutosGastos.getJan();
+                break;
+
+            case FEBRUARY:
+                saida += ocProdutosGastos.getFev();
+                break;
+            case MARCH:
+saida += ocProdutosGastos.getMar();
+                break;
+            case APRIL:
+                saida += ocProdutosGastos.getAbr();
+                break;
+            case MAY:
+saida += ocProdutosGastos.getMai();
+                break;
+            case JUNE:
+                saida += ocProdutosGastos.getJun();
+                break;
+            case JULY:
+                saida += ocProdutosGastos.getJul();
+                break;
+            case AUGUST:
+                saida += ocProdutosGastos.getAgo();
+                break;
+            case SEPTEMBER:
+                saida += ocProdutosGastos.getSet();
+                break;
+            case OCTOBER:
+                saida += ocProdutosGastos.getOut();
+                break;
+            case NOVEMBER:
+                saida += ocProdutosGastos.getNov();
+                break;
+            case DECEMBER:
+                saida += ocProdutosGastos.getDez();
+                break;
+
+        }
         modeloCompra.getComprasDashboard();
         jTableCompras.setModel(modeloCompra);
         jTableCompras.setRowHeight(30);
-       
+
         jTableCompras.getColumnModel().getColumn(1).setCellRenderer(new JTextAreaJTable());
         CentralizaElementosTabela render = new CentralizaElementosTabela();
         render.setHorizontalAlignment(SwingConstants.CENTER);
@@ -223,7 +266,7 @@ public class Dashboard extends javax.swing.JPanel {
         //Gráficos
         new GraficoDePizza(jPanelGraficoPizza1, sc.listaOsCincoServicosMaisRealizados()).plotaGrafico();
         //new GraficoXY(jPanelGrafico1).plotaGrafico();
-        new GraficoDeBarras().plotaGrafico(jPanelGrafico);
+        new GraficoDeBarras().plotaGrafico(jPanelGrafico, ocProdutosGastos);
 
     }
 
@@ -1099,9 +1142,9 @@ public class Dashboard extends javax.swing.JPanel {
             Cliente c = top5Clientes.get(2);
             if (modalTopCliente == null) {
                 if (c != null) {
-                   
+
                     long total = c.calculaTotalAnualGasto(c.getId());
-                   
+
                     modalTopCliente = new ModalTopCliente(null, false, c.getNome(), c.getQtdVisitas(), total);
                     modalTopCliente.setVisible(true);
                 }
