@@ -78,9 +78,11 @@
         <copy todir="${dist.dir}/Fontes">      
             <fileset dir="src/Fontes"/>
         </copy>
-          <copy todir="${dist.dir}/Relatorios">      
+       <copy todir="${dist.dir}/Relatorios">      
             <fileset dir="src/Relatorios"/>
         </copy>
+        
+  
 
   
     </target>

@@ -5,14 +5,13 @@
  */
 package BeutifulSalon.Ferramentas;
 
+import BeutifulSalon.view.MainMenu;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
-import java.net.URLDecoder;
-import javax.swing.JOptionPane;
-import org.bridj.Platform;
+
 
 /**
  *
@@ -26,23 +25,27 @@ public class ManipulaFontes {
     public String LIGHT = "Quicksand-Light.ttf";
     public String MEDIUM = "Quicksand-Medium.ttf";
     public String SEMIBOLD = "Quicksand-SemiBold.ttf";
+    private float TAMANHO_FONTE = 1f;
 
     public ManipulaFontes() {
+         
+      TAMANHO_FONTE = new ManipuladorArquivo().getTamanhoFonte();
+     
     }
 
     public Font getFont(String nome, int estilo, float tamanho) {
         try {
 
             //Para compilar na dist
-            //font = Font.createFont( Font.TRUETYPE_FONT,new File("Fontes\\" + nome));
+           //font = Font.createFont( Font.TRUETYPE_FONT,new File("Fontes\\" + nome));
             //para usar no netbeans
-            font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("\\Fontes\\" + nome));
+           font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("\\Fontes\\" + nome));
 
         } catch (IOException | FontFormatException e) {
             System.out.println(e);
             font = new Font("Arial", Font.PLAIN, 14);
         }
-        font = font.deriveFont(estilo, tamanho);
+        font = font.deriveFont(estilo, tamanho + ((tamanho/100) + TAMANHO_FONTE));
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(font);
         return font;

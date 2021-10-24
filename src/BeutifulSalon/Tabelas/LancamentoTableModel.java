@@ -7,8 +7,12 @@ package BeutifulSalon.Tabelas;
 
 import BeutifulSalon.controller.DespesaController;
 import BeutifulSalon.controller.OrcamentoController;
+import BeutifulSalon.controller.VendaController;
 import BeutifulSalon.model.Despesa;
 import BeutifulSalon.model.Dinheiro;
+import BeutifulSalon.model.Venda;
+import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,9 +99,111 @@ public class LancamentoTableModel extends AbstractTableModel {
         return dados.get(rowIndex);
     }
 
-    public void getDespesasPorLancamento(int mes) {
+    public void getDespesasPorLancamento(int mes, String ano) {
+        
+        if(ano.equals("")){
+         
+            ano = String.valueOf( LocalDate.now().getYear() );
+        }
+        getDespesasAnual(ano);
+        List<Despesa> despesaLancamento = new ArrayList<>();
+
+        switch (mes) {
+
+            case 0:
+                for (Despesa c : dados) {
+                    if (c.getLancameto().getMonth() == Month.JANUARY) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 1:
+                for (Despesa c : dados) {
+                    if (c.getLancameto().getMonth() == Month.FEBRUARY) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 2:
+                for (Despesa c : dados) {
+                    if (c.getLancameto().getMonth() == Month.MARCH) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 3:
+                for (Despesa c : dados) {
+                    if (c.getLancameto().getMonth() == Month.APRIL) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+
+            case 4:
+                for (Despesa c : dados) {
+                    if (c.getLancameto().getMonth() == Month.MAY) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+
+            case 5:
+                for (Despesa c : dados) {
+                    if (c.getLancameto().getMonth() == Month.JUNE) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 6:
+                for (Despesa c : dados) {
+                    if (c.getLancameto().getMonth() == Month.JULY) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 7:
+                for (Despesa c : dados) {
+                    if (c.getLancameto().getMonth() == Month.AUGUST) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 8:
+                for (Despesa c : dados) {
+                    if (c.getLancameto().getMonth() == Month.SEPTEMBER) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 9:
+                for (Despesa c : dados) {
+                    if (c.getLancameto().getMonth() == Month.OCTOBER) {
+                        despesaLancamento.add(c);
+                        
+                    }
+                }
+                break;
+            case 10:
+                for (Despesa c : dados) {
+                    if (c.getLancameto().getMonth() == Month.NOVEMBER) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 11:
+                for (Despesa c : dados) {
+                    if (c.getLancameto().getMonth() == Month.DECEMBER) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 12:
+                getDespesasAnual(ano);
+                break;
+        }
+        
         dados.clear();
-        addRow(despesaController.listarDespesasLancamento(mes));
+        addRow(despesaLancamento);
 
     }
 

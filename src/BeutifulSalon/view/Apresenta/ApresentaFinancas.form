@@ -1480,7 +1480,7 @@
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="12">
+                  <StringArray count="13">
                     <StringItem index="0" value="Janeiro"/>
                     <StringItem index="1" value="Fevereiro"/>
                     <StringItem index="2" value="Mar&#xe7;o"/>
@@ -1493,8 +1493,10 @@
                     <StringItem index="9" value="Outubro"/>
                     <StringItem index="10" value="Novembro"/>
                     <StringItem index="11" value="Dezembro"/>
+                    <StringItem index="12" value="Todos Meses"/>
                   </StringArray>
                 </Property>
+                <Property name="selectedIndex" type="int" value="12"/>
               </Properties>
               <Events>
                 <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBoxLancamentoItemStateChanged"/>
@@ -1518,7 +1520,7 @@
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="12">
+                  <StringArray count="13">
                     <StringItem index="0" value="Janeiro"/>
                     <StringItem index="1" value="Fevereiro"/>
                     <StringItem index="2" value="Mar&#xe7;o"/>
@@ -1531,8 +1533,10 @@
                     <StringItem index="9" value="Outubro"/>
                     <StringItem index="10" value="Novembro"/>
                     <StringItem index="11" value="Dezembro"/>
+                    <StringItem index="12" value="Todos Meses"/>
                   </StringArray>
                 </Property>
+                <Property name="selectedIndex" type="int" value="12"/>
               </Properties>
               <Events>
                 <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBoxVencimentoItemStateChanged"/>

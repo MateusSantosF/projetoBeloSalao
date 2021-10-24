@@ -13,6 +13,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -134,6 +135,28 @@ public class Agendamento {
         this.fimAgendamento = fimAgendamento;
     }
 
+    public String getTempoPrevisto() {
+
+        LocalTime fimAgendamento = LocalTime.MIDNIGHT;
+        int horas = 0;
+        int minutos = 0;
+
+        List<Servico> servicos = this.servicos;
+        if (servicos != null) {
+            for (Servico s : servicos) {
+                horas += s.getTempoGasto().getHour();
+                minutos += s.getTempoGasto().getMinute();
+            }
+
+            fimAgendamento = fimAgendamento.plusHours(horas);
+            fimAgendamento = fimAgendamento.plusMinutes(minutos);
+        }
+        
+        return fimAgendamento.toString() + "h";
+    }
+
+    
+
     public List<Servico> getServicos() {
         return servicos;
     }
@@ -204,6 +227,10 @@ public class Agendamento {
 
     public ArrayList<Agendamento> listarAgendamentosNaoPagos() throws ExceptionDAO {
         return new AgendamentoDAO().listarAgendamentosNaoPagos();
+    }
+
+    public List<Agendamento> listarAgendamentosIDCliente(long idCliente) throws ExceptionDAO {
+        return new AgendamentoDAO().listarAgendamentosIDCliente(idCliente);
     }
 
 }

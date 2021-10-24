@@ -21,33 +21,35 @@ import java.util.logging.Logger;
  *
  * @author mateu
  */
-public class Venda{
-    
+public class Venda {
+
     long idVenda;
     LocalDate data;
     long valorTotal;
     long valorDesconto;
     long idCliente;
+    int quantidadeProdutosVendidos;
     String nomeCliente;
     String sobrenomeCliente;
     String nomeProduto;
-  
-    ArrayList<Item> itensVenda;
+    List<Item> itensVenda;
 
-    
-    public Venda() { };
+    public Venda() {
+    }
+
+    ;
     
     public Venda(LocalDate data, long valorDesconto, String cpfCliente, ArrayList<Item> itensCompra) {
         this.data = data;
         this.valorDesconto = valorDesconto;
         this.itensVenda = itensCompra;
     }
-    
+
     public LocalDate getData() {
         return data;
     }
-    
-    public String getDataFormatada(){
+
+    public String getDataFormatada() {
         return data.toString();
     }
 
@@ -56,13 +58,14 @@ public class Venda{
     }
 
     public long getValorTotal() {
-        
+
         long valorTotalSomado = 0;
-        
-        for(Item it : getItensCompra()){
-            valorTotalSomado += it.getPrecoTotal();
+        if (getItensCompra() != null) {
+            for (Item it : getItensCompra()) {
+                valorTotalSomado += it.getPrecoTotal();
+            }
         }
-        
+
         return valorTotalSomado;
     }
 
@@ -74,11 +77,11 @@ public class Venda{
         this.idCliente = idCliente;
     }
 
-    public ArrayList<Item> getItensVenda() {
+    public List<Item> getItensVenda() {
         return itensVenda;
     }
 
-    public void setItensVenda(ArrayList<Item> itensVenda) {
+    public void setItensVenda(List<Item> itensVenda) {
         this.itensVenda = itensVenda;
     }
 
@@ -98,6 +101,14 @@ public class Venda{
         this.sobrenomeCliente = sobrenomeCliente;
     }
 
+    public int getQuantidadeProdutosVendidos() {
+        return quantidadeProdutosVendidos;
+    }
+
+    public void setQuantidadeProdutosVendidos(int quantidadeProdutosVendidos) {
+        this.quantidadeProdutosVendidos = quantidadeProdutosVendidos;
+    }
+
     public String getNomeProduto() {
         return nomeProduto;
     }
@@ -105,12 +116,10 @@ public class Venda{
     public void setNomeProduto(String nomeProduto) {
         this.nomeProduto = nomeProduto;
     }
-    
-    public long getTotal(){
+
+    public long getTotal() {
         return this.valorTotal;
     }
-    
-    
 
     public long getIdVenda() {
         return idVenda;
@@ -132,50 +141,66 @@ public class Venda{
         this.valorDesconto = valorDesconto;
     }
 
-
-
-    public ArrayList<Item> getItensCompra() {
+    public List<Item> getItensCompra() {
         return itensVenda;
     }
 
-    public void setItensCompra(ArrayList<Item> itensCompra) {
+    public void setItensCompra(List<Item> itensCompra) {
         this.itensVenda = itensCompra;
     }
-    
-    public void cadastrarVenda(Venda venda) throws ExceptionDAO{
+
+    public void cadastrarVenda(Venda venda) throws ExceptionDAO {
         new VendaProdutoDAO().cadastrarVenda(venda);
     }
 
-    public List<Venda> selecionaVendasDoAno(int anoReferente) throws ExceptionDAO{
+    public List<Venda> selecionaVendasDoAno(int anoReferente) throws ExceptionDAO {
         return new VendaProdutoDAO().selecionaVendasDoAno(anoReferente);
     }
-    
-    public long selecionaVendasPorMes(Month mes) throws ExceptionDAO{
+
+    public long selecionaVendasPorMes(Month mes) throws ExceptionDAO {
         return new VendaProdutoDAO().selecionaVendasPorMes(mes);
     }
-    
-    public static List<Venda> jasperList(){
+
+    public static List<Venda> jasperList() {
         try {
             return new VendaProdutoDAO().selecionaTodasVendas();
         } catch (ExceptionDAO ex) {
             Logger.getLogger(Venda.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return null;
     }
-    
-    public List<Venda> selecionaTodasVendas() throws ExceptionDAO{
+
+    public List<Venda> selecionaTodasVendas() throws ExceptionDAO {
         return new VendaProdutoDAO().selecionaTodasVendas();
     }
 
     public int retornaQuantidadeDeVendasHoje() throws ExceptionDAO {
         return new VendaProdutoDAO().retornaQuantidadeDeVendasHoje();
     }
-    
-    public long retornaSomaDeVendasMensal() throws ExceptionDAO{
+
+    public long retornaSomaDeVendasMensal() throws ExceptionDAO {
         return new VendaProdutoDAO().retornaSomaDeVendasMensal();
     }
- 
 
+    public List<Venda> selecionaVendasPorNomeCliente(String nomeCliente) throws ExceptionDAO {
+        return new VendaProdutoDAO().selecionaVendasPorNomeCliente(nomeCliente);
+    }
+
+    public List<Venda> selecionaVendasDoAnoPorNomeCliente(String nomeCliente) throws ExceptionDAO {
+        return new VendaProdutoDAO().selecionaVendasDoAnoPorNomeCliente(nomeCliente);
+    }
+
+    public boolean excluirVenda(Venda venda) throws ExceptionDAO {
+        return new VendaProdutoDAO().excluirVenda(venda);
+    }
+
+    public List<Venda> retornaComprasCliente(long idCliente) throws ExceptionDAO {
+        return new VendaProdutoDAO().retornaComprasPorIDCliente(idCliente);
+    }
+
+    public boolean atualizarVenda(Venda v, List<Item> itensAntigos) throws ExceptionDAO {
+        return new VendaProdutoDAO().atualizarVenda(v, itensAntigos);
+    }
 
 }

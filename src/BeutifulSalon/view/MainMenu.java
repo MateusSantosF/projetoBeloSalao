@@ -18,28 +18,37 @@ import BeutifulSalon.view.Apresenta.ApresentaFinancas;
 import BeutifulSalon.view.Apresenta.ApresentaProduto;
 import BeutifulSalon.view.Apresenta.ApresentaCliente;
 import BeutifulSalon.model.GerenciadorJPanel;
+import BeutifulSalon.model.Observador;
+import BeutifulSalon.model.Orcamento;
+import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.Apresenta.ApresentaAgendamentos;
 import BeutifulSalon.view.Apresenta.ApresentaServico;
 import BeutifulSalon.view.Cadastros.CadastroCabeleireiro;
 import java.awt.Color;
 import java.awt.Font;
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import javax.mail.MessagingException;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Mateus
  */
-public class MainMenu extends javax.swing.JFrame {
+public class MainMenu extends javax.swing.JFrame implements Observador {
 
+    public static int TAMANHO_FONTE = 1;
     NovoRegistro novoRegistro = null;
     CadastroCabeleireiro cadastroCabeleireiro = null;
-    private final Color SELECIONADO = new Color(32, 41, 59);
+    private final Color SELECIONADO = new Color(27, 36, 54);
     private final Color PADRAO = new Color(36, 46, 66);
     private final List<JPanel> paineis = new ArrayList<>();
 
@@ -461,8 +470,22 @@ public class MainMenu extends javax.swing.JFrame {
         trocaCorPainel(painelProdutos);
     }//GEN-LAST:event_jLabelProdutosMousePressed
 
+    public void setNovoTamanhoFonteBarraLateral() {
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        jLabelDashboard.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Envie um Email
+        jLabelAgendamento.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Agendamentos
+        jLabelClientes.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Clientes
+        jLabelServicos.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Clientes
+        jLabelProdutos.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Produtos
+        jLabelFinancas.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Finanças
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Novo Registro
+
+    }
     private void jLabelFinancasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelFinancasMousePressed
+
         new GerenciadorJPanel(painelPrincipal, new ApresentaFinancas());
+
         this.setTitle("Finanças");
         trocaCorPainel(painelFinancas);
     }//GEN-LAST:event_jLabelFinancasMousePressed
@@ -493,6 +516,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         if (cadastroCabeleireiro == null) {
             cadastroCabeleireiro = new CadastroCabeleireiro();
+            cadastroCabeleireiro.registrarObservador(this);
             cadastroCabeleireiro.setVisible(true);
         } else {
             cadastroCabeleireiro.setVisible(true);
@@ -684,4 +708,36 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel painelPrincipal;
     private javax.swing.JPanel painelProdutos;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Object obj) {
+       
+
+    }
+
+    @Override
+    public void update(Orcamento orcamento) {
+    }
+
+    @Override
+    public void update(DefaultTableModel model) {
+    }
+
+    @Override
+    public void update(String valorDesconto) {
+         
+        setNovoTamanhoFonteBarraLateral();
+    }
+
+    @Override
+    public void update(Cliente cliente) {
+    }
+
+    @Override
+    public void update(Servico servico) {
+    }
+
+    @Override
+    public void update(ArrayList<LocalTime> horarios) {
+    }
 }

@@ -403,9 +403,8 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
             JOptionPane.showMessageDialog(null, "Erro ao converter data");
         }
 
-        //retorna o CPF de acordo com o RadioButton
         if (isClienteComprando) {
-            sucesso = vc.RegistraVenda(
+            sucesso = vc.cadastrarVenda(
                     LocalDate.parse(dataFormatada, formatterData),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
                     id_Cliente,
@@ -451,6 +450,9 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                 modalInputMonetarios.setVisible(true);
             }
 
+        } else {
+            jTextFieldDesconto2.setText("R$ 0,00");
+            calculaTotal();
         }
     }//GEN-LAST:event_jCheckBoxDesconto2MousePressed
 
@@ -458,7 +460,6 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
         ModalProdutos modal;
 
-        //diferencia se quem comprou foi o cliente ou o cabeleireiro, para aplicar lógicas no modal.
         if (jRadioButtonCabelereiro.isSelected()) {
             modal = new ModalProdutos(true);
         } else {

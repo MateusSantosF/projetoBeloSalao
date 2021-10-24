@@ -3,15 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/controller/RelatorioController.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/model/Compra.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/dao/DespesaDAO.java</file>
             <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/Cadastros/CadastroAgendamento.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/dao/ServicoDAO.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/controller/ProdutoController.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/model/Servico.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/controller/AgendamentoController.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/model/Produto.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/ManipulaData.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/controller/ServicoController.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/controller/DespesaController.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/dao/CompraProdutoDAO.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/model/Agendamento.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/dao/AgendamentoDAO.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/controller/CompraController.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/model/Despesa.java</file>
         </group>
     </open-files>
 </project-private>

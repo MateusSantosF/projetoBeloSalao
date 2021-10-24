@@ -107,6 +107,9 @@ public class Orcamento {
         return getJan()+getFev()+getMar()+getAbr()+getMai()+getJun()+getJul()+getAgo()+getSet()+getOut()+getNov()+getDez();
     }
     
+    
+    
+    
     public long getJan() {
         return jan;
     }

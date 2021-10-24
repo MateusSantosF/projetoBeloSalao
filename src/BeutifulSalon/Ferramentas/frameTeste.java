@@ -23,17 +23,31 @@
  */
 package BeutifulSalon.Ferramentas;
 
+import BeutifulSalon.Tabelas.LancamentoTableModel;
+import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.controller.VendaController;
+import BeutifulSalon.dao.AgendamentoDAO;
+import BeutifulSalon.dao.VendaProdutoDAO;
 import BeutifulSalon.model.Cabeleireiro;
 import BeutifulSalon.model.Cliente;
+import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Item;
+import BeutifulSalon.model.RelatorioAgendamento;
+import BeutifulSalon.model.RelatorioVenda;
+import BeutifulSalon.model.Servico;
 import BeutifulSalon.model.Venda;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JREmptyDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -51,40 +65,12 @@ public class frameTeste extends javax.swing.JFrame {
     /**
      * Creates new form frameTeste
      */
+     private final LancamentoTableModel modeloLancamento = new LancamentoTableModel();
     public frameTeste() {
         initComponents();
-        
-        try {
-        
-        List<Venda> cs = new ArrayList<>();
-        
-        cs = new VendaController().selecionaTodasVendas();
-        ArrayList<Item> itens = new ArrayList<>();
-        Item i = new Item();
-         Item i2 = new Item();
-        i.setNome("teste");
-         i2.setNome("test2");
-        itens.add(i);
-         itens.add(i2);
-       
-         cs.get(0).setItensVenda(itens);
-          cs.get(0).setItensCompra(itens);
-        JasperReport j = JasperCompileManager.compileReport("C:\\Users\\Mateus\\Desktop\\BeloSalao\\projetoBeloSalao\\src\\RelatorioVendas.jrxml");
-        JasperPrint rp = JasperFillManager.fillReport(j, null, new JRBeanCollectionDataSource(cs));
-       
-   
-        
-        JDialog tela = new JDialog(this, "relatorio", true);
-        tela.setSize(1000,600);
-        
-        JRViewer painel = new JRViewer(rp);
-        
-        tela.getContentPane().add(painel);
-        
-        tela.setVisible(true);
-        } catch (JRException e) {
-            System.out.println(e);
-        }
+            
+        modeloLancamento.getDespesasAnual("2021");
+          jTable1.setModel(modeloLancamento);
     }
 
     /**
@@ -96,42 +82,43 @@ public class frameTeste extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addComponent(jButton1)
-                .addContainerGap(216, Short.MAX_VALUE))
+                .addGap(116, 116, 116)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(344, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(jButton1)
-                .addContainerGap(176, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(137, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(94, 94, 94))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       Cabeleireiro c = new CabeleireiroController().selecionaCabeleireiro();
-       
-        JOptionPane.showMessageDialog(null, c.getSenha());
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,12 +150,15 @@ public class frameTeste extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frameTeste().setVisible(true);
+                frameTeste t = new frameTeste();
+
+                t.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

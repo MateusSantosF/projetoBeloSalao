@@ -31,6 +31,11 @@ public class GraficoDePizza {
 
     private JPanel painelGrafico;
     private List<Servico> servicos;
+    private Color verde = new Color(9, 213, 147);
+    private Color vermelho = new Color(248, 67, 69);
+    private Color azul = new Color(6, 116, 245);
+    private Color amarelo = new Color(248, 164, 53);
+    private Color roxo = new Color(139, 113, 219);
 
     public GraficoDePizza() {
     }
@@ -69,9 +74,8 @@ public class GraficoDePizza {
         plot.setOutlineVisible(false);
         plot.setBackgroundPaint(null);
         plot.setLabelGenerator(null);
-        plot.getOutlinePaint();
-        plot.setSectionDepth(0.25); //Define tamanho/expressura das seções
-        plot.setSeparatorStroke(new BasicStroke(8)); // aumenta expressura da linha que separa as seções
+        plot.setSectionDepth(0.30); //Define tamanho/expressura das seções
+        plot.setSeparatorStroke(new BasicStroke(5)); // aumenta expressura da linha que separa as seções
         plot.setSeparatorPaint(Color.WHITE);
 
         plot.setOuterSeparatorExtension(0);
@@ -81,21 +85,45 @@ public class GraficoDePizza {
                 "{1} ({2})")); // Mostra quantidade {1} e apresenta a porcentagem {2}
         plot.setLabelBackgroundPaint(null);
         //plot.setSimpleLabels(true); // Labeis simples ficam em cima das seções ao invez de criar aquela risquinha
-        plot.setSectionPaint(dataset.getKey(0), new Color(0, 172, 178)); //Altera cores das seções com base na primeira cor passada
-        
+
+        int cont = 0;
+
+        for (Object k : dataset.getKeys()) {
+            switch (cont) {
+                case 0:
+                    plot.setSectionPaint(dataset.getKey(0), verde);
+                    break;
+                case 1:
+                    plot.setSectionPaint(dataset.getKey(1), vermelho);
+                    break;
+                case 2:
+                    plot.setSectionPaint(dataset.getKey(2), azul);
+                    break;
+                case 3:
+                    plot.setSectionPaint(dataset.getKey(3), amarelo);
+                    break;
+
+                case 4:
+                    plot.setSectionPaint(dataset.getKey(4), roxo);
+                    break;
+            }
+            cont++;
+        }
+
         ManipulaFontes mp = new ManipulaFontes();
         Font font = mp.getFont(mp.BOLD, Font.BOLD, 12);
         Font fontLegend = mp.getFont(mp.BOLD, Font.BOLD, 14);
         plot.setLabelFont(font);
         plot.setLabelBackgroundPaint(new Color(36, 46, 66));
         plot.setLabelPaint(Color.WHITE);
-           
+
         JFreeChart chart = new JFreeChart("", font, plot, true);
-     
+
         chart.setBackgroundPaint(Color.WHITE);
         chart.setPadding(new RectangleInsets(-10, 0, 0, 0));
         chart.getLegend().setItemFont(fontLegend);
- 
+        chart.getLegend().setHorizontalAlignment(HorizontalAlignment.CENTER);
+
         return chart;
     }
 
@@ -106,7 +134,6 @@ public class GraficoDePizza {
 
         ChartPanel g = new ChartPanel(criaGrafico(), largura, altura, largura, altura, 480, 840, true,
                 true, true, true, true, true);
-
 
         g.setBackground(Color.WHITE);
         painelGrafico.add(g);

@@ -9,6 +9,7 @@ package BeutifulSalon.dao;
 
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.controller.CabeleireiroController;
+import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Cabeleireiro;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -786,7 +787,7 @@ public class clienteDAO {
     }
     
     public List<Cliente> top5Clientes(int anoReferente){
-         String sql  = "SELECT COUNT(AGENDAMENTO.ID_CLIENTE) AS QTD, CLIENTE.NOME, CLIENTE.SOBRENOME FROM AGENDAMENTO\n" +
+         String sql  = "SELECT COUNT(AGENDAMENTO.ID_CLIENTE) AS QTD, CLIENTE.NOME, CLIENTE.ID,CLIENTE.SOBRENOME FROM AGENDAMENTO\n" +
                 "INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE " +
                 "WHERE AGENDAMENTO.DATA BETWEEN ? AND ? AND CLIENTE.EXCLUIDO = FALSE AND AGENDAMENTO.REALIZADO = TRUE " +
                 "GROUP BY AGENDAMENTO.ID_CLIENTE ORDER BY COUNT(AGENDAMENTO.ID_CLIENTE) DESC LIMIT 5;";
@@ -812,6 +813,7 @@ public class clienteDAO {
                 
                 while(rs.next()){
                     Cliente clienteAtual = new Cliente();
+                    clienteAtual.setId(rs.getLong("ID"));
                     clienteAtual.setNome(rs.getString("NOME"));
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
                     clienteAtual.setQtdVisitas(rs.getInt("QTD"));
@@ -925,5 +927,147 @@ public class clienteDAO {
             }    
         }
         return null;
+    }
+
+    public long getQuantidadeGastaEmAgendamentos(long idCliente) {
+
+   
+        long inicioDoAno = LocalDate.ofYearDay(LocalDate.now().getYear(), 1).toEpochDay() * 24 * 60 * 60 * 1000;
+        long fimDoAno = LocalDate.ofYearDay(LocalDate.now().getYear(), 1).plusYears(1).toEpochDay() * 24 * 60 * 60 * 1000; 
+  
+        
+        String sql2 = "SELECT SUM(TOTAL) AS TOTAL, SUM(DESCONTO) AS DESCONTO , SUM(VALORADICIONAL) AS ADICIONAL FROM AGENDAMENTO"
+                + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE "
+                + " WHERE DATA BETWEEN ? AND ? AND AGENDAMENTO.REALIZADO = TRUE AND CLIENTE.ID = ?";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+
+        long total = 0;
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql2);
+           
+            pStatement.setLong(1, inicioDoAno);
+            pStatement.setLong(2, fimDoAno);
+            pStatement.setLong(3, idCliente);
+            ResultSet rs = pStatement.executeQuery();
+              
+            if(rs != null){
+                while(rs.next()){
+                
+                   total += rs.getLong("TOTAL");         
+                   total += rs.getLong("ADICIONAL");    
+                   total -= rs.getLong("DESCONTO");
+                }
+            }
+          
+           return total;
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro agendamentoDAO" + e);
+        }finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        
+        return total;
+    
+    }
+
+    public long calculaTotalAnualGasto(long idCliente) {
+        long inicioDoAno = LocalDate.ofYearDay(LocalDate.now().getYear(), 1).toEpochDay() * 24 * 60 * 60 * 1000;
+        long fimDoAno = LocalDate.ofYearDay(LocalDate.now().getYear(), 1).plusYears(1).toEpochDay() * 24 * 60 * 60 * 1000; 
+  
+        
+        String agendamentos = "SELECT SUM(AGENDAMENTO.TOTAL) AS TOTAL FROM AGENDAMENTO"
+                + " WHERE ID_CLIENTE = ? AND DATA BETWEEN ? AND ?";
+        String compras = "SELECT (SUM(VALORTOTAL) - SUM(VALORDESCONTO)) AS TOTALCOMPRAS"
+                + " FROM VENDA WHERE ID_CLIENTE = ? AND DATA BETWEEN ? AND ?";
+
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+
+        long total = 0;
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(agendamentos);
+           
+            pStatement.setLong(1, idCliente);
+            pStatement.setLong(2, inicioDoAno);
+            pStatement.setLong(3, fimDoAno);
+     
+            
+            ResultSet rs = pStatement.executeQuery();
+              
+            if(rs != null){
+                while(rs.next()){     
+                   total += rs.getLong("TOTAL");
+                   
+                }
+            }
+            System.out.println("TOTAL => " + total);
+            pStatement = connection.prepareStatement(compras);
+           
+            pStatement.setLong(1, idCliente);
+            pStatement.setLong(2, inicioDoAno);
+            pStatement.setLong(3, fimDoAno);
+     
+            
+            ResultSet rs2 = pStatement.executeQuery();
+              
+            if(rs2 != null){
+                while(rs2.next()){     
+                   total += rs2.getLong("TOTALCOMPRAS");
+                   
+                }
+            }
+               System.out.println("TOTAL => " + total);
+          
+           return total;
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro agendamentoDAO" + e);
+        }finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        
+        return total;
     }
 }

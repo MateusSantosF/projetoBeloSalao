@@ -71,6 +71,10 @@ public class Servico {
     public long getPreco() {
         return preco;
     }
+    
+    public String getPrecoFormatado(){
+        return Dinheiro.parseString(preco);
+    }
 
     public void setPreco(long preco) {
         this.preco = preco;

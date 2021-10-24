@@ -6,6 +6,7 @@
 package BeutifulSalon.view.Cadastros;
 
 import BeutifulSalon.Ferramentas.ManipulaFontes;
+import BeutifulSalon.Ferramentas.ManipuladorArquivo;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.controller.RelatorioController;
 import BeutifulSalon.dao.CabeleireiroDAO;
@@ -14,6 +15,7 @@ import BeutifulSalon.model.Cabeleireiro;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Email;
+import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
@@ -30,6 +32,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -41,7 +44,7 @@ import javax.swing.text.NumberFormatter;
  *
  * @author mateus
  */
-public class CadastroCabeleireiro extends javax.swing.JFrame implements Observador {
+public class CadastroCabeleireiro extends javax.swing.JFrame implements Observador,  Observado {
 
     /**
      * Creates new form CadastroCabeleireiro
@@ -52,10 +55,14 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private String caminhoArquivoUltimaVisita;
     private Email emailUltimaVisita = new Email();
     private Email email = new Email();
+    private JFrame mainMenu;
+    Observador observador = null;
 
     public CadastroCabeleireiro() {
         initComponents();
-
+            
+        
+        this.mainMenu = mainMenu;
         ManipulaFontes mf = new ManipulaFontes();;
 
         //Fontes
@@ -139,10 +146,13 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
             jPasswordField.setText(cabeleireiro.getSenha());
             jCheckBoxVerificaHorarios.setSelected(cabeleireiro.isVerificarHorariosDisponiveis());
             jSliderTempoEntreAgendamentos.setValue(cabeleireiro.getTempoEntreHorariosLivres());
+            jSliderTamanhoFonte.setValue((int)new ManipuladorArquivo().getTamanhoFonte());
 
         }
 
     }
+
+  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -212,6 +222,8 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jSliderTempoEntreAgendamentos = new javax.swing.JSlider();
         jLabel26 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jSliderTamanhoFonte = new javax.swing.JSlider();
+        jLabel30 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
@@ -774,6 +786,20 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
             }
         });
 
+        jSliderTamanhoFonte.setBackground(new java.awt.Color(255, 255, 255));
+        jSliderTamanhoFonte.setForeground(new java.awt.Color(0, 0, 0));
+        jSliderTamanhoFonte.setMajorTickSpacing(1);
+        jSliderTamanhoFonte.setMaximum(10);
+        jSliderTamanhoFonte.setMinimum(-10);
+        jSliderTamanhoFonte.setMinorTickSpacing(1);
+        jSliderTamanhoFonte.setPaintLabels(true);
+        jSliderTamanhoFonte.setPaintTicks(true);
+        jSliderTamanhoFonte.setValue(0);
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel30.setText("Tamanho da Fonte");
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -785,6 +811,8 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel30)
+                    .addComponent(jSliderTamanhoFonte, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel26)
                     .addComponent(jLabel25)
                     .addGroup(jPanel6Layout.createSequentialGroup()
@@ -809,15 +837,19 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                 .addComponent(jLabel23)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel22)
-                .addGap(21, 21, 21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel25)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSliderTempoEntreAgendamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel30)
+                .addGap(10, 10, 10)
+                .addComponent(jSliderTamanhoFonte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jLabel26)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
                 .addComponent(jButtonCadastrar1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
         );
@@ -1238,6 +1270,10 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao atualizar preferências");
         }
+        
+        new ManipuladorArquivo().escritor(Float.valueOf(jSliderTamanhoFonte.getValue()));
+        notificarObservadores();
+     
     }//GEN-LAST:event_jButtonCadastrar1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -1283,7 +1319,10 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                 JOptionPane.showMessageDialog(null, "Verifique as datas inseridas e tente novamente.");
             }
         }else if(jRadioButtonAgendamentos.isSelected()){
-            
+            boolean sucesso = new RelatorioController().gerarRelatorioAgendamento(jFormattedTextFieldDataInicio.getValue().toString(), jFormattedTextFieldDataFim.getValue().toString());
+            if (!sucesso) {
+                JOptionPane.showMessageDialog(null, "Verifique as datas inseridas e tente novamente.");
+            }
         }else{
             
         }
@@ -1364,6 +1403,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1386,6 +1426,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private javax.swing.JRadioButton jRadioButtonRelatorioVenda;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSlider jSliderTamanhoFonte;
     private javax.swing.JSlider jSliderTempoEntreAgendamentos;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
@@ -1419,12 +1460,30 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
 
     @Override
     public void update(ArrayList<LocalTime> horarios) {
-        System.out.println("entrou");
+     
         expediente = horarios;
     }
 
     @Override
     public void update(Orcamento orcamento) {
 
+    }
+
+    @Override
+    public void registrarObservador(Observador observador) {
+        
+        this.observador = observador;
+    }
+
+    @Override
+    public void removeObservador(Observador observador) {
+        this.observador = null;
+    }
+
+    @Override
+    public void notificarObservadores() {
+        //código inventado para indicar que estou mudando a fonte
+        this.observador.update("403@");
+       
     }
 }

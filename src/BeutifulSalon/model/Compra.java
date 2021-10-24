@@ -10,6 +10,7 @@ import BeutifulSalon.dao.ExceptionDAO;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,10 +18,11 @@ import java.util.ArrayList;
  */
 public class Compra {
 
-    LocalDate data;
-    long valorTotal;
-    long valorDesconto;
-    ArrayList<Item> itensCompra;
+    private long idCompra;
+    private LocalDate data;
+    private long valorTotal;
+    private long valorDesconto;
+    private List<Item> itensCompra;
 
     public Compra() {
     }
@@ -50,6 +52,14 @@ public class Compra {
         return valorTotalSomado;
     }
 
+    public long getIdCompra() {
+        return idCompra;
+    }
+
+    public void setIdCompra(long idCompra) {
+        this.idCompra = idCompra;
+    }
+
     public void setValorTotal(long valorTotal) {
         this.valorTotal = valorTotal;
     }
@@ -62,11 +72,11 @@ public class Compra {
         this.valorDesconto = valorDesconto;
     }
 
-    public ArrayList<Item> getItensCompra() {
+    public List<Item> getItensCompra() {
         return itensCompra;
     }
 
-    public void setItensCompra(ArrayList<Item> itensCompra) {
+    public void setItensCompra(List<Item> itensCompra) {
         this.itensCompra = itensCompra;
     }
 
@@ -76,6 +86,34 @@ public class Compra {
 
     public long retornaSomaDeComprasMensais(Month mes) throws ExceptionDAO {
         return new CompraProdutoDAO().retornaSomaDeComprasMensais(mes);
+    }
+
+    public List<Compra> retornaTodasCompras() throws ExceptionDAO {
+        return new CompraProdutoDAO().retornaTodasCompras();
+    }
+
+    public List<Compra> retornaComprasDashboard() throws ExceptionDAO {
+        return new CompraProdutoDAO().retornaComprasDashboard();
+    }
+
+    public List<Compra> getComprasPorNomeProduto(String nomeProduto) throws ExceptionDAO {
+        return new CompraProdutoDAO().getComprasPorNomeProduto(nomeProduto);
+    }
+
+    public boolean excluirCompra(Compra compra) throws ExceptionDAO {
+        return new CompraProdutoDAO().excluirCompra(compra);
+    }
+
+    public List<Compra> retornaTodasComprasDoAno() throws ExceptionDAO {
+        return new CompraProdutoDAO().retornaTodasComprasDoAno();
+    }
+
+    public List<Compra> getComprasPorNomeProdutoDoAno(String nomeProduto) throws ExceptionDAO {
+        return new CompraProdutoDAO().getComprasPorNomeProdutoDoAno(nomeProduto);
+    }
+    
+    public boolean atualizarCompra(Compra c, List<Item> itensAntigos) throws ExceptionDAO{
+        return new CompraProdutoDAO().atualizarCompra(c, itensAntigos);
     }
 
 }

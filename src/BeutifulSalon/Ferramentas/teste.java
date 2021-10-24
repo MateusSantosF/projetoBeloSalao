@@ -23,19 +23,17 @@
  */
 package BeutifulSalon.Ferramentas;
 
-import BeutifulSalon.controller.ClienteController;
-import BeutifulSalon.model.Cliente;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JDialog;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.swing.JRViewer;
+
 
 
 /**
@@ -47,10 +45,10 @@ public class teste {
     
    
 
-    public void main(String[] args) throws JRException {
+    public static void main(String[] args) throws JRException {
 
     
-        
-        
+     
+       
     }
 }

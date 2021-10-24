@@ -132,7 +132,6 @@ public class ManipulaData {
 
             //soma-se meses referente ao ano para evitar problemas com qtd de dias;
             Month mesAtual = dataModificada.plusMonths(i).getMonth();
-            System.out.println(mesAtual);
             meses.add(mesAtual);
         }
         

@@ -13,11 +13,13 @@ import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Orcamento;
+import BeutifulSalon.model.OrcamentoServico;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
 import java.awt.Color;
 import java.awt.Font;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.SwingConstants;
@@ -35,107 +37,227 @@ public class DetalhesServico extends javax.swing.JFrame {
      */
     private Color verde = new Color(57, 201, 114);
     private Color vermelho = new Color(248, 67, 69);
+
     public DetalhesServico() {
         initComponents();
     }
-    
+
     public DetalhesServico(Servico servico) {
         initComponents();
-        
-        ManipulaFontes mf = new ManipulaFontes(); ;
-        
+
+        ManipulaFontes mf = new ManipulaFontes();;
+
         //Fontes
         jLabelNomeServico.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 30f));
         jLabelPreco.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 30f));
-        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); 
-        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); 
-        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); 
-        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); 
-        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); 
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jTableProdutosUtilizados.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela   
-        
+
         //Numeros
         jLabelTempoDuracao.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
         jLabelMargemContribuicao.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
         jLabelPontoDeEquilíbrio.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
         jLabelMeta.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
-        
+
         EstoqueController ec = new EstoqueController();
-        ((DefaultTableCellRenderer)jTableProdutosUtilizados.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+        ((DefaultTableCellRenderer) jTableProdutosUtilizados.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         CentralizaElementosTabela render = new CentralizaElementosTabela();
         jTableProdutosUtilizados.setDefaultRenderer(Object.class, render);
 
-        
         DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
         jLabelNomeServico.setText(servico.getNome());
         jLabelPreco.setText(Dinheiro.parseString(servico.getPreco()));
         jLabelTempoDuracao.setText(servico.getTempoGasto().format(formatterHora) + "h");
-        
-        
+
         //CALCULANDO MARGEM DE CONTRIBUIÇÃO
-    
-        long margemContribuicao = servico.getPreco();
+        Long margemContribuicao = servico.getPreco();
         long subtracao = 0;
-        
-        for(Produto p: servico.getProdutos()){
-            if(p.getRendimento() > 0){
-                subtracao += ec.ultimoValorPagoProduto(p.getId_produto())/p.getRendimento();
+
+        for (Produto p : servico.getProdutos()) {
+            if (p.getRendimento() > 0) {
+                if (p.getRendimento() > 0) {
+                    subtracao += ec.ultimoValorPagoProduto(p.getId_produto()) / p.getRendimento();
+                }
+
             }
         }
-        
+
         margemContribuicao -= subtracao;
-        
-        if(margemContribuicao <= 0 ){
+
+        if (margemContribuicao <= 0) {
             jLabelMargemContribuicao.setForeground(vermelho);
         }
         jLabelMargemContribuicao.setText(Dinheiro.parseString(margemContribuicao));
-        
-        
-      
+
         //CALCULANDO PONTO DE EQUILÍBRIO  (Custos Fixos/qtdServiços)/margemContribuição
-        
-        int qtdServicos = new ServicoController().somaQtdServicosRegistrados();
-        long valorTotalOrc = 0;
+        Month mesAtual = LocalDate.now().getMonth();
+        List<Orcamento> orcamentos = new OrcamentoController().listarOrcamentos(String.valueOf(LocalDate.now().getYear()));
+        List<OrcamentoServico> orcamentoServico = new OrcamentoController().listarOrcamentosServico(String.valueOf(LocalDate.now().getYear()));
         double meta = new CabeleireiroController().selecionaCabeleireiro().getMetaDeLucro();
         double pontoDeEquilibrio = 0.0;
-        
-        if(qtdServicos > 0){
-            List<Orcamento> ocs = new OrcamentoController().listarOrcamentos(String.valueOf(LocalDate.now().getYear()));
-            for(Orcamento o: ocs){
-                valorTotalOrc += o.getSomaTotalAnual();
-            }       
-            valorTotalOrc /= qtdServicos;
-            pontoDeEquilibrio = (double)valorTotalOrc/margemContribuicao;
+        long totalDespesaMensalPrevista = 0;
+        long previstoServicoMensal = 0;
+        long totalPrevistoServicosDoMes = 0;
+        System.out.println("NOME SERVIÇO =>" + servico.getNome());
+        System.out.println("Preço Servico =>" + Dinheiro.parseString(servico.getPreco()));
+        switch (mesAtual) {
+            case JANUARY:
+                for (Orcamento oc : orcamentos) {
+                    totalDespesaMensalPrevista += oc.getJan();
+                }
+                
+                for(OrcamentoServico ocs: orcamentoServico){
+                    totalPrevistoServicosDoMes += ocs.getJan() * new ServicoController().buscarServico(ocs.getId_servico()).getPreco();
+                }
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getJan() * servico.getPreco();
+                break;
+            case FEBRUARY:
+                for (Orcamento oc : orcamentos) {
+                    totalDespesaMensalPrevista += oc.getFev();
+                }
+                for(OrcamentoServico ocs: orcamentoServico){
+                    totalPrevistoServicosDoMes += ocs.getFev()* new ServicoController().buscarServico(ocs.getId_servico()).getPreco() ;
+                }
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getFev() * servico.getPreco();
+                break;
+            case MARCH:
+                for (Orcamento oc : orcamentos) {
+                    totalDespesaMensalPrevista += oc.getMar();
+                }
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServico(servico.getId()).getMar() * servico.getPreco();
+                
+                 for(OrcamentoServico ocs: orcamentoServico){
+                    totalPrevistoServicosDoMes += ocs.getMar()  * new ServicoController().buscarServico(ocs.getId_servico()).getPreco();
+                }
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getMar()* servico.getPreco();
 
-            //Ponto de Equilbrio economico (meta/qtdServiço)/MargemContribuoção
-        
-            meta /= qtdServicos;    
-            meta = (double) meta/ margemContribuicao;
-        
-            jLabelMeta.setText(String.valueOf((int)Math.ceil(meta)));
-            jLabelPontoDeEquilíbrio.setText(String.valueOf((int)Math.ceil(pontoDeEquilibrio)));
-        }
+                break;
+            case APRIL:
+                for (Orcamento oc : orcamentos) {
+                    totalDespesaMensalPrevista += oc.getAbr();
+                }
+                for(OrcamentoServico ocs: orcamentoServico){
+                    totalPrevistoServicosDoMes += ocs.getAbr()  * new ServicoController().buscarServico(ocs.getId_servico()).getPreco();
+                }
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getAbr() * servico.getPreco();
+                break;
+            case MAY:
+                for (Orcamento oc : orcamentos) {
+                    totalDespesaMensalPrevista += oc.getMai();
+                }
+                for(OrcamentoServico ocs: orcamentoServico){
+                    totalPrevistoServicosDoMes += ocs.getMai()  * new ServicoController().buscarServico(ocs.getId_servico()).getPreco();
+                }
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getMai() * servico.getPreco();
+                break;
+            case JUNE:
+                for (Orcamento oc : orcamentos) {
+                    totalDespesaMensalPrevista += oc.getJun();
+                }
+                for(OrcamentoServico ocs: orcamentoServico){
+                    totalPrevistoServicosDoMes += ocs.getJun()  * new ServicoController().buscarServico(ocs.getId_servico()).getPreco();
+                }
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getJun() * servico.getPreco();
+                break;
+            case JULY:
+                for (Orcamento oc : orcamentos) {
+                    totalDespesaMensalPrevista += oc.getJul();
+                }
+                for(OrcamentoServico ocs: orcamentoServico){
+                    totalPrevistoServicosDoMes += ocs.getJul()  * new ServicoController().buscarServico(ocs.getId_servico()).getPreco();
+                }
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getJul() * servico.getPreco();
+                break;
+            case AUGUST:
+                for (Orcamento oc : orcamentos) {
+                    totalDespesaMensalPrevista += oc.getAgo();
+                }
+                for(OrcamentoServico ocs: orcamentoServico){
+                    totalPrevistoServicosDoMes += ocs.getAgo() * new ServicoController().buscarServico(ocs.getId_servico()).getPreco();
+                }
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getAgo() * servico.getPreco();
+                break;
+            case SEPTEMBER:
+                for (Orcamento oc : orcamentos) {
+                    totalDespesaMensalPrevista += oc.getSet();
+                }
+                for(OrcamentoServico ocs: orcamentoServico){
+                    totalPrevistoServicosDoMes += ocs.getSet()  * new ServicoController().buscarServico(ocs.getId_servico()).getPreco();
+                }
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getSet() * servico.getPreco();
+                break;
+            case OCTOBER:
+                for (Orcamento oc : orcamentos) {
+                    totalDespesaMensalPrevista += oc.getOut();
+                }
+                
+                for(OrcamentoServico ocs: orcamentoServico){           
+                    totalPrevistoServicosDoMes += ocs.getOut()  * new ServicoController().buscarServico(ocs.getId_servico()).getPreco();
+                }
        
-        if(servico.getQuantidadeRealizada() < pontoDeEquilibrio){
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getOut() * servico.getPreco();
+                break;
+            case NOVEMBER:
+                for (Orcamento oc : orcamentos) {
+                    totalDespesaMensalPrevista += oc.getNov();
+                }
+                for(OrcamentoServico ocs: orcamentoServico){
+                    totalPrevistoServicosDoMes += ocs.getNov()  * new ServicoController().buscarServico(ocs.getId_servico()).getPreco();
+                }
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getNov() * servico.getPreco();
+                break;
+            case DECEMBER:
+                for (Orcamento oc : orcamentos) {
+                    totalDespesaMensalPrevista += oc.getDez();
+                }
+                for(OrcamentoServico ocs: orcamentoServico){
+                    totalPrevistoServicosDoMes += ocs.getDez()  * new ServicoController().buscarServico(ocs.getId_servico()).getPreco();
+                }
+                previstoServicoMensal = new OrcamentoController().buscarOrcamentoServicoPeloServico(servico.getId()).getDez() * servico.getPreco();
+                break;
+        }
+        
+        
+        if(totalPrevistoServicosDoMes > 0 && margemContribuicao > 0){
+            
+            System.out.println("Total Despesas do Mes=>"+ Dinheiro.parseString(totalDespesaMensalPrevista) );
+        System.out.println("Previsto do Servico Mensal=>"+  Dinheiro.parseString(previstoServicoMensal) );
+        System.out.println("Total Previsto de todos Servicos do Mes=>" +  Dinheiro.parseString(totalPrevistoServicosDoMes));
+        System.out.println("Margem de Contribuição =>" + Dinheiro.parseString(margemContribuicao));
+            pontoDeEquilibrio = (double)((double)previstoServicoMensal/totalPrevistoServicosDoMes)*previstoServicoMensal /margemContribuicao;
+            meta /= margemContribuicao;
+        
+        }
+        System.out.println("PONTO DE EQ=>" + pontoDeEquilibrio);
+        jLabelMeta.setText(String.valueOf((int) Math.ceil(meta)));
+        jLabelPontoDeEquilíbrio.setText(String.valueOf( Math.round(pontoDeEquilibrio)));
+
+        //============================================
+        if (servico.getQuantidadeRealizada() < pontoDeEquilibrio) {
             jLabelPontoDeEquilíbrio.setForeground(vermelho);
-        }else{
+        } else {
             jLabelPontoDeEquilíbrio.setForeground(verde);
         }
-        
-        if(servico.getQuantidadeRealizada() >= ((int)(Math.ceil(meta)))){
+
+        if (servico.getQuantidadeRealizada() >= ((int) (Math.ceil(meta)))) {
             jLabelMeta.setForeground(verde);
         }
-        
-        if(pontoDeEquilibrio < 0){
+
+        if (pontoDeEquilibrio < 0) {
             jLabelPontoDeEquilíbrio.setText("PREJUÍZO");
             jLabelPontoDeEquilíbrio.setForeground(vermelho);
         }
-        
-        if(meta < 0){
+
+        if (meta < 0) {
             jLabelMeta.setText("PREJUÍZO");
             jLabelMeta.setForeground(vermelho);
         }
-        
+
+        //Tabela Produtos Utilizados
         DefaultTableModel model = (DefaultTableModel) jTableProdutosUtilizados.getModel();
         model.setRowCount(0);
         servico.getProdutos().forEach(p -> {
@@ -145,10 +267,10 @@ public class DetalhesServico extends javax.swing.JFrame {
                 Dinheiro.parseString(ec.ultimoValorPagoProduto(p.getId_produto())),
                 p.getRendimento() + "x"
             });
-        } );
-        
+        });
+
         jTableProdutosUtilizados.setModel(model);
-        
+
     }
 
     /**

@@ -10,7 +10,7 @@ import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.Estoque;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Venda;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -20,7 +20,7 @@ public class EstoqueController {
 
     public boolean atualizaEstoque(Compra compra) {
 
-        ArrayList<Item> produtosComprados = compra.getItensCompra();
+        List<Item> produtosComprados = compra.getItensCompra();
 
         for (Item i : produtosComprados) {
             Estoque estoque = new Estoque();
@@ -42,7 +42,7 @@ public class EstoqueController {
 
     public boolean atualizaEstoque(Venda venda) throws ExceptionDAO {
 
-        ArrayList<Item> produtosVendidos = venda.getItensCompra();
+        List<Item> produtosVendidos = venda.getItensCompra();
 
         for (Item i : produtosVendidos) {
             Estoque estoque = new Estoque();
@@ -60,6 +60,42 @@ public class EstoqueController {
         return true;
 
     }
+    
+    public boolean atualizaEstoqueExclusaoVenda(List<Item> produtos){
+        for(Item i: produtos){
+            Estoque estoque = new Estoque();
+            estoque.setIdProduto(i.getId_produto());
+            estoque.setQuantidade(i.getQuantidade());
+            
+            try {
+                estoque.atualizaEstoque(estoque, true);
+            } catch (ExceptionDAO e) {
+                return false;
+            }
+
+        }
+        
+        return true;
+    }
+     public boolean atualizaEstoqueExclusaoCompra(List<Item> produtos){
+        for(Item i: produtos){
+            Estoque estoque = new Estoque();
+            estoque.setIdProduto(i.getId_produto());
+            estoque.setQuantidade(i.getQuantidade() * -1);
+            
+            try {
+                estoque.atualizaEstoque(estoque, true);
+            } catch (ExceptionDAO e) {
+                return false;
+            }
+
+        }
+        
+        return true;
+    }
+
+    
+    
 
     public long somaProdutosEstoque() {
         try {

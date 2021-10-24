@@ -7,6 +7,7 @@ package BeutifulSalon.dao;
 
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.controller.EstoqueController;
+import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.RelatorioVenda;
 import BeutifulSalon.model.Venda;
@@ -57,7 +58,7 @@ public class VendaProdutoDAO {
             if (firstInsert > 0) {
                 try {
 
-                    ArrayList<Item> itens = venda.getItensCompra();
+                    List<Item> itens = venda.getItensCompra();
                     for (Item it : itens) {
 
                         pStatement = connection.prepareStatement(insertItemCompra);
@@ -119,10 +120,123 @@ public class VendaProdutoDAO {
 
     }
     
+    public boolean atualizarVenda(Venda venda, List<Item> itensAntigos){
+         
+        String deleteitemVenda = "DELETE FROM ITEM_VENDA WHERE ID_VENDA = ?";
+        String updateVenda = "UPDATE VENDA SET DATA = ?, VALORTOTAL =?, VALORDESCONTO = ?, ID_CLIENTE = ? WHERE ID_VENDA = ?";  
+        String insertItemVenda = "INSERT INTO ITEM_VENDA (PRECOUNITARIO, QUANTIDADE, PRECOTOTAL, ID_PRODUTO, ID_VENDA) "
+                + "VALUES (?,?,?,?,?)";
+
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        EstoqueController estoque = new EstoqueController();
+
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            connection.setAutoCommit(false);
+            
+            //remove itens antigos
+            
+            if(!new EstoqueController().atualizaEstoqueExclusaoVenda(itensAntigos))return false;
+           
+            pStatement = connection.prepareStatement(deleteitemVenda);
+            pStatement.setLong(1, venda.getIdVenda());
+            pStatement.execute();
+            
+            pStatement = connection.prepareStatement(updateVenda);
+            pStatement.setDate(1, java.sql.Date.valueOf(venda.getData()));
+            pStatement.setLong(2, venda.getValorTotal());
+     
+            pStatement.setLong(3, venda.getValorDesconto());
+            pStatement.setLong(4, venda.getIdCliente());
+            pStatement.setLong(5, venda.getIdVenda());
+
+            int firstUpdate = pStatement.executeUpdate();
+
+            if (firstUpdate > 0) {
+                try {
+
+                    List<Item> itens = venda.getItensCompra();
+                    for (Item it : itens) {
+
+                        pStatement = connection.prepareStatement(insertItemVenda);
+                        pStatement.setLong(1, it.getPreco());
+                        pStatement.setInt(2, it.getQuantidade());
+                        pStatement.setLong(3, it.getPrecoTotal());
+                        pStatement.setLong(4, it.getId_produto());
+                        pStatement.setLong(5, venda.getIdVenda());
+                        pStatement.executeUpdate();
+
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Erro registrar itemCompra" + e);
+                    connection.rollback();
+                    return false;
+                }
+            }else{
+                connection.rollback();
+                new EstoqueController().atualizaEstoqueExclusaoCompra(itensAntigos);
+                return false;
+            }
+
+            connection.commit();
+
+            try {
+                boolean sucesso = estoque.atualizaEstoque(venda);
+
+                if (sucesso == false) {
+                    JOptionPane.showMessageDialog(null, "Erro ao atualizar estoque");
+
+                }
+            } catch (ExceptionDAO ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao atualizar estoque" + ex);
+                return false;
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+                return false;
+            }
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return true;
+    }
+    
     public List<Venda> selecionaVendasDoAno(int anoReferente) throws ExceptionDAO{
         
-        
-        String sql = "SELECT * FROM VENDA WHERE VENDA.DATA BETWEEN ? AND ? ORDER BY DATA ASC";
+                
+        String sql = "SELECT CLIENTE.NOME AS NOME, CLIENTE.SOBRENOME AS SOBRENOME,VENDA.ID_CLIENTE, VENDA.ID_VENDA, VENDA.DATA, VENDA.VALORTOTAL, VENDA.VALORDESCONTO, PRODUTO.NOME AS NOMEPRODUTO, "
+                + "SUM(ITEM_VENDA.QUANTIDADE) AS qtdVendida FROM VENDA " +
+        "    INNER JOIN CLIENTE ON CLIENTE.ID = VENDA.ID_CLIENTE " +
+        "    INNER JOIN ITEM_VENDA ON VENDA.ID_VENDA  = ITEM_VENDA.ID_VENDA " +
+        "    INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO WHERE VENDA.DATA BETWEEN ? AND ? "
+                + "GROUP BY VENDA.ID_VENDA ORDER BY VENDA.DATA DESC";
+       
 
         List<Venda> vendas = new ArrayList<>();
         Connection connection = null;
@@ -148,8 +262,12 @@ public class VendaProdutoDAO {
                     vendaAtual.setData(rs.getDate("DATA").toLocalDate());
                     vendaAtual.setValorTotal(rs.getLong("VALORTOTAL"));
                     vendaAtual.setValorDesconto(rs.getLong("VALORDESCONTO"));
-                    vendaAtual.setIdCliente(rs.getLong("ID_CLIENTE"));
+                    vendaAtual.setIdCliente(rs.getLong("ID_CLIENTE"));      
                     vendaAtual.setIdVenda(rs.getLong("ID_VENDA"));
+                    vendaAtual.setNomeCliente(rs.getString("NOME"));
+                    vendaAtual.setSobrenomeCliente(rs.getString("SOBRENOME"));
+                    vendaAtual.setQuantidadeProdutosVendidos(rs.getInt("qtdVendida"));
+                    vendaAtual.setItensVenda(retornaItemsRelatorioVenda(vendaAtual.getIdVenda()));
                     vendas.add(vendaAtual);
                 }
             }
@@ -192,11 +310,12 @@ public class VendaProdutoDAO {
         
         
          
-        String sql = "SELECT CLIENTE.NOME AS NOME, CLIENTE.SOBRENOME AS SOBRENOME, VENDA.DATA, VENDA.VALORTOTAL, PRODUTO.NOME AS NOMEPRODUTO "
-                + "FROM VENDA " +
+        String sql = "SELECT CLIENTE.NOME AS NOME, CLIENTE.SOBRENOME AS SOBRENOME, VENDA.DATA,VENDA.ID_CLIENTE,VENDA.ID_VENDA, VENDA.VALORDESCONTO ,VENDA.VALORTOTAL, PRODUTO.NOME AS NOMEPRODUTO, "
+                + "SUM(ITEM_VENDA.QUANTIDADE) AS qtdVendida FROM VENDA " +
         "    INNER JOIN CLIENTE ON CLIENTE.ID = VENDA.ID_CLIENTE " +
         "    INNER JOIN ITEM_VENDA ON VENDA.ID_VENDA  = ITEM_VENDA.ID_VENDA " +
-        "    INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO ORDER BY VENDA.DATA DESC LIMIT 300";
+        "    INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO "
+                + "GROUP BY VENDA.ID_VENDA ORDER BY VENDA.DATA DESC";
 
         List<Venda> vendas = new ArrayList<>();
         Connection connection = null;
@@ -216,10 +335,15 @@ public class VendaProdutoDAO {
          
                     Venda vendaAtual = new Venda();
                     vendaAtual.setData(rs.getDate("DATA").toLocalDate());
+                    vendaAtual.setIdCliente(rs.getLong("ID_CLIENTE"));
+                    vendaAtual.setIdVenda(rs.getLong("ID_VENDA"));
                     vendaAtual.setValorTotal(rs.getLong("VALORTOTAL"));
                     vendaAtual.setNomeCliente(rs.getString("NOME"));
+                    vendaAtual.setValorDesconto(rs.getLong("VALORDESCONTO"));
                     vendaAtual.setSobrenomeCliente(rs.getString("SOBRENOME"));
-                    vendaAtual.setNomeProduto(rs.getString("NOMEPRODUTO"));
+                    
+                    vendaAtual.setItensVenda(retornaItemsRelatorioVenda(vendaAtual.getIdVenda()));
+                    vendaAtual.setQuantidadeProdutosVendidos(rs.getInt("qtdVendida"));
                     vendas.add(vendaAtual);
                 }
             }
@@ -253,6 +377,157 @@ public class VendaProdutoDAO {
         
         return vendas;
     }
+     public List<Venda> selecionaVendasPorNomeCliente(String nomeCliente) throws ExceptionDAO{
+        
+        
+         
+        String sql = "SELECT CLIENTE.NOME ||' '|| CLIENTE.SOBRENOME AS NOMECOMPLETO,CLIENTE.NOME AS NOME, "
+                + "CLIENTE.SOBRENOME AS SOBRENOME, VENDA.DATA, VENDA.ID_CLIENTE,VENDA.VALORTOTAL,VENDA.ID_VENDA, PRODUTO.NOME AS NOMEPRODUTO , VENDA.VALORDESCONTO, "
+                + "SUM(ITEM_VENDA.QUANTIDADE) AS qtdVendida FROM VENDA " +
+        "    INNER JOIN CLIENTE ON CLIENTE.ID = VENDA.ID_CLIENTE " +
+        "    INNER JOIN ITEM_VENDA ON VENDA.ID_VENDA  = ITEM_VENDA.ID_VENDA " +
+        "    INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO WHERE NOMECOMPLETO  LIKE '%" + nomeCliente + "%' "
+        + "GROUP BY VENDA.ID_VENDA ";
+
+        List<Venda> vendas = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+         
+                    Venda vendaAtual = new Venda();
+                    vendaAtual.setData(rs.getDate("DATA").toLocalDate());
+                    vendaAtual.setValorTotal(rs.getLong("VALORTOTAL"));
+                    vendaAtual.setIdCliente(rs.getLong("ID_CLIENTE"));
+                      vendaAtual.setIdVenda(rs.getLong("ID_VENDA"));
+                    vendaAtual.setValorDesconto(rs.getLong("VALORDESCONTO"));
+                    vendaAtual.setNomeCliente(rs.getString("NOME"));
+                    vendaAtual.setSobrenomeCliente(rs.getString("SOBRENOME"));
+                    vendaAtual.setQuantidadeProdutosVendidos(rs.getInt("qtdVendida"));
+                     vendaAtual.setItensVenda(retornaItemsRelatorioVenda(vendaAtual.getIdVenda()));
+                    vendas.add(vendaAtual);
+                }
+            }
+            
+            return vendas;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+    
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return vendas;
+    }
+     
+     public List<Venda> selecionaVendasDoAnoPorNomeCliente(String nomeCliente) throws ExceptionDAO{
+        
+        
+         
+        String sql = "SELECT CLIENTE.NOME ||' '|| CLIENTE.SOBRENOME AS NOMECOMPLETO,CLIENTE.NOME AS NOME, "
+                + "CLIENTE.SOBRENOME AS SOBRENOME, VENDA.DATA, VENDA.VALORTOTAL,VENDA.ID_CLIENTE, VENDA.ID_CLIENTE, PRODUTO.NOME AS NOMEPRODUTO , VENDA.VALORDESCONTO, "
+                + "SUM(ITEM_VENDA.QUANTIDADE) AS qtdVendida FROM VENDA " +
+        "    INNER JOIN CLIENTE ON CLIENTE.ID = VENDA.ID_CLIENTE " +
+        "    INNER JOIN ITEM_VENDA ON VENDA.ID_VENDA  = ITEM_VENDA.ID_VENDA " +
+        "    INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO"
+                + " WHERE (VENDA.DATA BETWEEN ? AND ?) AND (NOMECOMPLETO  LIKE '%" + nomeCliente + "%')  "
+        + "GROUP BY VENDA.ID_VENDA ";
+
+        List<Venda> vendas = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            long inicioDoAno = LocalDate.ofYearDay(LocalDate.now().getYear(), 1).toEpochDay() * 24 * 60 * 60 * 1000;
+            long fimDoAno = LocalDate.ofYearDay(LocalDate.now().getYear(), 1).plusYears(1).toEpochDay() * 24 * 60 * 60 * 1000; 
+            pStatement.setLong(1, inicioDoAno);
+            pStatement.setLong(2, fimDoAno);
+  
+            
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+         
+                    Venda vendaAtual = new Venda();
+                    vendaAtual.setData(rs.getDate("DATA").toLocalDate());
+                    vendaAtual.setValorTotal(rs.getLong("VALORTOTAL"));
+                    vendaAtual.setValorDesconto(rs.getLong("VALORDESCONTO"));
+                    vendaAtual.setNomeCliente(rs.getString("NOME"));
+                    vendaAtual.setIdCliente(rs.getLong("ID_CLIENTE"));
+                    vendaAtual.setIdVenda(rs.getLong("ID_VENDA"));
+                    vendaAtual.setSobrenomeCliente(rs.getString("SOBRENOME"));
+                    vendaAtual.setQuantidadeProdutosVendidos(rs.getInt("qtdVendida"));
+                     vendaAtual.setItensVenda(retornaItemsRelatorioVenda(vendaAtual.getIdVenda()));
+                    vendas.add(vendaAtual);
+                }
+            }
+            
+            return vendas;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+    
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return vendas;
+    }
+     
+     
     public int retornaQuantidadeDeVendasHoje(){
          
         String sql = "SELECT COUNT(VENDA.ID_VENDA) AS QTD FROM VENDA " +
@@ -449,7 +724,8 @@ public class VendaProdutoDAO {
      
      public List<Item> retornaItemsRelatorioVenda(long idVenda) {
         
-        String sql = "SELECT PRODUTO.NOME AS NOME , PRODUTO.MARCA AS MARCA, QUANTIDADE, PRODUTO.PRECO AS PRECO, PRECOTOTAL FROM ITEM_VENDA "
+        String sql = "SELECT PRODUTO.NOME AS NOME , PRODUTO.MARCA AS MARCA, QUANTIDADE, PRODUTO.IDPRODUTO AS IDPROD,"
+                + " PRODUTO.PRECO AS PRECO, PRECOTOTAL FROM ITEM_VENDA "
                 + "INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ID_PRODUTO"
                 + " WHERE ITEM_VENDA.ID_VENDA = ?";
         
@@ -470,8 +746,9 @@ public class VendaProdutoDAO {
             if(rs != null){
                 while(rs.next()){
    
-                   
+            
                    Item i = new Item();
+                   i.setId_produto(rs.getLong("IDPROD"));
                    i.setNome(rs.getString("NOME"));
                    i.setMarca(rs.getString("MARCA"));
                    i.setQuantidade(rs.getInt("QUANTIDADE"));
@@ -578,15 +855,10 @@ public class VendaProdutoDAO {
      */
     public long selecionaVendasPorMes(Month mes)throws ExceptionDAO {
         
+   
         
-        String sql = "SELECT CLIENTE.NOME AS NOME, CLIENTE.SOBRENOME AS SOBRENOME, VENDA.DATA, VENDA.VALORTOTAL, PRODUTO.NOME AS NOMEPRODUTO "
-                + "FROM VENDA " +
-        "    INNER JOIN CLIENTE ON CLIENTE.ID = VENDA.ID_CLIENTE " +
-        "    INNER JOIN ITEM_VENDA ON VENDA.ID_VENDA  = ITEM_VENDA.ID_VENDA " +
-        "    INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO"
-        + "  WHERE VENDA.DATA BETWEEN ? AND ?";
-        
-        String sql2 = "SELECT SUM(VENDA.VALORTOTAL) AS RENDAMENSAL FROM VENDA WHERE VENDA.DATA BETWEEN ? AND ?";
+        String sql2 = "SELECT (SUM(VENDA.VALORTOTAL) - SUM(VENDA.VALORDESCONTO)) AS RENDAMENSAL"
+                + " FROM VENDA WHERE VENDA.DATA BETWEEN ? AND ?";
         long vendas = 0;
 
         //List<Venda> vendas = new ArrayList<>();
@@ -621,6 +893,122 @@ public class VendaProdutoDAO {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro DAO" + e);
       
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return vendas;
+
+    }
+
+    public boolean excluirVenda(Venda venda) {
+        
+        
+        String sql = "DELETE FROM VENDA WHERE ID_VENDA = ?";
+        String sql2 = "DELETE FROM ITEM_VENDA WHERE ID_VENDA = ?";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        PreparedStatement pStatement2 = null;
+  
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setLong(1, venda.getIdVenda());
+            
+             pStatement2 = connection.prepareStatement(sql2);
+            pStatement2.setLong(1, venda.getIdVenda());
+            
+            return pStatement.executeUpdate() == 1 && pStatement2.executeUpdate() >= 1;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        return false;
+    }
+
+    public List<Venda> retornaComprasPorIDCliente(long idCliente) {
+        String sql = "SELECT CLIENTE.NOME AS NOME, CLIENTE.SOBRENOME AS SOBRENOME, VENDA.DATA,VENDA.ID_CLIENTE,VENDA.ID_VENDA, VENDA.VALORDESCONTO ,VENDA.VALORTOTAL, PRODUTO.NOME AS NOMEPRODUTO, "
+                + "SUM(ITEM_VENDA.QUANTIDADE) AS qtdVendida FROM VENDA " +
+        "    INNER JOIN CLIENTE ON CLIENTE.ID = VENDA.ID_CLIENTE " +
+        "    INNER JOIN ITEM_VENDA ON VENDA.ID_VENDA  = ITEM_VENDA.ID_VENDA " +
+        "    INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO "
+                + " WHERE VENDA.ID_CLIENTE = ? GROUP BY VENDA.ID_VENDA ORDER BY VENDA.DATA DESC";
+
+        List<Venda> vendas = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+    
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setLong(1, idCliente);
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+         
+                    Venda vendaAtual = new Venda();
+                    vendaAtual.setData(rs.getDate("DATA").toLocalDate());
+                    vendaAtual.setIdCliente(rs.getLong("ID_CLIENTE"));
+                    vendaAtual.setIdVenda(rs.getLong("ID_VENDA"));
+                    vendaAtual.setValorTotal(rs.getLong("VALORTOTAL"));
+                    vendaAtual.setNomeCliente(rs.getString("NOME"));
+                    vendaAtual.setValorDesconto(rs.getLong("VALORDESCONTO"));
+                    vendaAtual.setSobrenomeCliente(rs.getString("SOBRENOME"));
+                    
+                    vendaAtual.setItensVenda(retornaItemsRelatorioVenda(vendaAtual.getIdVenda()));
+                    vendaAtual.setQuantidadeProdutosVendidos(rs.getInt("qtdVendida"));
+                    vendas.add(vendaAtual);
+                }
+            }
+            
+            return vendas;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+    
 
         } finally {
 

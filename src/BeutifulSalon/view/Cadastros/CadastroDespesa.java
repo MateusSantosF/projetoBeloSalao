@@ -19,6 +19,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -453,7 +454,8 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         boolean sucesso = false;
         DespesaController dc = new DespesaController();
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
-        int ano = LocalDate.now().getYear(); // Ano referente a despesa 
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
+        int anoDaDespesa = LocalDate.now().getYear();
 
         if (jToggleButton.isSelected()) {
 
@@ -469,7 +471,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Erro ao converter data");
             }
-
+            anoDaDespesa = LocalDate.parse(dataLancamento, formatterData).getYear(); // Ano referente a despesa 
             try {
                 idOrcamento = Long.parseLong(jTextFieldIdDespesa.getText());
             } catch (NumberFormatException e) {
@@ -478,7 +480,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
             //true pois está sendo registrado um pagamento
             if (!dc.verificaExistenciaPagamento(idOrcamento, dataLancamento, true)) {
-                if(dc.verificaCompatibilidadeEntreAno(idOrcamento)){
+                if(dc.verificaCompatibilidadeEntreAno(idOrcamento, dataLancamento, dataVencimento)){
                     
                     long idDespesa = dc.verificaExistencia(idOrcamento, dataLancamento);
                   
@@ -489,7 +491,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
                         dataPagamento,
                         jFormattedTextFieldValorPago.getText(),
                         jTextAreaAnotacao.getText(),
-                        String.valueOf(ano),
+                        String.valueOf(anoDaDespesa),
                         String.valueOf(jComboBoxFormaPagamento.getSelectedItem()),
                         true
                         ); 
@@ -500,7 +502,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
                                 dataPagamento,
                                 jFormattedTextFieldValorPago.getText(), 
                                 jTextAreaAnotacao.getText(), 
-                                String.valueOf(ano), 
+                                String.valueOf(anoDaDespesa), 
                                 String.valueOf(jComboBoxFormaPagamento.getSelectedItem()), 
                                 true, 
                                 idDespesa);
@@ -524,7 +526,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
         } else {
 
-            ano = LocalDate.now().getYear();
+            
             long idOrcamento = 0;
             String dataLancamento = "";
             String dataVencimento = "";
@@ -541,18 +543,19 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Selecione uma despesa antes.");
             }
+            anoDaDespesa = LocalDate.parse(dataLancamento, formatterData).getYear();
 
             //false pois está sendo registrado apenas lançamento e vencimento
             if (!dc.verificaExistenciaPagamento(idOrcamento, dataLancamento, false)) {
                 
-                if(dc.verificaCompatibilidadeEntreAno(idOrcamento)){
+                if(dc.verificaCompatibilidadeEntreAno(idOrcamento, dataLancamento, dataVencimento)){
                      sucesso = dc.CadastrarDespesa(idOrcamento,
                         dataLancamento,
                         dataVencimento,
                         null,
                         null,
                         null,
-                        String.valueOf(ano),
+                        String.valueOf(anoDaDespesa),
                         null,
                         false
                 );

@@ -39,7 +39,7 @@ public class Cliente {
     }
 
     //Construtor não padrão
-    public Cliente( String NOME, String SOBRENOME, String EMAIL, String DATANASC,
+    public Cliente(String NOME, String SOBRENOME, String EMAIL, String DATANASC,
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR, LocalDate DATAREG) {
         this.nome = NOME;
@@ -56,7 +56,7 @@ public class Cliente {
         this.dataDeRegistro = DATAREG;
     }
 
-    public Cliente( String NOME, String SOBRENOME, String EMAIL, String DATANASC,
+    public Cliente(String NOME, String SOBRENOME, String EMAIL, String DATANASC,
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR) {
         this.nome = NOME;
@@ -72,7 +72,6 @@ public class Cliente {
         this.celular = CELULAR;
 
     }
-
 
     public int getDeOndeConheceu() {
         return deOndeConheceu;
@@ -93,9 +92,7 @@ public class Cliente {
     public void setQtdVisitas(int qtdVisitas) {
         this.qtdVisitas = qtdVisitas;
     }
-    
-    
-    
+
     public void setDeOndeConheceu(int deOndeConheceu) {
         this.deOndeConheceu = deOndeConheceu;
     }
@@ -135,6 +132,10 @@ public class Cliente {
     public String getInstagram() {
         return instagram;
     }
+    
+    public String getNomeCompleto(){
+        return nome +" "+sobrenome;
+    }
 
     public void setInstagram(String instagram) {
         this.instagram = instagram;
@@ -172,8 +173,6 @@ public class Cliente {
     public void setId(long id) {
         this.id = id;
     }
-    
-    
 
     public String getNome() {
         return nome;
@@ -322,7 +321,11 @@ public class Cliente {
         return new clienteDAO().recuperaImagemPerfil(id);
     }
     
-    public List<Cliente> listarAniversariantesDoMes() throws ExceptionDAO{
+    public long calculaTotalAnualGasto(long idCliente){
+        return new clienteDAO().calculaTotalAnualGasto(idCliente);
+    }
+
+    public List<Cliente> listarAniversariantesDoMes() throws ExceptionDAO {
         return new clienteDAO().listarAniversariantesDoMes();
     }
 
@@ -333,9 +336,13 @@ public class Cliente {
     public void atualizarUltimoEnvioEmailUltimaVisita(long id) throws ExceptionDAO {
         new clienteDAO().atualizarUltimoEnvioEmailUltimaVisita(id);
     }
-    
-   public List<Cliente> listaClientesEmailUltimaVisita() throws ExceptionDAO{
-      return new clienteDAO().listaClientesEmailUltimaVisita();
-   }
+
+    public List<Cliente> listaClientesEmailUltimaVisita() throws ExceptionDAO {
+        return new clienteDAO().listaClientesEmailUltimaVisita();
+    }
+
+    public long getQuantidadeGastaEmAgendamentosAnual() {
+        return new clienteDAO().getQuantidadeGastaEmAgendamentos(this.getId());
+    }
 
 }
