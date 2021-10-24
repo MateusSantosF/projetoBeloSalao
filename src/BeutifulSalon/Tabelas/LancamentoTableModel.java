@@ -207,9 +207,111 @@ public class LancamentoTableModel extends AbstractTableModel {
 
     }
 
-    public void getDespesasPorVencimento(int mes) {
+    public void getDespesasPorVencimento(int mes, String ano) {
+        
+        
+        if(ano.equals("")){    
+            ano = String.valueOf( LocalDate.now().getYear() );
+        }
+        getDespesasAnual(ano);
+        List<Despesa> despesaLancamento = new ArrayList<>();
+
+        switch (mes) {
+
+            case 0:
+                for (Despesa c : dados) {
+                    if (c.getVencimento().getMonth() == Month.JANUARY) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 1:
+                for (Despesa c : dados) {
+                    if (c.getVencimento().getMonth() == Month.FEBRUARY) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 2:
+                for (Despesa c : dados) {
+                    if (c.getVencimento().getMonth() == Month.MARCH) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 3:
+                for (Despesa c : dados) {
+                    if (c.getVencimento().getMonth() == Month.APRIL) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+
+            case 4:
+                for (Despesa c : dados) {
+                    if (c.getVencimento().getMonth() == Month.MAY) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+
+            case 5:
+                for (Despesa c : dados) {
+                    if (c.getVencimento().getMonth() == Month.JUNE) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 6:
+                for (Despesa c : dados) {
+                    if (c.getVencimento().getMonth() == Month.JULY) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 7:
+                for (Despesa c : dados) {
+                    if (c.getVencimento().getMonth() == Month.AUGUST) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 8:
+                for (Despesa c : dados) {
+                    if (c.getVencimento().getMonth() == Month.SEPTEMBER) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 9:
+                for (Despesa c : dados) {
+                    if (c.getVencimento().getMonth() == Month.OCTOBER) {
+                        despesaLancamento.add(c);
+                        
+                    }
+                }
+                break;
+            case 10:
+                for (Despesa c : dados) {
+                    if (c.getVencimento().getMonth() == Month.NOVEMBER) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 11:
+                for (Despesa c : dados) {
+                    if (c.getVencimento().getMonth() == Month.DECEMBER) {
+                        despesaLancamento.add(c);
+                    }
+                }
+                break;
+            case 12:
+                getDespesasAnual(ano);
+                break;
+        }
+        
         dados.clear();
-        addRow(despesaController.listarDespesasVencimento(mes));
+        addRow(despesaLancamento);
     }
 
     public void getDespesasAnual(String ano) {
