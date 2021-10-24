@@ -41,6 +41,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
         jLabel3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
         jLabel5.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
         jLabel6.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
+        jLabelExcluir.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
 
         jRadioButtonHoje.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
         jRadioButtonAmanha.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));

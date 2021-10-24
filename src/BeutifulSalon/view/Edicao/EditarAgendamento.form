@@ -6,9 +6,6 @@
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="ff" green="ff" red="ff" type="rgb"/>
     </Property>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[966, 709]"/>
-    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -678,7 +675,7 @@
                   <StringArray count="4">
                     <StringItem index="0" value="Dinheiro"/>
                     <StringItem index="1" value="Cr&#xe9;dito"/>
-                    <StringItem index="2" value="D&#xe9;bito,"/>
+                    <StringItem index="2" value="D&#xe9;bito"/>
                     <StringItem index="3" value="Pix"/>
                   </StringArray>
                 </Property>

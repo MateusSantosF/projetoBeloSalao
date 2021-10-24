@@ -64,7 +64,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jLabel13.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //UF
 
         jLabel21.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 25f)); //+ Informações
-        jToggleButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 10f)); //Alterar informações
+        jToggleButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 8f)); //Alterar informações
         jButtonSalvar.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 11f)); //Salvar
         jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Tipo do Cabelo
         jComboBoxTipoCabelo.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Box Tipo do Cabelo
@@ -84,7 +84,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         //MENU LATERAL
         jLabelAlterarFotoPerfil.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 10f)); //Alterar
         jLabelNome.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //NomeUsuario
-        jLabelIdade.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Idade
+        jLabelIdade.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); //Idade
         jLabelEmail.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Email
         jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Telefone
         jLabelTelefone.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Tel2
@@ -95,6 +95,8 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
         jLabelUltimaViisita.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Sem informações
         jLabelClienteDesde.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
         jLabelDataClienteDesde.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jLabelClienteDesde1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jLabelTotalGasto.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
         jLabel26.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Observações
         jTextAreaObservacoes.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f)); //Area Observacoes
 
@@ -610,8 +612,8 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
                             .addComponent(jLabel23))
                         .addGap(43, 43, 43)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldInstagram)))
+                            .addComponent(jTextFieldInstagram)
+                            .addComponent(jLabel27, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -624,9 +626,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
                         .addGap(28, 28, 28)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextFieldCorCabelo)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -717,7 +717,7 @@ public class DetalhesCliente extends javax.swing.JFrame implements ObservadorCli
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 767, Short.MAX_VALUE)
         );
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.CENTER);

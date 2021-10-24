@@ -101,6 +101,31 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel19.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jLabel16.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        
+        //Configurações
+        jLabel24.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
+        jCheckBoxVerificaHorarios.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jLabel23.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 15f));
+        jLabel25.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 20f));
+        jLabel30.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 20f));
+        jLabel26.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jButton2.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
+        jButtonCadastrar1.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Confirmar
+        
+        //Relatorios
+        
+        jLabel27.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
+        jLabel28.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jLabel29.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jFormattedTextFieldDataInicio.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 20f));
+        jFormattedTextFieldDataFim.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 20f));
+
+        jRadioButtonRelatorioVenda.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jRadioButtonAgendamentos.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jRadioButtonDespesas.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+
+        jButton3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
+        
 
         // ===================================================//
         DecimalFormat decimal = new DecimalFormat("#,###,###.00");

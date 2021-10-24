@@ -77,7 +77,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jTableConsultaServicoRealizado.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
 
         //COMPARATIVO SERVICOS REALIZADOS
-        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Comparativo de Serviços Realizados
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Comparativo de Serviços Realizados
         jLabel23.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 23f)); //Aqui você encontra um comparativo entre o previsto e o realizado!
         jLabel27.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Buscar por Ano
         jTableServicoComparado.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
@@ -89,8 +89,8 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jLabel15.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Lançamento em
         jLabel14.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Vencimento em
         jTextFieldAno4.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Box Busca por ano
-        jComboBoxLancamento.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Box Lançamento
-        jComboBoxVencimento.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Box Vencimento
+        jComboBoxLancamento.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 12f)); //Box Lançamento
+        jComboBoxVencimento.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 12f)); //Box Vencimento
         jButtonEditar2.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Pagar | Editar
         jTableLancamentos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
 

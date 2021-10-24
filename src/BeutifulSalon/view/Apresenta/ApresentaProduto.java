@@ -53,6 +53,28 @@ public class ApresentaProduto extends javax.swing.JPanel {
         jTableConsultaProdutos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); // tabela
         jTableCompra.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f));
         jTableVendas.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f));
+        
+        //Compras
+        jLabel11.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Compras
+        jLabel12.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f)); //Confira todas as compras para o salão!
+        jLabel13.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Buscar por produto
+        jToggleButtonAnoCompra.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 12f));
+        jComboBoxMesCompras.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 12f));
+        jLabelEditarCompra.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));//editar
+        jLabelExcluirCompra.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));//excluir
+        jTableCompra.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); // tabela
+        jLabelTotalCompras.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));//total
+        
+        //Vendas
+        jLabel6.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f));
+        jLabel7.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f));
+        jLabel8.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
+        jToggleButtonAno.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 12f));
+        jComboBoxMesVendas.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 12f));
+        jLabelEditarVenda.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
+        jLabelExcluirVenda.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
+        jTableVendas.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f));
+        jLabelTotalVendas.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
 
         CentralizaElementosTabela render = new CentralizaElementosTabela();
         ((DefaultTableCellRenderer) jTableConsultaProdutos.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);

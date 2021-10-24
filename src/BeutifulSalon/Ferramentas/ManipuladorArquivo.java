@@ -43,7 +43,7 @@ public class ManipuladorArquivo {
     private float TAMANHO_FONTE = 1;
     //Para compilar na dist
     private String diretorio = "conf.txt";
-    private String netbeans = "C:\\Users\\Mateus\\Desktop\\BeloSalaoNEW\\src\\conf.txt";
+    private String netbeans = "C:\\Users\\Visitante\\Documents\\IF_BeautifulSalon\\pNovo\\projetoBeloSalao\\projetoBeloSalao\\src\\conf.txt";
 
     public void leitor() {
         diretorio = netbeans;

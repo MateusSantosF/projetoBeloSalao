@@ -24,6 +24,7 @@
 package BeutifulSalon.view.Edicao;
 
 import BeutifulSalon.Ferramentas.ManipulaData;
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.controller.ClienteController;
 import BeutifulSalon.controller.VendaController;
@@ -38,6 +39,7 @@ import BeutifulSalon.model.Servico;
 import BeutifulSalon.model.Venda;
 import BeutifulSalon.view.modais.ModalInputMonetarios;
 import BeutifulSalon.view.modais.ModalProdutos;
+import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -70,6 +72,26 @@ public class EditarVenda extends javax.swing.JFrame implements Observador {
 
     public EditarVenda(Venda v, List<Item> itensAntigos) {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+
+        jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 35f)); 
+        jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jTextFieldNomeCliente.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel10.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jDateChooser1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabel7.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jTextFieldTotalBruto.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jCheckBoxDesconto.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 15f));
+        jTextFieldDesconto.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jTextFieldTotal.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jCheckBoxDesconto.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
+        
+        jButtonAtualizar.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jTableProdutosComprados.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f));
 
         this.idVenda = v.getIdVenda();
         this.itensAntigos = itensAntigos;

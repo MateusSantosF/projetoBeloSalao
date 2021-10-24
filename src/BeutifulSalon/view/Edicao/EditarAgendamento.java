@@ -90,6 +90,8 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
         jCheckBoxDesconto.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Desconto 
         jCheckValorAdicional.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //valor Adicional
         jButtonFinalizarEdicao.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Finalizar Edição
+        jDateChooser1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));//Data dentro
+        jTextFieldHorario.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));//Hora dentro
 
         this.agendamento = ag;
         ClienteController cc = new ClienteController();
@@ -195,7 +197,6 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(966, 709));
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -439,7 +440,7 @@ public class EditarAgendamento extends javax.swing.JFrame implements Observador,
         jLabel14.setText("Forma de Pagamento");
 
         jComboBoxFormaPagamento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBoxFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Crédito", "Débito,", "Pix" }));
+        jComboBoxFormaPagamento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dinheiro", "Crédito", "Débito", "Pix" }));
         jComboBoxFormaPagamento.setEnabled(false);
         jComboBoxFormaPagamento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {

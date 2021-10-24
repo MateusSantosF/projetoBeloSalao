@@ -100,7 +100,7 @@
                           </Group>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jPanel4" alignment="1" pref="967" max="32767" attributes="0"/>
+                      <Component id="jPanel4" alignment="1" pref="969" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -403,7 +403,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel11" alignment="0" pref="967" max="32767" attributes="0"/>
+                      <Component id="jPanel11" alignment="0" pref="969" max="32767" attributes="0"/>
                       <Component id="jPanel12" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
@@ -450,8 +450,8 @@
                                   <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabelBtnBuscarCompra" alignment="0" pref="33" max="32767" attributes="0"/>
-                                      <Component id="jTextFieldNomeClienteCompra" alignment="0" pref="33" max="32767" attributes="0"/>
+                                      <Component id="jLabelBtnBuscarCompra" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jTextFieldNomeClienteCompra" alignment="0" max="32767" attributes="0"/>
                                       <Component id="jToggleButtonAnoCompra" max="32767" attributes="0"/>
                                       <Component id="jComboBoxMesCompras" max="32767" attributes="0"/>
                                   </Group>
@@ -753,7 +753,7 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel7" pref="967" max="32767" attributes="0"/>
+                      <Component id="jPanel7" pref="969" max="32767" attributes="0"/>
                       <Component id="jPanel9" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">

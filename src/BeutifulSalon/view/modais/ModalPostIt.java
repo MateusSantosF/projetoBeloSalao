@@ -23,9 +23,11 @@
  */
 package BeutifulSalon.view.modais;
 
+import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.dao.CabeleireiroDAO;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cabeleireiro;
+import java.awt.Font;
 
 /**
  *
@@ -42,6 +44,12 @@ public class ModalPostIt extends javax.swing.JFrame {
     
      public ModalPostIt(Cabeleireiro cabeleireiro) {
         initComponents();
+        
+        ManipulaFontes mf = new ManipulaFontes();
+
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); 
+        jTextArea1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f));
+        
         
         jTextArea1.setText(cabeleireiro.getPostit());
     }
