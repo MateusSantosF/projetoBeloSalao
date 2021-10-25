@@ -998,7 +998,7 @@ public class clienteDAO {
   
         
         String agendamentos = "SELECT SUM(AGENDAMENTO.TOTAL) AS TOTAL FROM AGENDAMENTO"
-                + " WHERE ID_CLIENTE = ? AND DATA BETWEEN ? AND ?";
+                + " WHERE ID_CLIENTE = ? AND DATA BETWEEN ? AND ? AND AGENDAMENTO.REALIZADO = TRUE";
         String compras = "SELECT (SUM(VALORTOTAL) - SUM(VALORDESCONTO)) AS TOTALCOMPRAS"
                 + " FROM VENDA WHERE ID_CLIENTE = ? AND DATA BETWEEN ? AND ?";
 

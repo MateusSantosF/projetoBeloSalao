@@ -42,11 +42,11 @@ public class ManipuladorArquivo {
 
     private float TAMANHO_FONTE = 1;
     //Para compilar na dist
-    private String diretorio = "conf.txt";
-    private String netbeans = "C:\\Users\\Visitante\\Documents\\IF_BeautifulSalon\\pNovo\\projetoBeloSalao\\projetoBeloSalao\\src\\conf.txt";
+    private String diretorio = "C:\\Users\\Mateus\\Desktop\\BeloSalaoNEW\\src\\conf.txt";
+    private String netbeans = "";
 
     public void leitor() {
-        diretorio = netbeans;
+        
         File file = new File(diretorio);
         if(!file.exists()){
             try {
@@ -83,7 +83,7 @@ public class ManipuladorArquivo {
     }
 
     public void escritor(float tamanho) {
-    diretorio = netbeans;
+ 
         BufferedWriter bufferedReader = null;
         File file = new File(diretorio);
         FileWriter writer = null;
@@ -105,7 +105,7 @@ public class ManipuladorArquivo {
 
                 file.delete();
 
-                file = new File("C:\\Users\\Mateus\\Desktop\\BeloSalaoNEW\\src\\conf.txt");
+                file = new File(diretorio);
 
                 try {
                     writer = new FileWriter(file, true);

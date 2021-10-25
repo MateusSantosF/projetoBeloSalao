@@ -30,6 +30,7 @@ import BeutifulSalon.dao.VendaProdutoDAO;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.RelatorioAgendamento;
+import BeutifulSalon.model.RelatorioDespesa;
 import BeutifulSalon.model.RelatorioVenda;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -86,7 +87,7 @@ public class RelatorioController {
 
             try {
 
-                JasperReport j = JasperCompileManager.compileReport("src\\RelatorioVendas.jrxml");
+                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioVendas.jrxml");
                 JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
 
                 JDialog tela = new JDialog();
@@ -142,7 +143,58 @@ public class RelatorioController {
 
             try {
 
-                JasperReport j = JasperCompileManager.compileReport("src\\RelatorioDeAgendamentos.jrxml");
+                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioDeAgendamentos.jrxml");
+                JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
+
+                JDialog tela = new JDialog();
+                tela.setSize(1080, 720);
+
+                JRViewer painel = new JRViewer(rp);
+
+                tela.getContentPane().add(painel);
+
+                tela.setVisible(true);
+
+            } catch (JRException e) {
+
+                JOptionPane.showMessageDialog(null, e);
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+    
+    
+     public boolean gerarRelatorioDespesas(String dataInicio, String dataFim) {
+
+        if (Valida.isData(dataInicio) && Valida.isData(dataFim)) {
+            ManipulaData md = new ManipulaData();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+            LocalDate inicio = LocalDate.parse(dataInicio, formatter);
+            LocalDate fim = LocalDate.parse(dataFim, formatter);
+
+            List<RelatorioDespesa> datasource = new DespesaController().listarDespesasRelatorio(md.meiaNoite(inicio), md.meiaNoite(fim));
+      
+            long totalFinal = 0;
+
+            for (RelatorioDespesa r : datasource) {
+    
+                totalFinal += r.getValorPago();
+            }
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("DataInicio", inicio.format(formatterData));
+            params.put("DataFim", fim.format(formatterData));
+            params.put("TotalFinal", Dinheiro.parseString(totalFinal));
+            params.put("numeroTotalDespesas", String.valueOf(datasource.size()));
+
+            try {
+
+                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioDeDespesas.jrxml");
                 JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
 
                 JDialog tela = new JDialog();

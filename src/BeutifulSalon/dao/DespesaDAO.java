@@ -7,6 +7,7 @@ package BeutifulSalon.dao;
 
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.model.Despesa;
+import BeutifulSalon.model.RelatorioDespesa;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -772,6 +773,75 @@ public class DespesaDAO {
             }
         }
         
+        return despesas;
+    }
+
+    public List<RelatorioDespesa> listarDespesasRelatorio(long inicio, long fim) {
+        
+        String sql = "SELECT ORCAMENTO.NOME AS NOMEDESPESA,ID_DESPESA, DATALANCAMENTO, DATAVENCIMENTO, DATAPAGAMENTO, STATUS,"
+                     + " VALORPAGO, DESPESAMENSAL.ANO, ANOTACAO, FORMAPAGAMENTO FROM DESPESAMENSAL" +
+                       " INNER JOIN ORCAMENTO ON ORCAMENTO.ID_ORCAMENTO = DESPESAMENSAL.ID_ORCAMENTO"
+                  + " WHERE DATALANCAMENTO BETWEEN ? AND ?";
+        
+        List<RelatorioDespesa> despesas = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        
+        try{
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            
+            pStatement.setLong(1, inicio); 
+            pStatement.setLong(2, fim); 
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                    RelatorioDespesa despesaAtual = new RelatorioDespesa();
+                    
+                    despesaAtual.setNomeDespesa(rs.getString("NOMEDESPESA"));
+                    despesaAtual.setIdDespesa(rs.getLong("ID_DESPESA"));
+                    despesaAtual.setLancameto(rs.getDate("DATALANCAMENTO").toLocalDate());
+                    despesaAtual.setVencimento(rs.getDate("DATAVENCIMENTO").toLocalDate());
+                    despesaAtual.setAno(rs.getString("ANO"));
+                    despesaAtual.setStatus(rs.getBoolean("STATUS"));
+                    despesaAtual.setValorPago(rs.getLong("VALORPAGO"));
+                    despesaAtual.setFormaPagamento(rs.getString("FORMAPAGAMENTO")); 
+                    
+                    if(rs.getDate("DATAPAGAMENTO") == null){
+                        despesaAtual.setPagamento(null);
+                    }else{
+                        despesaAtual.setPagamento(rs.getDate("DATAPAGAMENTO").toLocalDate());     
+                    }             
+                    despesaAtual.setAnotacao(rs.getString("ANOTACAO"));            
+                    despesas.add(despesaAtual);
+                }
+            }
+            
+            return despesas;
+            
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, "Erro DespesaDAO " + e);
+        } finally {
+            
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
         return despesas;
     }
 

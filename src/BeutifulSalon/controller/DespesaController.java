@@ -10,6 +10,7 @@ import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Despesa;
 import BeutifulSalon.model.Dinheiro;
+import BeutifulSalon.model.RelatorioDespesa;
 import BeutifulSalon.view.Edicao.EditarDespesa;
 import java.awt.HeadlessException;
 import java.text.SimpleDateFormat;
@@ -233,6 +234,15 @@ public class DespesaController {
         return true;
     }
 
+    public List<RelatorioDespesa> listarDespesasRelatorio(long inicio, long fim){
+        
+        try {
+           return new RelatorioDespesa().listarDespesasRelatorio(inicio, fim);
+        } catch (ExceptionDAO e) {           
+            return null;
+        }
+        
+    }
     public boolean verificaExistenciaPagamento(long idOrcamento, String dataPagamento, boolean pagamento) {
 
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
