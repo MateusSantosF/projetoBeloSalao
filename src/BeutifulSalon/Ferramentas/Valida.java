@@ -109,6 +109,23 @@ public class Valida {
 
     }
     
+     public static boolean isDataSemNotificar(String data){
+        
+        String dateFormat = "dd/MM/uuuu";
+         
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter
+                .ofPattern(dateFormat)
+                .withResolverStyle(ResolverStyle.STRICT);
+        try {
+            LocalDate date = LocalDate.parse(data, dateTimeFormatter);
+            return true;
+        } catch (DateTimeParseException e) {
+           // JOptionPane.showMessageDialog(null, "Erro ao validar data " + e);
+            return false;
+        }
+
+    }
+    
     public static boolean isEmail(String email){
         Matcher matcher = patternEmail.matcher(email);        
         boolean sucesso = matcher.matches();

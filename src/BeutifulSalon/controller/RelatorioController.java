@@ -143,7 +143,7 @@ public class RelatorioController {
 
             try {
 
-                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioDeAgendamentos.jrxml");
+                JasperReport j = JasperCompileManager.compileReport("src\\RelatorioDeAgendamentos.jrxml");
                 JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
 
                 JDialog tela = new JDialog();
@@ -166,9 +166,8 @@ public class RelatorioController {
 
         return true;
     }
-    
-    
-     public boolean gerarRelatorioDespesas(String dataInicio, String dataFim) {
+
+    public boolean gerarRelatorioDespesas(String dataInicio, String dataFim) {
 
         if (Valida.isData(dataInicio) && Valida.isData(dataFim)) {
             ManipulaData md = new ManipulaData();
@@ -178,11 +177,11 @@ public class RelatorioController {
             LocalDate fim = LocalDate.parse(dataFim, formatter);
 
             List<RelatorioDespesa> datasource = new DespesaController().listarDespesasRelatorio(md.meiaNoite(inicio), md.meiaNoite(fim));
-      
+
             long totalFinal = 0;
 
             for (RelatorioDespesa r : datasource) {
-    
+
                 totalFinal += r.getValorPago();
             }
 
@@ -205,6 +204,148 @@ public class RelatorioController {
                 tela.getContentPane().add(painel);
 
                 tela.setVisible(true);
+
+            } catch (JRException e) {
+
+                JOptionPane.showMessageDialog(null, e);
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean gerarRelatorioVenda(String dataInicio, String dataFim, String diretorio) {
+
+        if (Valida.isData(dataInicio) && Valida.isData(dataFim)) {
+
+            ManipulaData md = new ManipulaData();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+            LocalDate inicio = LocalDate.parse(dataInicio, formatter);
+            LocalDate fim = LocalDate.parse(dataFim, formatter);
+
+            if (inicio.isAfter(fim)) {
+                return false;
+            }
+
+            List<RelatorioVenda> datasource = new VendaProdutoDAO().relatorioVendas(md.meiaNoite(inicio), md.meiaNoiteAmanha(fim));
+            long totalVendido = 0;
+            long totalDescontos = 0;
+
+            for (RelatorioVenda dt : datasource) {
+                totalVendido += Dinheiro.parseCent(Dinheiro.retiraCaracteres(dt.getTotal()));
+                totalDescontos += Dinheiro.parseCent(Dinheiro.retiraCaracteres(dt.getDesconto()));
+            }
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("DataInicio", inicio.format(formatterData));
+            params.put("DataFim", fim.format(formatterData));
+            params.put("TotalVendas", Dinheiro.parseString(totalVendido));
+            params.put("TotalDescontos", Dinheiro.parseString(totalDescontos));
+            params.put("TotalFinal", Dinheiro.parseString(totalVendido - totalDescontos));
+            params.put("numeroTotalVendas", String.valueOf(datasource.size()));
+
+            try {
+
+                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioVendas.jrxml");
+                JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
+
+                JasperExportManager.exportReportToPdfFile(rp, diretorio);
+
+                return true;
+            } catch (JRException e) {
+
+                // JOptionPane.showMessageDialog(null, e);
+                return true;
+            }
+
+        } else {
+
+            return false;
+        }
+
+    }
+
+    public boolean gerarRelatorioAgendamento(String dataInicio, String dataFim, String diretorio) {
+
+        if (Valida.isData(dataInicio) && Valida.isData(dataFim)) {
+            ManipulaData md = new ManipulaData();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+            LocalDate inicio = LocalDate.parse(dataInicio, formatter);
+            LocalDate fim = LocalDate.parse(dataFim, formatter);
+
+            List<RelatorioAgendamento> datasource = new AgendamentoDAO().listarAgendamentosRelatorio(md.meiaNoite(inicio), md.meiaNoiteAmanha(fim));
+            long totalAdicional = 0;
+            long totalDescontos = 0;
+            long totalFinal = 0;
+
+            for (RelatorioAgendamento r : datasource) {
+                totalAdicional += Dinheiro.parseCent(Dinheiro.retiraCaracteres(r.getValorAdicional()));
+                totalDescontos += Dinheiro.parseCent(Dinheiro.retiraCaracteres(r.getDesconto()));
+                totalFinal += Dinheiro.parseCent(Dinheiro.retiraCaracteres(r.getTotal()));
+            }
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("DataInicio", inicio.format(formatterData));
+            params.put("DataFim", fim.format(formatterData));
+            params.put("totalAdicionais", Dinheiro.parseString(totalAdicional));
+            params.put("totalDesconto", "-" + Dinheiro.parseString(totalDescontos));
+            params.put("TotalFinal", Dinheiro.parseString(totalFinal));
+            params.put("subTotal", Dinheiro.parseString(totalFinal + totalDescontos - totalAdicional));
+            params.put("numeroTotalAgendamentos", String.valueOf(datasource.size()));
+
+            try {
+
+                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioDeAgendamentos.jrxml");
+                JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
+                JasperExportManager.exportReportToPdfFile(rp, diretorio);
+
+            } catch (JRException e) {
+
+                // JOptionPane.showMessageDialog(null, e);
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean gerarRelatorioDespesas(String dataInicio, String dataFim, String diretorio) {
+
+        if (Valida.isData(dataInicio) && Valida.isData(dataFim)) {
+            ManipulaData md = new ManipulaData();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+            LocalDate inicio = LocalDate.parse(dataInicio, formatter);
+            LocalDate fim = LocalDate.parse(dataFim, formatter);
+
+            List<RelatorioDespesa> datasource = new DespesaController().listarDespesasRelatorio(md.meiaNoite(inicio), md.meiaNoite(fim));
+
+            long totalFinal = 0;
+
+            for (RelatorioDespesa r : datasource) {
+
+                totalFinal += r.getValorPago();
+            }
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("DataInicio", inicio.format(formatterData));
+            params.put("DataFim", fim.format(formatterData));
+            params.put("TotalFinal", Dinheiro.parseString(totalFinal));
+            params.put("numeroTotalDespesas", String.valueOf(datasource.size()));
+
+            try {
+
+                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioDeDespesas.jrxml");
+                JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
+
+                JasperExportManager.exportReportToPdfFile(rp, diretorio);
 
             } catch (JRException e) {
 

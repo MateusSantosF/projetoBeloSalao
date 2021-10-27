@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view;
 
+import BeutifulSalon.Ferramentas.EmailAutomaticoRelatorio;
 import BeutifulSalon.Ferramentas.JavaMail;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.Valida;
@@ -592,7 +593,17 @@ public class MainMenu extends javax.swing.JFrame implements Observador {
         Cabeleireiro cab = cc.selecionaCabeleireiro();
         List<Cliente> clientes = new ClienteController().listarAniversariantesDoMes();
         List<Cliente> clientesUltimoEnvio = new ClienteController().listaClientesEmailUltimaVisita();
+        
+        new Thread() {
 
+                @Override
+                public void run() {
+                    EmailAutomaticoRelatorio emailAutomaticoRelatorio = new EmailAutomaticoRelatorio();
+                    
+                    emailAutomaticoRelatorio.enviarRelatorio();
+                }
+        }.start();
+        
         if (clientes != null || clientesUltimoEnvio != null) {
             new Thread() {
 

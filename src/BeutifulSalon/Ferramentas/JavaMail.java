@@ -8,11 +8,14 @@ package BeutifulSalon.Ferramentas;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.model.Email;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -38,6 +41,7 @@ public class JavaMail {
 
     public static final int EMAIL_PADRAO = 0;
     public static final int EMAIL_ANIVERSARIO_ULTIMAVISITA = 1;
+    public static final int EMAIL_RELATORIO = 2;
 
     private Email email;
     private int tipo;
@@ -78,7 +82,6 @@ public class JavaMail {
         });
 
         //session.setDebug(true);
-
         Message message = prepareMessage(session, myAccountEmail, email.getDestinatario(), email, tipo);
 
         try {
@@ -102,37 +105,34 @@ public class JavaMail {
         try {
 
             Message message = new MimeMessage(session);
-         
+
             message.setFrom(new InternetAddress(myAccountEmail));
 
             message.setRecipient(
                     Message.RecipientType.TO,
                     new InternetAddress(recepient));
 
-            message.setSubject( email.getTitulo() );
+            message.setSubject(email.getTitulo());
 
             if (email.getDiretorioArquivo() != null && email.getDiretorioArquivo().length() > 0) {
-                
 
                 // Criando a parte que vai tratar a imagem
                 MimeMultipart multipart = new MimeMultipart("related");
-              
 
                 if (tipo == EMAIL_PADRAO) {
-                    
-                  // Corpo da mensagem
-                  BodyPart messageBodyPart = new MimeBodyPart();
-                  String htmlText = "<p>" + email.getTexto() + "</p>";
-                  
-                  
-                  messageBodyPart.setContent(email.getTexto(), "text/html; charset=utf-8");
-                  
-                  // Add
-                  multipart.addBodyPart(messageBodyPart);
-                  
+
+                    // Corpo da mensagem
+                    BodyPart messageBodyPart = new MimeBodyPart();
+
+                    String htmlText = "<p>" + email.getTexto() + "</p>";
+
+                    messageBodyPart.setContent(email.getTexto(), "text/html; charset=utf-8");
+
+                    // Add
+                    multipart.addBodyPart(messageBodyPart);
+
                     messageBodyPart = new MimeBodyPart();
-                    
-                    
+
                     DataSource file = new FileDataSource(email.getDiretorioArquivo());
 
                     messageBodyPart.setDataHandler(new DataHandler(file));
@@ -141,16 +141,16 @@ public class JavaMail {
 
                     // Add arquivo
                     multipart.addBodyPart(messageBodyPart);
-                    
+
                     // Juntando tudo
                     message.setContent(multipart, "charset=UTF-8");
                 }
 
                 if (tipo == EMAIL_ANIVERSARIO_ULTIMAVISITA) {
-                    
+
                     // Corpo da mensagem
                     BodyPart messageBodyPart = new MimeBodyPart();
-                    String htmlText = "<p>" + email.getTexto() + "</p>"  + "<img src='cid:image' />";
+                    String htmlText = "<p>" + email.getTexto() + "</p>" + "<img src='cid:image' />";
 
                     messageBodyPart.setContent(htmlText, "text/html; charset=utf-8");
                     // Add
@@ -159,38 +159,36 @@ public class JavaMail {
                     File file = null;
                     try {
                         file = File.createTempFile("temp" + LocalDate.now().toEpochDay(), ".png");
-                        if(file.exists()){
-                          
-                            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file)); 
-                            bos.write(email.getAnexo()); 
-                            bos.close(); 
-                        }else{
+                        if (file.exists()) {
+
+                            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                            bos.write(email.getAnexo());
+                            bos.close();
+                        } else {
                             System.out.println("NAO EXISTE KKKKKKKK");
                         }
-                        
+
                         DataSource t = new FileDataSource(file.getAbsolutePath());
                         messageBodyPart.setDataHandler(new DataHandler(t));
-                        messageBodyPart.setHeader( "Content-ID", "<image>" );
+                        messageBodyPart.setHeader("Content-ID", "<image>");
                         messageBodyPart.setFileName(email.getNomeDoArquivo());
-                        
+
                     } catch (IOException e) {
-                        
+
                         System.out.println(e);
                     }
-                    
-                  
 
                     // Add arquivo
                     multipart.addBodyPart(messageBodyPart);
-    
+
                     // Juntando tudo
                     message.setContent(multipart, "text/html; charset=utf-8");
                 }
 
             } else {
-                System.out.println("AQUII");
+              
                 MimeMultipart multipart = new MimeMultipart("related");
-                
+
                 BodyPart messageBodyPart = new MimeBodyPart();
                 String htmlText = "<p>" + email.getTexto() + "</p>";
 
@@ -198,6 +196,36 @@ public class JavaMail {
 
                 multipart.addBodyPart(messageBodyPart);
                 message.setContent(multipart);
+            }
+
+            if (tipo == EMAIL_RELATORIO) {
+
+                MimeMultipart multipart = new MimeMultipart("related");
+                // Corpo da mensagem
+                BodyPart messageBodyPart = new MimeBodyPart();
+                String htmlText = "<p>" + email.getTexto() + "</p>";
+
+                messageBodyPart.setContent(email.getTexto(), "text/html; charset=utf-8");
+
+                // Add 
+                multipart.addBodyPart(messageBodyPart);
+                // Add Arquivos
+
+                List<String> anexos = email.getAnexos();
+                for (int i = 0; i < anexos.size(); i++) {
+                    try {
+                        messageBodyPart = new MimeBodyPart();
+
+                        DataSource file = new FileDataSource(anexos.get(i));
+                        messageBodyPart.setDataHandler(new DataHandler(file));
+                        messageBodyPart.setFileName(email.getNomeDoArquivo(i));
+                        multipart.addBodyPart(messageBodyPart);
+                    } catch (MessagingException e) {
+                    }
+
+                }
+                // Juntando tudo
+                message.setContent(multipart, "charset=UTF-8");
             }
 
             return message;

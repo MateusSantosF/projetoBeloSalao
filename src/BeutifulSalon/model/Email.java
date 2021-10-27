@@ -22,6 +22,7 @@ public class Email {
     private String Titulo;
     private String Texto;
     private byte[] anexo;
+    private List<String> anexos;
     private boolean enviar;
     private int periodoReenvio;
 
@@ -50,6 +51,15 @@ public class Email {
         return anexo;
     }
 
+    public List<String> getAnexos() {
+        return anexos;
+    }
+
+    public void setAnexos(List<String> anexos) {
+        this.anexos = anexos;
+    }
+    
+
     public int getPeriodoReenvio() {
         return periodoReenvio;
     }
@@ -57,6 +67,8 @@ public class Email {
     public void setPeriodoReenvio(int periodoReenvio) {
         this.periodoReenvio = periodoReenvio;
     }
+
+    
 
     public void setAnexo(byte[] anexo) {
         this.anexo = anexo;
@@ -98,6 +110,19 @@ public class Email {
 
         if (this.getDiretorioArquivo() != null) {
             String diretorio = this.getDiretorioArquivo();
+            String nome = diretorio.substring(diretorio.lastIndexOf("\\") + 1, diretorio.lastIndexOf("."));
+            String extensao = diretorio.substring(diretorio.lastIndexOf("."));
+            return nome + extensao;
+        } else {
+            return "Não existem arquivos anexados";
+        }
+
+    }
+    
+     public String getNomeDoArquivo(int index) {
+
+        if (anexos.get(index) != null) {
+            String diretorio = anexos.get(index);
             String nome = diretorio.substring(diretorio.lastIndexOf("\\") + 1, diretorio.lastIndexOf("."));
             String extensao = diretorio.substring(diretorio.lastIndexOf("."));
             return nome + extensao;
