@@ -75,7 +75,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jCheckBoxDesconto.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Desconto 
         jCheckValorAdicional.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //valor adicional
         jButtonFinalizarCompra.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Finalizar Agendamento
-
+        jDateChooser1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 12f));
         jToggleButton.setText("Pagamento Realizado");
         jComboBoxFormaPagamento.setEnabled(true);
         Color verde = new Color(57, 201, 114);

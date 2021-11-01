@@ -28,7 +28,6 @@ import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.AgendamentoDAO;
 import BeutifulSalon.dao.VendaProdutoDAO;
 import BeutifulSalon.model.Dinheiro;
-import BeutifulSalon.model.Item;
 import BeutifulSalon.model.RelatorioAgendamento;
 import BeutifulSalon.model.RelatorioDespesa;
 import BeutifulSalon.model.RelatorioVenda;
@@ -36,7 +35,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
@@ -47,12 +48,18 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.swing.JRViewer;
+import net.sf.jasperreports.swing.JRViewerToolbar;
+import net.sf.jasperreports.view.JRSaveContributor;
+import net.sf.jasperreports.view.save.JRDocxSaveContributor;
+import net.sf.jasperreports.view.save.JRPdfSaveContributor;
 
 /**
  *
  * @author Mateus
  */
 public class RelatorioController {
+
+    private String localAtual = "src";
 
     public boolean gerarRelatorioVenda(String dataInicio, String dataFim) {
 
@@ -87,13 +94,13 @@ public class RelatorioController {
 
             try {
 
-                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioVendas.jrxml");
+                JasperReport j = JasperCompileManager.compileReport(localAtual + "\\RelatorioVendas.jrxml");
                 JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
 
                 JDialog tela = new JDialog();
                 tela.setSize(1080, 720);
 
-                JRViewer painel = new JRViewer(rp);
+                JRViewer painel = new MyJRViewer(rp);
 
                 tela.getContentPane().add(painel);
 
@@ -110,6 +117,27 @@ public class RelatorioController {
             return false;
         }
 
+    }
+
+    public class MyJRViewer extends JRViewer {
+        //define the constructor that you use
+
+        public MyJRViewer(JasperPrint jasperPrint) {
+            super(jasperPrint);
+        }
+
+        @Override
+        protected JRViewerToolbar createToolbar() {
+            JRViewerToolbar toolbar = super.createToolbar();
+
+            Locale locale = viewerContext.getLocale();
+            ResourceBundle resBundle = viewerContext.getResourceBundle();
+            JRPdfSaveContributor pdf = new JRPdfSaveContributor(locale, resBundle);
+            JRDocxSaveContributor docx = new JRDocxSaveContributor(locale, resBundle);
+            toolbar.setSaveContributors(new JRSaveContributor[]{pdf, docx});
+
+            return toolbar;
+        }
     }
 
     public boolean gerarRelatorioAgendamento(String dataInicio, String dataFim) {
@@ -143,13 +171,13 @@ public class RelatorioController {
 
             try {
 
-                JasperReport j = JasperCompileManager.compileReport("src\\RelatorioDeAgendamentos.jrxml");
+                JasperReport j = JasperCompileManager.compileReport(localAtual + "\\RelatorioDeAgendamentos.jrxml");
                 JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
 
                 JDialog tela = new JDialog();
                 tela.setSize(1080, 720);
 
-                JRViewer painel = new JRViewer(rp);
+                JRViewer painel = new MyJRViewer(rp);
 
                 tela.getContentPane().add(painel);
 
@@ -193,13 +221,13 @@ public class RelatorioController {
 
             try {
 
-                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioDeDespesas.jrxml");
+                JasperReport j = JasperCompileManager.compileReport(localAtual + "\\RelatorioDeDespesas.jrxml");
                 JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
 
                 JDialog tela = new JDialog();
                 tela.setSize(1080, 720);
 
-                JRViewer painel = new JRViewer(rp);
+                JRViewer painel = new MyJRViewer(rp);
 
                 tela.getContentPane().add(painel);
 
@@ -250,7 +278,7 @@ public class RelatorioController {
 
             try {
 
-                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioVendas.jrxml");
+                JasperReport j = JasperCompileManager.compileReport(localAtual + "\\RelatorioVendas.jrxml");
                 JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
 
                 JasperExportManager.exportReportToPdfFile(rp, diretorio);
@@ -300,7 +328,7 @@ public class RelatorioController {
 
             try {
 
-                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioDeAgendamentos.jrxml");
+                JasperReport j = JasperCompileManager.compileReport(localAtual + "\\RelatorioDeAgendamentos.jrxml");
                 JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
                 JasperExportManager.exportReportToPdfFile(rp, diretorio);
 
@@ -342,7 +370,7 @@ public class RelatorioController {
 
             try {
 
-                JasperReport j = JasperCompileManager.compileReport("Relatorios\\RelatorioDeDespesas.jrxml");
+                JasperReport j = JasperCompileManager.compileReport(localAtual + "\\RelatorioDeDespesas.jrxml");
                 JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
 
                 JasperExportManager.exportReportToPdfFile(rp, diretorio);

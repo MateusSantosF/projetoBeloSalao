@@ -36,14 +36,15 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
      * Creates new form CadastroDespesa
      */
     private ModalOrcamentoPrevisto modal = null;
+    private long idDespesa = -1;
 
     public CadastroDespesa() {
         initComponents();
-        
-        ManipulaFontes mf = new ManipulaFontes(); ;
-        
+
+        ManipulaFontes mf = new ManipulaFontes();;
+
         jLabel9.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f)); //Pagamento de Despesa
-        jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //ID
+
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Nome da Despesa
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data de Lançamento
         jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Data de Vencimento
@@ -56,24 +57,22 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         jDateChooserLacamento.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jFormattedTextFieldValorPago.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
 
-
         jToggleButton.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Pagamento Pendente 
         jButtonCadastrar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cadastrar
-        
+
         DecimalFormat decimal = new DecimalFormat("#,###,###.00");
         NumberFormatter numFormatter = new NumberFormatter(decimal);
         numFormatter.setFormat(decimal);
         numFormatter.setAllowsInvalid(false);
         DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
         jFormattedTextFieldValorPago.setFormatterFactory(dfFactory);
-        
+
         jToggleButton.setText("Pagamento Pendente");
-      
+
         jComboBoxFormaPagamento.setEnabled(false);
         Color vermelho = new Color(248, 67, 69);
         jToggleButton.setBackground(vermelho);
-        
-    
+
     }
 
     /**
@@ -98,8 +97,6 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         jTextAreaAnotacao = new javax.swing.JTextArea();
         jLabel10 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextFieldIdDespesa = new javax.swing.JTextField();
         jTextFieldNomeDespesa = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -194,7 +191,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
                         .addComponent(jFormattedTextFieldValorPago)
                         .addComponent(jDateChooserDataPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,17 +217,6 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Nome da Despesa");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel2.setText("ID");
-
-        jTextFieldIdDespesa.setEditable(false);
-        jTextFieldIdDespesa.setBackground(new java.awt.Color(255, 255, 255));
-        jTextFieldIdDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTextFieldIdDespesa.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextFieldIdDespesa.setDisabledTextColor(new java.awt.Color(0, 0, 0));
-        jTextFieldIdDespesa.setEnabled(false);
-        jTextFieldIdDespesa.setFocusable(false);
 
         jTextFieldNomeDespesa.setEditable(false);
         jTextFieldNomeDespesa.setBackground(new java.awt.Color(255, 255, 255));
@@ -277,44 +263,35 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jToggleButton, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                            .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(60, 60, 60))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                                    .addComponent(jLabel2)
-                                                    .addGap(37, 37, 37))
-                                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                                    .addComponent(jTextFieldIdDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGap(22, 22, 22)))
-                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addGroup(jPanel3Layout.createSequentialGroup()
-                                                    .addComponent(jTextFieldNomeDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                    .addComponent(jLabel3))
-                                                .addComponent(jLabel1)))
+                                        .addComponent(jLabel1)
                                         .addComponent(jDateChooserLacamento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(jLabel5)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jTextFieldNomeDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel3)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jDateChooserVencimento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(10, 10, 10)))
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(486, 486, 486)
-                        .addComponent(jToggleButton, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,16 +301,12 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jTextFieldIdDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextFieldNomeDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextFieldNomeDespesa, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jDateChooserLacamento, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -381,8 +354,10 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -418,7 +393,7 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
     }//GEN-LAST:event_jToggleButtonPropertyChange
 
     private void jToggleButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToggleButtonMousePressed
-        
+
         if (!jToggleButton.isSelected()) {
             jToggleButton.setText("Pagamento Realizado");
             jTextAreaAnotacao.setEnabled(true);
@@ -438,15 +413,15 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
         }
 
     }//GEN-LAST:event_jToggleButtonMousePressed
-    
-    private void limparCampos(){
+
+    private void limparCampos() {
+        idDespesa = -1;
         jTextAreaAnotacao.setText("");
-        jTextFieldIdDespesa.setText("");
         jTextFieldNomeDespesa.setText("");
         jFormattedTextFieldValorPago.setText("");
     }
     private void jToggleButtonStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jToggleButtonStateChanged
- 
+
     }//GEN-LAST:event_jToggleButtonStateChanged
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
@@ -472,53 +447,52 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
                 JOptionPane.showMessageDialog(null, "Erro ao converter data");
             }
             anoDaDespesa = LocalDate.parse(dataLancamento, formatterData).getYear(); // Ano referente a despesa 
-            try {
-                idOrcamento = Long.parseLong(jTextFieldIdDespesa.getText());
-            } catch (NumberFormatException e) {
+
+            if (idDespesa > 0) {
+                idOrcamento = idDespesa;
+            } else {
                 JOptionPane.showMessageDialog(null, "Selecione uma despesa antes.");
             }
 
             //true pois está sendo registrado um pagamento
             if (!dc.verificaExistenciaPagamento(idOrcamento, dataLancamento, true)) {
-                if(dc.verificaCompatibilidadeEntreAno(idOrcamento, dataLancamento, dataVencimento)){
-                    
+                if (dc.verificaCompatibilidadeEntreAno(idOrcamento, dataLancamento, dataVencimento)) {
+
                     long idDespesa = dc.verificaExistencia(idOrcamento, dataLancamento);
-                  
-                    if(idDespesa == 0){
+
+                    if (idDespesa == 0) {
                         sucesso = dc.CadastrarDespesa(idOrcamento,
-                        dataLancamento,
-                        dataVencimento,
-                        dataPagamento,
-                        jFormattedTextFieldValorPago.getText(),
-                        jTextAreaAnotacao.getText(),
-                        String.valueOf(anoDaDespesa),
-                        String.valueOf(jComboBoxFormaPagamento.getSelectedItem()),
-                        true
-                        ); 
-                    }else{
-                        sucesso = dc.atualizarDespesa(idOrcamento, 
-                                dataLancamento, 
+                                dataLancamento,
                                 dataVencimento,
                                 dataPagamento,
-                                jFormattedTextFieldValorPago.getText(), 
-                                jTextAreaAnotacao.getText(), 
-                                String.valueOf(anoDaDespesa), 
-                                String.valueOf(jComboBoxFormaPagamento.getSelectedItem()), 
-                                true, 
+                                jFormattedTextFieldValorPago.getText(),
+                                jTextAreaAnotacao.getText(),
+                                String.valueOf(anoDaDespesa),
+                                String.valueOf(jComboBoxFormaPagamento.getSelectedItem()),
+                                true
+                        );
+                    } else {
+                        sucesso = dc.atualizarDespesa(idOrcamento,
+                                dataLancamento,
+                                dataVencimento,
+                                dataPagamento,
+                                jFormattedTextFieldValorPago.getText(),
+                                jTextAreaAnotacao.getText(),
+                                String.valueOf(anoDaDespesa),
+                                String.valueOf(jComboBoxFormaPagamento.getSelectedItem()),
+                                true,
                                 idDespesa);
                     }
-                   
+
                     if (sucesso) {
-                    JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
+                        JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
                         limparCampos();
                     } else {
                         JOptionPane.showMessageDialog(null, "Erro ao registrar despesa.");
                     }
-                }else{
-                   JOptionPane.showMessageDialog(null, "O ano da despesa selecionada não é igual ao ano atual.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "O ano da despesa selecionada não é igual ao ano atual.");
                 }
-                
-               
 
             } else {
                 JOptionPane.showMessageDialog(null, "Já existe um registro de pagamento desta despesa para o mês informado.");
@@ -526,7 +500,6 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
 
         } else {
 
-            
             long idOrcamento = 0;
             String dataLancamento = "";
             String dataVencimento = "";
@@ -538,39 +511,40 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
                 JOptionPane.showMessageDialog(null, "Erro ao converter data");
             }
 
-            try {
-                idOrcamento = Long.parseLong(jTextFieldIdDespesa.getText());
-            } catch (NumberFormatException e) {
+            if (idDespesa > 0) {
+                idOrcamento = idDespesa;
+            } else {
                 JOptionPane.showMessageDialog(null, "Selecione uma despesa antes.");
             }
+
             anoDaDespesa = LocalDate.parse(dataLancamento, formatterData).getYear();
 
             //false pois está sendo registrado apenas lançamento e vencimento
             if (!dc.verificaExistenciaPagamento(idOrcamento, dataLancamento, false)) {
-                
-                if(dc.verificaCompatibilidadeEntreAno(idOrcamento, dataLancamento, dataVencimento)){
-                     sucesso = dc.CadastrarDespesa(idOrcamento,
-                        dataLancamento,
-                        dataVencimento,
-                        null,
-                        null,
-                        null,
-                        String.valueOf(anoDaDespesa),
-                        null,
-                        false
-                );
 
-                if (sucesso) {
-                    JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
-                    limparCampos();
+                if (dc.verificaCompatibilidadeEntreAno(idOrcamento, dataLancamento, dataVencimento)) {
+                    sucesso = dc.CadastrarDespesa(idOrcamento,
+                            dataLancamento,
+                            dataVencimento,
+                            null,
+                            null,
+                            null,
+                            String.valueOf(anoDaDespesa),
+                            null,
+                            false
+                    );
+
+                    if (sucesso) {
+                        JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
+                        limparCampos();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Erro ao registrar despesa.");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Erro ao registrar despesa.");
-                } 
-                }else{
-                   JOptionPane.showMessageDialog(null, "O ano da despesa selecionada não é igual ao ano atual.");
+                    JOptionPane.showMessageDialog(null, "O ano da despesa selecionada não é igual ao ano atual.");
 
                 }
-              
+
             } else {
                 JOptionPane.showMessageDialog(null, "Já existe um registro de desta despesa para o mês informado. Realize o pagamento!");
             }
@@ -631,7 +605,6 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -644,7 +617,6 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaAnotacao;
-    private javax.swing.JTextField jTextFieldIdDespesa;
     private javax.swing.JTextField jTextFieldNomeDespesa;
     private javax.swing.JToggleButton jToggleButton;
     // End of variables declaration//GEN-END:variables
@@ -657,7 +629,8 @@ public class CadastroDespesa extends javax.swing.JFrame implements Observador {
     public void update(Orcamento orcamento) {
 
         if (orcamento != null) {
-            jTextFieldIdDespesa.setText(String.valueOf(orcamento.getId_orcamento()));
+            idDespesa = orcamento.getId_orcamento();
+
             jTextFieldNomeDespesa.setText(orcamento.getNome());
         }
     }

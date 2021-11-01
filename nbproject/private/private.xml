@@ -5,9 +5,11 @@
         <group>
             <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/controller/RelatorioController.java</file>
             <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/dao/ConnectionMVC.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/Cadastros/CadastroCabeleireiro.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/ManipuladorArquivo.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/MainMenu.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/EmailAutomaticoRelatorio.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/Apresenta/ApresentaFinancas.java</file>
             <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/ManipulaFontes.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/ManipulaData.java</file>
         </group>
     </open-files>
 </project-private>

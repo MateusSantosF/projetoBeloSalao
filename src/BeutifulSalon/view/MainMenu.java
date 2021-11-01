@@ -86,6 +86,17 @@ public class MainMenu extends javax.swing.JFrame implements Observador {
         } catch (Exception e) {
             System.out.println(e);
         }
+        
+   
+        new Thread() {
+
+            @Override
+            public void run() {
+                EmailAutomaticoRelatorio emailAutomaticoRelatorio = new EmailAutomaticoRelatorio();
+
+                emailAutomaticoRelatorio.enviarRelatorio();
+            }
+        }.start();
 
     }
 
@@ -472,7 +483,7 @@ public class MainMenu extends javax.swing.JFrame implements Observador {
     }//GEN-LAST:event_jLabelProdutosMousePressed
 
     public void setNovoTamanhoFonteBarraLateral() {
-        
+
         ManipulaFontes mf = new ManipulaFontes();
         jLabelDashboard.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Envie um Email
         jLabelAgendamento.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f)); //Agendamentos
@@ -593,17 +604,8 @@ public class MainMenu extends javax.swing.JFrame implements Observador {
         Cabeleireiro cab = cc.selecionaCabeleireiro();
         List<Cliente> clientes = new ClienteController().listarAniversariantesDoMes();
         List<Cliente> clientesUltimoEnvio = new ClienteController().listaClientesEmailUltimaVisita();
-        
-        new Thread() {
+      
 
-                @Override
-                public void run() {
-                    EmailAutomaticoRelatorio emailAutomaticoRelatorio = new EmailAutomaticoRelatorio();
-                    
-                    emailAutomaticoRelatorio.enviarRelatorio();
-                }
-        }.start();
-        
         if (clientes != null || clientesUltimoEnvio != null) {
             new Thread() {
 
@@ -722,7 +724,6 @@ public class MainMenu extends javax.swing.JFrame implements Observador {
 
     @Override
     public void update(Object obj) {
-       
 
     }
 
@@ -736,7 +737,7 @@ public class MainMenu extends javax.swing.JFrame implements Observador {
 
     @Override
     public void update(String valorDesconto) {
-         
+
         setNovoTamanhoFonteBarraLateral();
     }
 

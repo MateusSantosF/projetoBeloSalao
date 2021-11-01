@@ -13,7 +13,16 @@ import BeutifulSalon.view.Cadastros.CadastroDespesa;
 import BeutifulSalon.view.Cadastros.CadastroFluxoDeCaixa;
 import BeutifulSalon.view.Cadastros.CadastroOrcamentoPrevisto;
 import BeutifulSalon.view.Cadastros.CadastroServico;
+import java.awt.Component;
 import java.awt.Font;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,15 +34,43 @@ public class NovoRegistro extends javax.swing.JFrame {
     /**
      * Creates new form novoRegistro
      */
+    private  final ImageIcon PRODUTO_ICON = new ImageIcon(getClass().getResource("/imagens/iconProdutosRegistro.png"));
+    private  final ImageIcon ORCAMENTO_ICON = new ImageIcon(getClass().getResource("/imagens/iconOrcamentoRegistro.png"));
+    private  final ImageIcon CLIENTE_ICON = new ImageIcon(getClass().getResource("/imagens/iconClienteRegistro.png"));
+    private  final ImageIcon VENDA_ICON = new ImageIcon(getClass().getResource("/imagens/iconVendaCompraRegistro.png"));
+    private  final ImageIcon SERVICO_ICON = new ImageIcon(getClass().getResource("/imagens/iconServicoRegistro.png"));
+    private  final ImageIcon AGENDAMENTO_ICON = new ImageIcon(getClass().getResource("/imagens/iconAgendamentoRegistro.png"));
+    private  final ImageIcon DESPESA_ICON = new ImageIcon(getClass().getResource("/imagens/iconeDespesaRegistro.png"));
+    public final String PRODUTO_STR = "Novo Produto";
+    private final String ORCAMENTO_STR = "Novo Orçamento";
+    public final String CLIENTE_STR = "Novo Cliente";
+    private final String VENDA_STR = "Nova Venda | Compra";
+    public final String SERVICO_STR = "Novo Serviço";
+    private final String AGENDAMENTO_STR = "Novo Agendamento";
+    public final String DESPESA_STR = "Nova Despesa";
+
     public NovoRegistro() {
         initComponents();
-        
+
         ManipulaFontes mf = new ManipulaFontes();
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 30f)); //Selecione o tipo 
         jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 30f)); //de Registro
         jComboBoxTipoRegistro.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Combobox
         jButtonConfirmar.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 20f)); //Confirmar
-    
+
+        Map<Object, Icon> icons = new HashMap<Object, Icon>();
+
+        icons.put(PRODUTO_STR, PRODUTO_ICON);
+        icons.put(ORCAMENTO_STR, ORCAMENTO_ICON);
+        icons.put(CLIENTE_STR, CLIENTE_ICON);
+        icons.put(VENDA_STR, VENDA_ICON);
+        icons.put(SERVICO_STR, SERVICO_ICON);
+        icons.put(AGENDAMENTO_STR, AGENDAMENTO_ICON);
+        icons.put(DESPESA_STR, DESPESA_ICON);
+        
+
+        jComboBoxTipoRegistro.setRenderer(new IconListRenderer(icons));
+
     }
 
     /**
@@ -149,17 +186,36 @@ public class NovoRegistro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxTipoRegistroActionPerformed
 
+    class IconListRenderer extends DefaultListCellRenderer {
+
+      
+        private Map<Object, Icon> icons = null;
+
+        public IconListRenderer(Map<Object, Icon> icons) {
+            this.icons = icons;
+        }
+
+        @Override
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+          
+            this.setIcon(icons.get(value.toString()));
+            this.setText(value.toString());
+            return this;
+        }
+    }
+
     private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
-        
+
         int opc = jComboBoxTipoRegistro.getSelectedIndex();
-        
-        
-        switch(opc){
-            case 0: 
+
+        switch (opc) {
+            case 0:
                 new CadastroProduto().setVisible(true);
                 dispose();
                 break;
-            case 1: 
+            case 1:
                 new CadastroOrcamentoPrevisto().setVisible(true);
                 dispose();
                 break;
@@ -207,13 +263,17 @@ public class NovoRegistro extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NovoRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NovoRegistro.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NovoRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NovoRegistro.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NovoRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NovoRegistro.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NovoRegistro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NovoRegistro.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>

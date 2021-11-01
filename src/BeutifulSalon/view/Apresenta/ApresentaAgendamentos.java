@@ -18,25 +18,23 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
-
 /**
  *
  * @author Mateus
  */
-public class ApresentaAgendamentos extends javax.swing.JPanel implements ObservadorEdicao{
+public class ApresentaAgendamentos extends javax.swing.JPanel implements ObservadorEdicao {
 
     /**
      * Creates new form ApresentaAgendamentos
      */
-    
     private final AgendamentoTableModel modelo = new AgendamentoTableModel();
-    
+
     public ApresentaAgendamentos() {
         initComponents();
-        
+
         ManipulaFontes mf = new ManipulaFontes();
 
-	jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f));
+        jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f));
         jLabel2.setFont(mf.getFont(mf.LIGHT, Font.PLAIN, 30f));
         jLabel3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
         jLabel5.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
@@ -50,14 +48,13 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
         jRadioButton1.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
         jRadioButtonTodos.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
         jTableAgendamentos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f));
-        
-        
+
         CentralizaElementosTabela render = new CentralizaElementosTabela();
         modelo.getAgendamentosHoje();
         ((DefaultTableCellRenderer) jTableAgendamentos.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         jTableAgendamentos.setDefaultRenderer(Object.class, render);
         jTableAgendamentos.setModel(modelo);
-       
+
     }
 
     /**
@@ -367,7 +364,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRadioButtonHojeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonHojeActionPerformed
-        
+
         modelo.getAgendamentosHoje();
         jTableAgendamentos.setModel(modelo);
     }//GEN-LAST:event_jRadioButtonHojeActionPerformed
@@ -383,18 +380,18 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
     }//GEN-LAST:event_jRadioButtonSemanaActionPerformed
 
     private void jRadioButtonTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonTodosActionPerformed
-        
+
         modelo.getTodosAgendamentos();
         jTableAgendamentos.setModel(modelo);
     }//GEN-LAST:event_jRadioButtonTodosActionPerformed
 
     private void jLabelBuscarClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBuscarClienteMousePressed
-        
-        if(jTextFieldNomeCliente.getText().equals("")){
+
+        if (jTextFieldNomeCliente.getText().equals("")) {
             modelo.getTodosAgendamentos();
-        }else{
+        } else {
             modelo.getAgendamentosPorNomeCliente(jTextFieldNomeCliente.getText());
-        } 
+        }
         jTableAgendamentos.setModel(modelo);
     }//GEN-LAST:event_jLabelBuscarClienteMousePressed
 
@@ -409,68 +406,78 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
         Agendamento agendamento;
         boolean sucesso = false;
 
-        if(index > -1){
+        if (index > -1) {
             long idAgendamento = modelo.getAgendamento(index).getIdAgendamento();
             agendamento = ag.listarAgendamento(idAgendamento);
             EditarAgendamento ed = new EditarAgendamento(agendamento);
             ed.registrarObservador(this);
             sucesso = ag.editarAgendamento(agendamento, ed);
-            
-            if(!sucesso){
-              JOptionPane.showMessageDialog(null, "Erro ao selecionar PKAgendamento");   
+
+            if (!sucesso) {
+                JOptionPane.showMessageDialog(null, "Erro ao selecionar PKAgendamento");
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione um agendamento");
         }
     }//GEN-LAST:event_jLabel5MousePressed
 
     private void jLabelExcluirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelExcluirMousePressed
-            
+
         int indice = jTableAgendamentos.getSelectedRow();
         int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este agendamento?", "Excluir Agendamento", JOptionPane.YES_NO_OPTION);
-        
-        if( opc == 0){
-            if( indice > -1){
-                   
+
+        if (opc == 0) {
+            if (indice > -1) {
+
                 Agendamento agendamento = modelo.getAgendamento(indice);
                 boolean sucesso = new AgendamentoController().excluirAgendamento(agendamento);
-                
-                    if (sucesso) {
-                        JOptionPane.showMessageDialog(null, "Agendamento deletado com sucesso.");
-                        modelo.getTodosAgendamentos();
-                        jTableAgendamentos.setModel(modelo);
-                        jRadioButtonTodos.setSelected(true);
+
+                if (sucesso) {
+                    JOptionPane.showMessageDialog(null, "Agendamento deletado com sucesso.");
+
+                    if (jRadioButtonAmanha.isSelected()) {
+                        modelo.getAgendamentosAmanha();
+
+                    } else if (jRadioButtonHoje.isSelected()) {
+                        modelo.getAgendamentosHoje();
+                    } else if (jRadioButtonNaoPago.isSelected()) {
+                        modelo.getAgendamentosNaPagos();
+                    } else if (jRadioButtonSemana.isSelected()) {
+                        modelo.getAgendamentosSemana();
                     } else {
-                        JOptionPane.showMessageDialog(null, "Não foi possível excluir este agendamento.");
+                        modelo.getTodosAgendamentos();
                     }
-                
-           }      
+                    jTableAgendamentos.setModel(modelo);
+                    //  jRadioButtonHoje.setSelected(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Não foi possível excluir este agendamento.");
+                }
+
+            }
         }
-        
-            
+
+
     }//GEN-LAST:event_jLabelExcluirMousePressed
 
     private void jLabel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MousePressed
-        
+
         int indice = jTableAgendamentos.getSelectedRow();
-        
-        if( indice > -1){
+
+        if (indice > -1) {
             Agendamento agendamento = modelo.getAgendamento(indice);
-            
+
             agendamento.setServicos(new AgendamentoController().listarServicosAgendamento(agendamento.getIdAgendamento()));
 
-            
             new ModalDetalhesAgendamento(agendamento).setVisible(true);
         }
     }//GEN-LAST:event_jLabel6MousePressed
 
     private void jRadioButtonNaoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonNaoPagoActionPerformed
-       modelo.getAgendamentosNaPagos();
-       jTableAgendamentos.setModel(modelo);
+        modelo.getAgendamentosNaPagos();
+        jTableAgendamentos.setModel(modelo);
     }//GEN-LAST:event_jRadioButtonNaoPagoActionPerformed
-    
-    
- 
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
@@ -496,20 +503,20 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
 
     @Override
     public void update(boolean editou) {
-        
-        if(jRadioButtonAmanha.isSelected()){
+
+        if (jRadioButtonAmanha.isSelected()) {
             modelo.getAgendamentosAmanha();
-           
-        }else if(jRadioButtonHoje.isSelected()){
+
+        } else if (jRadioButtonHoje.isSelected()) {
             modelo.getAgendamentosHoje();
-        }else if(jRadioButtonNaoPago.isSelected()){
+        } else if (jRadioButtonNaoPago.isSelected()) {
             modelo.getAgendamentosNaPagos();
-        }else if(jRadioButtonSemana.isSelected()){
+        } else if (jRadioButtonSemana.isSelected()) {
             modelo.getAgendamentosSemana();
-        }else{
+        } else {
             modelo.getTodosAgendamentos();
         }
-        
-         jTableAgendamentos.setModel(modelo);
+
+        jTableAgendamentos.setModel(modelo);
     }
 }

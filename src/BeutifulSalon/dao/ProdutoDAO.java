@@ -480,7 +480,7 @@ public class ProdutoDAO {
   
                 }
             }
-            System.out.println("EXISTE=>" + existe);
+            //System.out.println("EXISTE=>" + existe);
             return existe;
        
             

@@ -55,6 +55,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private final DespesaPrevistaTableModel modeloDespesaPrevista = new DespesaPrevistaTableModel();
     private final String ANOATUAL = String.valueOf(LocalDate.now().getYear());
 
+
     public ApresentaFinancas() {
         initComponents();
     
@@ -1576,7 +1577,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
                 break;
             case 5:
-
+               
                 modeloDespesaComparada.getDespesaComparadaPorAno(ano);
                 jTableComparativoDespesas.setModel(modeloDespesaComparada);
                 for (int i = 1; i <= 12; i++) {

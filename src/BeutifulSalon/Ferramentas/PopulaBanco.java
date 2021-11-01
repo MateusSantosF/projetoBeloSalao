@@ -55,7 +55,7 @@ public class PopulaBanco {
         String linha = "";
         try {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(
-                    "C:\\Users\\Mateus\\Desktop\\LUCASDEDILAINE\\Clientes.csv"), StandardCharsets.ISO_8859_1));
+                    "C:\\Users\\Mateus\\Desktop\\DENISE\\Clientes.csv"), StandardCharsets.ISO_8859_1));
 
             br.readLine();//pula primeira linha
             while ((linha = br.readLine()) != null) {
@@ -148,9 +148,9 @@ public class PopulaBanco {
         BufferedReader br = null;
         String linha = "";
         try {
-            br = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\Mateus\\Desktop\\LUCASDEDILAINE\\Servicos.csv"), StandardCharsets.ISO_8859_1));
+            br = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\Mateus\\Desktop\\Sidney\\Servicos.csv"), StandardCharsets.ISO_8859_1));
 
-            br.readLine();
+           br.readLine();
             while ((linha = br.readLine()) != null) {
                 System.out.println(linha);
                 sc.cadastrarServico(criaServico(linha));
@@ -209,6 +209,7 @@ public class PopulaBanco {
                 // System.out.println("Horas =>" + horas);
                 // System.out.println("mInutos =>" + minutos);
                 LocalTime t = LocalTime.of(horas, minutos);
+                System.out.println("Duracao=>" + t);
                 duracao = t;
             }
         }
@@ -232,7 +233,7 @@ public class PopulaBanco {
                 }
                 if (i + 2 < dados.length) {
                     if (dados[i + 2] != null) {
-                        //System.out.println("Rendimento linha=>" + dados[i + 2]);
+                        System.out.println("Rendimento linha=>" + dados[i + 2]);
                         rendimento = Integer.valueOf(dados[i + 2]);
                         p.setRendimento(rendimento);
                         // System.out.println("Rendimento =>" + p.getRendimento());
@@ -268,7 +269,7 @@ public class PopulaBanco {
         String linha = "";
         try {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(
-                    "C:\\Users\\Mateus\\Desktop\\LUCASDEDILAINE\\Orcamento.csv"), StandardCharsets.ISO_8859_1));
+                    "C:\\Users\\Mateus\\Desktop\\Sidney\\Orcamento.csv"), StandardCharsets.ISO_8859_1));
 
             br.readLine();
             while ((linha = br.readLine()) != null) {
@@ -357,7 +358,7 @@ public class PopulaBanco {
         String linha = "";
         try {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(
-                    "C:\\Users\\Mateus\\Desktop\\LUCASDEDILAINE\\servicosRealizados.csv"), StandardCharsets.ISO_8859_1));
+                    "C:\\Users\\Mateus\\Desktop\\LUCAS\\servicosRealizados.csv"), StandardCharsets.ISO_8859_1));
 
             br.readLine();
             while ((linha = br.readLine()) != null) {
@@ -428,15 +429,15 @@ public class PopulaBanco {
         if (dados[0] != "" && dados[0] != " " && dados[0] != null) {
 
             dados[0] = dados[0].replaceAll(" ", " ");
-            String[] nomes = dados[0].split(" ");
-            nome = nomes[0].substring(0, 1).toUpperCase().concat(nomes[0].substring(1).toLowerCase());
-            for (int i = 1; i < nomes.length; i++) {
-                if (nomes[i].length() >= 1) {
-                    sobrenome += " " + nomes[i].substring(0, 1).toUpperCase().concat(nomes[i].substring(1).toLowerCase());
-                }
+            //String[] nomes = dados[0].split("");
+            //nome = nomes[0].substring(0, 1).toUpperCase().concat(nomes[0].substring(1).toLowerCase());
+            //for (int i = 1; i < nomes.length; i++) {
+              //  if (nomes[i].length() >= 1) {
+                  //  sobrenome += " " + nomes[i].substring(0, 1).toUpperCase().concat(nomes[i].substring(1).toLowerCase());
+                //}
 
-            }
-
+            //}
+            nome = dados[0];
             orcamento.setNome(nome + sobrenome);
         }
 
@@ -510,7 +511,7 @@ public class PopulaBanco {
         }
 
         orcamento.setPrevisto(true);
-        orcamento.setAno(String.valueOf(LocalDate.now().getYear()));
+        orcamento.setAno(String.valueOf(2022));
 
         return orcamento;
 
@@ -561,7 +562,7 @@ public class PopulaBanco {
                         atual = ant;
                     } else {
                         atual = geraDiaAleatorio();
-                        if (ant == atual) {
+                        while (ant == atual) {
                             atual = geraDiaAleatorio();
                         }
                     }
@@ -600,7 +601,7 @@ public class PopulaBanco {
                         atual = ant;
                     } else {
                         atual = geraDiaAleatorio();
-                        if (ant == atual) {
+                        while (ant == atual) {
                             atual = geraDiaAleatorio();
                         }
                     }
@@ -638,7 +639,7 @@ public class PopulaBanco {
                         atual = ant;
                     } else {
                         atual = geraDiaAleatorio();
-                        if (ant == atual) {
+                        while (ant == atual) {
                             atual = geraDiaAleatorio();
                         }
                     }
@@ -676,7 +677,7 @@ public class PopulaBanco {
                         atual = ant;
                     } else {
                         atual = geraDiaAleatorio();
-                        if (ant == atual) {
+                        while (ant == atual) {
                             atual = geraDiaAleatorio();
                         }
                     }
@@ -713,7 +714,7 @@ public class PopulaBanco {
                         atual = ant;
                     } else {
                         atual = geraDiaAleatorio();
-                        if (ant == atual) {
+                        while (ant == atual) {
                             atual = geraDiaAleatorio();
                         }
                     }
@@ -750,7 +751,7 @@ public class PopulaBanco {
                         atual = ant;
                     } else {
                         atual = geraDiaAleatorio();
-                        if (ant == atual) {
+                        while (ant == atual) {
                             atual = geraDiaAleatorio();
                         }
                     }
@@ -788,7 +789,7 @@ public class PopulaBanco {
                         atual = ant;
                     } else {
                         atual = geraDiaAleatorio();
-                        if (ant == atual) {
+                        while (ant == atual) {
                             atual = geraDiaAleatorio();
                         }
                     }
@@ -826,7 +827,7 @@ public class PopulaBanco {
                         atual = ant;
                     } else {
                         atual = geraDiaAleatorio();
-                        if (ant == atual) {
+                        while (ant == atual) {
                             atual = geraDiaAleatorio();
                         }
                     }
@@ -864,7 +865,7 @@ public class PopulaBanco {
                         atual = ant;
                     } else {
                         atual = geraDiaAleatorio();
-                        if (ant == atual) {
+                        while (ant == atual) {
                             atual = geraDiaAleatorio();
                         }
                     }
@@ -902,7 +903,7 @@ public class PopulaBanco {
                         atual = ant;
                     } else {
                         atual = geraDiaAleatorio();
-                        if (ant == atual) {
+                        while (ant == atual) {
                             atual = geraDiaAleatorio();
                         }
                     }
@@ -939,7 +940,7 @@ public class PopulaBanco {
                         atual = ant;
                     } else {
                         atual = geraDiaAleatorio();
-                        if (ant == atual) {
+                        while(ant == atual) {
                             atual = geraDiaAleatorio();
                         }
                     }
@@ -977,7 +978,7 @@ public class PopulaBanco {
                         atual = ant;
                     } else {
                         atual = geraDiaAleatorio();
-                        if (ant == atual) {
+                        while(ant == atual) {
                             atual = geraDiaAleatorio();
                         }
                     }
@@ -1008,10 +1009,11 @@ public class PopulaBanco {
 
     public static void main(String[] args) {
         //new PopulaBanco().CadastrarClientes();
-        //new PopulaBanco().CadastrarServicos();
-        //new PopulaBanco().CadastrarOrcamentoPrevisto();
         //new PopulaBanco().CadastrarProdutos();
-        new PopulaBanco().CadastrarServicosRealizados();
+        new PopulaBanco().CadastrarServicos();
+        //new PopulaBanco().CadastrarOrcamentoPrevisto();
+       
+        //new PopulaBanco().CadastrarServicosRealizados();
     }
 
 }

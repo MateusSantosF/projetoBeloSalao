@@ -70,9 +70,18 @@ public class JavaMail {
         properties.put("mail.smtp.ssl.trust", email.getSmtpHostMail()); //linha adicionada para antivirus não dar problema
         properties.put("mail.smtp.host", email.getSmtpHostMail());
         properties.put("mail.smtp.port", email.getSmtpPortMail());
-
-        String myAccountEmail = cc.selecionaCabeleireiro().getEmail();
-        String password = cc.selecionaCabeleireiro().getSenha();
+        
+        String myAccountEmail;
+        String password;
+        
+        if(tipo != EMAIL_RELATORIO){
+            myAccountEmail = cc.selecionaCabeleireiro().getEmail();
+            password = cc.selecionaCabeleireiro().getSenha(); 
+        }else{
+            myAccountEmail = "beutifulsalontest@gmail.com";
+            password = "40028922@";
+        }
+       
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override

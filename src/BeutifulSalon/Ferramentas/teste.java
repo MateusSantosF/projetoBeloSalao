@@ -49,7 +49,7 @@ public class teste {
 
     public static void main(String[] args) throws JRException {
 
-        String diretorio = "\\src\\";
+     
         EmailAutomaticoRelatorio email = new EmailAutomaticoRelatorio();
         email.enviarRelatorio();
        
