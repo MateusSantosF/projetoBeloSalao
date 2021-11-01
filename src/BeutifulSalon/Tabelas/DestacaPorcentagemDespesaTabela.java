@@ -45,8 +45,8 @@ public class DestacaPorcentagemDespesaTabela extends DefaultTableCellRenderer {
     private final Color defaultForeground;
     private final DespesaComparadaTableModel modelo;
     //private Color verde = new Color(9, 213, 147);
-    private Color vermelho = new Color(248, 67, 69);
-    private Color verde = new Color(57, 201, 114);
+    private Color vermelho = new Color(57, 201, 114);
+    private Color verde = new Color(248, 67, 69);
 
     public DestacaPorcentagemDespesaTabela(int column,  DespesaComparadaTableModel modelo) {
         super();
@@ -54,6 +54,8 @@ public class DestacaPorcentagemDespesaTabela extends DefaultTableCellRenderer {
         this.defaultForeground = getForeground();
         this.modelo = modelo;
     }
+    
+      
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value,
@@ -61,7 +63,7 @@ public class DestacaPorcentagemDespesaTabela extends DefaultTableCellRenderer {
 
         final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         Orcamento oc = modelo.getOrcamento(row);
-
+        
         switch (this.columnIndex) {
             case 1:
 
