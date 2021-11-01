@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioVendas" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="05a1c458-38bd-4f63-8eeb-339c60ac5674">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BeanCollectionPadrao"/>
+	<style name="Style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT} % 2 == 0)]]></conditionExpression>
+			<style backcolor="#E6E6E6"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="DataInicio" class="java.lang.String">
+		<parameterDescription><![CDATA[dataInicio]]></parameterDescription>
+	</parameter>
+	<parameter name="DataFim" class="java.lang.String">
+		<parameterDescription><![CDATA[dataFim]]></parameterDescription>
+	</parameter>
+	<parameter name="TotalVendas" class="java.lang.String">
+		<parameterDescription><![CDATA[totalVendas]]></parameterDescription>
+	</parameter>
+	<parameter name="TotalDescontos" class="java.lang.String">
+		<parameterDescription><![CDATA[totalDescontos]]></parameterDescription>
+	</parameter>
+	<parameter name="TotalFinal" class="java.lang.String">
+		<parameterDescription><![CDATA[totalFinal]]></parameterDescription>
+	</parameter>
+	<parameter name="numeroTotalVendas" class="java.lang.String">
+		<parameterDescription><![CDATA[numeroTotalVendas]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="Cliente" class="java.lang.String">
+		<fieldDescription><![CDATA[nomeCliente]]></fieldDescription>
+	</field>
+	<field name="Sobrenome" class="java.lang.String">
+		<fieldDescription><![CDATA[sobrenomeCliente]]></fieldDescription>
+	</field>
+	<field name="Data da Venda" class="java.lang.String">
+		<fieldDescription><![CDATA[data]]></fieldDescription>
+	</field>
+	<field name="Desconto" class="java.lang.String">
+		<fieldDescription><![CDATA[desconto]]></fieldDescription>
+	</field>
+	<field name="Total" class="java.lang.String">
+		<fieldDescription><![CDATA[total]]></fieldDescription>
+	</field>
+	<field name="codVenda" class="java.lang.Long">
+		<fieldDescription><![CDATA[idVenda]]></fieldDescription>
+	</field>
+	<field name="ItensVendidos" class="java.util.List">
+		<fieldDescription><![CDATA[itensVendidos]]></fieldDescription>
+	</field>
+	<background>
+		<band height="802" splitType="Stretch">
+			<image hAlign="Center" vAlign="Bottom" onErrorType="Blank">
+				<reportElement x="0" y="180" width="555" height="530" uuid="c4b6f085-40fe-4adf-b131-458cc6b5e393"/>
+				<imageExpression><![CDATA["imagens/LogoGrande.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<staticText>
+				<reportElement x="50" y="10" width="180" height="40" uuid="e6d5a717-ce98-4776-b87f-584e97d3f4f4"/>
+				<textElement>
+					<font fontName="Tahoma" size="30"/>
+				</textElement>
+				<text><![CDATA[BeautySalon]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="50" width="220" height="30" forecolor="#9C9C9C" uuid="6bc44cef-87e1-48fa-83cc-837789bfb401"/>
+				<textElement>
+					<font fontName="Tahoma" size="22"/>
+				</textElement>
+				<text><![CDATA[Relatório de Compras]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="410" y="-10" width="160" height="30" uuid="188fcc85-480c-4062-b226-479f6456f2e2"/>
+				<textFieldExpression><![CDATA["Data de Emissão: " + new SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date());]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="20" width="50" height="50" uuid="76989b90-4c07-41ca-af47-f7efe64b0917"/>
+				<imageExpression><![CDATA["Imagens/logo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="340" height="19" uuid="7e46c2d1-2b50-4ed7-ac69-532f3a407d45"/>
+				<textElement>
+					<font fontName="Tahoma" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Período Referente: " + $P{DataInicio} + " à " + $P{DataFim} + "."]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="20" width="544" height="20" uuid="5f5bdf10-1136-4f79-a6a1-3d07470414a0"/>
+				<textElement>
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nº Total de Compras no período: " + $P{numeroTotalVendas}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="0" width="100" height="21" uuid="c77bf8ab-fb3a-49b2-9993-69e94c8df565">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4bc6f245-329b-4df7-aa08-beec2215790d"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data da Compra]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="21" uuid="d62cefa8-962f-4ed3-a4ac-11e0a94fb6e7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="676ed8f3-4081-4e43-bd9a-b11f5af6d135"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CodCompra]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="119" splitType="Stretch">
+			<subreport>
+				<reportElement x="40" y="30" width="509" height="40" uuid="d06353f1-ab0a-4bd9-8af3-45d398c14092"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource( $F{ItensVendidos} )]]></dataSourceExpression>
+				<subreportExpression><![CDATA["subRelatorioCompras.jasper"]]></subreportExpression>
+			</subreport>
+			<rectangle>
+				<reportElement style="Style1" stretchType="ContainerHeight" x="0" y="0" width="550" height="118" forecolor="#5C5C5C" backcolor="rgba(255, 255, 255, 0.0)" uuid="137a7f74-7a75-4dab-a4bf-93fae67555d9"/>
+			</rectangle>
+			<textField>
+				<reportElement x="220" y="10" width="100" height="20" uuid="c8add3f0-0b91-4bc4-ac4e-af3d07b048d8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c4736b4-dc96-4828-844f-fc3dab76a162"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Cliente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="10" width="220" height="20" uuid="6c8a7315-1381-4b57-b1b1-148e22692130">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0d1f6b24-7fc7-47ac-8429-a3c3eed9f9c0"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Sobrenome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="10" width="100" height="20" uuid="7329dd53-454f-4562-af8d-c167f08d695b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="094f0030-0a80-4d2e-ac79-a4aefe434e4d"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Data da Venda}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="10" width="80" height="20" uuid="deb433ed-5189-4641-9a25-b3e1f96e1a2a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c40441de-d485-4a23-86fa-b6b95a4a079d"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codVenda}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="270" y="80" width="100" height="19" uuid="265a288b-a754-4268-9e55-563717a6805a"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Desconto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="420" y="80" width="130" height="19" uuid="8eec21a6-712d-4650-ae3d-7d741cd86a82"/>
+				<textElement textAlignment="Left">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Valor Total]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="FixRelativeToBottom" x="270" y="99" width="100" height="20" uuid="548f46c2-1439-436d-9711-563d2a303f3a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1529dca3-e665-47eb-9022-4676382bb427"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{Desconto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="FixRelativeToBottom" x="420" y="99" width="128" height="19" uuid="853d9302-9750-4e48-82d8-d52991674bba">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8a0f194c-8800-44ec-84f5-76b832871b87"/>
+				</reportElement>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="103" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="530" height="30" uuid="0329f4a6-9b9b-40a8-ba2c-278807c10be1"/>
+				<textElement>
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Comprado: " + $P{TotalVendas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="40" width="530" height="30" uuid="2a3571c8-a24b-4a12-8a7e-b0da87683b95"/>
+				<textElement>
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Descontos: " + $P{TotalDescontos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="70" width="530" height="30" uuid="e591f791-937c-445a-8be9-55ecea71e4a3"/>
+				<textElement>
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Total Final: " + $P{TotalFinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+	<noData>
+		<band height="52">
+			<staticText>
+				<reportElement x="121" y="5" width="313" height="30" uuid="75982985-4c09-4550-9827-399fb5f92be4"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Não existem dados neste período]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -118,6 +118,65 @@ public class RelatorioController {
         }
 
     }
+    
+    public boolean gerarRelatorioCompras(String dataInicio, String dataFim) {
+
+        if (Valida.isData(dataInicio) && Valida.isData(dataFim)) {
+
+            ManipulaData md = new ManipulaData();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+            LocalDate inicio = LocalDate.parse(dataInicio, formatter);
+            LocalDate fim = LocalDate.parse(dataFim, formatter);
+
+            if (inicio.isAfter(fim)) {
+                return false;
+            }
+            
+            //Usei de gambiarra, para passar uma compra como uma venda
+            List<RelatorioVenda> datasource = new VendaProdutoDAO().relatorioCompras(md.meiaNoite(inicio), md.meiaNoiteAmanha(fim));
+            long totalVendido = 0;
+            long totalDescontos = 0;
+
+            for (RelatorioVenda dt : datasource) {
+                totalVendido += Dinheiro.parseCent(Dinheiro.retiraCaracteres(dt.getTotal()));
+                totalDescontos += Dinheiro.parseCent(Dinheiro.retiraCaracteres(dt.getDesconto()));
+            }
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("DataInicio", inicio.format(formatterData));
+            params.put("DataFim", fim.format(formatterData));
+            params.put("TotalVendas", Dinheiro.parseString(totalVendido));
+            params.put("TotalDescontos", Dinheiro.parseString(totalDescontos));
+            params.put("TotalFinal", Dinheiro.parseString(totalVendido - totalDescontos));
+            params.put("numeroTotalVendas", String.valueOf(datasource.size()));
+
+            try {
+
+                JasperReport j = JasperCompileManager.compileReport(localAtual + "\\RelatorioCompras.jrxml");
+                JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
+
+                JDialog tela = new JDialog();
+                tela.setSize(1080, 720);
+
+                JRViewer painel = new MyJRViewer(rp);
+
+                tela.getContentPane().add(painel);
+
+                tela.setVisible(true);
+                return true;
+            } catch (JRException e) {
+
+                JOptionPane.showMessageDialog(null, e);
+                return true;
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Verifique as datas digitadas e tente novamente.");
+            return false;
+        }
+
+    }
 
     public class MyJRViewer extends JRViewer {
         //define the constructor that you use
@@ -244,7 +303,59 @@ public class RelatorioController {
 
         return true;
     }
+    
+     public boolean gerarRelatorioCompras(String dataInicio, String dataFim, String diretorio) {
 
+        if (Valida.isData(dataInicio) && Valida.isData(dataFim)) {
+
+            ManipulaData md = new ManipulaData();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+            LocalDate inicio = LocalDate.parse(dataInicio, formatter);
+            LocalDate fim = LocalDate.parse(dataFim, formatter);
+
+            if (inicio.isAfter(fim)) {
+                return false;
+            }
+            
+            //Usei de gambiarra, para passar uma compra como uma venda
+            List<RelatorioVenda> datasource = new VendaProdutoDAO().relatorioCompras(md.meiaNoite(inicio), md.meiaNoiteAmanha(fim));
+            long totalVendido = 0;
+            long totalDescontos = 0;
+
+            for (RelatorioVenda dt : datasource) {
+                totalVendido += Dinheiro.parseCent(Dinheiro.retiraCaracteres(dt.getTotal()));
+                totalDescontos += Dinheiro.parseCent(Dinheiro.retiraCaracteres(dt.getDesconto()));
+            }
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("DataInicio", inicio.format(formatterData));
+            params.put("DataFim", fim.format(formatterData));
+            params.put("TotalVendas", Dinheiro.parseString(totalVendido));
+            params.put("TotalDescontos", Dinheiro.parseString(totalDescontos));
+            params.put("TotalFinal", Dinheiro.parseString(totalVendido - totalDescontos));
+            params.put("numeroTotalVendas", String.valueOf(datasource.size()));
+            
+            try {
+
+                JasperReport j = JasperCompileManager.compileReport(localAtual + "\\RelatorioCompras.jrxml");
+                JasperPrint rp = JasperFillManager.fillReport(j, params, new JRBeanCollectionDataSource(datasource));
+
+                JasperExportManager.exportReportToPdfFile(rp, diretorio);
+
+                return true;
+            } catch (JRException e) {
+                return true;
+            }
+
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Verifique as datas digitadas e tente novamente.");
+            return false;
+        }
+
+    }
+    
     public boolean gerarRelatorioVenda(String dataInicio, String dataFim, String diretorio) {
 
         if (Valida.isData(dataInicio) && Valida.isData(dataFim)) {

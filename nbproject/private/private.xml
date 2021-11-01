@@ -5,11 +5,13 @@
         <group>
             <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/controller/RelatorioController.java</file>
             <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/dao/ConnectionMVC.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/MainMenu.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/EmailAutomaticoRelatorio.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/Apresenta/ApresentaFinancas.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/PopulaBanco.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/dao/ServicoDAO.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/Edicao/EditarServico.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/model/Servico.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/view/Cadastros/CadastroCliente.java</file>
             <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/ManipulaFontes.java</file>
-            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/Ferramentas/ManipulaData.java</file>
+            <file>file:/C:/Users/Mateus/Desktop/BeloSalaoNEW/src/BeutifulSalon/controller/ServicoController.java</file>
         </group>
     </open-files>
 </project-private>

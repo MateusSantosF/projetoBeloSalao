@@ -26,7 +26,7 @@ public class ClienteController {
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR) {
 
-        if (NOME != null && NOME.length() > 0 && SOBRENOME.length() > 0 && NUMERO.length() <= 6) {
+        if (NOME != null && NOME.length() > 0 && NUMERO.length() <= 6) {
                  
             
           
@@ -82,7 +82,7 @@ public class ClienteController {
             String CEP, String BAIRRO, String RUA, String CIDADE, String NUMERO,
             String TELEFONE, String CELULAR, long id) {
 
-        if (NOME != null && NOME.length() > 0 && SOBRENOME.length() > 0 && NUMERO.length() <= 6) {
+        if (NOME != null && NOME.length() > 0 && NUMERO.length() <= 6) {
 
             if(DATANASC.replaceAll(" ","").length() == 10){
                 if(Valida.isData(DATANASC) == false){

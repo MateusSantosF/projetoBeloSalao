@@ -33,10 +33,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
@@ -59,7 +55,7 @@ public class EmailAutomaticoRelatorio {
 
 
     private String diretorio = "sendEmail.txt";
-    private String netbeans = "C:\\Users\\Mateus\\Desktop\\BeloSalaoNEW\\src\\sendEmail.txt";
+    //private String netbeans = "C:\\Users\\Mateus\\Desktop\\BeloSalaoNEW\\src\\sendEmail.txt";
     private String emailDestino = "beutifulsalontest@gmail.com";
     
     public void enviarRelatorio() {
@@ -87,7 +83,7 @@ public class EmailAutomaticoRelatorio {
                             + ultimoEnvio.format(formatter) + " " + dataAtual.format(formatter));
 
                     //Corpo Email
-                    relatorio.setTexto("Seguem em anexos os relatórios do salão do(a)" + cabeleireiro.getNome() + " no período"
+                    relatorio.setTexto("Seguem em anexos os relatórios do salão do(a) " + cabeleireiro.getNome() + " no período"
                             + " referente a: " + ultimoEnvio.format(formatter) + " até " + dataAtual.format(formatter) + "."
                             + "\n\n"
                             + "Grato pela atenção.\n Att,\n\nBeautySalonApp");
@@ -99,21 +95,25 @@ public class EmailAutomaticoRelatorio {
                     String nomeAg = "agendamentos_" + cabeleireiro.getNome() + ".pdf";
                     String nomeDespesas = "despesas_" + cabeleireiro.getNome() + ".pdf";
                     String nomeVendas = "vendas_" + cabeleireiro.getNome() + ".pdf";
+                    String nomeCompras = "compras_" + cabeleireiro.getNome() + ".pdf";
                     
                     rc.gerarRelatorioAgendamento(ultimoEnvio.format(formatter), dataAtual.format(formatter), diretorio + nomeAg);
                     rc.gerarRelatorioDespesas(ultimoEnvio.format(formatter), dataAtual.format(formatter), diretorio + nomeDespesas);
                     rc.gerarRelatorioVenda(ultimoEnvio.format(formatter), dataAtual.format(formatter), diretorio + nomeVendas);
+                    rc.gerarRelatorioCompras(ultimoEnvio.format(formatter), dataAtual.format(formatter), diretorio + nomeCompras);
 
                     //Criando arquivos dos relatórios
                     List<String> anexos = new ArrayList<>();
                     File rAgendamentos = new File(diretorio + nomeAg);
                     File rDespesas = new File(diretorio + nomeDespesas);
                     File rVendas = new File(diretorio + nomeVendas);
+                    File rCompras = new File(diretorio + nomeCompras);
                     
                     try {
                         rAgendamentos.createNewFile();
                         rDespesas.createNewFile();
                         rVendas.createNewFile();
+                        rCompras.createNewFile();
                     } catch (IOException ex) {
                         Logger.getLogger(EmailAutomaticoRelatorio.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -121,6 +121,7 @@ public class EmailAutomaticoRelatorio {
                     anexos.add(rAgendamentos.getAbsolutePath());
                     anexos.add(rDespesas.getAbsolutePath());
                     anexos.add(rVendas.getAbsolutePath());
+                    anexos.add(rCompras.getAbsolutePath());
                     relatorio.setAnexos(anexos);
                     
                     boolean sucesso = false;
@@ -138,6 +139,7 @@ public class EmailAutomaticoRelatorio {
                     rAgendamentos.delete();
                     rDespesas.delete();
                     rVendas.delete();
+                    rCompras.delete();
                     
                 }
             }
@@ -152,7 +154,7 @@ public class EmailAutomaticoRelatorio {
             try {
                 file.createNewFile();
                 escritor(LocalDate.now().minusDays(1));
-                JOptionPane.showMessageDialog(null, "Criou arquivo");
+                
             } catch (IOException ex) {
                 Logger.getLogger(ManipuladorArquivo.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -55,7 +55,7 @@ public class PopulaBanco {
         String linha = "";
         try {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(
-                    "C:\\Users\\Mateus\\Desktop\\DENISE\\Clientes.csv"), StandardCharsets.ISO_8859_1));
+                    "C:\\Users\\Mateus\\Desktop\\Sidney\\Clientes.csv"), StandardCharsets.ISO_8859_1));
 
             br.readLine();//pula primeira linha
             while ((linha = br.readLine()) != null) {
@@ -92,6 +92,7 @@ public class PopulaBanco {
         String telefone = "";
         String dataNascimento = "";
         String email = "";
+       
 
         if (dados[0] != "" && dados[0] != " " && dados[0] != null) {
 
@@ -130,6 +131,8 @@ public class PopulaBanco {
                 email = dados[4].trim();
             }
         }
+        
+    
 
         cliente.setNome(nome.trim());
         cliente.setSobrenome(sobrenome.trim());
@@ -137,6 +140,7 @@ public class PopulaBanco {
         cliente.setTelefoneResidencial(telefone.trim());
         cliente.setDataNasc(dataNascimento.trim());
         cliente.setEmail(email);
+
         cliente.setDataDeRegistro(LocalDate.now());
 
         return cliente;
@@ -1008,9 +1012,9 @@ public class PopulaBanco {
     }
 
     public static void main(String[] args) {
-        //new PopulaBanco().CadastrarClientes();
+        new PopulaBanco().CadastrarClientes();
         //new PopulaBanco().CadastrarProdutos();
-        new PopulaBanco().CadastrarServicos();
+       // new PopulaBanco().CadastrarServicos();
         //new PopulaBanco().CadastrarOrcamentoPrevisto();
        
         //new PopulaBanco().CadastrarServicosRealizados();

@@ -845,7 +845,7 @@ public class ServicoDAO {
 
             int firstDelete = pStatement.executeUpdate();
 
-            if (firstDelete > 0) {
+            if (firstDelete >= 0) {
                 try {
 
                     ArrayList<Produto> produtos = servico.getProdutos();

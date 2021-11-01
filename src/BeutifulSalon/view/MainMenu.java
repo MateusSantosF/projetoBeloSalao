@@ -602,11 +602,11 @@ public class MainMenu extends javax.swing.JFrame implements Observador {
 
         CabeleireiroController cc = new CabeleireiroController();
         Cabeleireiro cab = cc.selecionaCabeleireiro();
-        List<Cliente> clientes = new ClienteController().listarAniversariantesDoMes();
-        List<Cliente> clientesUltimoEnvio = new ClienteController().listaClientesEmailUltimaVisita();
+       List<Cliente> clientes = new ClienteController().listarAniversariantesDoMes();
+       List<Cliente> clientesUltimoEnvio =new ClienteController().listaClientesEmailUltimaVisita();
       
 
-        if (clientes != null || clientesUltimoEnvio != null) {
+        if (clientes != null || clientesUltimoEnvio != null ) {
             new Thread() {
 
                 @Override

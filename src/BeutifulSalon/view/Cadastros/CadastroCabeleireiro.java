@@ -71,7 +71,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //CPF
         jLabel2.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //E-mail
         jLabel12.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Senha E-mail
-        jLabel21.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); // meta de lucro
+       // jLabel21.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); // meta de lucro
 
         jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //Configurar Expediente
         jButton1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 13f)); //Abrir grade 
@@ -123,6 +123,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jRadioButtonRelatorioVenda.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jRadioButtonAgendamentos.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jRadioButtonDespesas.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jRadioButtonRelatorioVenda1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
 
         jButton3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
         
@@ -133,7 +134,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         numFormatter.setFormat(decimal);
         numFormatter.setAllowsInvalid(false);
         DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
-        jFormattedTextFieldPreco.setFormatterFactory(dfFactory);
+      //  jFormattedTextFieldPreco.setFormatterFactory(dfFactory);
 
         CabeleireiroController cc = new CabeleireiroController();
 
@@ -167,7 +168,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
             jCheckBoxUltimaVisita.setSelected(cabeleireiro.getEmailUltimaVisita().isEnviar());
             jCheckBoxAniversario.setSelected(cabeleireiro.getEmailAniversario().isEnviar());
             jLabelNomeArquivoAniversario.setText(cabeleireiro.getEmailAniversario().getNomeDoArquivo());
-            jFormattedTextFieldPreco.setValue(Dinheiro.parseDecimal(cabeleireiro.getMetaDeLucro()));
+           // jFormattedTextFieldPreco.setValue(Dinheiro.parseDecimal(cabeleireiro.getMetaDeLucro()));
             jPasswordField.setText(cabeleireiro.getSenha());
             jCheckBoxVerificaHorarios.setSelected(cabeleireiro.isVerificarHorariosDisponiveis());
             jSliderTempoEntreAgendamentos.setValue(cabeleireiro.getTempoEntreHorariosLivres());
@@ -205,8 +206,6 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel4 = new javax.swing.JLabel();
         jPasswordField = new javax.swing.JPasswordField();
         jLabel12 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jFormattedTextFieldPreco = new javax.swing.JFormattedTextField();
         jPanelEmails = new javax.swing.JPanel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel3 = new javax.swing.JPanel();
@@ -263,6 +262,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jRadioButtonDespesas = new javax.swing.JRadioButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
+        jRadioButtonRelatorioVenda1 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -347,11 +347,6 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel12.setText("Senha do E-mail");
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel21.setText("Meta de Lucro");
-
-        jFormattedTextFieldPreco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -360,6 +355,25 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldEmail, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(389, 389, 389))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(48, 48, 48)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jFormattedTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(49, 49, 49))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -367,34 +381,11 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton1))
                             .addComponent(jLabel2))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(39, 39, 39)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jFormattedTextFieldPreco)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(48, 48, 48)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jFormattedTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 156, Short.MAX_VALUE))
-                            .addComponent(jTextFieldEmail, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(49, 49, 49))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(238, 238, 238))
+                .addGap(281, 281, 281))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -413,20 +404,16 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel21))
+                .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFormattedTextFieldPreco))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(jPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel5))
-                .addGap(28, 28, 28)
+                    .addComponent(jLabel5)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Perfil", jPanel1);
@@ -898,23 +885,19 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel30)
+                    .addComponent(jSliderTamanhoFonte, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel26)
+                    .addComponent(jLabel25)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel30)
-                            .addComponent(jSliderTamanhoFonte, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel26)
-                            .addComponent(jLabel25)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBoxVerificaHorarios)
-                                    .addComponent(jLabel23))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel22))
-                            .addComponent(jSliderTempoEntreAgendamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(108, Short.MAX_VALUE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jCheckBoxVerificaHorarios)
+                            .addComponent(jLabel23))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel22))
+                    .addComponent(jSliderTempoEntreAgendamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 587, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
@@ -989,7 +972,6 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         buttonGroup1.add(jRadioButtonRelatorioVenda);
         jRadioButtonRelatorioVenda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jRadioButtonRelatorioVenda.setForeground(new java.awt.Color(34, 34, 3));
-        jRadioButtonRelatorioVenda.setSelected(true);
         jRadioButtonRelatorioVenda.setText("Relatório de Vendas");
         jRadioButtonRelatorioVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1032,39 +1014,54 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
+        jRadioButtonRelatorioVenda1.setBackground(new java.awt.Color(255, 255, 255));
+        buttonGroup1.add(jRadioButtonRelatorioVenda1);
+        jRadioButtonRelatorioVenda1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jRadioButtonRelatorioVenda1.setForeground(new java.awt.Color(34, 34, 3));
+        jRadioButtonRelatorioVenda1.setSelected(true);
+        jRadioButtonRelatorioVenda1.setText("Relatório de Compras");
+        jRadioButtonRelatorioVenda1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonRelatorioVenda1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(241, 241, 241))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel28)
-                            .addComponent(jFormattedTextFieldDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel29)
-                            .addComponent(jFormattedTextFieldDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(241, 241, 241))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                            .addComponent(jRadioButtonRelatorioVenda)
-                            .addGap(18, 18, 18)
-                            .addComponent(jRadioButtonAgendamentos)
-                            .addGap(18, 18, 18)
-                            .addComponent(jRadioButtonDespesas)
-                            .addGap(78, 78, 78)))))
-            .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel28)
+                                    .addComponent(jFormattedTextFieldDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(40, 40, 40)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel29)
+                                    .addComponent(jFormattedTextFieldDataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jRadioButtonRelatorioVenda)
+                                    .addComponent(jRadioButtonRelatorioVenda1))
+                                .addGap(212, 212, 212)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jRadioButtonAgendamentos)
+                                    .addComponent(jRadioButtonDespesas))))
+                        .addGap(74, 74, 74))))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(36, 36, 36)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel28)
                     .addComponent(jLabel29))
@@ -1072,12 +1069,15 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jFormattedTextFieldDataFim)
                     .addComponent(jFormattedTextFieldDataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(60, 60, 60)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButtonRelatorioVenda)
-                    .addComponent(jRadioButtonAgendamentos)
                     .addComponent(jRadioButtonDespesas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 161, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButtonAgendamentos)
+                    .addComponent(jRadioButtonRelatorioVenda1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(74, 74, 74))
         );
@@ -1119,7 +1119,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                         jTextFieldEmail.getText(),
                         this.expediente,
                         jPasswordField.getPassword(),
-                        jFormattedTextFieldPreco.getText());
+                       "0");
 
                 if (sucesso) {
                     JOptionPane.showMessageDialog(null, "Registro realizado com sucesso");
@@ -1162,7 +1162,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                         jTextFieldEmail.getText(),
                         this.expediente,
                         jPasswordField.getPassword(),
-                        jFormattedTextFieldPreco.getText());
+                        "0");
 
                 if (sucesso) {
                     JOptionPane.showMessageDialog(null, "Atualização realizada com sucesso");
@@ -1429,14 +1429,23 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
             if (!sucesso) {
                 JOptionPane.showMessageDialog(null, "Verifique as datas inseridas e tente novamente.");
             }
-        }else{
+        }else if(jRadioButtonDespesas.isSelected()){
             boolean sucesso = new RelatorioController().gerarRelatorioDespesas(jFormattedTextFieldDataInicio.getValue().toString(), jFormattedTextFieldDataFim.getValue().toString());
+            if (!sucesso) {
+                JOptionPane.showMessageDialog(null, "Verifique as datas inseridas e tente novamente.");
+            }
+        }else{
+            boolean sucesso = new RelatorioController().gerarRelatorioCompras(jFormattedTextFieldDataInicio.getValue().toString(), jFormattedTextFieldDataFim.getValue().toString());
             if (!sucesso) {
                 JOptionPane.showMessageDialog(null, "Verifique as datas inseridas e tente novamente.");
             }
         }
 
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jRadioButtonRelatorioVenda1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonRelatorioVenda1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButtonRelatorioVenda1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1488,7 +1497,6 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private javax.swing.JFormattedTextField jFormattedTextFieldCPF;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataFim;
     private javax.swing.JFormattedTextField jFormattedTextFieldDataInicio;
-    private javax.swing.JFormattedTextField jFormattedTextFieldPreco;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1502,7 +1510,6 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
@@ -1537,6 +1544,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private javax.swing.JRadioButton jRadioButtonAgendamentos;
     private javax.swing.JRadioButton jRadioButtonDespesas;
     private javax.swing.JRadioButton jRadioButtonRelatorioVenda;
+    private javax.swing.JRadioButton jRadioButtonRelatorioVenda1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSlider jSliderTamanhoFonte;

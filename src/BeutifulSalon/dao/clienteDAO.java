@@ -231,10 +231,11 @@ public class clienteDAO {
         long periodoDeReenvio = LocalDate.now().minusMonths(c.getEmailUltimaVisita().getPeriodoReenvio()).toEpochDay() * 24 * 60 * 60 * 1000;
         
        
-        String sql1 = "SELECT NOME, SOBRENOME, EMAIL, CLIENTE.ID FROM CLIENTE "
+        String sql1 = "SELECT DISTINCT NOME, SOBRENOME, EMAIL, CLIENTE.ID FROM CLIENTE "
                 + "INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID "
                 + "INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.ID_CLIENTE = CLIENTE.ID "
-                + "WHERE AGENDAMENTO.DATA NOT BETWEEN ? AND " + md.MeiaNoiteAmanha() +" AND EMAILULTIMAVISITA.ULTIMOENVIO IS NULL AND CLIENTE.EXCLUIDO = FALSE";
+                + "WHERE AGENDAMENTO.DATA NOT BETWEEN ? AND " + md.MeiaNoiteAmanha() +" AND EMAILULTIMAVISITA.ULTIMOENVIO"
+                + " IS NULL AND CLIENTE.EXCLUIDO = FALSE";
         
         String sql2 = "SELECT NOME, SOBRENOME, EMAIL, CLIENTE.ID FROM CLIENTE "      
                 + " INNER JOIN EMAILULTIMAVISITA ON EMAILULTIMAVISITA.ID_CLIENTE = CLIENTE.ID "

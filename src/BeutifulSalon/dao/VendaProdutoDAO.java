@@ -721,6 +721,74 @@ public class VendaProdutoDAO {
         
         return vendas;
     }
+       public List<RelatorioVenda> relatorioCompras(long dataInicio, long dataFim) {
+        
+        String sql = "SELECT ID_COMPRA, DATA, VALORTOTAL, VALORDESCONTO FROM COMPRA "
+                     +"WHERE COMPRA.DATA BETWEEN ? AND ? ORDER BY DATA DESC";
+        
+        ArrayList<RelatorioVenda> vendas = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            
+            connection.setAutoCommit(false);
+            pStatement = connection.prepareStatement(sql);
+
+            pStatement.setLong(1, dataInicio);
+            pStatement.setLong(2, dataFim);
+ 
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                    
+                   RelatorioVenda v = new RelatorioVenda();
+                   v.setIdVenda(rs.getLong("ID_COMPRA"));
+                   v.setNomeCliente("");
+                   v.setSobrenomeCliente("");
+                   v.setTotal(rs.getLong("VALORTOTAL"));
+                   v.setDesconto(rs.getLong("VALORDESCONTO"));
+                   v.setData(rs.getDate("DATA").toLocalDate());
+                   v.setItensVendidos(retornaItemsRelatorioCompras(v.getIdVenda()));
+                   vendas.add(v);
+                }
+            }
+            
+            connection.commit();
+            connection.setAutoCommit(true);
+            return vendas;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+    
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return vendas;
+    }
+     
      
      public List<Item> retornaItemsRelatorioVenda(long idVenda) {
         
@@ -739,6 +807,72 @@ public class VendaProdutoDAO {
             pStatement = connection.prepareStatement(sql);
 
             pStatement.setLong(1, idVenda);
+  
+
+            rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+   
+            
+                   Item i = new Item();
+                   i.setId_produto(rs.getLong("IDPROD"));
+                   i.setNome(rs.getString("NOME"));
+                   i.setMarca(rs.getString("MARCA"));
+                   i.setQuantidade(rs.getInt("QUANTIDADE"));
+                   i.setPreco(rs.getLong("PRECO"));
+                   i.setPrecoTotal(rs.getLong("PRECOTOTAL"));
+                   items.add(i);
+                }
+            }
+            
+            return items;
+       
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+    
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return items;
+    }
+     
+      public List<Item> retornaItemsRelatorioCompras(long idCompra) {
+        
+        String sql = "SELECT PRODUTO.NOME AS NOME , PRODUTO.MARCA AS MARCA, QUANTIDADE, PRODUTO.IDPRODUTO AS IDPROD,"
+                + " PRODUTO.PRECO AS PRECO, PRECOTOTAL FROM ITEM_COMPRA "
+                + "INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ID_PRODUTO"
+                + " WHERE ITEM_COMPRA.ID_COMPRA = ?";
+        
+        List<Item> items = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+
+            pStatement.setLong(1, idCompra);
   
 
             rs = pStatement.executeQuery();

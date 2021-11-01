@@ -21,7 +21,7 @@ import javax.swing.table.AbstractTableModel;
 public class ClienteTableModel extends AbstractTableModel {
 
     private final List<Cliente> dados;
-    private final String[] columns = {"Nome", "Sobrenome", "Celular", "Telefone", "Email", "Última Vísita"};
+    private final String[] columns = {"Nome", "Sobrenome", "Celular", "Telefone", "Email", "Última Visita"};
     private final ClienteController clienteController;
 
     public ClienteTableModel() {

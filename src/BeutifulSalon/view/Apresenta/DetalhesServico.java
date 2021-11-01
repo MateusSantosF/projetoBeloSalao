@@ -53,7 +53,7 @@ public class DetalhesServico extends javax.swing.JFrame {
         jLabel3.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jLabel8.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
-        jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+      //  jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jTableProdutosUtilizados.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela   
 
@@ -61,7 +61,7 @@ public class DetalhesServico extends javax.swing.JFrame {
         jLabelTempoDuracao.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
         jLabelMargemContribuicao.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
         jLabelPontoDeEquilíbrio.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
-        jLabelMeta.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
+        //jLabelMeta.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 25f));
 
         EstoqueController ec = new EstoqueController();
         ((DefaultTableCellRenderer) jTableProdutosUtilizados.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
@@ -224,16 +224,20 @@ public class DetalhesServico extends javax.swing.JFrame {
         
         if(totalPrevistoServicosDoMes > 0 && margemContribuicao > 0){
             
-            System.out.println("Total Despesas do Mes=>"+ Dinheiro.parseString(totalDespesaMensalPrevista) );
+        System.out.println("Total Despesas do Mes=>"+ Dinheiro.parseString(totalDespesaMensalPrevista) );
         System.out.println("Previsto do Servico Mensal=>"+  Dinheiro.parseString(previstoServicoMensal) );
         System.out.println("Total Previsto de todos Servicos do Mes=>" +  Dinheiro.parseString(totalPrevistoServicosDoMes));
         System.out.println("Margem de Contribuição =>" + Dinheiro.parseString(margemContribuicao));
-            pontoDeEquilibrio = (double)((double)previstoServicoMensal/totalPrevistoServicosDoMes)*previstoServicoMensal /margemContribuicao;
-            meta /= margemContribuicao;
+            
+            
+            
+        pontoDeEquilibrio = (double)(((double)previstoServicoMensal/totalPrevistoServicosDoMes)*totalDespesaMensalPrevista ) / margemContribuicao;
+       
+        meta /= margemContribuicao;
         
         }
         System.out.println("PONTO DE EQ=>" + pontoDeEquilibrio);
-        jLabelMeta.setText(String.valueOf((int) Math.ceil(meta)));
+        //jLabelMeta.setText(String.valueOf((int) Math.ceil(meta)));
         jLabelPontoDeEquilíbrio.setText(String.valueOf( Math.round(pontoDeEquilibrio)));
 
         //============================================
@@ -244,7 +248,7 @@ public class DetalhesServico extends javax.swing.JFrame {
         }
 
         if (servico.getQuantidadeRealizada() >= ((int) (Math.ceil(meta)))) {
-            jLabelMeta.setForeground(verde);
+          //  jLabelMeta.setForeground(verde);
         }
 
         if (pontoDeEquilibrio < 0) {
@@ -253,8 +257,8 @@ public class DetalhesServico extends javax.swing.JFrame {
         }
 
         if (meta < 0) {
-            jLabelMeta.setText("PREJUÍZO");
-            jLabelMeta.setForeground(vermelho);
+          //  jLabelMeta.setText("PREJUÍZO");
+           // jLabelMeta.setForeground(vermelho);
         }
 
         //Tabela Produtos Utilizados
@@ -296,9 +300,6 @@ public class DetalhesServico extends javax.swing.JFrame {
         painelPontoEquilibrio = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabelPontoDeEquilíbrio = new javax.swing.JLabel();
-        painelPontoEquilibrio1 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabelMeta = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabelNomeServico = new javax.swing.JLabel();
         jLabelPreco = new javax.swing.JLabel();
@@ -401,30 +402,6 @@ public class DetalhesServico extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
         painelPontoEquilibrio.add(jLabelPontoDeEquilíbrio, gridBagConstraints);
 
-        painelPontoEquilibrio1.setBackground(new java.awt.Color(255, 255, 255));
-        painelPontoEquilibrio1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
-        painelPontoEquilibrio1.setToolTipText("Quantidade mínima para alcançar a meta.");
-        painelPontoEquilibrio1.setLayout(new java.awt.GridBagLayout());
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Meta");
-        jLabel5.setIconTextGap(40);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.insets = new java.awt.Insets(0, 0, 50, 0);
-        painelPontoEquilibrio1.add(jLabel5, gridBagConstraints);
-
-        jLabelMeta.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabelMeta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelMeta.setText("0");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(20, 0, 0, 0);
-        painelPontoEquilibrio1.add(jLabelMeta, gridBagConstraints);
-
         jPanel1.setBackground(new java.awt.Color(36, 46, 66));
 
         jLabelNomeServico.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -465,16 +442,16 @@ public class DetalhesServico extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(painelPontoEquilibrio, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(painelPontoEquilibrio1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(painelNumeroAgendamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, Short.MAX_VALUE)
-                        .addComponent(painelNumeroAgendamentos3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(painelNumeroAgendamentos3, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(painelPontoEquilibrio, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(111, 111, 111)))
                 .addGap(40, 40, 40))
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -486,11 +463,9 @@ public class DetalhesServico extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(painelNumeroAgendamentos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
                     .addComponent(painelNumeroAgendamentos3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(painelPontoEquilibrio, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
-                    .addComponent(painelPontoEquilibrio1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addComponent(painelPontoEquilibrio, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                .addGap(4, 4, 4)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -553,10 +528,8 @@ public class DetalhesServico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelMargemContribuicao;
-    private javax.swing.JLabel jLabelMeta;
     private javax.swing.JLabel jLabelNomeServico;
     private javax.swing.JLabel jLabelPontoDeEquilíbrio;
     private javax.swing.JLabel jLabelPreco;
@@ -568,6 +541,5 @@ public class DetalhesServico extends javax.swing.JFrame {
     private javax.swing.JPanel painelNumeroAgendamentos;
     private javax.swing.JPanel painelNumeroAgendamentos3;
     private javax.swing.JPanel painelPontoEquilibrio;
-    private javax.swing.JPanel painelPontoEquilibrio1;
     // End of variables declaration//GEN-END:variables
 }
