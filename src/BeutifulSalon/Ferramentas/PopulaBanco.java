@@ -11,6 +11,8 @@ import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.dao.CompraProdutoDAO;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.dao.ProdutoDAO;
+import BeutifulSalon.dao.ServicoDAO;
+import BeutifulSalon.dao.clienteDAO;
 import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Compra;
@@ -48,14 +50,14 @@ public class PopulaBanco {
     ClienteController cc = new ClienteController();
     ServicoController sc = new ServicoController();
     ProdutoController pc = new ProdutoController();
-
+        long totalMESMO = 0;
     public void CadastrarClientes() {
 
         BufferedReader br = null;
         String linha = "";
         try {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(
-                    "C:\\Users\\Mateus\\Desktop\\Sidney\\Clientes.csv"), StandardCharsets.ISO_8859_1));
+                    "C:\\Users\\Mateus\\Desktop\\ROGER\\Clientes.csv"), StandardCharsets.ISO_8859_1));
 
             br.readLine();//pula primeira linha
             while ((linha = br.readLine()) != null) {
@@ -362,12 +364,12 @@ public class PopulaBanco {
         String linha = "";
         try {
             br = new BufferedReader(new InputStreamReader(new FileInputStream(
-                    "C:\\Users\\Mateus\\Desktop\\LUCAS\\servicosRealizados.csv"), StandardCharsets.ISO_8859_1));
+                    "C:\\Users\\Mateus\\Desktop\\ROGER\\AgendamentoOUT.CSV"), StandardCharsets.ISO_8859_1));
 
             br.readLine();
             while ((linha = br.readLine()) != null) {
                 System.out.println(linha);
-                cadastraServicosRealizados(linha);
+                cadastraServicosRealizadosRoger(linha);
             }
 
         } catch (FileNotFoundException e) {
@@ -383,6 +385,8 @@ public class PopulaBanco {
                 }
             }
         }
+        
+        System.out.println("TOTAL MESMO =>" + totalMESMO);
     }
 
     private Produto criaProduto(String linha) {
@@ -540,6 +544,92 @@ public class PopulaBanco {
         Random gerador = new Random();
         return gerador.nextInt(45) + 1;
     }
+     
+     public void cadastraServicosRealizadosRoger(String linha){
+         
+        String[] dados = linha.split(";");
+        Servico servico = null;
+        ManipulaData mp = new ManipulaData();
+        List<Servico> servicos = new ArrayList<>();
+        Cliente cliente = null;
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
+        
+         try {
+             
+             //CLIENTE
+             List<Cliente> clientes = new clienteDAO().listarClientes(dados[0].trim());
+             if(cliente != null){
+                 cliente = clientes.get(0);
+                 
+             }else{
+                 cliente = new clienteDAO().buscarCliente(geraClienteAleatorio());
+             }
+             
+             //SERVICO
+              
+            List<Servico> sTemp = new ServicoDAO().listarServicos(dados[1].trim());
+            
+            for(Servico s: sTemp){
+                if(s.getNome().equalsIgnoreCase(dados[1].trim())){
+                    servico = s;
+                }
+            }
+            if(servico == null){
+                servico = sTemp.get(0);
+            }    
+                
+            
+             
+             //DATA
+             LocalDate dataAgendamento = LocalDate.parse(dados[2], formatterData);
+             
+             //TOTAL
+            long total = Dinheiro.parseCent(Dinheiro.retiraCaracteres(dados[3]));
+            totalMESMO += total;
+            
+            servicos.add(servico);
+            
+            Agendamento ag = new Agendamento();
+            ag.setPago(true);
+            LocalTime horario = LocalTime.of(geraHoraAleatoria(), geraMinutoAleatorio());
+            LocalTime termino = horario;
+            termino = termino.plusHours(servico.getTempoGasto().getHour());
+            termino = termino.plusMinutes(servico.getTempoGasto().getMinute());
+            ag.setServicos(servicos);
+            ag.setFimAgendamento(termino);
+            ag.setHorario(horario);
+            ag.setData(dataAgendamento);
+            ag.setTotal(total);
+            ag.setIdCliente(cliente.getId());
+            ag.setRealizado(true);
+            ag.setDesconto(0);
+            ag.setValorAdicional(0);
+            switch(dados[4]){
+                case "DINHEIRO":
+                    ag.setFormaDePagamento("Dinheiro");
+                    break;
+                case "CREDITO":
+                    ag.setFormaDePagamento("Crédito");
+                    break;
+                case "DEBITO":
+                    ag.setFormaDePagamento("Débito");
+                    break;
+                case "PIX":
+                    ag.setFormaDePagamento("Pix");
+                    break;
+                default:
+                    ag.setFormaDePagamento("Dinheiro");
+                    break;
+            }
+             try {
+                  ag.cadastraAgendamento(ag);
+             } catch (ExceptionDAO | SQLException e) {
+             }
+           
+             
+         } catch (ExceptionDAO e) {
+         }
+     }
 
     public void cadastraServicosRealizados(String linha) {
 
@@ -1012,12 +1102,13 @@ public class PopulaBanco {
     }
 
     public static void main(String[] args) {
-        new PopulaBanco().CadastrarClientes();
+       // new PopulaBanco().CadastrarClientes();
         //new PopulaBanco().CadastrarProdutos();
        // new PopulaBanco().CadastrarServicos();
         //new PopulaBanco().CadastrarOrcamentoPrevisto();
        
-        //new PopulaBanco().CadastrarServicosRealizados();
+       new PopulaBanco().CadastrarServicosRealizados();
+       
     }
 
 }

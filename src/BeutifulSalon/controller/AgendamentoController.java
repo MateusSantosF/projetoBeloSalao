@@ -198,7 +198,7 @@ public class AgendamentoController {
 
         try {
             return new Agendamento().listarAgendamento(idAgendamento);
-        } catch (Exception e) {
+        } catch (ExceptionDAO e) {
             return null;
         }
 

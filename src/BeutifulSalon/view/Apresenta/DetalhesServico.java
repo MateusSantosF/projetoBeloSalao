@@ -11,6 +11,7 @@ import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.controller.EstoqueController;
 import BeutifulSalon.controller.OrcamentoController;
 import BeutifulSalon.controller.ServicoController;
+import BeutifulSalon.dao.ServicoDAO;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.OrcamentoServico;
@@ -55,6 +56,7 @@ public class DetalhesServico extends javax.swing.JFrame {
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
       //  jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
         jLabel1.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f));
+        jLabelQuantidadeMensal.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 12f));
         jTableProdutosUtilizados.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela   
 
         //Numeros
@@ -72,7 +74,16 @@ public class DetalhesServico extends javax.swing.JFrame {
         jLabelNomeServico.setText(servico.getNome());
         jLabelPreco.setText(Dinheiro.parseString(servico.getPreco()));
         jLabelTempoDuracao.setText(servico.getTempoGasto().format(formatterHora) + "h");
-
+        
+        //Quantidade mensal realizada
+        long qtdMensal = 0;
+        
+        try {
+           qtdMensal =  new ServicoDAO().buscaQtdServicoMensal(servico.getId(), LocalDate.now().getMonth());
+        } catch (Exception e) {
+        }
+         jLabelQuantidadeMensal.setText( "Quantidade Mensal Realizada: "+String.valueOf(qtdMensal));
+        
         //CALCULANDO MARGEM DE CONTRIBUIÇÃO
         Long margemContribuicao = servico.getPreco();
         long subtracao = 0;
@@ -102,8 +113,8 @@ public class DetalhesServico extends javax.swing.JFrame {
         long totalDespesaMensalPrevista = 0;
         long previstoServicoMensal = 0;
         long totalPrevistoServicosDoMes = 0;
-        System.out.println("NOME SERVIÇO =>" + servico.getNome());
-        System.out.println("Preço Servico =>" + Dinheiro.parseString(servico.getPreco()));
+        //System.out.println("NOME SERVIÇO =>" + servico.getNome());
+      //  System.out.println("Preço Servico =>" + Dinheiro.parseString(servico.getPreco()));
         switch (mesAtual) {
             case JANUARY:
                 for (Orcamento oc : orcamentos) {
@@ -224,11 +235,11 @@ public class DetalhesServico extends javax.swing.JFrame {
         
         if(totalPrevistoServicosDoMes > 0 && margemContribuicao > 0){
             
-        System.out.println("Total Despesas do Mes=>"+ Dinheiro.parseString(totalDespesaMensalPrevista) );
-        System.out.println("Previsto do Servico Mensal=>"+  Dinheiro.parseString(previstoServicoMensal) );
-        System.out.println("Total Previsto de todos Servicos do Mes=>" +  Dinheiro.parseString(totalPrevistoServicosDoMes));
-        System.out.println("Margem de Contribuição =>" + Dinheiro.parseString(margemContribuicao));
-            
+        //System.out.println("Total Despesas do Mes=>"+ Dinheiro.parseString(totalDespesaMensalPrevista) );
+        ////System.out.println("Previsto do Servico Mensal=>"+  Dinheiro.parseString(previstoServicoMensal) );
+        //System.out.println("Total Previsto de todos Servicos do Mes=>" +  Dinheiro.parseString(totalPrevistoServicosDoMes));
+        //System.out.println("Margem de Contribuição =>" + Dinheiro.parseString(margemContribuicao));
+           
             
             
         pontoDeEquilibrio = (double)(((double)previstoServicoMensal/totalPrevistoServicosDoMes)*totalDespesaMensalPrevista ) / margemContribuicao;
@@ -236,7 +247,7 @@ public class DetalhesServico extends javax.swing.JFrame {
         meta /= margemContribuicao;
         
         }
-        System.out.println("PONTO DE EQ=>" + pontoDeEquilibrio);
+       // System.out.println("PONTO DE EQ=>" + pontoDeEquilibrio);
         //jLabelMeta.setText(String.valueOf((int) Math.ceil(meta)));
         jLabelPontoDeEquilíbrio.setText(String.valueOf( Math.round(pontoDeEquilibrio)));
 
@@ -303,6 +314,7 @@ public class DetalhesServico extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabelNomeServico = new javax.swing.JLabel();
         jLabelPreco = new javax.swing.JLabel();
+        jLabelQuantidadeMensal = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -414,15 +426,23 @@ public class DetalhesServico extends javax.swing.JFrame {
         jLabelPreco.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelPreco.setText("R$");
 
+        jLabelQuantidadeMensal.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelQuantidadeMensal.setText("Quantidade Mensal realizada:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelNomeServico, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
-                    .addComponent(jLabelPreco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabelNomeServico, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                            .addComponent(jLabelPreco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelQuantidadeMensal)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -432,7 +452,8 @@ public class DetalhesServico extends javax.swing.JFrame {
                 .addComponent(jLabelNomeServico, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelQuantidadeMensal, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -533,6 +554,7 @@ public class DetalhesServico extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelNomeServico;
     private javax.swing.JLabel jLabelPontoDeEquilíbrio;
     private javax.swing.JLabel jLabelPreco;
+    private javax.swing.JLabel jLabelQuantidadeMensal;
     private javax.swing.JLabel jLabelTempoDuracao;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

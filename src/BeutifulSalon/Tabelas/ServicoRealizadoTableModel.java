@@ -129,6 +129,7 @@ public class ServicoRealizadoTableModel extends AbstractTableModel {
         if (servicos != null) {
 
             for (Servico s : servicos) {
+                
 
                 long janeiro = 0;
                 long fevereiro = 0;
@@ -149,6 +150,7 @@ public class ServicoRealizadoTableModel extends AbstractTableModel {
 
                     switch (m) {
                         case JANUARY:
+                            System.out.println(s.getId());
                             janeiro = oc.listarOrcamentoServicorRealizado(ano, Month.JANUARY, s.getId()).getQuantidadeRealizada();
                             ocQuantidades.setJan(janeiro);
                        

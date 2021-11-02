@@ -106,7 +106,7 @@ public class CabeleireiroController {
 
     public boolean cadastrarEmailPadraoAniversario(Email email, String cpf) {
 
-        if (email.getTitulo().length() > 0 && email.getTexto().length() > 24) {
+        if (email.getTitulo().length() > 0 && email.getTexto().length() > 0) {
             try {
                 new Cabeleireiro().cadastrarEmailPadraoAniversario(email, cpf);
                 return true;
@@ -122,7 +122,7 @@ public class CabeleireiroController {
 
     public boolean cadastrarEmailUltimaVisita(Email email, String cpf, int periodo) {
 
-        if (email.getTitulo().length() > 0 && email.getTexto().length() > 24) {
+        if (email.getTitulo().length() > 0 && email.getTexto().length() > 0) {
             try {
                 new Cabeleireiro().cadastrarEmailUltimaVisita(email, cpf, periodo);
                 return true;

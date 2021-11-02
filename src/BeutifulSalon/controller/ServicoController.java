@@ -210,8 +210,5 @@ public class ServicoController {
         }
     }
 
-    public List<Servico> listarServicosPorAno(String anoReferente) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 }

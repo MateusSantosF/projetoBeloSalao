@@ -59,7 +59,7 @@ import net.sf.jasperreports.view.save.JRPdfSaveContributor;
  */
 public class RelatorioController {
 
-    private String localAtual = "src";
+    private String localAtual = "Relatorios";
 
     public boolean gerarRelatorioVenda(String dataInicio, String dataFim) {
 

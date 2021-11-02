@@ -1342,7 +1342,8 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                 }
 
             }
-            boolean sucesso = cc.cadastrarEmailUltimaVisita(emailUltimaVisita, cc.selecionaCabeleireiro().getCpf(), jComboBoxPeriodo.getSelectedIndex() + 2);
+            boolean sucesso = cc.cadastrarEmailUltimaVisita(emailUltimaVisita, cc.selecionaCabeleireiro().getCpf(), 
+                    jComboBoxPeriodo.getSelectedIndex() + 2);
 
             if (sucesso) {
                 JOptionPane.showMessageDialog(null, "Email padrão de última visita atualizado com sucesso!");

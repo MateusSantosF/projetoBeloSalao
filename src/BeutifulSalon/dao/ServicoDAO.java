@@ -6,6 +6,7 @@
 package BeutifulSalon.dao;
 
 
+import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.controller.ProdutoController;
 import BeutifulSalon.model.Produto;
 import BeutifulSalon.model.Servico;
@@ -15,6 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -650,6 +652,7 @@ public class ServicoDAO {
 
         return null;
     }
+     
     public ArrayList<Servico> buscaServicoPeloAgendamento(long idAgendamento){
         
         String sql = "SELECT ID_SERVICO FROM AGENDAMENTO_SERVICO WHERE ID_AGENDAMENTO = ?";
@@ -698,6 +701,62 @@ public class ServicoDAO {
         }
 
         return null;
+    }
+    
+    public long buscaQtdServicoMensal(long idServico, Month mes){
+        
+        String sql = "SELECT COUNT(ID_SERVICO) AS QTD FROM AGENDAMENTO_SERVICO"
+                + " INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_SERVICO.ID_AGENDAMENTO"
+                + "  WHERE ID_SERVICO = ? AND AGENDAMENTO.DATA BETWEEN ? AND ? AND AGENDAMENTO.REALIZADO = TRUE ";
+      
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ResultSet rs = null;
+        ManipulaData md = new ManipulaData();
+        long inicioDoMes = 0;
+        long fimDoMes = 0;
+        long soma = 0;
+        
+        try{
+            
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            inicioDoMes = md.inicioDoMes(LocalDate.now(), mes);
+            fimDoMes = md.fimDoMes(LocalDate.now(), mes);
+            pStatement.setLong(1, idServico);
+            pStatement.setLong(2, inicioDoMes);
+            pStatement.setLong(3, fimDoMes);
+            rs = pStatement.executeQuery();
+ 
+            if(rs != null){                
+                while(rs.next()){  
+                    soma += rs.getLong("QTD");
+                    System.out.println("Soma=>"+soma);
+                }
+            }
+            
+            return soma;
+       
+            
+        } catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro ao consultar o banco(DAO) " + e);
+        }finally{
+              try {
+                if(pStatement != null) pStatement.close();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar statement" + e);
+            }
+            
+            try {
+                if(connection != null) connection.close();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null,"Erro ao fechar conexão" + e);
+            }
+            
+        }
+
+        return 0;
     }
     
     public List<Servico> selecionaServicosDoAno(int anoReferente) throws ExceptionDAO{

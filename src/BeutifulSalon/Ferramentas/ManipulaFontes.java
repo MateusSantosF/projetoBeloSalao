@@ -12,7 +12,6 @@ import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
 
-
 /**
  *
  * @author Mateus
@@ -28,24 +27,24 @@ public class ManipulaFontes {
     private float TAMANHO_FONTE = 1f;
 
     public ManipulaFontes() {
-         
-      TAMANHO_FONTE = new ManipuladorArquivo().getTamanhoFonte();
-     
+
+        TAMANHO_FONTE = new ManipuladorArquivo().getTamanhoFonte();
+
     }
 
     public Font getFont(String nome, int estilo, float tamanho) {
         try {
 
             //Para compilar na dist
-         //   font = Font.createFont( Font.TRUETYPE_FONT,new File("Fontes\\" + nome));
+            font = Font.createFont(Font.TRUETYPE_FONT, new File("Fontes\\" + nome));
             //para usar no netbeans
-         font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("\\Fontes\\" + nome));
+            //font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("\\Fontes\\" + nome));
 
         } catch (IOException | FontFormatException e) {
             System.out.println(e);
             font = new Font("Arial", Font.PLAIN, 14);
         }
-        font = font.deriveFont(estilo, tamanho + ((tamanho/100) + TAMANHO_FONTE));
+        font = font.deriveFont(estilo, tamanho + ((tamanho / 100) + TAMANHO_FONTE));
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
         ge.registerFont(font);
         return font;
