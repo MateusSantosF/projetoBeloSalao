@@ -38,6 +38,7 @@ public class ManipulaFontes {
             //Para compilar na dist
             font = Font.createFont(Font.TRUETYPE_FONT, new File("Fontes\\" + nome));
             //para usar no netbeans
+            //
             //font = Font.createFont(Font.TRUETYPE_FONT, getClass().getClassLoader().getResourceAsStream("\\Fontes\\" + nome));
 
         } catch (IOException | FontFormatException e) {

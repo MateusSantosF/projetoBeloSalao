@@ -28,7 +28,7 @@ public class ConnectionMVC {
             conn = DriverManager.getConnection("jdbc:sqlite:" + caminhoBanco);
 
             // UTILIZAR ENQUANTO NO NETBEANS
-            //conn = DriverManager.getConnection("jdbc:sqlite:src/BancoDeDados/beutifulsalondb.db");
+          //conn = DriverManager.getConnection("jdbc:sqlite:src/BancoDeDados/beutifulsalondb.db");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "erro: " + e);
         }

@@ -1011,7 +1011,8 @@ public class AgendamentoDAO {
      
     public long retornaSomaDeAgendamentosMensal(Month mes){
         
-         String sql = "SELECT (SUM(AGENDAMENTO.TOTAL)) AS RENDAMENSAL FROM AGENDAMENTO WHERE AGENDAMENTO.DATA BETWEEN ? AND ?";
+         String sql = "SELECT (SUM(AGENDAMENTO.TOTAL)) AS RENDAMENSAL FROM AGENDAMENTO "
+                 + " WHERE AGENDAMENTO.DATA BETWEEN ? AND ? AND AGENDAMENTO.REALIZADO = TRUE";
         long agendamentos = 0;
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -1173,7 +1174,7 @@ public class AgendamentoDAO {
          String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, CLIENTE.NOME, TOTAL, DESCONTO, VALORADICIONAL,"
                 + " PAGO, FORMADEPAGAMENTO, CLIENTE.NOME  ||' '|| CLIENTE.SOBRENOME AS NOMECOMPLETO FROM AGENDAMENTO"
         + " INNER JOIN CLIENTE ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID "
-                + " WHERE CLIENTE.EXCLUIDO = FALSE AND CLIENTE.ID = ?";
+                + " WHERE CLIENTE.EXCLUIDO = FALSE AND CLIENTE.ID = ? ORDER BY DATA DESC";
         
         Connection connection = null;
         PreparedStatement pStatement = null;

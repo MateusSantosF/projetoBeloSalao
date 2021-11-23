@@ -317,7 +317,9 @@ public class clienteDAO {
     public List<Cliente> listarClientes(String nome) throws ExceptionDAO{
         
         
-        String sql  = "SELECT ID, NOME  ||' '|| SOBRENOME AS NOMECOMPLETO,NOME,SOBRENOME, CELULAR,EMAIL FROM CLIENTE WHERE "
+        String sql  = "SELECT ID, NOME  ||' '|| SOBRENOME AS NOMECOMPLETO,NOME,SOBRENOME, "
+                + "CELULAR,EMAIL, (SELECT MAX(DATA) FROM AGENDAMENTO WHERE ID_CLIENTE = CLIENTE.ID AND REALIZADO = TRUE) AS ULTIMAVISITA "
+                + "FROM CLIENTE WHERE "
                 + " NOMECOMPLETO LIKE '%" + nome + "%' AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATAREG DESC";
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -341,6 +343,9 @@ public class clienteDAO {
                     clienteAtual.setSobrenome(rs.getString("SOBRENOME"));
                     clienteAtual.setCelular(rs.getString("CELULAR"));
                     clienteAtual.setEmail(rs.getString("EMAIL"));
+                    if(rs.getDate("ULTIMAVISITA") != null){
+                        clienteAtual.setUltimaVisita(rs.getDate("ULTIMAVISITA").toLocalDate());
+                    }
                     clientes.add(clienteAtual);
                 }
             }
@@ -372,7 +377,7 @@ public class clienteDAO {
     public List<Cliente> listarClientes() throws ExceptionDAO{
         
         String sql  = "SELECT ID, NOME, SOBRENOME, CELULAR, EMAIL,"
-                + "(SELECT MAX(DATA) FROM AGENDAMENTO WHERE ID_CLIENTE = ID AND REALIZADO = TRUE) AS ULTIMAVISITA "
+                + "(SELECT MAX(DATA) FROM AGENDAMENTO WHERE ID_CLIENTE = CLIENTE.ID AND REALIZADO = TRUE) AS ULTIMAVISITA "
                 + "FROM CLIENTE  WHERE CLIENTE.EXCLUIDO = FALSE ORDER BY DATAREG DESC";
         
         Connection connection = null;

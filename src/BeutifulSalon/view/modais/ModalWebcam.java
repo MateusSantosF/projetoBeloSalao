@@ -83,13 +83,16 @@ public class ModalWebcam extends javax.swing.JFrame implements ObservadorCliente
         }
 
         if (webcam != null) {
+            
             webcam.setViewSize(WebcamResolution.VGA.getSize());
             WebcamPanel painel = new WebcamPanel(webcam);
             painel.setFPSDisplayed(false);
             painel.setDisplayDebugInfo(true);
             painel.setImageSizeDisplayed(true);
             painel.setMirrored(true);
+            painel.setVisible(true);
             jPanel1.add(painel);
+            jPanel1.setVisible(true);
 
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possível detectar sua Webcam.");
@@ -302,16 +305,17 @@ public class ModalWebcam extends javax.swing.JFrame implements ObservadorCliente
     }//GEN-LAST:event_formWindowClosing
 
     private void jComboBoxWebcamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxWebcamsActionPerformed
-        
-    }//GEN-LAST:event_jComboBoxWebcamsActionPerformed
-
-    private void jComboBoxWebcamsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxWebcamsItemStateChanged
         if (webcam != null) {
             webcam.close();
             webcam = null;
+           
         }
-        System.out.println("mudou");
+        
         iniciarWebCam();
+    }//GEN-LAST:event_jComboBoxWebcamsActionPerformed
+
+    private void jComboBoxWebcamsItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxWebcamsItemStateChanged
+        
     }//GEN-LAST:event_jComboBoxWebcamsItemStateChanged
 
     /**
