@@ -10,10 +10,13 @@ import BeutifulSalon.Tabelas.AgendamentoTableModel;
 import BeutifulSalon.Tabelas.CentralizaElementosTabela;
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.model.Agendamento;
+import BeutifulSalon.model.ObservadorAgendamento;
 import BeutifulSalon.model.ObservadorEdicao;
 import BeutifulSalon.view.Edicao.EditarAgendamento;
+import BeutifulSalon.view.modais.ModalDatas;
 import BeutifulSalon.view.modais.ModalDetalhesAgendamento;
 import java.awt.Font;
+import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -22,7 +25,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  * @author Mateus
  */
-public class ApresentaAgendamentos extends javax.swing.JPanel implements ObservadorEdicao {
+public class ApresentaAgendamentos extends javax.swing.JPanel implements ObservadorEdicao, ObservadorAgendamento {
 
     /**
      * Creates new form ApresentaAgendamentos
@@ -41,12 +44,6 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
         jLabel6.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
         jLabelExcluir.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
 
-        jRadioButtonHoje.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
-        jRadioButtonAmanha.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
-        jRadioButtonSemana.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
-        jRadioButtonNaoPago.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
-        jRadioButton1.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
-        jRadioButtonTodos.setFont(mf.getFont(mf.LIGHT, Font.BOLD, 15f));
         jTableAgendamentos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f));
 
         CentralizaElementosTabela render = new CentralizaElementosTabela();
@@ -74,18 +71,15 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
         jLabel3 = new javax.swing.JLabel();
         jTextFieldNomeCliente = new javax.swing.JTextField();
         jLabelBuscarCliente = new javax.swing.JLabel();
-        jRadioButtonHoje = new javax.swing.JRadioButton();
-        jRadioButtonAmanha = new javax.swing.JRadioButton();
-        jRadioButtonSemana = new javax.swing.JRadioButton();
-        jRadioButtonTodos = new javax.swing.JRadioButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabelExcluir = new javax.swing.JLabel();
-        jRadioButtonNaoPago = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableAgendamentos = new javax.swing.JTable();
+        jComboBoxFiltros = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setForeground(new java.awt.Color(243, 244, 255));
@@ -144,57 +138,6 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
             }
         });
 
-        jRadioButtonHoje.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(jRadioButtonHoje);
-        jRadioButtonHoje.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jRadioButtonHoje.setSelected(true);
-        jRadioButtonHoje.setText("Hoje");
-        jRadioButtonHoje.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonHojeActionPerformed(evt);
-            }
-        });
-
-        jRadioButtonAmanha.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(jRadioButtonAmanha);
-        jRadioButtonAmanha.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jRadioButtonAmanha.setText("Amanhã");
-        jRadioButtonAmanha.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonAmanhaActionPerformed(evt);
-            }
-        });
-
-        jRadioButtonSemana.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(jRadioButtonSemana);
-        jRadioButtonSemana.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jRadioButtonSemana.setText("1 semana");
-        jRadioButtonSemana.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonSemanaActionPerformed(evt);
-            }
-        });
-
-        jRadioButtonTodos.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(jRadioButtonTodos);
-        jRadioButtonTodos.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jRadioButtonTodos.setText("Todos");
-        jRadioButtonTodos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonTodosActionPerformed(evt);
-            }
-        });
-
-        jRadioButton1.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jRadioButton1.setText("Não realizados");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
-            }
-        });
-
         jPanel1.setBackground(new java.awt.Color(48, 63, 79));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -241,16 +184,6 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
             }
         });
 
-        jRadioButtonNaoPago.setBackground(new java.awt.Color(255, 255, 255));
-        buttonGroup1.add(jRadioButtonNaoPago);
-        jRadioButtonNaoPago.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jRadioButtonNaoPago.setText("Não Pagos");
-        jRadioButtonNaoPago.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButtonNaoPagoActionPerformed(evt);
-            }
-        });
-
         jTableAgendamentos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTableAgendamentos.setForeground(new java.awt.Color(25, 25, 25));
         jTableAgendamentos.setModel(new javax.swing.table.DefaultTableModel(
@@ -292,6 +225,26 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
         jTableAgendamentos.setShowGrid(false);
         jScrollPane1.setViewportView(jTableAgendamentos);
 
+        jComboBoxFiltros.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jComboBoxFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hoje", "Amanhã", "1 Semana", "Não Pagos", "Não Realizados" }));
+        jComboBoxFiltros.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jComboBoxFiltros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxFiltrosActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("Buscar agendamentos:");
+
+        jButton1.setText("Por Datas");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -302,88 +255,55 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addGap(17, 17, 17))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                            .addComponent(jTextFieldNomeCliente))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(13, 13, 13)
-                                .addComponent(jLabelExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53))
+                                .addComponent(jTextFieldNomeCliente)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabelBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jRadioButtonHoje, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jRadioButtonAmanha, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButtonSemana, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButtonNaoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(17, 17, 17)
-                                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jRadioButtonTodos)
-                                .addGap(29, 29, 29))))))
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                .addGap(75, 75, 75)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabelExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
+                .addGap(17, 17, 17))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabelExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jRadioButtonHoje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButtonAmanha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButtonSemana)
-                        .addComponent(jRadioButtonNaoPago)
-                        .addComponent(jRadioButton1)
-                        .addComponent(jRadioButtonTodos))
-                    .addComponent(jLabelBuscarCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                    .addComponent(jLabelBuscarCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextFieldNomeCliente, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(jComboBoxFiltros, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelExcluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jRadioButtonHojeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonHojeActionPerformed
-
-        modelo.getAgendamentosHoje();
-        jTableAgendamentos.setModel(modelo);
-    }//GEN-LAST:event_jRadioButtonHojeActionPerformed
-
-    private void jRadioButtonAmanhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonAmanhaActionPerformed
-        modelo.getAgendamentosAmanha();
-        jTableAgendamentos.setModel(modelo);
-    }//GEN-LAST:event_jRadioButtonAmanhaActionPerformed
-
-    private void jRadioButtonSemanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonSemanaActionPerformed
-        modelo.getAgendamentosSemana();
-        jTableAgendamentos.setModel(modelo);
-    }//GEN-LAST:event_jRadioButtonSemanaActionPerformed
-
-    private void jRadioButtonTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonTodosActionPerformed
-
-        modelo.getTodosAgendamentos();
-        jTableAgendamentos.setModel(modelo);
-    }//GEN-LAST:event_jRadioButtonTodosActionPerformed
 
     private void jLabelBuscarClienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBuscarClienteMousePressed
 
@@ -394,11 +314,6 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
         }
         jTableAgendamentos.setModel(modelo);
     }//GEN-LAST:event_jLabelBuscarClienteMousePressed
-
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        modelo.getAgendamentosNaoRealizados();
-        jTableAgendamentos.setModel(modelo);
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
         int index = jTableAgendamentos.getSelectedRow();
@@ -434,21 +349,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
 
                 if (sucesso) {
                     JOptionPane.showMessageDialog(null, "Agendamento deletado com sucesso.");
-
-                    if (jRadioButtonAmanha.isSelected()) {
-                        modelo.getAgendamentosAmanha();
-
-                    } else if (jRadioButtonHoje.isSelected()) {
-                        modelo.getAgendamentosHoje();
-                    } else if (jRadioButtonNaoPago.isSelected()) {
-                        modelo.getAgendamentosNaPagos();
-                    } else if (jRadioButtonSemana.isSelected()) {
-                        modelo.getAgendamentosSemana();
-                    } else {
-                        modelo.getTodosAgendamentos();
-                    }
-                    jTableAgendamentos.setModel(modelo);
-                    //  jRadioButtonHoje.setSelected(true);
+                    atualizarTabela();
                 } else {
                     JOptionPane.showMessageDialog(null, "Não foi possível excluir este agendamento.");
                 }
@@ -471,31 +372,56 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
             new ModalDetalhesAgendamento(agendamento).setVisible(true);
         }
     }//GEN-LAST:event_jLabel6MousePressed
+    
+    private void atualizarTabela(){
+        switch(jComboBoxFiltros.getSelectedIndex()){
+           case 0:
+                modelo.getAgendamentosHoje();
+               break;
+           case 1:
+               modelo.getAgendamentosAmanha();
+               break;
+               
+           case 2:
+               modelo.getAgendamentosSemana();
+               break;
+               
+           case 3:
+                modelo.getAgendamentosNaPagos();
+               break;
+            case 4:
+                modelo.getAgendamentosNaoRealizados();
+               break;
+       }
+       
+       jTableAgendamentos.setModel(modelo);
+    }
+    private void jComboBoxFiltrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFiltrosActionPerformed
+       atualizarTabela();
+    }//GEN-LAST:event_jComboBoxFiltrosActionPerformed
 
-    private void jRadioButtonNaoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonNaoPagoActionPerformed
-        modelo.getAgendamentosNaPagos();
-        jTableAgendamentos.setModel(modelo);
-    }//GEN-LAST:event_jRadioButtonNaoPagoActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        ModalDatas modal = new ModalDatas();
+        modal.registrarObservador(this);
+        modal.setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBoxFiltros;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelBuscarCliente;
     private javax.swing.JLabel jLabelExcluir;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButtonAmanha;
-    private javax.swing.JRadioButton jRadioButtonHoje;
-    private javax.swing.JRadioButton jRadioButtonNaoPago;
-    private javax.swing.JRadioButton jRadioButtonSemana;
-    private javax.swing.JRadioButton jRadioButtonTodos;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableAgendamentos;
     private javax.swing.JTextField jTextFieldNomeCliente;
@@ -504,19 +430,32 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
     @Override
     public void update(boolean editou) {
 
-        if (jRadioButtonAmanha.isSelected()) {
-            modelo.getAgendamentosAmanha();
+      switch(jComboBoxFiltros.getSelectedIndex()){
+           case 0:
+                modelo.getAgendamentosHoje();
+               break;
+           case 1:
+               modelo.getAgendamentosAmanha();
+               break;
+               
+           case 2:
+               modelo.getAgendamentosSemana();
+               break;
+               
+           case 3:
+                modelo.getAgendamentosNaPagos();
+               break;
+            case 4:
+                modelo.getAgendamentosNaoRealizados();
+               break;
+       }
 
-        } else if (jRadioButtonHoje.isSelected()) {
-            modelo.getAgendamentosHoje();
-        } else if (jRadioButtonNaoPago.isSelected()) {
-            modelo.getAgendamentosNaPagos();
-        } else if (jRadioButtonSemana.isSelected()) {
-            modelo.getAgendamentosSemana();
-        } else {
-            modelo.getTodosAgendamentos();
-        }
+        jTableAgendamentos.setModel(modelo);
+    }
 
+    @Override
+    public void update(LocalDate inicio, LocalDate fim) {
+        modelo.getAgendamentosPorData(inicio, fim);
         jTableAgendamentos.setModel(modelo);
     }
 }

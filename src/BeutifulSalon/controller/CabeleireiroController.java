@@ -99,6 +99,10 @@ public class CabeleireiroController {
     public int verificaRegistro() {
         return new Cabeleireiro().verificaRegistro();
     }
+    
+    public boolean criaTabelasAposAtualizacao(){
+        return new CabeleireiroDAO().criaTabelasAposAtualizacao();
+    }
 
     public ArrayList<LocalTime> selecionaExpediente(int diaDaSemana) {
         return new Cabeleireiro().selecionaExpediente(diaDaSemana);

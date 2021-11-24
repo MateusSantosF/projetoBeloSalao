@@ -600,8 +600,12 @@ public class MainMenu extends javax.swing.JFrame implements Observador {
             }
         });
 
-        CabeleireiroController cc = new CabeleireiroController();
-        Cabeleireiro cab = cc.selecionaCabeleireiro();
+       CabeleireiroController cc = new CabeleireiroController();
+       //Cria tabelas apos atualização
+       cc.criaTabelasAposAtualizacao();
+       
+       
+       Cabeleireiro cab = cc.selecionaCabeleireiro();
        List<Cliente> clientes = new ClienteController().listarAniversariantesDoMes();
        List<Cliente> clientesUltimoEnvio =new ClienteController().listaClientesEmailUltimaVisita();
       

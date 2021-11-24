@@ -12,6 +12,7 @@ import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Servico;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -141,5 +142,10 @@ public class AgendamentoTableModel extends AbstractTableModel {
     public void getAgendamentosPorNomeCliente(String nome){
         dados.clear();
         addRow(agendamentoController.listarAgendamentosNome(nome));
+    }
+    
+    public void getAgendamentosPorData(LocalDate inicio, LocalDate fim){
+        dados.clear();
+        addRow(agendamentoController.listarAgendamentosPorData(inicio, fim));
     }
 }

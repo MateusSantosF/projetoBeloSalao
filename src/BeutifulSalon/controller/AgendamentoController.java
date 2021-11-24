@@ -274,6 +274,15 @@ public class AgendamentoController {
         }
         return null;
     }
+     
+     public List<Agendamento> listarAgendamentosPorData(LocalDate inicio, LocalDate fim){
+          try {
+            return new Agendamento().listarAgendamentosPorData(inicio, fim);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return null;
+     }
 
     public ArrayList<Agendamento> listarAgendamentosNaoRealizados() {
         try {

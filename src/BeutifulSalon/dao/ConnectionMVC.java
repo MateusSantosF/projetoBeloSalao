@@ -24,11 +24,11 @@ public class ConnectionMVC {
         try {
             // Usar PARA COMPILAR
 
-            String caminhoBanco = new File("BancoDeDados/beutifulsalondb.db").getAbsolutePath();
-            conn = DriverManager.getConnection("jdbc:sqlite:" + caminhoBanco);
+            //String caminhoBanco = new File("BancoDeDados/beutifulsalondb.db").getAbsolutePath();
+            //conn = DriverManager.getConnection("jdbc:sqlite:" + caminhoBanco);
 
             // UTILIZAR ENQUANTO NO NETBEANS
-            //conn = DriverManager.getConnection("jdbc:sqlite:src/BancoDeDados/beutifulsalondb.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:src/BancoDeDados/beutifulsalondb.db");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "erro: " + e);
         }
