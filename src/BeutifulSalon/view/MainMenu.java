@@ -86,8 +86,7 @@ public class MainMenu extends javax.swing.JFrame implements Observador {
         } catch (Exception e) {
             System.out.println(e);
         }
-        
-   
+
         new Thread() {
 
             @Override
@@ -601,12 +600,14 @@ public class MainMenu extends javax.swing.JFrame implements Observador {
         });
 
         CabeleireiroController cc = new CabeleireiroController();
-        Cabeleireiro cab = cc.selecionaCabeleireiro();
-       List<Cliente> clientes = new ClienteController().listarAniversariantesDoMes();
-       List<Cliente> clientesUltimoEnvio =new ClienteController().listaClientesEmailUltimaVisita();
-      
 
-        if (clientes != null || clientesUltimoEnvio != null ) {
+        //Cria tabelas apos atualização
+        cc.criaTabelasAposAtualizacao();
+        Cabeleireiro cab = cc.selecionaCabeleireiro();
+        List<Cliente> clientes = new ClienteController().listarAniversariantesDoMes();
+        List<Cliente> clientesUltimoEnvio = new ClienteController().listaClientesEmailUltimaVisita();
+
+        if (clientes != null || clientesUltimoEnvio != null) {
             new Thread() {
 
                 @Override

@@ -233,4 +233,7 @@ public class Agendamento {
         return new AgendamentoDAO().listarAgendamentosIDCliente(idCliente);
     }
 
+      public List<Agendamento> listarAgendamentosPorData(LocalDate inicio, LocalDate fim) throws ExceptionDAO{
+        return new AgendamentoDAO().listarAgendamentosPorData(inicio, fim);              
+    }
 }

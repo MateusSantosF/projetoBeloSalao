@@ -33,7 +33,7 @@ public class AgendamentoController {
 
     public boolean cadastraAgendamento(String data, String horario, long idCliente, List<Servico> servicos, long total,
             long desconto, long valorAdicional, boolean realizado, boolean pago, String FormaDePagamento) throws ExceptionDAO {
-        
+
         Agendamento ag = null;
         if (Valida.isHora(horario) && !servicos.isEmpty() && idCliente > 0) {
 
@@ -61,7 +61,7 @@ public class AgendamentoController {
             int minutos = 0;
             servicos.remove(servicos.size() - 1);
             for (Servico s : servicos) {
-    
+
                 Servico sAtual = new ServicoController().buscarServico(s.getId());
                 horas += sAtual.getTempoGasto().getHour();
                 minutos += sAtual.getTempoGasto().getMinute();
@@ -204,6 +204,15 @@ public class AgendamentoController {
 
     }
 
+    public List<Agendamento> listarAgendamentosPorData(LocalDate inicio, LocalDate fim) {
+        try {
+            return new Agendamento().listarAgendamentosPorData(inicio, fim);
+        } catch (ExceptionDAO e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return null;
+    }
+
     public ArrayList<Servico> listarServicosAgendamento(long idAgendamento) {
         try {
             return new Agendamento().listarServicosAgendamento(idAgendamento);
@@ -265,8 +274,8 @@ public class AgendamentoController {
         }
         return null;
     }
-    
-     public List<Agendamento> listarAgendamentosIDCliente(long idCliente) {
+
+    public List<Agendamento> listarAgendamentosIDCliente(long idCliente) {
         try {
             return new Agendamento().listarAgendamentosIDCliente(idCliente);
         } catch (ExceptionDAO e) {

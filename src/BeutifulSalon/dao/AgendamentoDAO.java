@@ -1238,4 +1238,72 @@ public class AgendamentoDAO {
         
         return agendamentos;
     }
+    
+    public List<Agendamento> listarAgendamentosPorData(LocalDate inicio, LocalDate fim) {
+      
+        
+        ManipulaData datas = new ManipulaData();
+            
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO  FROM AGENDAMENTO"
+                + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE "
+                + " WHERE DATA BETWEEN " + datas.meiaNoite(inicio) + " AND " + datas.meiaNoite(fim) 
+                + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATA ASC ";
+        
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+        ArrayList<Agendamento> agendamentos = null;
+
+        
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                
+                agendamentos = new ArrayList<>();
+                while(rs.next()){
+                    Agendamento ag = new Agendamento();
+                   
+                    ag.setIdAgendamento(rs.getLong("ID_AGENDAMENTO"));
+                    ag.setData(rs.getDate("DATA").toLocalDate());
+                    ag.setHorario(rs.getTime("HORARIO").toLocalTime());                    
+                    ag.setIdCliente(rs.getLong("ID_CLIENTE"));
+                    ag.setRealizado(rs.getBoolean("REALIZADO"));
+                    ag.setTotal(rs.getLong("TOTAL"));
+                    ag.setDesconto(rs.getLong("DESCONTO"));
+                    ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
+                    ag.setPago(rs.getBoolean("PAGO"));
+                    ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                    agendamentos.add(ag);         
+                }
+            }
+           
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro agendamentoDAO" + e);
+        }finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        
+        return agendamentos;
+
+    }
 }

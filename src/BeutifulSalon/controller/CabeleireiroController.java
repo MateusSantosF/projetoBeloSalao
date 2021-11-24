@@ -86,7 +86,12 @@ public class CabeleireiroController {
         }
 
     }
-
+    
+      
+    public boolean criaTabelasAposAtualizacao(){
+        return new CabeleireiroDAO().criaTabelasAposAtualizacao();
+    }
+    
     public Cabeleireiro selecionaCabeleireiro() {
         try {
             return new Cabeleireiro().selecionaCabeleireiro();
