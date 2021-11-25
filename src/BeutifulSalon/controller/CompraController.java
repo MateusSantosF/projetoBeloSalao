@@ -11,7 +11,6 @@ import BeutifulSalon.model.Compra;
 import BeutifulSalon.model.Item;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -21,7 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class CompraController {
 
-    public boolean RegistraCompra(LocalDate data, long valorDesconto, ArrayList<Item> itensCompra) {
+    public boolean RegistraCompra(LocalDate data, long valorDesconto, List<Item> itensCompra) {
 
         if (!itensCompra.isEmpty()) {
 

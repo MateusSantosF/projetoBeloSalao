@@ -87,6 +87,11 @@ public class ModalServicoTableModel extends AbstractTableModel {
         dados.add(servico);
         this.fireTableDataChanged();
     }
+    
+    public void removeRow(int rowIndex){
+        dados.remove(rowIndex);
+        fireTableDataChanged();
+    }
 
     public List<Servico> getDados() {
         return dados;

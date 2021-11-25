@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class VendaController {
 
-    public boolean cadastrarVenda(LocalDate data, long valorDesconto, long idCliente, ArrayList<Item> itensCompra) {
+    public boolean cadastrarVenda(LocalDate data, long valorDesconto, long idCliente, List<Item> itensCompra) {
 
         if (validaQuantidadeProduto(itensCompra) ) {
 

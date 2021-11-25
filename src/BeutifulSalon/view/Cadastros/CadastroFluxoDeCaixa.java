@@ -8,6 +8,7 @@ package BeutifulSalon.view.Cadastros;
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.RecuperaTabela;
+import BeutifulSalon.Tabelas.ModalProdutosCompradosTableModel;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.view.modais.ModalCliente;
 import BeutifulSalon.view.modais.ModalProdutos;
@@ -29,6 +30,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -43,6 +45,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     public static String CPF;
     public static long id_Cliente;
     private ModalInputMonetarios modalInputMonetarios;
+    private ModalProdutosCompradosTableModel modelo = new ModalProdutosCompradosTableModel();
 
     public CadastroFluxoDeCaixa() {
         initComponents();
@@ -386,18 +389,19 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonFinalizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFinalizarCompraActionPerformed
-
+        
+        String dataFormatada = "";
         boolean sucesso;
-
+        boolean isClienteComprando = jRadioButtonCliente.isSelected();
         CompraController cc = new CompraController();
         VendaController vc = new VendaController();
         CabeleireiroController cabc = new CabeleireiroController();
-        boolean isClienteComprando = jRadioButtonCliente.isSelected();
-
         SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy");
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/M/uuuu");
-        String dataFormatada = "";
+      
+        
         try {
+            
             dataFormatada = formater.format(jDateChooser1.getDate());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao converter data");
@@ -408,13 +412,13 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
                     LocalDate.parse(dataFormatada, formatterData),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
                     id_Cliente,
-                    new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
+                    modelo.getDados());
         } else {
 
             sucesso = cc.RegistraCompra(
                     LocalDate.parse(dataFormatada, formatterData),
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldDesconto2.getText())),
-                    new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados));
+                    modelo.getDados());
         }
 
         if (sucesso) {
@@ -479,9 +483,9 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     }//GEN-LAST:event_jLabelAddClienteMousePressed
 
     private void jRadioButtonClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonClienteActionPerformed
+        
         if (jRadioButtonCliente.isSelected()) {
             jTextFieldNome2.setEnabled(true);
-
             jLabelAddCliente.setEnabled(true);
             jTextFieldNome2.setEditable(false);
 
@@ -510,9 +514,8 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
         //limpar tabela
         try {
-            DefaultTableModel model = (DefaultTableModel) jTableProdutosComprados.getModel();
-            model.setRowCount(0);
-            jTableProdutosComprados.setModel(model);
+            modelo.limparTabela();
+            jTableProdutosComprados.setModel(modelo);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro ao limpar tabela " + e);
         }
@@ -521,7 +524,7 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
 
     private void calculaTotalBruto() {
 
-        ArrayList<Item> produtos = new RecuperaTabela().recuperaItensCompra(jTableProdutosComprados);
+        List<Item> produtos = modelo.getDados();
         long total = 0;
 
         try {
@@ -559,14 +562,6 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     @Override
     public void update(DefaultTableModel model) {
 
-        try {
-            jTableProdutosComprados.setModel(model);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao converter ModelTabela");
-        }
-        calculaTotalBruto();
-        calculaTotal();
-
     }
 
     @Override
@@ -587,6 +582,12 @@ public class CadastroFluxoDeCaixa extends javax.swing.JFrame implements Observad
     @Override
     public void update(Object obj) {
 
+        if (obj instanceof ModalProdutosCompradosTableModel) {
+            modelo = (ModalProdutosCompradosTableModel) obj;
+            jTableProdutosComprados.setModel((ModalProdutosCompradosTableModel) obj);
+            calculaTotalBruto();
+            calculaTotal();
+        }
     }
 
     /**

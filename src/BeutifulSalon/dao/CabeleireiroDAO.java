@@ -984,6 +984,10 @@ public class CabeleireiroDAO {
             "    COMISSAOPORLUCRO BOOLEAN," +
             "    COMISSAOPORQTD BOOLEAN" +
             ")";
+        String addTableAgendamentoCompra = "CREATE TABLE IF NOT EXISTS AGENDAMENTO_PRODUTO(" +
+        "    ID_AGENDAMENTO INTEGER NOT NULL," +
+        "    ID_VENDA INTEGER NOT NULL" +
+        ")";
         try {
 
             connection = new ConnectionMVC().getConnection();
@@ -997,6 +1001,12 @@ public class CabeleireiroDAO {
                 System.out.println("tabela colaborador criada com sucesso");
             }else{
                 System.err.println("Tabela colaborador já existe");
+            }
+            
+            if(connection.prepareStatement(addTableAgendamentoCompra).execute()){
+                System.out.println("tabela agendamentoCompra criada com sucesso");
+            }else{
+                System.err.println("Tabela agendamentoCompra  já existe");
             }
                 
 

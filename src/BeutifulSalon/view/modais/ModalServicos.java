@@ -64,6 +64,7 @@ public class ModalServicos extends javax.swing.JFrame implements Observado {
         jLabelSelecionar = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -147,6 +148,13 @@ public class ModalServicos extends javax.swing.JFrame implements Observado {
             }
         });
 
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-seta-esquerda.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel1MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -156,11 +164,13 @@ public class ModalServicos extends javax.swing.JFrame implements Observado {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelSelecionar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelSelecionar)
+                            .addComponent(jLabel1)))
                     .addComponent(jLabel2)
                     .addComponent(jTextFieldNomeServico, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
@@ -186,10 +196,12 @@ public class ModalServicos extends javax.swing.JFrame implements Observado {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelSelecionar)
-                        .addGap(140, 140, 140)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addGap(82, 82, 82)))
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -212,10 +224,9 @@ public class ModalServicos extends javax.swing.JFrame implements Observado {
     private void jLabelSelecionarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSelecionarMousePressed
 
         int indice = jTableServicosCadastrados.getSelectedRow();
-       
 
         if (indice > -1) {
-            Servico servico = modelo.getServico(indice);     
+            Servico servico = modelo.getServico(indice);
             escolhidos.addRow(servico);
 
         } else {
@@ -248,6 +259,15 @@ public class ModalServicos extends javax.swing.JFrame implements Observado {
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+        int indice = jTableServicosEscolhidos.getSelectedRow();
+
+        if (indice > -1) {
+            escolhidos.removeRow(indice);
+            jTableServicosEscolhidos.setModel(escolhidos);
+        }
+
+    }//GEN-LAST:event_jLabel1MousePressed
 
     private ModalServicoTableModel servicosSelecionados() {
         return escolhidos;
@@ -309,6 +329,7 @@ public class ModalServicos extends javax.swing.JFrame implements Observado {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelSelecionar;

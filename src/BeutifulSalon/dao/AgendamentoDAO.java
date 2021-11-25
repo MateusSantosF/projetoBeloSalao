@@ -8,8 +8,11 @@ package BeutifulSalon.dao;
 import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Agendamento;
+import BeutifulSalon.model.Compra;
+import BeutifulSalon.model.Item;
 import BeutifulSalon.model.RelatorioAgendamento;
 import BeutifulSalon.model.Servico;
+import BeutifulSalon.model.Venda;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,6 +37,20 @@ public class AgendamentoDAO {
 
         String insertServicoAgendamento = "INSERT INTO AGENDAMENTO_SERVICO (ID_AGENDAMENTO, ID_SERVICO) "
                 + "VALUES ((SELECT ID_AGENDAMENTO FROM AGENDAMENTO ORDER BY ID_AGENDAMENTO DESC LIMIT 1), ?)";
+        
+        String insertAgendamentoCompra = "INSERT INTO AGENDAMENTO_PRODUTO (ID_AGENDAMENTO, ID_VENDA) "
+                + "VALUES (((SELECT ID_AGENDAMENTO FROM AGENDAMENTO ORDER BY ID_AGENDAMENTO DESC LIMIT 1)) ,"
+                + " ((SELECT ID_VENDA FROM VENDA ORDER BY VENDA.ID_VENDA DESC LIMIT 1)))";
+        
+        if(agendamento.getProdutosComprados().size() >= 1){
+            Venda venda = new Venda();
+            venda.setData(agendamento.getData());
+            venda.setIdCliente(agendamento.getIdCliente());
+            venda.setItensVenda(agendamento.getProdutosComprados());
+            
+            new VendaProdutoDAO().cadastrarVenda(venda);
+           
+        }
 
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -72,6 +89,11 @@ public class AgendamentoDAO {
                     connection.rollback();
                 }
             }
+            
+            if(agendamento.getProdutosComprados().size() >= 1){
+                pStatement = connection.prepareStatement(insertAgendamentoCompra);
+                pStatement.execute();
+            }
 
             connection.commit();
 
@@ -100,11 +122,74 @@ public class AgendamentoDAO {
         }
 
     }
+    
+    
+    public List<Item> buscaProdutosCompradosAgendamento(long idAgendamento){
+        
+        String sql = "SELECT PRODUTO.IDPRODUTO AS ID, PRODUTO.NOME AS NOME, PRODUTO.MARCA AS MARCA, ITEM_VENDA.QUANTIDADE AS QTD,"
+                + " ITEM_VENDA.PRECOUNITARIO AS PUNITARIO FROM VENDA " +
+        "    INNER JOIN AGENDAMENTO_PRODUTO ON AGENDAMENTO_PRODUTO.ID_VENDA = VENDA.ID_VENDA " +
+        "    INNER JOIN AGENDAMENTO ON AGENDAMENTO.ID_AGENDAMENTO = AGENDAMENTO_PRODUTO.ID_AGENDAMENTO " +
+        "    INNER JOIN ITEM_VENDA ON VENDA.ID_VENDA  = ITEM_VENDA.ID_VENDA " +
+        "    INNER JOIN PRODUTO ON PRODUTO.IDPRODUTO = ITEM_VENDA.ID_PRODUTO " +
+        "WHERE AGENDAMENTO.ID_AGENDAMENTO = ?";
+        
+        List<Item> itensComprados = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+       
+        try {
+            connection = new ConnectionMVC().getConnection();
+            pStatement = connection.prepareStatement(sql);
+            pStatement.setLong(1, idAgendamento);
+            
+            ResultSet rs = pStatement.executeQuery();
+            
+            if(rs != null){
+                while(rs.next()){
+                    Item i = new Item();
+                    i.setId_produto(rs.getLong("ID"));
+                    i.setNome(rs.getString("NOME"));
+                    i.setMarca(rs.getString("MARCA"));
+                    i.setQuantidade(rs.getInt("QTD"));
+                    i.setPreco(rs.getLong("PUNITARIO"));
+                    itensComprados.add(i);
+                }
+            }
+            
+            return itensComprados;
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro agendamentoDAO" + e);
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
+        
+        return null;
+    }
     public Agendamento listarAgendamento(long idAgendamento){
         
  
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO,TOTAL,"
                 + " DESCONTO, VALORADICIONAL, ID_CLIENTE, PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO WHERE ID_AGENDAMENTO = ? ";
+        
+       
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -134,6 +219,8 @@ public class AgendamentoDAO {
                     agendamento.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
                 }
             }
+            agendamento.setProdutosComprados(buscaProdutosCompradosAgendamento(agendamento.getIdAgendamento()));
+            
            
             return agendamento;
         } catch (SQLException e) {
@@ -195,6 +282,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                    ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -295,6 +383,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                    ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -364,7 +453,7 @@ public class AgendamentoDAO {
                         ag.setServicosSolicitados(listaServicosAgendamento(rs.getLong("ID_AGENDAMENTO")));
                     } catch (ExceptionDAO e) {
                     }
-                  
+              
                     agendamentos.add(ag);         
                 }
             }
@@ -433,6 +522,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -500,6 +590,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -567,6 +658,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -633,6 +725,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -702,7 +795,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
-       
+           ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -775,7 +868,7 @@ public class AgendamentoDAO {
                     
 
                     ag.setServicos(sc.buscarServicoPeloAgendamento(rs.getLong("ID_AGENDAMENTO")));
-              
+                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
          
                     agendamentos.add(ag);         
                 }
@@ -922,6 +1015,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -1138,6 +1232,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -1208,6 +1303,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -1275,6 +1371,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }

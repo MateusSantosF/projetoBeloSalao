@@ -6,10 +6,11 @@
 package BeutifulSalon.view.modais;
 
 import BeutifulSalon.Ferramentas.ManipulaFontes;
-import BeutifulSalon.controller.ProdutoController;
-import BeutifulSalon.dao.ExceptionDAO;
+import BeutifulSalon.Tabelas.ModalProdutosCompradosTableModel;
+import BeutifulSalon.Tabelas.ModalProdutosTableModel;
 import BeutifulSalon.model.Cliente;
 import BeutifulSalon.model.Dinheiro;
+import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Observado;
 import BeutifulSalon.model.Observador;
 import BeutifulSalon.model.Orcamento;
@@ -30,18 +31,14 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
     /**
      * Creates new form ModalProdutos
      */
-    ArrayList<Observador> observadores = new ArrayList<>();
     private boolean cabeleleiro;
     private String valorPagoPeloProduto = "";
+    ArrayList<Observador> observadores = new ArrayList<>();
+    ModalProdutosTableModel modelo = new ModalProdutosTableModel();
+    ModalProdutosCompradosTableModel escolhidos = new ModalProdutosCompradosTableModel();
 
     public ModalProdutos() {
         initComponents();
-        listarTodosProdutos();
-
-        //Limpa linhas da tabela de produtos comprados
-        DefaultTableModel model = (DefaultTableModel) jTableProdutosComprados.getModel();
-        model.setRowCount(0);
-        jTableProdutosComprados.setModel(model);
     }
 
     public ModalProdutos(boolean cabeleleiro) {
@@ -56,14 +53,11 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 25f)); //Produtos
         jButton1.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 18f)); //Concluir
         jTableConsultaProdutos.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f)); //Tabela
-
+        jTableProdutosComprados.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 13f));
         this.cabeleleiro = cabeleleiro;
-        listarTodosProdutos();
-
-        //Limpa linhas da tabela de produtos comprados
-        DefaultTableModel model = (DefaultTableModel) jTableProdutosComprados.getModel();
-        model.setRowCount(0);
-        jTableProdutosComprados.setModel(model);
+        modelo.setIsCabeleireiroView(cabeleleiro);
+        modelo.getTodosProdutos();
+        jTableConsultaProdutos.setModel(modelo);
 
     }
 
@@ -87,6 +81,8 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
         jTextFieldNomeProduto = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -109,13 +105,10 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
 
         jTableConsultaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Nome", "Marca", "Preço de Venda", "id"
+                "Nome", "Marca", "Preço de Venda", "Qtd. Estoque"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -127,11 +120,6 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
             }
         });
         jScrollPane2.setViewportView(jTableConsultaProdutos);
-        if (jTableConsultaProdutos.getColumnModel().getColumnCount() > 0) {
-            jTableConsultaProdutos.getColumnModel().getColumn(3).setMinWidth(1);
-            jTableConsultaProdutos.getColumnModel().getColumn(3).setPreferredWidth(1);
-            jTableConsultaProdutos.getColumnModel().getColumn(3).setMaxWidth(1);
-        }
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-seta.png"))); // NOI18N
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -142,17 +130,14 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
 
         jTableProdutosComprados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
-                "Nome", "Marca", "Preço", "Qtd.", "id"
+                "Nome", "Marca", "Preço", "Quantidade"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -182,6 +167,26 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setText("Produtos");
 
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icon-seta-esquerda.png"))); // NOI18N
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel5MousePressed(evt);
+            }
+        });
+
+        jPanel2.setBackground(new java.awt.Color(36, 46, 65));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 896, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 54, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -189,39 +194,37 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(357, 357, 357)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel5)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jTextFieldNomeProduto)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
+                .addGap(50, 50, 50))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(336, 336, 336))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -234,12 +237,14 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18))
+                        .addGap(10, 10, 10))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(161, 161, 161)))
+                        .addGap(34, 34, 34)
+                        .addComponent(jLabel5)
+                        .addGap(66, 66, 66)))
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addGap(45, 45, 45))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -271,44 +276,38 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
     private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
 
         int indice = jTableConsultaProdutos.getSelectedRow();
-        Produto produtoBuscado = null;
 
         if (indice > -1) {
-
+            Produto produtoBuscado = modelo.getProduto(indice);
             int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade comprada: "));
+            
+            if(quantidade < 0){
+                quantidade *= -1;
+            }
             long valorPago = 0;
+
             //Se for o cabeleleiro comprando
             if (cabeleleiro) {
-
                 DialogValorProduto modalValorProduto = new DialogValorProduto(this, true);
                 modalValorProduto.setName("Valor do Produto");
                 modalValorProduto.registrarObservador(this);
                 modalValorProduto.setVisible(true);
             }
-
-            DefaultTableModel tabelaProdutosComprados = (DefaultTableModel) jTableProdutosComprados.getModel();
-
-            ProdutoController po = new ProdutoController();
-
-            long idProdutoBuscado = (long) jTableConsultaProdutos.getValueAt(indice, 3);
-
-            produtoBuscado = po.buscarProduto(idProdutoBuscado);
-
             if (cabeleleiro) {
                 valorPago = Dinheiro.parseCent(Dinheiro.retiraCaracteres(valorPagoPeloProduto));
             } else {
                 valorPago = produtoBuscado.getPreco();
             }
+            produtoBuscado.setPreco(valorPago);
 
-            tabelaProdutosComprados.addRow(new Object[]{
-                produtoBuscado.getNome(),
-                produtoBuscado.getMarca(),
-                Dinheiro.parseString(valorPago),
-                quantidade,
-                produtoBuscado.getId_produto()
-            });
-
-            jTableProdutosComprados.setModel(tabelaProdutosComprados);
+            Item i = new Item();
+            i.setId_produto(produtoBuscado.getId_produto());
+            i.setNome(produtoBuscado.getNome());
+            i.setMarca(produtoBuscado.getMarca());
+            i.setPreco(valorPago);
+            i.setQuantidade(quantidade);
+            escolhidos.addRow(i);
+            jTableProdutosComprados.setModel(escolhidos);
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um produto antes.");
@@ -318,48 +317,29 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
 
     private void jTextFieldNomeProdutoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldNomeProdutoKeyPressed
 
-        String nome = jTextFieldNomeProduto.getText(); // nome produto do TextField
-        DefaultTableModel tabelaProdutoModel = (DefaultTableModel) jTableConsultaProdutos.getModel(); // tabela
-
-        tabelaProdutoModel.setRowCount(0);
-
-        ProdutoController pc = new ProdutoController();
-
-        ArrayList<Produto> produtosListados = null;
-
-        produtosListados = pc.listarProdutos(nome);
-
-        try {
-            produtosListados.forEach((Produto produto) -> {
-                if (produto.getPreco() > 0 || cabeleleiro) {
-                    tabelaProdutoModel.addRow(new Object[]{
-                        produto.getNome(),
-                        produto.getMarca(),
-                        (produto.getPreco()  < 0 )? "Não é vendido"  : Dinheiro.parseString( produto.getPreco() ),
-                        produto.getId_produto()
-                    });
-                }
-
-            });
-
-            jTableConsultaProdutos.setModel(tabelaProdutoModel);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao listarProdutos" + e);
-        }
+        modelo.getProdutosPeloNome(jTextFieldNomeProduto.getText());
+        jTableConsultaProdutos.setModel(modelo);
     }//GEN-LAST:event_jTextFieldNomeProdutoKeyPressed
 
     private void jTextFieldNomeProdutoCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_jTextFieldNomeProdutoCaretUpdate
 
         if (jTextFieldNomeProduto.getText().equals("")) {
-            listarTodosProdutos();
+            modelo.getTodosProdutos();
+            jTableConsultaProdutos.setModel(modelo);
         }
     }//GEN-LAST:event_jTextFieldNomeProdutoCaretUpdate
 
-    private DefaultTableModel produtosEscolhidos() {
+    private void jLabel5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MousePressed
+        int indice = jTableProdutosComprados.getSelectedRow();
 
-        return (DefaultTableModel) jTableProdutosComprados.getModel();
-    }
+        if (indice > -1) {
+            escolhidos.removeRow(indice);
+            jTableProdutosComprados.setModel(escolhidos);
+        }
+
+    }//GEN-LAST:event_jLabel5MousePressed
+
+   
 
     /**
      * @param args the command line arguments
@@ -399,57 +379,16 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
         });
     }
 
-    private void listarTodosProdutos() {
-
-        DefaultTableModel tabelaProdutoModel = (DefaultTableModel) jTableConsultaProdutos.getModel(); // tabela
-        tabelaProdutoModel.setRowCount(0);
-
-        ProdutoController pc = new ProdutoController();
-        ArrayList<Produto> produtosListados = null;
-
-        produtosListados = pc.listarProdutos();
-
-        try {
-            produtosListados.forEach((Produto produto) -> {
-
-                if (cabeleleiro) {
-                    
-                    String preco = Dinheiro.parseString(produto.getPreco());
-                    if(produto.getPreco() < 0){
-                        preco = "Não vendido";
-                    }
-                    tabelaProdutoModel.addRow(new Object[]{
-                        produto.getNome(),
-                        produto.getMarca(),
-                       preco,
-                        produto.getId_produto()
-                    });
-                } else {
-                    if (produto.getPreco() > 0) {
-                        tabelaProdutoModel.addRow(new Object[]{
-                            produto.getNome(),
-                            produto.getMarca(),
-                            Dinheiro.parseString(produto.getPreco()),
-                            produto.getId_produto()
-                        });
-                    }
-                }
-
-            });
-
-            jTableConsultaProdutos.setModel(tabelaProdutoModel);
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao listarProdutos" + e);
-        }
-    }
+  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableConsultaProdutos;
@@ -471,8 +410,7 @@ public class ModalProdutos extends javax.swing.JFrame implements Observado, Obse
     public void notificarObservadores() {
 
         observadores.forEach((Observador ob) -> {
-            ob.update(produtosEscolhidos());
-
+          ob.update(escolhidos);
         });
     }
 

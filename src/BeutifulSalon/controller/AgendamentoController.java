@@ -11,6 +11,7 @@ import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.dao.AgendamentoDAO;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Agendamento;
+import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.Edicao.EditarAgendamento;
 import java.sql.SQLException;
@@ -31,7 +32,8 @@ import javax.swing.JPanel;
  */
 public class AgendamentoController {
 
-    public boolean cadastraAgendamento(String data, String horario, long idCliente, List<Servico> servicos, long total,
+    public boolean cadastraAgendamento(String data, String horario, long idCliente, List<Servico> servicos,
+            List<Item> produtosComprados, long total,
             long desconto, long valorAdicional, boolean realizado, boolean pago, String FormaDePagamento) throws ExceptionDAO {
 
         Agendamento ag = null;
@@ -76,7 +78,14 @@ public class AgendamentoController {
             //RETIRA LINHA DE TEMPO TOTAL DOS SERVIÇOS
 
             Agendamento agendamento = new Agendamento();
+            agendamento.setProdutosComprados(produtosComprados);
             agendamento.setFimAgendamento(fimAgendamento);
+            //RETIRANDO VALOR DOS PRODUTOS COMPRADOS DO TOTAL DO AGENDAMENTO, PARA GARANTIR UNIDADE
+            if (produtosComprados.size() >= 1) {
+                for (Item i : produtosComprados) {
+                    total -= i.getPrecoTotal();
+                }
+            }
             agendamento.setTotal(total);
             agendamento.setDesconto(desconto);
             agendamento.setIdCliente(idCliente);

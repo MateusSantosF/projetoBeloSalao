@@ -13,7 +13,6 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.DefaultListModel;
 
 /**
  *
@@ -33,11 +32,12 @@ public class Agendamento {
     private LocalTime fimAgendamento;
     private Boolean realizado;
     private List<Servico> servicos;
+    private List<Item> produtosComprados;
 
     public Agendamento() {
-    }
+    };
 
-    ;
+    
     
     public Agendamento(LocalDate data, LocalTime horario, long idCliente, ArrayList<Servico> servicos) {
 
@@ -134,6 +134,16 @@ public class Agendamento {
     public void setFimAgendamento(LocalTime fimAgendamento) {
         this.fimAgendamento = fimAgendamento;
     }
+
+    public List<Item> getProdutosComprados() {
+        return produtosComprados;
+    }
+
+    public void setProdutosComprados(List<Item> produtosComprados) {
+        this.produtosComprados = produtosComprados;
+    }
+    
+    
 
     public String getTempoPrevisto() {
 

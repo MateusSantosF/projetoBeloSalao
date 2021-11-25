@@ -258,19 +258,12 @@ public class DetalhesServico extends javax.swing.JFrame {
             jLabelPontoDeEquilíbrio.setForeground(verde);
         }
 
-        if (servico.getQuantidadeRealizada() >= ((int) (Math.ceil(meta)))) {
-          //  jLabelMeta.setForeground(verde);
-        }
 
         if (pontoDeEquilibrio < 0) {
             jLabelPontoDeEquilíbrio.setText("PREJUÍZO");
             jLabelPontoDeEquilíbrio.setForeground(vermelho);
         }
 
-        if (meta < 0) {
-          //  jLabelMeta.setText("PREJUÍZO");
-           // jLabelMeta.setForeground(vermelho);
-        }
 
         //Tabela Produtos Utilizados
         DefaultTableModel model = (DefaultTableModel) jTableProdutosUtilizados.getModel();
