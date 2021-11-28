@@ -11,8 +11,10 @@ import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.Valida;
 import BeutifulSalon.controller.CabeleireiroController;
 import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.dao.ColaboradorDAO;
 import BeutifulSalon.model.Cabeleireiro;
 import BeutifulSalon.model.Cliente;
+import BeutifulSalon.model.Colaborador;
 import BeutifulSalon.model.Email;
 import BeutifulSalon.view.modais.NovoRegistro;
 import BeutifulSalon.view.Apresenta.ApresentaFinancas;
@@ -603,7 +605,19 @@ public class MainMenu extends javax.swing.JFrame implements Observador {
 
         //Cria tabelas apos atualização
         cc.criaTabelasAposAtualizacao();
+        
         Cabeleireiro cab = cc.selecionaCabeleireiro();
+        //registra colaborador com dados do cabeleireiro
+        if ( cab.verificaRegistro() == 1 ) {
+            if ( new ColaboradorDAO().verificaRegistroColaboradorCabeleireiro( cab.getId() ) == 0) {
+                Colaborador c = new Colaborador();
+                c.setNome( cab.getNome() );
+                c.setIdColaborador( cab.getId() );
+                c.setComissionado( false );
+                c.setPorcentagemComisao( 0L );
+                c.cadastrarColaboradorCabeleireiro( c );
+            }
+        }
         List<Cliente> clientes = new ClienteController().listarAniversariantesDoMes();
         List<Cliente> clientesUltimoEnvio = new ClienteController().listaClientesEmailUltimaVisita();
 

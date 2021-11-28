@@ -26,43 +26,38 @@ public class ModalInputMonetarios extends javax.swing.JFrame implements Observad
     /**
      * Creates new form ModalInputMonetarios
      */
-    
-     ArrayList<Observador> observadores = new ArrayList<>();
-  
-     
-     
+    ArrayList<Observador> observadores = new ArrayList<>();
+
     public ModalInputMonetarios() {
         initComponents();
-        
+
         ManipulaFontes mf = new ManipulaFontes();
         jLabelTexto.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Salvar
         jFormattedTextFieldValor.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Descartar
         jLabelBtnInserir.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Descartar
-        
-        
-                  
-                DecimalFormat decimal = new DecimalFormat("#,###,###.00");
-                NumberFormatter numFormatter = new NumberFormatter(decimal);
-                numFormatter.setFormat(decimal);
-                numFormatter.setAllowsInvalid(false);
-                DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
-                jFormattedTextFieldValor.setFormatterFactory(dfFactory);
+
+        DecimalFormat decimal = new DecimalFormat("#,###,###.00");
+        NumberFormatter numFormatter = new NumberFormatter(decimal);
+        numFormatter.setFormat(decimal);
+        numFormatter.setAllowsInvalid(false);
+        DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
+        jFormattedTextFieldValor.setFormatterFactory(dfFactory);
 
     }
-    
-    public ModalInputMonetarios(String texto){
+
+    public ModalInputMonetarios(String texto) {
         initComponents();
         jLabelTexto.setText(texto);
-                  
-                DecimalFormat decimal = new DecimalFormat("#,###,###.00");
-                NumberFormatter numFormatter = new NumberFormatter(decimal);
-                numFormatter.setFormat(decimal);
-                numFormatter.setAllowsInvalid(false);
-                DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
-                jFormattedTextFieldValor.setFormatterFactory(dfFactory);
+
+        DecimalFormat decimal = new DecimalFormat("#,###,###.00");
+        NumberFormatter numFormatter = new NumberFormatter(decimal);
+        numFormatter.setFormat(decimal);
+        numFormatter.setAllowsInvalid(false);
+        DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
+        jFormattedTextFieldValor.setFormatterFactory(dfFactory);
     }
-    
-    private String valorMonetario(){
+
+    private String valorMonetario() {
         return jFormattedTextFieldValor.getText();
     }
 
@@ -162,9 +157,9 @@ public class ModalInputMonetarios extends javax.swing.JFrame implements Observad
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabelBtnInserirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelBtnInserirMousePressed
-    
-       notificarObservadores();
-       dispose();
+
+        notificarObservadores();
+        dispose();
     }//GEN-LAST:event_jLabelBtnInserirMousePressed
 
     /**
@@ -199,9 +194,7 @@ public class ModalInputMonetarios extends javax.swing.JFrame implements Observad
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ModalInputMonetarios().setVisible(true);
-      
-             
-               
+
             }
         });
     }
@@ -216,7 +209,7 @@ public class ModalInputMonetarios extends javax.swing.JFrame implements Observad
 
     @Override
     public void registrarObservador(Observador observador) {
-            
+
         observadores.add(observador);
     }
 
@@ -227,20 +220,19 @@ public class ModalInputMonetarios extends javax.swing.JFrame implements Observad
 
     @Override
     public void notificarObservadores() {
-        
-          observadores.forEach((Observador ob)->{
-                ob.update(valorMonetario());
-     
+
+        observadores.forEach((Observador ob) -> {
+            ob.update(valorMonetario());
+
         });
     }
 
     @Override
     public void run() {
-             
-        synchronized(this){
-            
+
+        synchronized (this) {
+
         }
-  
-            
+
     }
 }

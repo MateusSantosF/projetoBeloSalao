@@ -33,7 +33,7 @@ public class AgendamentoDAO {
     public void cadastraAgendamento(Agendamento agendamento) throws SQLException, SQLException {
 
         String insertAgendamento = "INSERT INTO AGENDAMENTO (DATA, HORARIO, ID_CLIENTE, REALIZADO, DESCONTO, TOTAL,"
-                + " VALORADICIONAL, PAGO, FORMADEPAGAMENTO, FIMAGENDAMENTO) VALUES (?, ?, ?, ?, ?,?,?,?,?,?)";
+                + " VALORADICIONAL, PAGO, FORMADEPAGAMENTO, FIMAGENDAMENTO, ID_COLABORADOR) VALUES (?, ?, ?, ?, ?,?,?,?,?,?,?)";
 
         String insertServicoAgendamento = "INSERT INTO AGENDAMENTO_SERVICO (ID_AGENDAMENTO, ID_SERVICO) "
                 + "VALUES ((SELECT ID_AGENDAMENTO FROM AGENDAMENTO ORDER BY ID_AGENDAMENTO DESC LIMIT 1), ?)";
@@ -71,6 +71,7 @@ public class AgendamentoDAO {
             pStatement.setBoolean(8, agendamento.isPago());
             pStatement.setString(9, agendamento.getFormaDePagamento());
             pStatement.setTime(10, java.sql.Time.valueOf(agendamento.getFimAgendamento()));
+            pStatement.setLong(11, agendamento.getIdColaborador());
             int firstInsert = pStatement.executeUpdate();
 
             if (firstInsert > 0) {
@@ -252,7 +253,7 @@ public class AgendamentoDAO {
     public ArrayList<Agendamento> listarAgendamentos(){
         
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, "
-                + "ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO "
+                + "ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO, ID_COLABORADOR FROM AGENDAMENTO "
                 + "INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
                 + " WHERE REALIZADO = TRUE AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATA DESC ";
         
@@ -283,6 +284,7 @@ public class AgendamentoDAO {
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
                     ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
                     agendamentos.add(ag);         
                 }
             }
@@ -352,7 +354,8 @@ public class AgendamentoDAO {
         ManipulaData datas = new ManipulaData();
         
         
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO  FROM AGENDAMENTO"
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO,"
+                + " FORMADEPAGAMENTO, ID_COLABORADOR  FROM AGENDAMENTO"
                 + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE "
                 + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.MeiaNoiteAmanha() + " AND REALIZADO = TRUE "
                 + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO ASC ";
@@ -383,6 +386,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
                     ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
@@ -491,7 +495,8 @@ public class AgendamentoDAO {
         ManipulaData datas = new ManipulaData();
         
         
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO"
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL,"
+                + " PAGO, FORMADEPAGAMENTO, ID_COLABORADOR FROM AGENDAMENTO"
                 + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE "
                 + " WHERE DATA BETWEEN " + datas.MeiaNoiteAmanha() + " AND " + datas.somaDia(LocalDateTime.now().plusDays(1), 1)
                 + " AND REALIZADO = TRUE AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO ASC";
@@ -522,7 +527,8 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
-                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
+                    ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -559,7 +565,8 @@ public class AgendamentoDAO {
         ManipulaData datas = new ManipulaData();
         
         
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO"
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, "
+                + "PAGO, FORMADEPAGAMENTO, ID_COLABORADOR FROM AGENDAMENTO"
                 + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
                 + " WHERE DATA BETWEEN " + datas.meiaNoiteHoje() + " AND " + datas.somaDia(LocalDateTime.now(), 5) 
                 +" AND REALIZADO = TRUE AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATA DESC";
@@ -590,7 +597,8 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
-                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
+                    ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -627,7 +635,8 @@ public class AgendamentoDAO {
         ManipulaData datas = new ManipulaData();
         
         
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO"
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, "
+                + "FORMADEPAGAMENTO, ID_COLABORADOR FROM AGENDAMENTO"
                 + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
                 + " WHERE DATA BETWEEN " + datas.inicioDoMes(LocalDate.now(), mes) + " AND " + datas.fimDoMes(LocalDate.now(), mes) 
                 +" AND REALIZADO = TRUE AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATA DESC";
@@ -658,7 +667,8 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
-                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
+                    ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -695,7 +705,7 @@ public class AgendamentoDAO {
      public ArrayList<Agendamento> listarAgendamentosNome(String nome){
              
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, CLIENTE.NOME, TOTAL, DESCONTO, VALORADICIONAL,"
-                + " PAGO, FORMADEPAGAMENTO, CLIENTE.NOME  ||' '|| CLIENTE.SOBRENOME AS NOMECOMPLETO FROM AGENDAMENTO"
+                + " PAGO, FORMADEPAGAMENTO, CLIENTE.NOME  ||' '|| CLIENTE.SOBRENOME AS NOMECOMPLETO, ID_COLABORADOR FROM AGENDAMENTO"
         + " INNER JOIN CLIENTE ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID AND NOMECOMPLETO LIKE'%" + nome +"%'"
                 + " WHERE CLIENTE.EXCLUIDO = FALSE";
         
@@ -725,7 +735,8 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
-                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
+                    ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -762,7 +773,7 @@ public class AgendamentoDAO {
         ManipulaData datas = new ManipulaData();
       
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL"
-                + ", PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO"
+                + ", PAGO, FORMADEPAGAMENTO, ID_COLABORADOR FROM AGENDAMENTO"
                 + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
                 + " WHERE DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data) +" "
                 + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO ASC";
@@ -795,7 +806,8 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
-           ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
+                    ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -832,7 +844,7 @@ public class AgendamentoDAO {
         ManipulaData datas = new ManipulaData();
       
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO,FIMAGENDAMENTO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL,"
-                + "PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO"
+                + "PAGO, FORMADEPAGAMENTO, ID_COLABORADOR FROM AGENDAMENTO"
                 + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE"
                 + " WHERE REALIZADO = TRUE AND DATA BETWEEN " + datas.meiaNoite(data) + " AND " + datas.meiaNoiteAmanha(data)  
                 + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO ASC";
@@ -865,10 +877,10 @@ public class AgendamentoDAO {
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
                     ag.setFimAgendamento(rs.getTime("FIMAGENDAMENTO").toLocalTime());
-                    
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
 
                     ag.setServicos(sc.buscarServicoPeloAgendamento(rs.getLong("ID_AGENDAMENTO")));
-                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
+                    ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
          
                     agendamentos.add(ag);         
                 }
@@ -987,7 +999,7 @@ public class AgendamentoDAO {
     public ArrayList<Agendamento> listarAgendamentosNaoRealizados(){
         
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL,"
-                + "PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO WHERE REALIZADO = FALSE ORDER BY DATA DESC ";
+                + "PAGO, FORMADEPAGAMENTO, ID_COLABORADOR FROM AGENDAMENTO WHERE REALIZADO = FALSE ORDER BY DATA DESC ";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -1015,6 +1027,7 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
                         ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
@@ -1204,7 +1217,7 @@ public class AgendamentoDAO {
 
     public ArrayList<Agendamento> listarAgendamentosNaoPagos() {
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL,"
-                + "PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO WHERE PAGO = FALSE ORDER BY DATA DESC";
+                + "PAGO, FORMADEPAGAMENTO, ID_COLABORADOR FROM AGENDAMENTO WHERE PAGO = FALSE ORDER BY DATA DESC";
         
         Connection connection = null;
         PreparedStatement pStatement = null;
@@ -1232,7 +1245,9 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
-                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
+                    
+                    ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -1267,7 +1282,7 @@ public class AgendamentoDAO {
 
     public List<Agendamento> listarAgendamentosIDCliente(long idCliente) {
          String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, CLIENTE.NOME, TOTAL, DESCONTO, VALORADICIONAL,"
-                + " PAGO, FORMADEPAGAMENTO, CLIENTE.NOME  ||' '|| CLIENTE.SOBRENOME AS NOMECOMPLETO FROM AGENDAMENTO"
+                + " PAGO, FORMADEPAGAMENTO, CLIENTE.NOME  ||' '|| CLIENTE.SOBRENOME AS NOMECOMPLETO, ID_COLABORADOR FROM AGENDAMENTO"
         + " INNER JOIN CLIENTE ON AGENDAMENTO.ID_CLIENTE = CLIENTE.ID "
                 + " WHERE CLIENTE.EXCLUIDO = FALSE AND CLIENTE.ID = ? ORDER BY DATA DESC";
         
@@ -1303,7 +1318,9 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
-                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
+                    
+                    ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }
@@ -1340,7 +1357,8 @@ public class AgendamentoDAO {
         
         ManipulaData datas = new ManipulaData();
             
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO  FROM AGENDAMENTO"
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, TOTAL, DESCONTO, VALORADICIONAL, PAGO,"
+                + " FORMADEPAGAMENTO, ID_COLABORADOR FROM AGENDAMENTO"
                 + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE "
                 + " WHERE DATA BETWEEN " + datas.meiaNoite(inicio) + " AND " + datas.meiaNoite(fim) 
                 + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY DATA ASC ";
@@ -1371,7 +1389,9 @@ public class AgendamentoDAO {
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     ag.setPago(rs.getBoolean("PAGO"));
                     ag.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
-                        ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
+                    
+                    ag.setProdutosComprados(buscaProdutosCompradosAgendamento(ag.getIdAgendamento()));
                     agendamentos.add(ag);         
                 }
             }

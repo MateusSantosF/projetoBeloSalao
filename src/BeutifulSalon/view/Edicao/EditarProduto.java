@@ -94,6 +94,7 @@ public class EditarProduto extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Produto");
+        setResizable(false);
 
         JPCadastroClientes1.setBackground(new java.awt.Color(243, 244, 245));
 

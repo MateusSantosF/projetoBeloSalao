@@ -34,7 +34,7 @@ public class AgendamentoController {
 
     public boolean cadastraAgendamento(String data, String horario, long idCliente, List<Servico> servicos,
             List<Item> produtosComprados, long total,
-            long desconto, long valorAdicional, boolean realizado, boolean pago, String FormaDePagamento) throws ExceptionDAO {
+            long desconto, long valorAdicional, boolean realizado, boolean pago, String FormaDePagamento, long idColaborador) throws ExceptionDAO {
 
         Agendamento ag = null;
         if (Valida.isHora(horario) && !servicos.isEmpty() && idCliente > 0) {
@@ -96,6 +96,7 @@ public class AgendamentoController {
             agendamento.setValorAdicional(valorAdicional);
             agendamento.setPago(pago);
             agendamento.setFormaDePagamento(FormaDePagamento);
+            agendamento.setIdColaborador(idColaborador);
 
             try {
                 agendamento.cadastraAgendamento(agendamento);

@@ -183,13 +183,13 @@ public class Dashboard extends javax.swing.JPanel {
                 saida += ocProdutosGastos.getFev();
                 break;
             case MARCH:
-saida += ocProdutosGastos.getMar();
+                saida += ocProdutosGastos.getMar();
                 break;
             case APRIL:
                 saida += ocProdutosGastos.getAbr();
                 break;
             case MAY:
-saida += ocProdutosGastos.getMai();
+                saida += ocProdutosGastos.getMai();
                 break;
             case JUNE:
                 saida += ocProdutosGastos.getJun();

@@ -28,13 +28,19 @@ import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.controller.CompraController;
 import BeutifulSalon.controller.DespesaController;
 import BeutifulSalon.controller.VendaController;
+import BeutifulSalon.model.Colaborador;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.OrcamentoProduto;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Paint;
 import java.text.NumberFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -59,11 +65,24 @@ public class GraficoDeBarras {
     private Color verde = new Color(9, 213, 147);
     private Color vermelho = new Color(248, 67, 69);
     private Color azul = new Color(6, 116, 245);
-    private Color amarelo = new Color(248, 164,53);
+    private Color amarelo = new Color(248, 164, 53);
     private OrcamentoProduto ocProdutosGastos;
+    private List<Colaborador> colaboradores;
 
     public GraficoDeBarras() {
 
+    }
+
+    public void plotaGraficoColaborador(JPanel painel, List<Colaborador> colaboradores) {
+        this.colaboradores = colaboradores;
+        final CategoryDataset dataset = createDatasetColab();
+        final JFreeChart chart = createChartColaboradores(dataset);
+        final ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new Dimension(500, 270));
+        chartPanel.setMouseZoomable(true);
+        chartPanel.setMouseWheelEnabled(true);
+
+        painel.add(chartPanel);
     }
 
     public void plotaGrafico(JPanel painel, OrcamentoProduto orcamentoProduto) {
@@ -74,7 +93,7 @@ public class GraficoDeBarras {
         chartPanel.setPreferredSize(new Dimension(500, 270));
         chartPanel.setMouseZoomable(true);
         chartPanel.setMouseWheelEnabled(true);
-      
+
         painel.add(chartPanel);
     }
 
@@ -87,7 +106,6 @@ public class GraficoDeBarras {
         //saidas
         CompraController cc = new CompraController();
         DespesaController dc = new DespesaController();
-        
 
         ManipulaData md = new ManipulaData();
 
@@ -212,7 +230,7 @@ public class GraficoDeBarras {
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
                     saida += Dinheiro.parseDecimal(ocProdutosGastos.getNov());
-                    
+
                     dataset.addValue(saida, series1, category11);
                     dataset.addValue(entrada, series2, category11);
                     dataset.addValue(entrada - saida, series3, category11);
@@ -222,7 +240,7 @@ public class GraficoDeBarras {
                     entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
                     saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
                     saida += Dinheiro.parseDecimal(ocProdutosGastos.getDez());
-                    
+
                     dataset.addValue(saida, series1, category12);
                     dataset.addValue(entrada, series2, category12);
                     dataset.addValue(entrada - saida, series3, category12);
@@ -244,6 +262,57 @@ public class GraficoDeBarras {
      *
      * @return The chart.
      */
+    private JFreeChart createChartColaboradores(CategoryDataset dataset) {
+
+        final JFreeChart chart = ChartFactory.createBarChart(
+                "", // chart title
+                "", // domain axis label
+                "Qtd. Serviços", // range axis label
+                dataset, // data
+                PlotOrientation.VERTICAL, // orientation
+                true, // include legend
+                true, // tooltips?
+                false // URLs?
+        );
+        Paint[] paintSequence = new Paint[]{
+            new Color(38, 70, 83),
+            new Color(42, 157, 143),
+            new Color(233, 196, 106),
+            new Color(244, 162, 97),
+            new Color(231, 111, 81),
+            azul,
+            vermelho,
+            verde,};
+
+        chart.setBackgroundPaint(Color.white);
+        final CategoryPlot plot = chart.getCategoryPlot();
+        plot.setBackgroundPaint(Color.lightGray);
+        plot.setRangeGridlinePaint(Color.white);
+        plot.setBackgroundPaint(Color.white);
+        plot.setDomainGridlinePaint(Color.white);
+        plot.setRangeGridlinePaint(Color.white);
+        plot.setRangeCrosshairVisible(true);
+
+        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        rangeAxis.setUpperMargin(1.0);
+        rangeAxis.setRangeType(RangeType.POSITIVE);
+
+        final BarRenderer renderer = (BarRenderer) plot.getRenderer();
+        renderer.setDrawBarOutline(false);
+        renderer.setBarPainter(new StandardBarPainter());
+        //Mudando a cor das barras
+
+        int i = dataset.getRowCount();
+
+        for (int j = 0; j <= i; j++) {
+            renderer.setSeriesPaint(j, paintSequence[j]);
+        }
+        renderer.setItemMargin(-0.005);
+
+        return chart;
+    }
+
     private JFreeChart createChart(final CategoryDataset dataset) {
 
         // create the chart...
@@ -298,11 +367,35 @@ public class GraficoDeBarras {
         renderer.setSeriesPaint(2, azul); // lucros
 
         final CategoryAxis domainAxis = plot.getDomainAxis();
-        
+
         domainAxis.setCategoryLabelPositionOffset(1);
 
-        // OPTIONAL CUSTOMISATION COMPLETED.
         return chart;
+
+    }
+
+    private CategoryDataset createDatasetColab() {
+
+        // row keys...
+        Map<Long, String> series = new HashMap<>();
+        colaboradores.forEach(colab -> {
+            series.put(colab.getIdColaborador(), colab.getNome());
+        });
+
+        // column keys...
+        Map<Long, String> categorys = new HashMap<>();
+
+        colaboradores.forEach(colab -> {
+            categorys.put(colab.getIdColaborador(), colab.getNome());
+        });
+
+        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+        colaboradores.forEach(c -> {
+            dataset.addValue(c.getQtdRealizada(), series.get(c.getIdColaborador()), categorys.get(c.getIdColaborador()));
+        });
+
+        return dataset;
 
     }
 

@@ -188,6 +188,7 @@ public class CabeleireiroDAO {
 
             if (rs != null) {
                 while (rs.next()) {
+                    cabeleireiro.setId(rs.getLong("ID"));
                     cabeleireiro.setNome(rs.getString("NOME"));
                     cabeleireiro.setEmail(rs.getString("EMAIL"));
                     cabeleireiro.setCpf(rs.getString("CPF"));
@@ -971,44 +972,120 @@ public class CabeleireiroDAO {
 
     }
     
-    public boolean criaTabelasAposAtualizacao() {
+    public void criaTabelaColaborador(){
         
         PreparedStatement pStatement = null;
         Connection connection = null;
-        String addColumnColaborador = "ALTER TABLE AGENDAMENTO ADD COLUMN ID_COLABORADOR INTEGER NOT NULL DEFAULT 1";
+
         String addTableColaborador = "CREATE TABLE IF NOT EXISTS COLABORADOR(" +
             "    ID_COLABORADOR INTEGER PRIMARY KEY," +
             "    NOME VARCHAR(100) NOT NULL," +
             "    ISCOMISSIONADO BOOLEAN," +
             "    PORCENTAGEMCOMISSAO INTEGER," +
             "    COMISSAOPORLUCRO BOOLEAN," +
-            "    COMISSAOPORQTD BOOLEAN" +
+            "    COMISSAOPORQTD BOOLEAN,"+
+            "    EXCLUIDO BOOLEAN" +
             ")";
+ 
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+            
+            if(connection.prepareStatement(addTableColaborador).execute()){
+                System.out.println("tabela colaborador criada com sucesso");
+            }else{
+                System.err.println("Tabela colaborador já existe");
+            }
+
+             
+        } catch (SQLException e) {
+            System.out.println("Tabela já existe!");
+            
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+
+        }
+       
+    
+    }
+    
+    public void criaColunaColaborador(){
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+        String addColumnColaborador = "ALTER TABLE AGENDAMENTO ADD COLUMN ID_COLABORADOR INTEGER NOT NULL DEFAULT 1";
+
+        try {
+
+            connection = new ConnectionMVC().getConnection();
+             if( connection.prepareStatement(addColumnColaborador).execute()){
+                System.out.println("coluna colaborador criada com sucesso");
+            }else{
+                System.err.println("coluna colaborador já existe");
+            } 
+                
+
+        } catch (SQLException e) {
+            System.out.println("Tabela já existe!");
+            
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+
+        }
+
+    
+    }
+    
+    public boolean criaTabelasAposAtualizacao() {
+        
+        criaTabelaColaborador();
+        criaColunaColaborador();
+        PreparedStatement pStatement = null;
+        Connection connection = null;
+
         String addTableAgendamentoCompra = "CREATE TABLE IF NOT EXISTS AGENDAMENTO_PRODUTO(" +
         "    ID_AGENDAMENTO INTEGER NOT NULL," +
         "    ID_VENDA INTEGER NOT NULL" +
         ")";
         try {
 
-            connection = new ConnectionMVC().getConnection();
-            
-            if( connection.prepareStatement(addColumnColaborador).execute()){
-                System.out.println("coluna colaborador criada com sucesso");
-            }else{
-                System.err.println("coluna colaborador já existe");
-            }   
-            if(connection.prepareStatement(addTableColaborador).execute()){
-                System.out.println("tabela colaborador criada com sucesso");
-            }else{
-                System.err.println("Tabela colaborador já existe");
-            }
-            
+            connection = new ConnectionMVC().getConnection();           
             if(connection.prepareStatement(addTableAgendamentoCompra).execute()){
                 System.out.println("tabela agendamentoCompra criada com sucesso");
             }else{
                 System.err.println("Tabela agendamentoCompra  já existe");
-            }
-                
+            }             
 
         } catch (SQLException e) {
             System.out.println("Tabela já existe!");

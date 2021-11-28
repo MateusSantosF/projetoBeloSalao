@@ -4,6 +4,7 @@ import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Ferramentas.RecuperaTabela;
 import BeutifulSalon.Ferramentas.Valida;
+import BeutifulSalon.Tabelas.ColaboradorTableModel;
 import BeutifulSalon.Tabelas.DestacaTotalTabela;
 import BeutifulSalon.Tabelas.ModalProdutosCompradosTableModel;
 import BeutifulSalon.Tabelas.ModalServicoTableModel;
@@ -57,6 +58,7 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
     private ModalInputMonetarios modalValorAdicional;
     private ModalServicoTableModel servicosEscolhidos = new ModalServicoTableModel();
     private ModalProdutosCompradosTableModel produtosComprados = new ModalProdutosCompradosTableModel();
+    private ColaboradorTableModel modeloColaborador = new ColaboradorTableModel();
 
     public CadastroAgendamento() {
         initComponents();
@@ -93,6 +95,14 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
         jTableServicosSolicitados.setModel(servicosEscolhidos);
         jTableProdutosComprados.setModel(produtosComprados);
+        
+        modeloColaborador.getTodosColaboradores();
+        
+        modeloColaborador.getDados().forEach(cob ->{
+            jComboBoxColaborador.addItem(cob.getNome());
+        });
+        
+        
     }
 
     /**
@@ -459,8 +469,6 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
         jLabelColaboradorResponsavel.setForeground(new java.awt.Color(34, 34, 34));
         jLabelColaboradorResponsavel.setText("Colaborador Responsável");
 
-        jComboBoxColaborador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -716,7 +724,8 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
                     Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldValorAdicional.getText())),
                     true,
                     pago,
-                    formaDePagamento);
+                    formaDePagamento,
+                    modeloColaborador.getDados().get(jComboBoxColaborador.getSelectedIndex()).getIdColaborador());
 
             if (sucesso) {
                 JOptionPane.showMessageDialog(null, "Agendamento Realizado com sucesso");

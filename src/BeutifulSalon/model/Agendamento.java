@@ -19,7 +19,8 @@ import java.util.List;
  * @author mateus
  */
 public class Agendamento {
-
+    
+    private long idColaborador;
     private long idAgendamento;
     private long idCliente;
     private long total;
@@ -82,6 +83,16 @@ public class Agendamento {
     public void setValorAdicional(long valorAdicional) {
         this.valorAdicional = valorAdicional;
     }
+
+    public long getIdColaborador() {
+        return idColaborador;
+    }
+
+    public void setIdColaborador(long idColaborador) {
+        this.idColaborador = idColaborador;
+    }
+    
+    
 
     public void setIdAgendamento(long idAgendamento) {
         this.idAgendamento = idAgendamento;
