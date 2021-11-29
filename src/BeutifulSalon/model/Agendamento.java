@@ -34,7 +34,8 @@ public class Agendamento {
     private Boolean realizado;
     private List<Servico> servicos;
     private List<Item> produtosComprados;
-
+    private List<Item> antigosprodutosComprados;
+    
     public Agendamento() {
     };
 
@@ -79,6 +80,18 @@ public class Agendamento {
     public long getValorAdicional() {
         return valorAdicional;
     }
+
+    public List<Item> getAntigosprodutosComprados() {
+        return antigosprodutosComprados;
+    }
+
+    public void setAntigosprodutosComprados(List<Item> antigosprodutosComprados) {
+        this.antigosprodutosComprados = antigosprodutosComprados;
+    }
+
+   
+    
+    
 
     public void setValorAdicional(long valorAdicional) {
         this.valorAdicional = valorAdicional;

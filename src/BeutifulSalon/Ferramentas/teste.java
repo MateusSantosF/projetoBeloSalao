@@ -23,12 +23,18 @@
  */
 package BeutifulSalon.Ferramentas;
 
+import BeutifulSalon.controller.AgendamentoController;
+import BeutifulSalon.controller.CompraController;
+import BeutifulSalon.controller.DespesaController;
+import BeutifulSalon.controller.VendaController;
+import BeutifulSalon.model.Dinheiro;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.Period;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,25 +42,29 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
 
-
-
 /**
  *
  * @author Mateus
  */
 public class teste {
-    
-    
-   
 
     public static void main(String[] args) throws JRException {
 
-     
-        EmailAutomaticoRelatorio email = new EmailAutomaticoRelatorio();
-        email.enviarRelatorio();
-       
-      
- 
-       
+        Month m = Month.DECEMBER;
+
+        double entrada, saida = 0;
+
+        VendaController vc = new VendaController();
+        AgendamentoController ag = new AgendamentoController();
+        //saidas
+        CompraController cc = new CompraController();
+        DespesaController dc = new DespesaController();
+
+        entrada = (double)(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m))/100;
+        saida = (double)(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m))/100;
+        
+        System.out.println("entrada=>" + entrada);
+        System.out.println("saída" + saida);
+
     }
 }

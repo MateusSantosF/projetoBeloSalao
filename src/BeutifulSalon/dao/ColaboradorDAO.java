@@ -115,7 +115,7 @@ public class ColaboradorDAO {
             return c;
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar colaborador" + e);
+            JOptionPane.showMessageDialog(null, "Erro buscar colaborador" + e);
 
         } finally {
 

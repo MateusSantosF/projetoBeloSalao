@@ -35,16 +35,15 @@ import javax.swing.table.AbstractTableModel;
  * @author Mateus
  */
 public class ColaboradorTableModel extends AbstractTableModel {
-    
+
     private final List<Colaborador> dados;
     private final String[] columns = {"Nome", "Comissão"};
 
-
     public ColaboradorTableModel() {
         this.dados = new ArrayList<>();
-     
+
     }
-    
+
     @Override
     public int getRowCount() {
         return dados.size();
@@ -54,6 +53,7 @@ public class ColaboradorTableModel extends AbstractTableModel {
     public int getColumnCount() {
         return columns.length;
     }
+
     @Override
     public String getColumnName(int column) {
         return columns[column];
@@ -61,28 +61,25 @@ public class ColaboradorTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-       
-        switch(columnIndex){
+
+        switch (columnIndex) {
             case 0:
-                return dados.get(rowIndex).getNome();         
+                return dados.get(rowIndex).getNome();
             case 1:
-                
-                if(dados.get(rowIndex).isComissionado()){
+
+                if (dados.get(rowIndex).isComissionado()) {
                     System.out.println("COMISSAO ->" + dados.get(rowIndex).getPorcentagemComisao());
-                    if(dados.get(rowIndex).isComissaoPorLucro()){
-                        return dados.get(rowIndex).getPorcentagemComisao() + "%";      
-                    }else{
-                        return "R$"+Dinheiro.parseDecimal(dados.get(rowIndex).getPorcentagemComisao());
-                    }
-                }else{
+                    return  Dinheiro.parseString(dados.get(rowIndex).getPorcentagemComisao());
+
+                } else {
                     return "Não comissionado";
                 }
-                                
+
         }
-        
+
         return null;
     }
-    
+
     public void addRow(Colaborador c) {
         dados.add(c);
         this.fireTableDataChanged();
@@ -92,19 +89,18 @@ public class ColaboradorTableModel extends AbstractTableModel {
         c.forEach(col -> dados.add(col));
         this.fireTableDataChanged();
     }
-    
-    public Colaborador getColaborador(int rowCount){
+
+    public Colaborador getColaborador(int rowCount) {
         return dados.get(rowCount);
     }
-    
-    public void getTodosColaboradores(){
+
+    public void getTodosColaboradores() {
         dados.clear();
         addRow(new ColaboradorController().listarColaboradores());
     }
-    
-    public List<Colaborador> getDados(){
+
+    public List<Colaborador> getDados() {
         return dados;
     }
-      
-  
+
 }

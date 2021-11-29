@@ -8,6 +8,7 @@ package BeutifulSalon.model;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  *
@@ -34,8 +35,11 @@ public class Dinheiro {
         return VALOR.multiply(new BigDecimal(100)).longValue();
     }
     
-    public static long parseDecimal(long VALOR){
-        return new BigDecimal(VALOR).divide(new BigDecimal(100)).longValue();
+    public static String parseDecimal(long VALOR){
+        
+        double valorD = (double)VALOR/100;
+        
+        return new DecimalFormat("#,###,###.00").format(valorD);
     }
     
     public static BigDecimal parseBigDecimal(Long VALOR){

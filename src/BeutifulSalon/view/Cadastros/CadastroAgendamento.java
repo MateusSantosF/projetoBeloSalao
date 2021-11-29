@@ -11,6 +11,7 @@ import BeutifulSalon.Tabelas.ModalServicoTableModel;
 import BeutifulSalon.controller.AgendamentoController;
 import BeutifulSalon.dao.ExceptionDAO;
 import BeutifulSalon.model.Cliente;
+import BeutifulSalon.model.Colaborador;
 import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.Item;
 import BeutifulSalon.model.Observador;
@@ -95,14 +96,14 @@ public class CadastroAgendamento extends javax.swing.JFrame implements Observado
 
         jTableServicosSolicitados.setModel(servicosEscolhidos);
         jTableProdutosComprados.setModel(produtosComprados);
-        
+
         modeloColaborador.getTodosColaboradores();
-        
-        modeloColaborador.getDados().forEach(cob ->{
+
+        modeloColaborador.getDados().forEach(cob -> {
+
             jComboBoxColaborador.addItem(cob.getNome());
         });
-        
-        
+
     }
 
     /**

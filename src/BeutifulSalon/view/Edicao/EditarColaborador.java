@@ -31,9 +31,12 @@ import BeutifulSalon.model.Dinheiro;
 import BeutifulSalon.model.ObservadoColaborador;
 import BeutifulSalon.model.ObservadorColaborador;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
+import javax.swing.text.NumberFormatter;
 
 /**
  *
@@ -61,16 +64,18 @@ public class EditarColaborador extends javax.swing.JFrame implements ObservadoCo
         if (jCheckBoxComissionado.isSelected()) {
             jTextFieldComissao.setEnabled(true);
             jComboBox1.setEnabled(true);
-        }
-        if (c.isComissaoPorQtd()) {
-            jLabel3.setText("R$ por Serviço");
-            jComboBox1.setSelectedIndex(1);
-            jTextFieldComissao.setText(Dinheiro.parseString(c.getPorcentagemComisao()));
-        } else {
-            jLabel3.setText("% Comissão");
-            jTextFieldComissao.setText(String.valueOf(c.getPorcentagemComisao()));
+            
         }
 
+
+        DecimalFormat decimal = new DecimalFormat("#,###,###.00");
+        NumberFormatter numFormatter = new NumberFormatter(decimal);
+        numFormatter.setFormat(decimal);
+        numFormatter.setAllowsInvalid(false);
+        DefaultFormatterFactory dfFactory = new DefaultFormatterFactory(numFormatter);
+        jTextFieldComissao.setFormatterFactory(dfFactory);
+        
+        jTextFieldComissao.setText(Dinheiro.parseDecimal(c.getPorcentagemComisao()));
     }
 
     /**
@@ -138,12 +143,12 @@ public class EditarColaborador extends javax.swing.JFrame implements ObservadoCo
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("% De Comissão");
+        jLabel3.setText("Valor por Serviço");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Tipo de Comissão");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comissão por Lucro", "Comissão por Qtd." }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Comissão por Qtd." }));
         jComboBox1.setEnabled(false);
 
         jButtonAtualizar.setBackground(new java.awt.Color(255, 255, 255));
@@ -168,18 +173,22 @@ public class EditarColaborador extends javax.swing.JFrame implements ObservadoCo
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextFieldComissao, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldNomeColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(73, 73, 73)
-                                .addComponent(jCheckBoxComissionado, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jCheckBoxComissionado, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jTextFieldNomeColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel4))
+                                    .addGap(42, 42, 42))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(104, 104, 104)))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel3)
+                                .addComponent(jTextFieldComissao, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,17 +204,20 @@ public class EditarColaborador extends javax.swing.JFrame implements ObservadoCo
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldNomeColaborador, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCheckBoxComissionado, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                    .addComponent(jTextFieldComissao))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jButtonAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addComponent(jButtonAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldComissao, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -242,22 +254,13 @@ public class EditarColaborador extends javax.swing.JFrame implements ObservadoCo
 
             switch (jComboBox1.getSelectedIndex()) {
                 case 0:
-                    c.setComissaoPorLucro(true);
-                    c.setComissaoPorQtd(false);
-                    break;
-                case 1:
                     c.setComissaoPorQtd(true);
                     c.setComissaoPorLucro(false);
                     break;
             }
         }
 
-        //Porcentagem
-        if (c.isComissaoPorLucro()) {
-            c.setPorcentagemComisao(Long.parseLong(jTextFieldComissao.getText()));
-        } else {
-            c.setPorcentagemComisao(Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldComissao.getText())));
-        }
+        c.setPorcentagemComisao(Dinheiro.parseCent(Dinheiro.retiraCaracteres(jTextFieldComissao.getText())));
 
         if (cc.atualizarColaborador(c)) {
             JOptionPane.showMessageDialog(null, "Colaborador atualizado com sucesso!");

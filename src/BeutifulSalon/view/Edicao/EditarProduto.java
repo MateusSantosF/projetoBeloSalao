@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.HeadlessException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
@@ -18,17 +19,17 @@ import javax.swing.text.NumberFormatter;
  */
 //VIEW
 public class EditarProduto extends javax.swing.JFrame {
-
+    
     public EditarProduto() {
         initComponents();
     }
-
+    
     public EditarProduto(Produto produto) {
-
+        
         initComponents();
-
-        ManipulaFontes mf = new ManipulaFontes(); 
-
+        
+        ManipulaFontes mf = new ManipulaFontes();
+        
         jLabel17.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 36f)); //Editar Produto
         jLabel20.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //ID
         jLabel18.setFont(mf.getFont(mf.MEDIUM, Font.PLAIN, 15f)); //*Nome Produto
@@ -39,8 +40,6 @@ public class EditarProduto extends javax.swing.JFrame {
         jButtonAtualizar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Atualizar
         jButtonCancelar.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Cancelar
 
-        
-        
         DecimalFormat decimal = new DecimalFormat("#,###,###.00");
         NumberFormatter numFormatter = new NumberFormatter(decimal);
         numFormatter.setFormat(decimal);
@@ -50,13 +49,14 @@ public class EditarProduto extends javax.swing.JFrame {
         
         jTextFieldNome.setText(produto.getNome());
         jTextFieldMarca.setText(produto.getMarca());
-        if(produto.getPreco() > 0){
+        if (produto.getPreco() > 0) {
             jCheckBox1.setSelected(true);
-            jTextFieldPreco.setText(Long.toString(Dinheiro.parseDecimal(produto.getPreco())));
+            
+            jTextFieldPreco.setText(Dinheiro.parseDecimal(produto.getPreco()));
         }
         
         jTextFieldID.setText(Long.toString(produto.getId_produto()));
-
+        
     }
 
     /**
@@ -93,7 +93,7 @@ public class EditarProduto extends javax.swing.JFrame {
         jLabel9.setText("jLabel9");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Produto");
+        setTitle("Editar Produto");
         setResizable(false);
 
         JPCadastroClientes1.setBackground(new java.awt.Color(243, 244, 245));
@@ -305,24 +305,24 @@ public class EditarProduto extends javax.swing.JFrame {
 
     //salvar produto
     private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
-
+        
         boolean sucessoAoAtualizar;
-
+        
         try {
-
+            
             ProdutoController pc = new ProdutoController();
             sucessoAoAtualizar = pc.AtualizarProduto(
-                jTextFieldNome.getText(),
-                jTextFieldMarca.getText(),
-                jTextFieldPreco.getText(),
-                Long.parseLong(jTextFieldID.getText()),
-                jCheckBox1.isSelected()
+                    jTextFieldNome.getText(),
+                    jTextFieldMarca.getText(),
+                    jTextFieldPreco.getText(),
+                    Long.parseLong(jTextFieldID.getText()),
+                    jCheckBox1.isSelected()
             );
-
+            
             if (sucessoAoAtualizar) {
                 JOptionPane.showMessageDialog(null, "Atualização realizada com sucesso.");
                 this.dispose();
-
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao atualizar, preencha todos os campos!");
             }
@@ -332,10 +332,10 @@ public class EditarProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
     private void jCheckBox1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBox1StateChanged
-
-        if(jCheckBox1.isSelected()){
+        
+        if (jCheckBox1.isSelected()) {
             jTextFieldPreco.setEnabled(true);
-        }else{
+        } else {
             jTextFieldPreco.setEnabled(false);
         }
 

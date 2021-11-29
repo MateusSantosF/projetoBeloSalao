@@ -55,13 +55,10 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     private final DespesaPrevistaTableModel modeloDespesaPrevista = new DespesaPrevistaTableModel();
     private final String ANOATUAL = String.valueOf(LocalDate.now().getYear());
 
-
     public ApresentaFinancas() {
         initComponents();
-    
-        
+
         ManipulaFontes mf = new ManipulaFontes();
-   
 
         //SERVICOS PREVISTOS
         jLabel5.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 50f)); //Serviços Previstos
@@ -109,11 +106,8 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         jLabelExcluir2.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f)); //Excluir
         jTableConsultaOrcamento.setFont(mf.getFont(mf.SEMIBOLD, Font.PLAIN, 15f)); //Tabela
 
-  
-
         listarOrcamentoServicoRealizado(ANOATUAL);
 
- 
         ((DefaultTableCellRenderer) jTableConsultaOrcamento.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         ((DefaultTableCellRenderer) jTableConsultaServicoRealizado.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
         ((DefaultTableCellRenderer) jTableConsultaOrcamentoServico.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
@@ -156,8 +150,8 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         }
 
     }
-    
-     public class FormatacaoConteudo2 extends DefaultTableCellRenderer implements TableCellRenderer {
+
+    public class FormatacaoConteudo2 extends DefaultTableCellRenderer implements TableCellRenderer {
 
         private Color color;
         private int row = -1;
@@ -176,7 +170,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
             Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 
             if (row != -1 && color != null) {
-                if (row == this.row || row == this.row  - 1) {
+                if (row == this.row || row == this.row - 1) {
                     c.setBackground(new Color(0, 0, 0));
                     c.setForeground(this.color);
                     this.setHorizontalAlignment(CENTER);
@@ -1516,7 +1510,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         modeloServicoRealizado.calculaCustoProdutosMensal();
         jTableConsultaServicoRealizado.setModel(modeloServicoRealizado);
         jTableConsultaServicoRealizado.getColumnModel().getColumn(0).setCellRenderer(new FormatacaoConteudo2(Color.WHITE, jTableConsultaServicoRealizado.getRowCount() - 1));
-        
+
     }
 
 
@@ -1577,11 +1571,11 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
                 break;
             case 5:
-               
+
                 modeloDespesaComparada.getDespesaComparadaPorAno(ano);
                 jTableComparativoDespesas.setModel(modeloDespesaComparada);
                 for (int i = 1; i <= 12; i++) {
-                   jTableComparativoDespesas.getColumnModel().getColumn(i).setCellRenderer(new DestacaPorcentagemDespesaTabela(i,  modeloDespesaComparada));
+                    jTableComparativoDespesas.getColumnModel().getColumn(i).setCellRenderer(new DestacaPorcentagemDespesaTabela(i, modeloDespesaComparada));
                 }
                 jTableComparativoDespesas.getColumnModel().getColumn(0).setPreferredWidth(200);
                 jTableComparativoDespesas.setDefaultRenderer(Object.class, render);
@@ -1592,20 +1586,19 @@ public class ApresentaFinancas extends javax.swing.JPanel {
     }//GEN-LAST:event_jTabbedStateChanged
 
     private void btnBuscaPorAno4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscaPorAno4MousePressed
-        
+
         if (jTextFieldAno4.getText().equals("")) {
             modeloLancamento.getDespesasAnual(String.valueOf(LocalDate.now().getYear()));
-            if(jComboBoxLancamento.getSelectedIndex() != 12){
+            if (jComboBoxLancamento.getSelectedIndex() != 12) {
                 modeloLancamento.getDespesasPorLancamento(jComboBoxLancamento.getSelectedIndex(), String.valueOf(LocalDate.now().getYear()));
             }
-           
 
         } else {
             modeloLancamento.getDespesasAnual(jTextFieldAno4.getText());
-            if(jComboBoxLancamento.getSelectedIndex() != 12){
+            if (jComboBoxLancamento.getSelectedIndex() != 12) {
                 modeloLancamento.getDespesasPorLancamento(jComboBoxLancamento.getSelectedIndex(), jTextFieldAno4.getText());
             }
-            
+
         }
         jTableLancamentos.setModel(modeloLancamento);
     }//GEN-LAST:event_btnBuscaPorAno4MousePressed
@@ -1755,7 +1748,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
         int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este orçamento?\n"
                 + jTableConsultaOrcamento.getValueAt(indice, 0) + "\n\nExcluir este orçamento, significa perder todos os"
                 + " lançamentos\nregistrados para este orçamento.",
-                 "Excluir Orçamento", JOptionPane.YES_NO_OPTION);
+                "Excluir Orçamento", JOptionPane.YES_NO_OPTION);
 
         if (opc == 0) {
             if (indice > -1) {
@@ -1801,7 +1794,7 @@ public class ApresentaFinancas extends javax.swing.JPanel {
 
         int indice = jTableLancamentos.getSelectedRow();
         int opc = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este lançamento?",
-                 "Excluir Lançamento", JOptionPane.YES_NO_OPTION);
+                "Excluir Lançamento", JOptionPane.YES_NO_OPTION);
 
         if (opc == 0) {
 

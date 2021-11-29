@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.view.Apresenta;
 
+import BeutifulSalon.Ferramentas.ManipulaData;
 import BeutifulSalon.Ferramentas.ManipulaFontes;
 import BeutifulSalon.Tabelas.AgendamentoTableModel;
 import BeutifulSalon.Tabelas.CentralizaElementosTabela;
@@ -229,7 +230,7 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
         jScrollPane1.setViewportView(jTableAgendamentos);
 
         jComboBoxFiltros.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jComboBoxFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hoje", "Amanhã", "1 Semana", "Não Pagos", "Não Realizados" }));
+        jComboBoxFiltros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Hoje", "Amanhã", "1 Semana", "Não Pagos", "Não Realizados", "Ano atual" }));
         jComboBoxFiltros.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jComboBoxFiltros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -289,14 +290,13 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabelExcluir, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jComboBoxFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabelBuscarCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBoxFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -339,6 +339,9 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
         }
     }//GEN-LAST:event_jLabel5MousePressed
     private void atualizarTabela() {
+        
+        
+        
         switch (jComboBoxFiltros.getSelectedIndex()) {
             case 0:
                 modelo.getAgendamentosHoje();
@@ -356,6 +359,10 @@ public class ApresentaAgendamentos extends javax.swing.JPanel implements Observa
                 break;
             case 4:
                 modelo.getAgendamentosNaoRealizados();
+                break;
+            case 5:
+                
+                modelo.getAgendamentosPorData(LocalDate.now().withDayOfYear(1), LocalDate.now().withDayOfYear(1).plusYears(1).minusDays(1));
                 break;
         }
 

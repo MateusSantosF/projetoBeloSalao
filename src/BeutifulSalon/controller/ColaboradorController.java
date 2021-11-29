@@ -42,8 +42,7 @@ public class ColaboradorController {
 
             if (colaborador.isComissionado()) {
 
-                if (colaborador.getPorcentagemComisao() > 0
-                        && colaborador.getPorcentagemComisao() <= 100) {
+                if (colaborador.getPorcentagemComisao() >= 0) {
                     try {
                         colaborador.cadastrarColaborador(colaborador);
                     } catch (ExceptionDAO e) {
@@ -51,7 +50,7 @@ public class ColaboradorController {
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Verique a porcentagem de comissão, e tente novamente!");
+                    JOptionPane.showMessageDialog(null, "Verique a comissão, e tente novamente!");
                     return false;
                 }
             } else {
@@ -76,32 +75,15 @@ public class ColaboradorController {
             colaborador.setNome(colaborador.getNome().trim());
             if (colaborador.isComissionado()) {
 
-                if (colaborador.isComissaoPorLucro()) {
-                    if (colaborador.getPorcentagemComisao() > 0
-                            && colaborador.getPorcentagemComisao() <= 100) {
-                        try {
-                            return colaborador.atualizarColaborador(colaborador);
-                        } catch (ExceptionDAO e) {
-                            JOptionPane.showMessageDialog(null, e);
-                            return false;
-                        }
-
+                try {
+                    if (colaborador.getPorcentagemComisao() >= 0) {
+                        return colaborador.atualizarColaborador(colaborador);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Verique a porcentagem de comissão, e tente novamente!");
-                        return false;
+                        JOptionPane.showMessageDialog(null, "Você não pode ter uma comissão menor ou igual a zero!");
                     }
-                } else {
-                    try {
-                        if (colaborador.getPorcentagemComisao() >= 0) {
-                            return colaborador.atualizarColaborador(colaborador);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Você não pode ter uma comissão menor ou igual a zero!");
-                        }
-                    } catch (ExceptionDAO e) {
-                        JOptionPane.showMessageDialog(null, e);
-                        return false;
-                    }
-
+                } catch (ExceptionDAO e) {
+                    JOptionPane.showMessageDialog(null, e);
+                    return false;
                 }
 
             } else {

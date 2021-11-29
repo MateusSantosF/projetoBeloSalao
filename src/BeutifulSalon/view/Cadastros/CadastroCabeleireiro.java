@@ -26,6 +26,7 @@ import BeutifulSalon.model.Orcamento;
 import BeutifulSalon.model.Servico;
 import BeutifulSalon.view.modais.ModalColaboradores;
 import BeutifulSalon.view.modais.ModalExpediente;
+import BeutifulSalon.view.modais.ModalFolhaPagamento;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
@@ -69,6 +70,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private Email email = new Email();
     private JFrame mainMenu;
     private int mesSelecionado = 1;
+    private ModalFolhaPagamento modalFolhaPagamento = null;
 
     Observador observador = null;
 
@@ -76,7 +78,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         initComponents();
 
         this.mainMenu = mainMenu;
-        ManipulaFontes mf = new ManipulaFontes();;
+        ManipulaFontes mf = new ManipulaFontes();
 
         //Fontes
         jLabel4.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 40f)); //Informe seus dados pessoais
@@ -139,6 +141,18 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
 
         jButton3.setFont(mf.getFont(mf.BOLD, Font.PLAIN, 15f));
 
+        //Colaboradores
+        
+        jLabel21.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jLabel32.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+        jComboBoxMeses.setFont(mf.getFont(mf.REGULAR, Font.BOLD, 15f));
+        jLabel33.setFont(mf.getFont(mf.MEDIUM, Font.BOLD, 15f));
+                
+        
+        
+        
+        
+        
         // ===================================================//
         DecimalFormat decimal = new DecimalFormat("#,###,###.00");
         NumberFormatter numFormatter = new NumberFormatter(decimal);
@@ -288,6 +302,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jPanelGraficoColab = new javax.swing.JPanel();
         jComboBoxMeses = new javax.swing.JComboBox<>();
         jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -1159,20 +1174,33 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
         jLabel32.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel32.setText("Mes Referente");
 
+        jLabel33.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/iconOrcamentoRegistro.png"))); // NOI18N
+        jLabel33.setText("Exibir folha de pagamento");
+        jLabel33.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel33MousePressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(jLabel31)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelGraficoColab, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxMeses, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel32))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel31)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanelGraficoColab, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxMeses, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel32)))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel33)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
@@ -1189,7 +1217,9 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
                 .addComponent(jComboBoxMeses, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanelGraficoColab, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addGap(36, 36, 36)
+                .addComponent(jLabel33)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Colaboradores", jPanel8);
@@ -1621,6 +1651,18 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
 
     }//GEN-LAST:event_jComboBoxMesesItemStateChanged
 
+    private void jLabel33MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel33MousePressed
+           
+        if(modalFolhaPagamento == null){
+            modalFolhaPagamento = new ModalFolhaPagamento();
+            
+        }else{
+            modalFolhaPagamento = new ModalFolhaPagamento();
+        }
+        
+        modalFolhaPagamento.setVisible(Boolean.TRUE);
+    }//GEN-LAST:event_jLabel33MousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -1698,6 +1740,7 @@ public class CadastroCabeleireiro extends javax.swing.JFrame implements Observad
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

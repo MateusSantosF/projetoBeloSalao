@@ -6,6 +6,7 @@
 package BeutifulSalon.dao;
 
 import BeutifulSalon.Ferramentas.ManipulaData;
+import BeutifulSalon.controller.EstoqueController;
 import BeutifulSalon.controller.ServicoController;
 import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Compra;
@@ -188,7 +189,8 @@ public class AgendamentoDAO {
         
  
         String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO,TOTAL,"
-                + " DESCONTO, VALORADICIONAL, ID_CLIENTE, PAGO, FORMADEPAGAMENTO FROM AGENDAMENTO WHERE ID_AGENDAMENTO = ? ";
+                + " DESCONTO, VALORADICIONAL, ID_CLIENTE, PAGO, FORMADEPAGAMENTO, ID_COLABORADOR"
+                + " FROM AGENDAMENTO WHERE ID_AGENDAMENTO = ? ";
         
        
         
@@ -218,6 +220,7 @@ public class AgendamentoDAO {
                     agendamento.setValorAdicional(rs.getLong("VALORADICIONAL"));
                     agendamento.setPago(rs.getBoolean("PAGO"));
                     agendamento.setFormaDePagamento(rs.getString("FORMADEPAGAMENTO"));
+                    agendamento.setIdColaborador(rs.getLong("ID_COLABORADOR"));
                 }
             }
             agendamento.setProdutosComprados(buscaProdutosCompradosAgendamento(agendamento.getIdAgendamento()));
@@ -912,11 +915,14 @@ public class AgendamentoDAO {
         
         return agendamentos;
     }
-
+    
+  
+    
     public void atualizarAgendamento(Agendamento agendamento) throws SQLException {
         
         String insertAgendamento = "UPDATE AGENDAMENTO SET DATA = ?, HORARIO = ? , ID_CLIENTE = ? ,"
-                 + " REALIZADO = ? , DESCONTO = ? , TOTAL = ?, VALORADICIONAL = ?, PAGO = ?, FORMADEPAGAMENTO = ? WHERE ID_AGENDAMENTO = ?";
+                 + " REALIZADO = ? , DESCONTO = ? , TOTAL = ?, VALORADICIONAL = ?, PAGO = ?, FORMADEPAGAMENTO = ?,"
+                + " ID_COLABORADOR = ? WHERE ID_AGENDAMENTO = ?";
          
         String deletaServicoAgendamentoAntigo = "DELETE FROM AGENDAMENTO_SERVICO WHERE ID_AGENDAMENTO = ?";
         String insertServicoAgendamento = "INSERT INTO AGENDAMENTO_SERVICO (ID_AGENDAMENTO, ID_SERVICO) "
@@ -932,7 +938,7 @@ public class AgendamentoDAO {
             connection.setAutoCommit(false);
 
             pStatement = connection.prepareStatement(insertAgendamento);
-            pStatement.setLong(10, agendamento.getIdAgendamento());
+            pStatement.setLong(11, agendamento.getIdAgendamento());
             pStatement.setDate(1, java.sql.Date.valueOf(agendamento.getData()));
             pStatement.setTime(2, java.sql.Time.valueOf(agendamento.getHorario()));
             pStatement.setLong(3, agendamento.getIdCliente());
@@ -942,6 +948,7 @@ public class AgendamentoDAO {
             pStatement.setLong(7, agendamento.getValorAdicional());
             pStatement.setBoolean(8, agendamento.isPago());
             pStatement.setString(9, agendamento.getFormaDePagamento());
+            pStatement.setLong(10, agendamento.getIdColaborador());
             int firstInsert = pStatement.executeUpdate();
 
             if (firstInsert > 0) {
@@ -965,10 +972,11 @@ public class AgendamentoDAO {
                     JOptionPane.showMessageDialog(null, "Erro registrar serviço" + e);
                     connection.rollback();
                 }
+                
+      
             }
-
             connection.commit();
-
+           
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro DAO" + e);
             connection.rollback();
@@ -992,8 +1000,85 @@ public class AgendamentoDAO {
                 JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
             }
         }
-            
+        registraProdutosAtualizacaoAgendamento(agendamento);    
 
+    }
+    
+    public void registraProdutosAtualizacaoAgendamento(Agendamento agendamento){
+         
+        String deletaProdutosAgendamentoAntigo = "DELETE FROM AGENDAMENTO_PRODUTO WHERE ID_AGENDAMENTO = ?";
+        
+        String deletaVendaProdutoAgendamentoAntigo = "DELETE FROM VENDA WHERE ID_VENDA = "
+                + "(SELECT ID_VENDA FROM AGENDAMENTO_PRODUTO WHERE ID_AGENDAMENTO = ?)";
+        
+         String deletaVendaProdutoAgendamentoAntigo2 = "DELETE FROM ITEM_VENDA WHERE ID_VENDA = "
+                + "(SELECT ID_VENDA FROM AGENDAMENTO_PRODUTO WHERE ID_AGENDAMENTO = ?)";
+        
+         String insertAgendamentoCompra = "INSERT INTO AGENDAMENTO_PRODUTO (ID_AGENDAMENTO, ID_VENDA) "
+                + "VALUES ( ?,(SELECT ID_VENDA FROM VENDA ORDER BY VENDA.ID_VENDA DESC LIMIT 1))";
+
+ 
+        Connection connection = null;
+        PreparedStatement pStatement = null;
+
+        try {
+            
+             connection = new ConnectionMVC().getConnection();
+             
+            if (agendamento.getAntigosprodutosComprados() != null) {
+                new EstoqueController().atualizaEstoqueExclusaoVenda(agendamento.getAntigosprodutosComprados());
+            }
+                //DELETANDO PRODUTOS
+                pStatement = connection.prepareStatement(deletaVendaProdutoAgendamentoAntigo);
+                pStatement.setLong(1, agendamento.getIdAgendamento());
+                pStatement.executeUpdate();
+                
+                pStatement = connection.prepareStatement(deletaVendaProdutoAgendamentoAntigo2);
+                pStatement.setLong(1, agendamento.getIdAgendamento());
+                pStatement.executeUpdate();
+
+                pStatement = connection.prepareStatement(deletaProdutosAgendamentoAntigo);
+                pStatement.setLong(1, agendamento.getIdAgendamento());
+                pStatement.executeUpdate();
+                
+                if (agendamento.getProdutosComprados().size() > 0) {
+
+                    Venda venda = new Venda();
+                    venda.setData(agendamento.getData());
+                    venda.setIdCliente(agendamento.getIdCliente());
+                    venda.setItensVenda(agendamento.getProdutosComprados());
+                    new VendaProdutoDAO().cadastrarVenda(venda);
+
+                    pStatement = connection.prepareStatement(insertAgendamentoCompra);
+                    pStatement.setLong(1, agendamento.getIdAgendamento());
+                    pStatement.executeUpdate();
+
+                }
+            
+             
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro DAO" + e);
+         
+
+        } finally {
+
+            try {
+                if (pStatement != null) {
+                    pStatement.close();
+                }
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar statement" + e);
+            }
+
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Erro ao fechar conexão" + e);
+            }
+        }
     }
     
     public ArrayList<Agendamento> listarAgendamentosNaoRealizados(){

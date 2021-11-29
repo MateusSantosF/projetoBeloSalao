@@ -132,23 +132,23 @@ public class GraficoDeBarras {
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         md.meses(LocalDate.now()).forEach(m -> {
 
-            long entrada;
-            long saida;
+            double entrada;
+            double saida;
 
             switch (m) {
 
                 case JANUARY:
-                    entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
-                    saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
-                    saida += Dinheiro.parseDecimal(ocProdutosGastos.getJan());
+                    entrada = (double)(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m)) / 100;
+                    saida =(double)(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m)) / 100;
+                    saida += (double)(ocProdutosGastos.getJan()) / 100;
                     dataset.addValue(saida, series1, category1);
                     dataset.addValue(entrada, series2, category1);
                     dataset.addValue(entrada - saida, series3, category1);
                     break;
                 case FEBRUARY:
-                    entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
-                    saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
-                    saida += Dinheiro.parseDecimal(ocProdutosGastos.getFev());
+                    entrada = (double)(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m)) / 100;
+                    saida =(double) (cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m)) / 100;
+                    saida +=(double) (ocProdutosGastos.getFev()) / 100;
 
                     dataset.addValue(saida, series1, category2);
                     dataset.addValue(entrada, series2, category2);
@@ -156,80 +156,80 @@ public class GraficoDeBarras {
 
                     break;
                 case MARCH:
-                    entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
-                    saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
-                    saida += Dinheiro.parseDecimal(ocProdutosGastos.getMar());
+                    entrada = (double)(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m)) / 100;
+                    saida = (double)(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m)) / 100;
+                    saida +=(double) (ocProdutosGastos.getMar()) / 100;
                     dataset.addValue(saida, series1, category3);
                     dataset.addValue(entrada, series2, category3);
                     dataset.addValue(entrada - saida, series3, category3);
 
                     break;
                 case APRIL:
-                    entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
-                    saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
-                    saida += Dinheiro.parseDecimal(ocProdutosGastos.getAbr());
+                    entrada = (double)(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m)) / 100;
+                    saida = (double)(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m)) / 100;
+                    saida += (double)(ocProdutosGastos.getAbr()) / 100;
                     dataset.addValue(saida, series1, category4);
                     dataset.addValue(entrada, series2, category4);
                     dataset.addValue(entrada - saida, series3, category4);
                     break;
                 case MAY:
-                    entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
-                    saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
-                    saida += Dinheiro.parseDecimal(ocProdutosGastos.getMai());
+                    entrada =(double) (vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m))/100;
+                    saida = (double)(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m))/100;
+                    saida += (double)(ocProdutosGastos.getMai())/100;
                     dataset.addValue(saida, series1, category5);
                     dataset.addValue(entrada, series2, category5);
                     dataset.addValue(entrada - saida, series3, category5);
 
                     break;
                 case JUNE:
-                    entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
-                    saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
-                    saida += Dinheiro.parseDecimal(ocProdutosGastos.getJun());
+                    entrada = (double)(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m)) / 100;
+                    saida =(double) (cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m)) / 100;
+                    saida +=(double) (ocProdutosGastos.getJun()) / 100;
                     dataset.addValue(saida, series1, category6);
                     dataset.addValue(entrada, series2, category6);
                     dataset.addValue(entrada - saida, series3, category6);
 
                     break;
                 case JULY:
-                    entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
-                    saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
-                    saida += Dinheiro.parseDecimal(ocProdutosGastos.getJul());
+                    entrada = (double)(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m)) / 100;
+                    saida = (double)(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m)) / 100;
+                    saida += (double)(ocProdutosGastos.getJul()) / 100;
                     dataset.addValue(saida, series1, category7);
                     dataset.addValue(entrada, series2, category7);
                     dataset.addValue(entrada - saida, series3, category7);
 
                     break;
                 case AUGUST:
-                    entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
-                    saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
-                    saida += Dinheiro.parseDecimal(ocProdutosGastos.getAgo());
+                    entrada = (double)(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m)) / 100;
+                    saida = (double)(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m)) / 100;
+                    saida += (double)(ocProdutosGastos.getAgo()) / 100;
                     dataset.addValue(saida, series1, category8);
                     dataset.addValue(entrada, series2, category8);
                     dataset.addValue(entrada - saida, series3, category8);
 
                     break;
                 case SEPTEMBER:
-                    entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
-                    saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
-                    saida += Dinheiro.parseDecimal(ocProdutosGastos.getSet());
+                    entrada = (double)(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m)) / 100;
+                    saida = (double)(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m)) / 100;
+                    saida += (double)(ocProdutosGastos.getSet()) / 100;
                     dataset.addValue(saida, series1, category9);
                     dataset.addValue(entrada, series2, category9);
                     dataset.addValue(entrada - saida, series3, category9);
 
                     break;
                 case OCTOBER:
-                    entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
-                    saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
-                    saida += Dinheiro.parseDecimal(ocProdutosGastos.getOut());
+                    entrada =(double) (vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m)) / 100;
+                    saida = (double)(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m)) / 100;
+                    saida += (double)(ocProdutosGastos.getOut()) / 100;
                     dataset.addValue(saida, series1, category10);
                     dataset.addValue(entrada, series2, category10);
                     dataset.addValue(entrada - saida, series3, category10);
 
                     break;
                 case NOVEMBER:
-                    entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
-                    saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
-                    saida += Dinheiro.parseDecimal(ocProdutosGastos.getNov());
+                    entrada = (double)(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m)) / 100;
+                    saida = (double)(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m)) / 100;
+                    saida += (double)(ocProdutosGastos.getNov()) / 100;
 
                     dataset.addValue(saida, series1, category11);
                     dataset.addValue(entrada, series2, category11);
@@ -237,9 +237,9 @@ public class GraficoDeBarras {
 
                     break;
                 case DECEMBER:
-                    entrada = Dinheiro.parseDecimal(vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m));
-                    saida = Dinheiro.parseDecimal(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m));
-                    saida += Dinheiro.parseDecimal(ocProdutosGastos.getDez());
+                    entrada =(double) (vc.selecionaVendasPorMes(m) + ag.retornaSomaDeLucrosAgendamentosMensal(m)) / 100;
+                    saida = (double)(cc.retornaSomaDeComprasMensais(m) + dc.retornaSomaDeDespesasMensais(m)) / 100;
+                    saida += (double)(ocProdutosGastos.getDez()) / 100;
 
                     dataset.addValue(saida, series1, category12);
                     dataset.addValue(entrada, series2, category12);

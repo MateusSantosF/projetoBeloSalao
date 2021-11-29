@@ -121,9 +121,9 @@ public class AgendamentoController {
 
     public boolean atualizarAgendamento(String data, String horario, long idCliente, List<Servico> servicos, long total,
             long desconto, boolean realizado, long idAgendamento, long valorAdicional, boolean pago, String formaDePagamento,
-            LocalTime horarioInicioAntigo, LocalTime horarioFinalAntigo) throws ExceptionDAO {
-
-        if (Valida.isHora(horario) && !servicos.isEmpty()) {
+            LocalTime horarioInicioAntigo, LocalTime horarioFinalAntigo,long idColaborador, List<Item> itensComprados, List<Item> itensCompradosAntigos) throws ExceptionDAO {
+        
+        if (Valida.isHora(horario) && servicos.size() > 1) {
 
             if (total < 0) {
                 JOptionPane.showMessageDialog(null, "Você não pode registrar um agendamento com valores negativos.");
@@ -165,8 +165,12 @@ public class AgendamentoController {
             }
 
             //Passando parametros
+            
             Agendamento agendamento = new Agendamento();
+            
             agendamento.setIdAgendamento(idAgendamento);
+            agendamento.setIdColaborador(idColaborador);
+            agendamento.setProdutosComprados(itensComprados);
             agendamento.setTotal(total);
             agendamento.setDesconto(desconto);
             agendamento.setIdCliente(idCliente);
@@ -177,6 +181,8 @@ public class AgendamentoController {
             agendamento.setValorAdicional(valorAdicional);
             agendamento.setPago(pago);
             agendamento.setFormaDePagamento(formaDePagamento);
+            agendamento.setProdutosComprados(itensComprados);
+            agendamento.setAntigosprodutosComprados(itensCompradosAntigos);
 
             try {
                 agendamento.atualizarAgendamento(agendamento);
