@@ -227,6 +227,7 @@ public class RelatorioController {
             params.put("TotalFinal", Dinheiro.parseString(totalFinal));
             params.put("subTotal", Dinheiro.parseString(totalFinal + totalDescontos - totalAdicional));
             params.put("numeroTotalAgendamentos", String.valueOf(datasource.size()));
+            
 
             try {
 

@@ -1474,13 +1474,13 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jPanelGraficoColab" alignment="0" min="-2" pref="605" max="-2" attributes="0"/>
                                   <Component id="jComboBoxMeses" min="-2" pref="145" max="-2" attributes="0"/>
-                                  <Component id="jLabel21" min="-2" pref="118" max="-2" attributes="0"/>
-                                  <Component id="jLabel32" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel21" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
+                                  <Component id="jLabel32" alignment="0" min="-2" pref="178" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                              <Component id="jLabel33" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel33" min="-2" pref="265" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>

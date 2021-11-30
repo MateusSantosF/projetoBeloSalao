@@ -2,12 +2,6 @@
 <!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioVendas" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="05a1c458-38bd-4f63-8eeb-339c60ac5674">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BeanCollectionPadrao"/>
-	<style name="Style1">
-		<conditionalStyle>
-			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT} % 2 == 0)]]></conditionExpression>
-			<style backcolor="#E6E6E6"/>
-		</conditionalStyle>
-	</style>
 	<parameter name="DataInicio" class="java.lang.String">
 		<parameterDescription><![CDATA[dataInicio]]></parameterDescription>
 	</parameter>
@@ -61,6 +55,9 @@
 	</field>
 	<field name="statusPagamento" class="java.lang.String">
 		<fieldDescription><![CDATA[statusPagamento]]></fieldDescription>
+	</field>
+	<field name="nomeColaborador" class="java.lang.String">
+		<fieldDescription><![CDATA[nomeColaborador]]></fieldDescription>
 	</field>
 	<background>
 		<band height="802" splitType="Stretch">
@@ -153,7 +150,7 @@
 				<subreportExpression><![CDATA["subRelatorioAgendamento.jasper"]]></subreportExpression>
 			</subreport>
 			<rectangle>
-				<reportElement style="Style1" stretchType="ContainerHeight" x="0" y="0" width="550" height="146" forecolor="#5C5C5C" backcolor="rgba(255, 255, 255, 0.0)" uuid="137a7f74-7a75-4dab-a4bf-93fae67555d9"/>
+				<reportElement stretchType="ContainerHeight" x="0" y="0" width="550" height="146" forecolor="#5C5C5C" backcolor="rgba(255, 255, 255, 0.0)" uuid="137a7f74-7a75-4dab-a4bf-93fae67555d9"/>
 			</rectangle>
 			<textField>
 				<reportElement x="250" y="4" width="128" height="20" uuid="70e80a29-c710-4e16-8973-2a5e0f5cc8da">
@@ -279,6 +276,22 @@
 				</textElement>
 				<text><![CDATA[Status Pagamento]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="370" y="27" width="120" height="14" uuid="9e3b2f6c-ea22-4fab-ad98-190620a80796">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1a85505f-0169-4952-b5a2-06e58ded2926"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Colaborador:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="41" width="140" height="16" uuid="bbb13ce9-a66b-493e-b24f-fa2ea7073d4c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="24511e20-a2ac-434c-86f0-336939d128c3"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nomeColaborador}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<summary>

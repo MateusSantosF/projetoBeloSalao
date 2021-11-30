@@ -23,6 +23,7 @@
  */
 package BeutifulSalon.model;
 
+import BeutifulSalon.controller.ColaboradorController;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -35,7 +36,8 @@ import java.util.List;
 public class RelatorioAgendamento {
         
     
-  
+    private String nomeColaborador;
+    private long idColaborador;
     private String nomeCliente;
     private String sobrenomeCliente;
     private long total;
@@ -80,6 +82,19 @@ public class RelatorioAgendamento {
 
     public void setDesconto(long desconto) {
         this.desconto = desconto;
+    }
+
+    public long getIdColaborador() {
+        return idColaborador;
+    }
+
+    public void setIdColaborador(long idColaborador) {
+        this.idColaborador = idColaborador;
+    }
+    
+        
+    public String getNomeColaborador(){
+        return new ColaboradorController().buscarColaborador(idColaborador).getNome();
     }
 
     public String getValorAdicional() {

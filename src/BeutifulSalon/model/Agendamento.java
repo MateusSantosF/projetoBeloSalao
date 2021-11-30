@@ -5,6 +5,7 @@
  */
 package BeutifulSalon.model;
 
+import BeutifulSalon.controller.ColaboradorController;
 import BeutifulSalon.dao.AgendamentoDAO;
 import BeutifulSalon.dao.ExceptionDAO;
 import java.sql.SQLException;
@@ -60,6 +61,7 @@ public class Agendamento {
     public long getTotal() {
         return total;
     }
+
 
     public void setTotal(long total) {
         this.total = total;

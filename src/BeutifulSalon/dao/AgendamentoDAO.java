@@ -425,7 +425,8 @@ public class AgendamentoDAO {
      public ArrayList<RelatorioAgendamento> listarAgendamentosRelatorio(long inicio, long fim) {
         
              
-        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, CLIENTE.NOME AS NOME, CLIENTE.SOBRENOME AS SOBRENOME, TOTAL, DESCONTO, VALORADICIONAL, PAGO, FORMADEPAGAMENTO  FROM AGENDAMENTO"
+        String sql = "SELECT ID_AGENDAMENTO, DATA, HORARIO, REALIZADO, ID_CLIENTE, CLIENTE.NOME AS NOME, CLIENTE.SOBRENOME AS SOBRENOME, TOTAL, DESCONTO,"
+                + " VALORADICIONAL, PAGO, FORMADEPAGAMENTO, ID_COLABORADOR FROM AGENDAMENTO"
                 + " INNER JOIN CLIENTE ON CLIENTE.ID = AGENDAMENTO.ID_CLIENTE "
                 + " WHERE DATA BETWEEN " + inicio + " AND " + fim + " AND REALIZADO = TRUE "
                 + " AND CLIENTE.EXCLUIDO = FALSE ORDER BY HORARIO ASC ";
@@ -456,6 +457,7 @@ public class AgendamentoDAO {
                     ag.setTotal(rs.getLong("TOTAL"));
                     ag.setDesconto(rs.getLong("DESCONTO"));
                     ag.setValorAdicional(rs.getLong("VALORADICIONAL"));
+                    ag.setIdColaborador(rs.getLong("ID_COLABORADOR"));
                     try {
                         ag.setServicosSolicitados(listaServicosAgendamento(rs.getLong("ID_AGENDAMENTO")));
                     } catch (ExceptionDAO e) {

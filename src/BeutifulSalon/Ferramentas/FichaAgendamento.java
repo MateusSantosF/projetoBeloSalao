@@ -24,8 +24,10 @@
 package BeutifulSalon.Ferramentas;
 
 import BeutifulSalon.controller.ClienteController;
+import BeutifulSalon.controller.ColaboradorController;
 import BeutifulSalon.model.Agendamento;
 import BeutifulSalon.model.Dinheiro;
+import BeutifulSalon.model.Item;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,40 +47,45 @@ import net.sf.jasperreports.swing.JRViewer;
  * @author Mateus
  */
 public class FichaAgendamento {
-    
-    
-    public void imprimirFicha(Agendamento ag){
-        
+
+    public void imprimirFicha(Agendamento ag) {
+
         DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
-        
-        
-        
+        long valorEmProdutos = 0;
+        String nomeColaborador = new ColaboradorController().buscarColaborador(ag.getIdColaborador()).getNome();
+
+        for (Item i : ag.getProdutosComprados()) {
+            valorEmProdutos += i.getPrecoTotal();
+        }
+
         Map<String, Object> params = new HashMap<>();
         params.put("nomeCliente", new ClienteController().buscarCliente(ag.getIdCliente()).getNomeCompleto());
+        params.put("nomeColaborador", nomeColaborador);
         params.put("dataAgendamento", formatterData.format(ag.getData()));
         params.put("horarioAgendamento", formatterHora.format(ag.getHorario()) + "h");
         params.put("servicosSolicitadosAgendamento", ag.getServicos());
         params.put("formaDePagamento", ag.getFormaDePagamento());
-        params.put("statusPagamento",  ag.isPago() ? "Pago" : "Pendente");
+        params.put("statusPagamento", ag.isPago() ? "Pago" : "Pendente");
         params.put("subtotal", Dinheiro.parseString(ag.getTotal() + ag.getDesconto() - ag.getValorAdicional()));
         params.put("valorAdicional", Dinheiro.parseString(ag.getValorAdicional()));
         params.put("valorDesconto", Dinheiro.parseString(ag.getDesconto()));
-        params.put("valorTotal", Dinheiro.parseString(ag.getTotal()));
+        params.put("valorTotal", Dinheiro.parseString(ag.getTotal() + valorEmProdutos));
         params.put("tempoPrevisto", ag.getTempoPrevisto());
 
-        try {
+        params.put("valorProdutosComprados", Dinheiro.parseString(valorEmProdutos));
+        params.put("produtosComprados", ag.getProdutosComprados());
 
-            JasperReport j = JasperCompileManager.compileReport("Relatorios\\FichaAgendamento.jrxml");
+        try {
+            JasperReport j = JasperCompileManager.compileReport("Relatorios/FichaAgendamento.jrxml");
             JasperPrint rp = JasperFillManager.fillReport(j, params, new JREmptyDataSource());
             JasperPrintManager.printPage(rp, 0, true);
-            
- 
+
         } catch (JRException e) {
 
             JOptionPane.showMessageDialog(null, e);
 
         }
     }
-    
+
 }
