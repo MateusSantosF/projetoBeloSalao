@@ -78,8 +78,8 @@ public class JavaMail {
             myAccountEmail = cc.selecionaCabeleireiro().getEmail();
             password = cc.selecionaCabeleireiro().getSenha(); 
         }else{
-            myAccountEmail = "beutifulsalontest@gmail.com";
-            password = "40028922@";
+            myAccountEmail = "";
+            password = "";
         }
        
 
@@ -174,7 +174,7 @@ public class JavaMail {
                             bos.write(email.getAnexo());
                             bos.close();
                         } else {
-                            System.out.println("NAO EXISTE KKKKKKKK");
+                            System.out.println("NAO EXISTE");
                         }
 
                         DataSource t = new FileDataSource(file.getAbsolutePath());
