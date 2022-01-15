@@ -8,3 +8,8 @@ O App BeautySalon tem por objetivo ajudar salões de beleza no controle de suas 
 
 
 Para mais informações do projeto, [clique aqui](https://www.sbv.ifsp.edu.br/component/content/article/67-noticias-publicadas/pagina-inicial/comunicados/1023-programa-if-empreendedor-nacional-seleciona-projeto-em-são-joão-da-boa-vista)
+
+
+# Como usar ?
+
+Procure a última versão na aba "Releases" e descompacte o arquivo .7zip. Para abrir o software, execute os arquivos BeautySalon32bits ou BeautySalon64bits conforme as específicações de seu computador.
